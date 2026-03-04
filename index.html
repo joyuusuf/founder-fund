@@ -307,6 +307,21 @@
   ::-webkit-scrollbar{width:5px;height:5px}
   ::-webkit-scrollbar-track{background:transparent}
   ::-webkit-scrollbar-thumb{background:var(--g300);border-radius:3px}
+
+  /* ── FUND CREATION STEPPER ────────────────────────────── */
+  .fund-step{display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;min-width:64px}
+  .fund-step-num{width:30px;height:30px;border-radius:50%;border:2px solid var(--g300);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:var(--g400);background:#fff;transition:all .2s}
+  .fund-step-label{font-size:10.5px;font-weight:600;color:var(--g400);text-transform:uppercase;letter-spacing:.05em;transition:color .2s}
+  .fund-step-active .fund-step-num{background:var(--blue);border-color:var(--blue);color:#fff}
+  .fund-step-active .fund-step-label{color:var(--blue)}
+  .fund-step-done .fund-step-num{background:var(--green-light);border-color:var(--green);color:var(--green)}
+  .fund-step-done .fund-step-label{color:var(--green)}
+  .fund-step-line{flex:1;height:2px;background:var(--g200);margin:0 4px;margin-bottom:16px;transition:background .2s;min-width:24px}
+  .fund-step-line-done{background:var(--green)}
+  .fund-step-panel{animation:fadeIn .18s ease}
+  .fund-checkbox-row{display:flex;align-items:flex-start;gap:10px;padding:10px 12px;border-radius:8px;border:1px solid var(--g200);cursor:pointer;transition:all .15s;background:#fff}
+  .fund-checkbox-row:hover{background:var(--blue-light);border-color:var(--blue-mid)}
+  .fund-checkbox-row input[type=checkbox]{margin-top:2px;accent-color:var(--blue);width:14px;height:14px;flex-shrink:0;cursor:pointer}
 </style>
 </head>
 <body>
@@ -1681,71 +1696,768 @@
 <div id="screen-fund-details" class="screen">
 <div class="main">
   <div class="topbar">
-    <div class="topbar-left"><div class="title">Fund Rules Engine</div><div class="bread">Fund Ledger › Configure Rules</div></div>
+    <div class="topbar-left">
+      <div class="title">New Fund</div>
+      <div class="bread">Fund Ledger › Create New Fund</div>
+    </div>
     <div class="topbar-actions">
-      <button class="btn btn-secondary" onclick="goTo('screen-fund-ledger')">Cancel</button>
-      <button class="btn btn-primary" onclick="alert('Rules saved. New Rule Snapshot RS-2026-004 created.')">Save &amp; Create Snapshot</button>
+      <button class="btn btn-secondary" onclick="goTo('screen-fund-ledger')">✕ Cancel</button>
+      <button class="btn btn-secondary" onclick="alert('Draft saved.')">Save Draft</button>
+      <button class="btn btn-primary" onclick="fundFormSubmit()">Create Fund →</button>
     </div>
   </div>
   <div class="page">
-    <div class="notice notice-warn">⚠ Saving these rules creates a new Rule Snapshot (e.g. RS-2026-004). All <strong>future</strong> events will use this snapshot. Past events retain their original snapshot permanently. Use Simulation to model impact before saving.</div>
-    <div class="two-col">
-      <div class="card">
-        <div class="card-header"><div class="card-title">⚙ Fund Rules Engine</div><span class="badge badge-blue badge-no-dot">Creates new Rule Snapshot on save</span></div>
-        <div class="card-body">
-          <div class="fg">
-            <div class="form-group"><label>Fund Name <span class="req">*</span></label><input class="form-control" value="Founders Fund Q1 2026"></div>
-            <div class="grid2">
-              <div class="form-group"><label>Contribution Period (days) <span class="req">*</span></label><input class="form-control" type="number" value="7"><div class="form-hint">7 = one sprint/week</div></div>
-              <div class="form-group"><label>OT Threshold (hrs/week) <span class="req">*</span></label><input class="form-control" type="number" value="40"><div class="form-hint">Hours before OT kicks in</div></div>
-            </div>
-            <div class="grid2">
-              <div class="form-group"><label>OT Coefficient <span class="req">*</span></label><input class="form-control" type="number" value="1.5" step="0.05"><div class="form-hint">Gain multiplier for OT hours</div></div>
-              <div class="form-group"><label>Contingent Bonus % <span class="req">*</span></label><div class="prefix-wrap"><span class="prefix">%</span><input class="form-control" type="number" value="10"></div><div class="form-hint">Skill attribution — Green flag only</div></div>
-            </div>
-            <div class="notice notice-purple">🟣 Contingent bonus applies to <strong>Base Inputs only</strong> — it is a skill attribution, not a capital return. It never applies to OT gain.</div>
-            <div class="divider"></div>
-            <div class="section-label">Deficit Event Values</div>
-            <div class="grid2">
-              <div class="form-group"><label>Misallocation (Minor) <span class="req">*</span></label><div class="prefix-wrap"><span class="prefix">−</span><input class="form-control" type="number" value="100"></div></div>
-              <div class="form-group"><label>System Inefficiency (Major) <span class="req">*</span></label><div class="prefix-wrap"><span class="prefix">−</span><input class="form-control" type="number" value="500"></div></div>
-            </div>
-            <div class="divider"></div>
-            <div class="section-label">Permissible Flow Event Types</div>
-            <div style="display:flex;gap:16px;flex-wrap:wrap;">
-              <label style="display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer;"><input type="checkbox" checked> Labor Flow (Base)</label>
-              <label style="display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer;"><input type="checkbox" checked> Labor Flow (OT Gain)</label>
-              <label style="display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer;"><input type="checkbox" checked> Skill Attribution</label>
-              <label style="display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer;"><input type="checkbox" checked> Cash Basis</label>
-              <label style="display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer;"><input type="checkbox" checked> Non-Cash Basis</label>
-              <label style="display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer;"><input type="checkbox" checked> Deficit Events</label>
-            </div>
-          </div>
-        </div>
+
+    <!-- Step progress bar -->
+    <div style="display:flex;align-items:center;gap:0;margin-bottom:22px;">
+      <div class="fund-step fund-step-active" data-step="1" onclick="fundGoStep(1)">
+        <div class="fund-step-num">1</div><div class="fund-step-label">Identity</div>
       </div>
-      <div style="position:sticky;top:70px;display:flex;flex-direction:column;gap:12px;">
-        <div class="card">
-          <div class="card-header"><div class="card-title">📸 Current Rule Snapshot</div></div>
-          <div class="card-body">
-            <div class="rules-card">
-              <div style="font-size:11px;font-family:'DM Mono',monospace;font-weight:700;color:var(--blue);margin-bottom:10px;">RS-2026-003 · Active</div>
-              <div class="rule-row"><span class="rule-key">Period</span><span class="rule-val">7 days</span></div>
-              <div class="rule-row"><span class="rule-key">OT Threshold</span><span class="rule-val">40 hrs/wk</span></div>
-              <div class="rule-row"><span class="rule-key">OT Coefficient</span><span class="rule-val">×1.5</span></div>
-              <div class="rule-row"><span class="rule-key">Contingent</span><span class="rule-val">10% (Base only)</span></div>
-              <div class="rule-row"><span class="rule-key">Misallocation</span><span class="rule-val" style="color:var(--orange);">−100</span></div>
-              <div class="rule-row"><span class="rule-key">Sys. Inefficiency</span><span class="rule-val" style="color:var(--red);">−500</span></div>
-            </div>
-          </div>
-        </div>
-        <div class="notice notice-info">Saving creates <strong>RS-2026-004</strong>. Previous snapshot RS-2026-003 remains attached to its events permanently.</div>
-        <button class="btn btn-purple btn-sm" style="justify-content:center;" onclick="goTo('screen-simulation')">🧪 Simulate before saving →</button>
+      <div class="fund-step-line fund-step-line-done"></div>
+      <div class="fund-step" data-step="2" onclick="fundGoStep(2)">
+        <div class="fund-step-num">2</div><div class="fund-step-label">Structure</div>
+      </div>
+      <div class="fund-step-line"></div>
+      <div class="fund-step" data-step="3" onclick="fundGoStep(3)">
+        <div class="fund-step-num">3</div><div class="fund-step-label">Actors</div>
+      </div>
+      <div class="fund-step-line"></div>
+      <div class="fund-step" data-step="4" onclick="fundGoStep(4)">
+        <div class="fund-step-num">4</div><div class="fund-step-label">Accounts</div>
+      </div>
+      <div class="fund-step-line"></div>
+      <div class="fund-step" data-step="5" onclick="fundGoStep(5)">
+        <div class="fund-step-num">5</div><div class="fund-step-label">Rules</div>
+      </div>
+      <div class="fund-step-line"></div>
+      <div class="fund-step" data-step="6" onclick="fundGoStep(6)">
+        <div class="fund-step-num">6</div><div class="fund-step-label">Review</div>
       </div>
     </div>
+
+    <!-- ══ STEP 1: IDENTITY ══ -->
+    <div id="fund-step-1" class="fund-step-panel">
+      <div style="display:grid;grid-template-columns:1fr 320px;gap:18px;align-items:start;">
+        <div style="display:flex;flex-direction:column;gap:14px;">
+
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">🏦 Fund Identity</div>
+              <span class="badge badge-blue badge-no-dot">Core entity metadata</span>
+            </div>
+            <div class="card-body">
+              <div class="fg">
+                <div class="form-group">
+                  <label>Fund Name <span class="req">*</span></label>
+                  <input class="form-control" placeholder="e.g. Founders Fund Q2 2026" id="ff-name" oninput="fundPreview()">
+                  <div class="form-hint">Unique, human-readable identifier for this fund. Will appear in all ledgers, letters, and snapshots.</div>
+                </div>
+                <div class="grid2">
+                  <div class="form-group">
+                    <label>Fund Type <span class="req">*</span></label>
+                    <select class="form-control" id="ff-type" onchange="fundPreview()">
+                      <option value="">— Select type —</option>
+                      <option value="equity" selected>Equity / Sweat Fund</option>
+                      <option value="seed">Seed Round Fund</option>
+                      <option value="bonus">Performance Bonus Pool</option>
+                      <option value="profit">Profit Share Pool</option>
+                      <option value="grant">Grant / Award Fund</option>
+                      <option value="custom">Custom</option>
+                    </select>
+                    <div class="form-hint">Determines default rules and permissible flow event types</div>
+                  </div>
+                  <div class="form-group">
+                    <label>Fund Status</label>
+                    <select class="form-control" id="ff-status">
+                      <option value="draft">Draft</option>
+                      <option value="active" selected>Active</option>
+                      <option value="paused">Paused</option>
+                      <option value="closed">Closed</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label>Strategy <span class="req">*</span></label>
+                  <select class="form-control" id="ff-strategy">
+                    <option value="">— Link to a strategy —</option>
+                    <option value="saf-v3" selected>SAF Model v3 — Basis / Gain / Skill decomposition</option>
+                    <option value="saf-v2">SAF Model v2 — Legacy OT model</option>
+                    <option value="equal">Equal Split — No decomposition</option>
+                    <option value="tiered">Tiered Contribution — Role-weighted</option>
+                    <option value="custom">Custom Strategy</option>
+                  </select>
+                  <div class="form-hint">Defines how contributions are calculated and attributed. Managed in the <a href="#" style="color:var(--blue);">Strategy Directory →</a></div>
+                </div>
+                <div class="form-group">
+                  <label>Client / Organization</label>
+                  <select class="form-control" id="ff-client">
+                    <option value="">— Select client —</option>
+                    <option value="021" selected>021 (Internal)</option>
+                    <option value="ext-a">Acme Corp (External)</option>
+                    <option value="ext-b">Vertex Partners</option>
+                    <option value="new">+ Register new client</option>
+                  </select>
+                  <div class="form-hint">The entity this fund operates within. Managed in the <a href="#" style="color:var(--blue);">Client Directory →</a></div>
+                </div>
+                <div class="form-group">
+                  <label>Description</label>
+                  <textarea class="form-control" rows="3" placeholder="Describe the purpose and scope of this fund…">Equity compensation fund for the 021 founding team. Tracks labor contributions, cash investments, and performance bonuses using the SAF Model v3. Covers Q2 2026 sprint period.</textarea>
+                  <div class="form-hint">Visible to all actors linked to this fund. Included in award letters and agreement documents.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header"><div class="card-title">📅 Timeline & Cadence</div></div>
+            <div class="card-body">
+              <div class="grid2">
+                <div class="form-group">
+                  <label>Start Date <span class="req">*</span></label>
+                  <input class="form-control" type="date" value="2026-04-01" id="ff-start">
+                  <div class="form-hint">First contribution period opens on this date</div>
+                </div>
+                <div class="form-group">
+                  <label>End Date</label>
+                  <input class="form-control" type="date" value="2026-06-30" id="ff-end">
+                  <div class="form-hint">Leave blank for open-ended fund</div>
+                </div>
+              </div>
+              <div class="grid2" style="margin-top:14px;">
+                <div class="form-group">
+                  <label>Contribution Period</label>
+                  <select class="form-control">
+                    <option selected>Weekly (7 days)</option>
+                    <option>Bi-weekly (14 days)</option>
+                    <option>Monthly (30 days)</option>
+                    <option>Custom</option>
+                  </select>
+                  <div class="form-hint">How often flow events are recorded and periods locked</div>
+                </div>
+                <div class="form-group">
+                  <label>Fiscal Quarter</label>
+                  <select class="form-control">
+                    <option>Q1 2026 (Jan–Mar)</option>
+                    <option selected>Q2 2026 (Apr–Jun)</option>
+                    <option>Q3 2026 (Jul–Sep)</option>
+                    <option>Q4 2026 (Oct–Dec)</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Right sticky preview -->
+        <div style="position:sticky;top:70px;display:flex;flex-direction:column;gap:12px;">
+          <div class="card">
+            <div class="card-header"><div class="card-title">👁 Fund Preview</div></div>
+            <div class="card-body" style="padding:14px;">
+              <div style="background:linear-gradient(135deg,var(--navy) 0%,#1e4976 100%);border-radius:8px;padding:14px;color:#fff;margin-bottom:12px;">
+                <div style="font-size:10px;font-weight:700;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px;">Fund</div>
+                <div id="prev-name" style="font-size:15px;font-weight:800;">—</div>
+                <div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap;">
+                  <span class="badge badge-blue badge-no-dot" id="prev-type" style="font-size:10px;">Select type</span>
+                  <span class="badge badge-green" style="font-size:10px;">Active</span>
+                </div>
+              </div>
+              <div class="rules-card" style="margin-bottom:10px;">
+                <div class="rule-row"><span class="rule-key">Strategy</span><span class="rule-val" style="font-size:11px;color:var(--blue);">SAF Model v3</span></div>
+                <div class="rule-row"><span class="rule-key">Client</span><span class="rule-val" style="font-size:11px;">021 (Internal)</span></div>
+                <div class="rule-row"><span class="rule-key">Start</span><span class="rule-val" style="font-size:11px;">Apr 1, 2026</span></div>
+                <div class="rule-row"><span class="rule-key">End</span><span class="rule-val" style="font-size:11px;">Jun 30, 2026</span></div>
+                <div class="rule-row"><span class="rule-key">Period</span><span class="rule-val" style="font-size:11px;">Weekly (7 days)</span></div>
+              </div>
+              <div class="notice notice-info" style="margin-bottom:0;font-size:11px;">ℹ Rule Snapshot <strong>RS-2026-004</strong> will be created on activation.</div>
+            </div>
+          </div>
+          <div style="display:flex;gap:8px;">
+            <button class="btn btn-secondary" style="flex:1;justify-content:center;" onclick="goTo('screen-fund-ledger')">Cancel</button>
+            <button class="btn btn-primary" style="flex:1;justify-content:center;" onclick="fundGoStep(2)">Next: Structure →</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ STEP 2: STRUCTURE ══ -->
+    <div id="fund-step-2" class="fund-step-panel" style="display:none;">
+      <div style="display:grid;grid-template-columns:1fr 320px;gap:18px;align-items:start;">
+        <div style="display:flex;flex-direction:column;gap:14px;">
+
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">💰 Investment Basis</div>
+              <span class="badge badge-blue badge-no-dot">Capital structure</span>
+            </div>
+            <div class="card-body">
+              <div class="fg">
+                <div class="notice notice-info">🔵 The investment basis defines what types of capital can enter this fund and how they are classified as <strong>Basis</strong> (stored capital) vs <strong>Gain</strong> (value created) in the SAF model.</div>
+                <div class="grid2">
+                  <div class="form-group">
+                    <label>Target Fund Size</label>
+                    <div class="prefix-wrap"><span class="prefix">$</span><input class="form-control" type="number" placeholder="0" value="250000"></div>
+                    <div class="form-hint">Total expected inputs across all founders</div>
+                  </div>
+                  <div class="form-group">
+                    <label>Currency</label>
+                    <select class="form-control">
+                      <option selected>USD ($)</option>
+                      <option>EUR (€)</option>
+                      <option>GBP (£)</option>
+                      <option>Equity Points (EP)</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="divider" style="margin:4px 0;"></div>
+                <div class="section-label">Permissible Input Types</div>
+                <div style="display:flex;flex-direction:column;gap:8px;">
+                  <label class="fund-checkbox-row">
+                    <input type="checkbox" checked>
+                    <div>
+                      <div style="font-size:13px;font-weight:600;color:var(--navy);">⚡ Labor — Base Inputs</div>
+                      <div style="font-size:11px;color:var(--g500);">Hours × hourly rate up to the OT threshold. Classified as <strong>Basis</strong> (stored capital — not value-creating beyond the exchange).</div>
+                    </div>
+                  </label>
+                  <label class="fund-checkbox-row">
+                    <input type="checkbox" checked>
+                    <div>
+                      <div style="font-size:13px;font-weight:600;color:var(--teal);">⏱ Labor — Overtime Gain</div>
+                      <div style="font-size:11px;color:var(--g500);">Hours beyond OT threshold × coefficient multiplier. Classified as <strong>Gain</strong> (coordination surplus — value created above basis).</div>
+                    </div>
+                  </label>
+                  <label class="fund-checkbox-row">
+                    <input type="checkbox" checked>
+                    <div>
+                      <div style="font-size:13px;font-weight:600;color:var(--purple);">🌟 Skill Attribution (Contingent Bonus)</div>
+                      <div style="font-size:11px;color:var(--g500);">Performance bonus applied to Base Inputs for 🟢 Green flag holders only. Classified as <strong>Skill</strong>. Never applies to OT gain.</div>
+                    </div>
+                  </label>
+                  <label class="fund-checkbox-row">
+                    <input type="checkbox" checked>
+                    <div>
+                      <div style="font-size:13px;font-weight:600;color:var(--green);">💵 Cash Contributions</div>
+                      <div style="font-size:11px;color:var(--g500);">Direct cash input by a founder. Always classified as <strong>Basis</strong> — not gain-generating. Tracked separately in the attribution layer.</div>
+                    </div>
+                  </label>
+                  <label class="fund-checkbox-row">
+                    <input type="checkbox">
+                    <div>
+                      <div style="font-size:13px;font-weight:600;color:var(--g700);">📦 Non-Cash / In-Kind</div>
+                      <div style="font-size:11px;color:var(--g500);">Equipment, IP, services, or other tangible assets. Valued at fair market value. Classified as <strong>Basis</strong>.</div>
+                    </div>
+                  </label>
+                  <label class="fund-checkbox-row">
+                    <input type="checkbox" checked>
+                    <div>
+                      <div style="font-size:13px;font-weight:600;color:var(--red);">💔 Deficit Events</div>
+                      <div style="font-size:11px;color:var(--g500);">Wealth destruction events — Misallocation, System Inefficiency, Coordination Failure. Tracked as negative stock entries.</div>
+                    </div>
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header"><div class="card-title">📊 Equity Model</div></div>
+            <div class="card-body">
+              <div class="fg">
+                <div class="grid2">
+                  <div class="form-group">
+                    <label>Equity Calculation</label>
+                    <select class="form-control">
+                      <option selected>Pro-rata (proportional stock %)</option>
+                      <option>Fixed allocation</option>
+                      <option>Milestone-based</option>
+                      <option>Hybrid</option>
+                    </select>
+                    <div class="form-hint">Equity% = Founder Stock ÷ System Stock</div>
+                  </div>
+                  <div class="form-group">
+                    <label>Vesting Schedule</label>
+                    <select class="form-control">
+                      <option selected>Per-period (sprint-by-sprint)</option>
+                      <option>Cliff + linear (12mo cliff)</option>
+                      <option>Immediate on approval</option>
+                      <option>Custom</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label>Dilution Policy</label>
+                  <select class="form-control">
+                    <option selected>Full dilution — all new entrants reduce existing %</option>
+                    <option>Protected floor — existing holders protected to minimum %</option>
+                    <option>Cap-weighted — larger holders dilute proportionally more</option>
+                    <option>No dilution — fixed allocations only</option>
+                  </select>
+                  <div class="form-hint">How new flow events and new actors affect existing equity percentages</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <div style="position:sticky;top:70px;display:flex;flex-direction:column;gap:12px;">
+          <div class="card">
+            <div class="card-header"><div class="card-title">🔵 Input Classification</div></div>
+            <div class="card-body" style="padding:14px;">
+              <div style="display:flex;flex-direction:column;gap:6px;">
+                <div style="display:flex;align-items:center;justify-content:space-between;font-size:12px;padding:5px 0;border-bottom:1px dashed var(--g200);">
+                  <span style="color:var(--navy);font-weight:600;">🔵 Basis inputs</span><span style="font-size:11px;color:var(--g500);">Labor + Cash</span>
+                </div>
+                <div style="display:flex;align-items:center;justify-content:space-between;font-size:12px;padding:5px 0;border-bottom:1px dashed var(--g200);">
+                  <span style="color:var(--teal);font-weight:600;">🟢 Gain inputs</span><span style="font-size:11px;color:var(--g500);">OT Labor only</span>
+                </div>
+                <div style="display:flex;align-items:center;justify-content:space-between;font-size:12px;padding:5px 0;border-bottom:1px dashed var(--g200);">
+                  <span style="color:var(--purple);font-weight:600;">🟣 Skill inputs</span><span style="font-size:11px;color:var(--g500);">Contingent bonus</span>
+                </div>
+                <div style="display:flex;align-items:center;justify-content:space-between;font-size:12px;padding:5px 0;">
+                  <span style="color:var(--red);font-weight:600;">💔 Deficit events</span><span style="font-size:11px;color:var(--g500);">3 types enabled</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div style="display:flex;gap:8px;">
+            <button class="btn btn-secondary" style="flex:1;justify-content:center;" onclick="fundGoStep(1)">← Back</button>
+            <button class="btn btn-primary" style="flex:1;justify-content:center;" onclick="fundGoStep(3)">Next: Actors →</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ STEP 3: ACTORS ══ -->
+    <div id="fund-step-3" class="fund-step-panel" style="display:none;">
+      <div style="display:grid;grid-template-columns:1fr 320px;gap:18px;align-items:start;">
+        <div style="display:flex;flex-direction:column;gap:14px;">
+
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">👥 Actors Involved</div>
+              <button class="btn btn-secondary btn-sm" onclick="alert('Founder Directory — select actors to link to this fund')">+ Add from Directory</button>
+            </div>
+            <div class="card-body" style="padding:0;">
+              <div class="tbl-wrap" style="border:none;box-shadow:none;border-radius:0;">
+                <table>
+                  <thead><tr><th>Actor</th><th>Role</th><th>Rate</th><th>Performance Flag</th><th>Permissions</th><th></th></tr></thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <div style="display:flex;align-items:center;gap:8px;">
+                          <div style="width:26px;height:26px;border-radius:50%;background:var(--blue);display:flex;align-items:center;justify-content:center;color:#fff;font-size:10px;font-weight:700;flex-shrink:0;">DB</div>
+                          <span class="td-name">David Boctor</span>
+                        </div>
+                      </td>
+                      <td><select class="form-control" style="width:130px;padding:4px 8px;font-size:12px;"><option>Founder</option><option>Admin</option><option>Contributor</option><option>Observer</option></select></td>
+                      <td><div class="prefix-wrap" style="width:90px;"><span class="prefix">$</span><input class="form-control" type="number" value="120" style="padding:4px 4px 4px 18px;font-size:12px;"></div></td>
+                      <td><select class="form-control" style="width:100px;padding:4px 8px;font-size:12px;"><option>🟢 Green</option><option>🟡 Yellow</option><option>🔴 Red</option></select></td>
+                      <td><select class="form-control" style="width:110px;padding:4px 8px;font-size:12px;"><option>Admin</option><option>Edit</option><option>View only</option></select></td>
+                      <td><button class="btn btn-ghost btn-sm" style="color:var(--red);">✕</button></td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <div style="display:flex;align-items:center;gap:8px;">
+                          <div style="width:26px;height:26px;border-radius:50%;background:var(--teal);display:flex;align-items:center;justify-content:center;color:#fff;font-size:10px;font-weight:700;flex-shrink:0;">RR</div>
+                          <span class="td-name">Ryker Rinehart</span>
+                        </div>
+                      </td>
+                      <td><select class="form-control" style="width:130px;padding:4px 8px;font-size:12px;"><option selected>Admin</option><option>Founder</option><option>Contributor</option><option>Observer</option></select></td>
+                      <td><div class="prefix-wrap" style="width:90px;"><span class="prefix">$</span><input class="form-control" type="number" value="95" style="padding:4px 4px 4px 18px;font-size:12px;"></div></td>
+                      <td><select class="form-control" style="width:100px;padding:4px 8px;font-size:12px;"><option>🟢 Green</option><option>🟡 Yellow</option><option>🔴 Red</option></select></td>
+                      <td><select class="form-control" style="width:110px;padding:4px 8px;font-size:12px;"><option>Admin</option><option>Edit</option><option>View only</option></select></td>
+                      <td><button class="btn btn-ghost btn-sm" style="color:var(--red);">✕</button></td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <div style="display:flex;align-items:center;gap:8px;">
+                          <div style="width:26px;height:26px;border-radius:50%;background:var(--purple);display:flex;align-items:center;justify-content:center;color:#fff;font-size:10px;font-weight:700;flex-shrink:0;">AC</div>
+                          <span class="td-name">Alex Chen</span>
+                        </div>
+                      </td>
+                      <td><select class="form-control" style="width:130px;padding:4px 8px;font-size:12px;"><option>Founder</option><option>Admin</option><option selected>Contributor</option><option>Observer</option></select></td>
+                      <td><div class="prefix-wrap" style="width:90px;"><span class="prefix">$</span><input class="form-control" type="number" value="85" style="padding:4px 4px 4px 18px;font-size:12px;"></div></td>
+                      <td><select class="form-control" style="width:100px;padding:4px 8px;font-size:12px;"><option>🟢 Green</option><option selected>🟡 Yellow</option><option>🔴 Red</option></select></td>
+                      <td><select class="form-control" style="width:110px;padding:4px 8px;font-size:12px;"><option>Admin</option><option selected>Edit</option><option>View only</option></select></td>
+                      <td><button class="btn btn-ghost btn-sm" style="color:var(--red);">✕</button></td>
+                    </tr>
+                    <tr style="background:var(--g50);">
+                      <td colspan="6">
+                        <button class="btn btn-ghost btn-sm" style="width:100%;justify-content:center;color:var(--blue);" onclick="alert('Founder Directory — select actors to add')">+ Add Actor from Directory</button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header"><div class="card-title">📄 Agreements & Notifications</div></div>
+            <div class="card-body">
+              <div class="fg">
+                <div class="form-group">
+                  <label>Agreement Template</label>
+                  <select class="form-control">
+                    <option selected>Standard SAF Participation Agreement v3</option>
+                    <option>Simplified Equity MOU</option>
+                    <option>Full Founder Agreement (legal)</option>
+                    <option>None — informal</option>
+                  </select>
+                  <div class="form-hint">Sent to all actors on fund activation. Managed in the <a href="#" style="color:var(--blue);">Agreement Directory →</a></div>
+                </div>
+                <div class="form-group">
+                  <label>Notify actors when…</label>
+                  <div style="display:flex;flex-direction:column;gap:6px;margin-top:4px;">
+                    <label style="display:flex;align-items:center;gap:8px;font-size:12.5px;cursor:pointer;"><input type="checkbox" checked> Flow event is approved</label>
+                    <label style="display:flex;align-items:center;gap:8px;font-size:12.5px;cursor:pointer;"><input type="checkbox" checked> Equity % changes by more than 1%</label>
+                    <label style="display:flex;align-items:center;gap:8px;font-size:12.5px;cursor:pointer;"><input type="checkbox" checked> A deficit event is recorded against them</label>
+                    <label style="display:flex;align-items:center;gap:8px;font-size:12.5px;cursor:pointer;"><input type="checkbox"> Period is locked</label>
+                    <label style="display:flex;align-items:center;gap:8px;font-size:12.5px;cursor:pointer;"><input type="checkbox" checked> Rule snapshot changes</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <div style="position:sticky;top:70px;display:flex;flex-direction:column;gap:12px;">
+          <div class="card">
+            <div class="card-header"><div class="card-title">👥 Actor Summary</div></div>
+            <div class="card-body" style="padding:14px;">
+              <div style="display:flex;flex-direction:column;gap:8px;">
+                <div style="display:flex;align-items:center;gap:8px;">
+                  <div style="width:22px;height:22px;border-radius:50%;background:var(--blue);display:flex;align-items:center;justify-content:center;color:#fff;font-size:9px;font-weight:700;">DB</div>
+                  <span style="font-size:12.5px;font-weight:600;">David Boctor</span>
+                  <span class="badge badge-blue badge-no-dot" style="font-size:10px;margin-left:auto;">Founder</span>
+                </div>
+                <div style="display:flex;align-items:center;gap:8px;">
+                  <div style="width:22px;height:22px;border-radius:50%;background:var(--teal);display:flex;align-items:center;justify-content:center;color:#fff;font-size:9px;font-weight:700;">RR</div>
+                  <span style="font-size:12.5px;font-weight:600;">Ryker Rinehart</span>
+                  <span class="badge badge-teal badge-no-dot" style="font-size:10px;margin-left:auto;">Admin</span>
+                </div>
+                <div style="display:flex;align-items:center;gap:8px;">
+                  <div style="width:22px;height:22px;border-radius:50%;background:var(--purple);display:flex;align-items:center;justify-content:center;color:#fff;font-size:9px;font-weight:700;">AC</div>
+                  <span style="font-size:12.5px;font-weight:600;">Alex Chen</span>
+                  <span class="badge badge-purple badge-no-dot" style="font-size:10px;margin-left:auto;">Contributor</span>
+                </div>
+              </div>
+              <div class="divider" style="margin:10px 0;"></div>
+              <div style="font-size:11px;color:var(--g500);">3 actors · 1 admin · Agreements will be sent on activation</div>
+            </div>
+          </div>
+          <div style="display:flex;gap:8px;">
+            <button class="btn btn-secondary" style="flex:1;justify-content:center;" onclick="fundGoStep(2)">← Back</button>
+            <button class="btn btn-primary" style="flex:1;justify-content:center;" onclick="fundGoStep(4)">Next: Accounts →</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ STEP 4: ACCOUNTS ══ -->
+    <div id="fund-step-4" class="fund-step-panel" style="display:none;">
+      <div style="display:grid;grid-template-columns:1fr 320px;gap:18px;align-items:start;">
+        <div style="display:flex;flex-direction:column;gap:14px;">
+
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">🏛 Linked Accounts</div>
+              <button class="btn btn-secondary btn-sm" onclick="alert('Account Directory')">+ Link Account</button>
+            </div>
+            <div class="card-body">
+              <div class="notice notice-info" style="margin-bottom:14px;">🏛 Accounts are the financial or equity containers linked to this fund — they define where inputs land and how vesting is tracked. Managed in the <a href="#" style="color:var(--blue);">Account Directory →</a></div>
+              <div style="display:flex;flex-direction:column;gap:10px;">
+
+                <div class="intg-card" style="padding:12px 14px;">
+                  <div class="intg-icon" style="background:var(--blue-light);font-size:16px;">💼</div>
+                  <div style="flex:1;">
+                    <div style="font-weight:700;font-size:13px;color:var(--navy);">Equity Pool — Q2 2026</div>
+                    <div style="font-size:11px;color:var(--g500);margin-top:2px;">Type: Equity ledger · Currency: USD · Opening balance: $0</div>
+                    <div style="font-size:11px;color:var(--g500);">Receives: Labor (Base + OT), Skill Attribution</div>
+                  </div>
+                  <div style="display:flex;flex-direction:column;gap:4px;align-items:flex-end;">
+                    <span class="badge badge-green" style="font-size:10px;">Primary</span>
+                    <button class="btn btn-ghost btn-sm" style="color:var(--red);padding:2px 6px;">✕</button>
+                  </div>
+                </div>
+
+                <div class="intg-card" style="padding:12px 14px;">
+                  <div class="intg-icon" style="background:var(--green-light);font-size:16px;">💵</div>
+                  <div style="flex:1;">
+                    <div style="font-weight:700;font-size:13px;color:var(--navy);">Cash Basis Account</div>
+                    <div style="font-size:11px;color:var(--g500);margin-top:2px;">Type: Cash ledger · Currency: USD · Opening balance: $0</div>
+                    <div style="font-size:11px;color:var(--g500);">Receives: Cash contributions (Basis classification only)</div>
+                  </div>
+                  <div style="display:flex;flex-direction:column;gap:4px;align-items:flex-end;">
+                    <span class="badge badge-green" style="font-size:10px;">Secondary</span>
+                    <button class="btn btn-ghost btn-sm" style="color:var(--red);padding:2px 6px;">✕</button>
+                  </div>
+                </div>
+
+                <div class="intg-card" style="padding:12px 14px;border:1px dashed var(--g300);background:var(--g50);">
+                  <div class="intg-icon" style="background:var(--g100);font-size:16px;">💔</div>
+                  <div style="flex:1;">
+                    <div style="font-weight:700;font-size:13px;color:var(--g600);">Deficit Tracking Ledger</div>
+                    <div style="font-size:11px;color:var(--g400);margin-top:2px;">Type: Deficit ledger · Records wealth destruction events only</div>
+                    <div style="font-size:11px;color:var(--g400);">Optional — disable if deficit classification is not needed</div>
+                  </div>
+                  <div style="display:flex;flex-direction:column;gap:4px;align-items:flex-end;">
+                    <span class="badge badge-gray" style="font-size:10px;">Optional</span>
+                    <button class="btn btn-ghost btn-sm" style="color:var(--red);padding:2px 6px;">✕</button>
+                  </div>
+                </div>
+
+                <button class="btn btn-ghost btn-sm" style="width:100%;justify-content:center;border:1px dashed var(--g300);color:var(--blue);" onclick="alert('Account Directory')">+ Add another account type</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header"><div class="card-title">🔗 Integration Sources</div></div>
+            <div class="card-body">
+              <div class="grid2">
+                <div class="form-group">
+                  <label>Time Tracking</label>
+                  <select class="form-control">
+                    <option>🌾 Harvest (connected)</option>
+                    <option>Toggl</option>
+                    <option>Clockify</option>
+                    <option>Manual entry only</option>
+                  </select>
+                  <div class="form-hint">Auto-fills hours per actor per period</div>
+                </div>
+                <div class="form-group">
+                  <label>Sprint / Task Tracking</label>
+                  <select class="form-control">
+                    <option>📋 ClickUp (connected)</option>
+                    <option>Linear</option>
+                    <option>Jira</option>
+                    <option>None</option>
+                  </select>
+                  <div class="form-hint">Pulls sprint points for velocity attribution</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <div style="position:sticky;top:70px;display:flex;flex-direction:column;gap:12px;">
+          <div class="card">
+            <div class="card-header"><div class="card-title">🏛 Account Structure</div></div>
+            <div class="card-body" style="padding:14px;">
+              <div style="display:flex;flex-direction:column;gap:6px;">
+                <div style="display:flex;justify-content:space-between;font-size:12px;padding:5px 0;border-bottom:1px dashed var(--g200);">
+                  <span style="color:var(--blue);font-weight:600;">Equity Pool</span><span style="font-size:11px;color:var(--g400);">Primary · USD</span>
+                </div>
+                <div style="display:flex;justify-content:space-between;font-size:12px;padding:5px 0;border-bottom:1px dashed var(--g200);">
+                  <span style="color:var(--green);font-weight:600;">Cash Basis</span><span style="font-size:11px;color:var(--g400);">Secondary · USD</span>
+                </div>
+                <div style="display:flex;justify-content:space-between;font-size:12px;padding:5px 0;">
+                  <span style="color:var(--g500);font-weight:600;">Deficit Ledger</span><span style="font-size:11px;color:var(--g400);">Optional</span>
+                </div>
+              </div>
+              <div class="divider" style="margin:10px 0;"></div>
+              <div style="font-size:11px;color:var(--g500);">3 accounts · Harvest + ClickUp connected</div>
+            </div>
+          </div>
+          <div style="display:flex;gap:8px;">
+            <button class="btn btn-secondary" style="flex:1;justify-content:center;" onclick="fundGoStep(3)">← Back</button>
+            <button class="btn btn-primary" style="flex:1;justify-content:center;" onclick="fundGoStep(5)">Next: Rules →</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ STEP 5: RULES ══ -->
+    <div id="fund-step-5" class="fund-step-panel" style="display:none;">
+      <div style="display:grid;grid-template-columns:1fr 320px;gap:18px;align-items:start;">
+        <div style="display:flex;flex-direction:column;gap:14px;">
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">⚙ Rules Engine Configuration</div>
+              <span class="badge badge-purple badge-no-dot">Will create Rule Snapshot RS-2026-004</span>
+            </div>
+            <div class="card-body">
+              <div class="notice notice-warn">⚠ These rules are locked into a <strong>Rule Snapshot</strong> on fund creation. All future events reference this snapshot. Updating rules later creates a new snapshot — past events always retain their original.</div>
+              <div class="fg" style="margin-top:4px;">
+                <div class="grid2">
+                  <div class="form-group">
+                    <label>OT Threshold (hrs/week) <span class="req">*</span></label>
+                    <input class="form-control" type="number" value="40">
+                    <div class="form-hint">Hours per week before overtime gain begins</div>
+                  </div>
+                  <div class="form-group">
+                    <label>OT Coefficient <span class="req">*</span></label>
+                    <input class="form-control" type="number" value="1.5" step="0.05">
+                    <div class="form-hint">Gain multiplier for OT hours (1.5 = 50% premium)</div>
+                  </div>
+                </div>
+                <div class="grid2">
+                  <div class="form-group">
+                    <label>Contingent Bonus % <span class="req">*</span></label>
+                    <div class="prefix-wrap"><span class="prefix">%</span><input class="form-control" type="number" value="10"></div>
+                    <div class="form-hint">Applied to Base Inputs · 🟢 Green flag holders only</div>
+                  </div>
+                  <div class="form-group">
+                    <label>Contingent Applied To</label>
+                    <select class="form-control">
+                      <option selected>Base Inputs only (recommended)</option>
+                      <option>Base + OT Gain</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="notice notice-purple" style="margin:0;">🟣 Contingent is a <strong>skill attribution</strong> — not a capital return. It rewards demonstrated performance, not just time worked.</div>
+                <div class="divider" style="margin:4px 0;"></div>
+                <div class="section-label">Deficit Event Penalty Values</div>
+                <div class="grid3">
+                  <div class="form-group">
+                    <label>Misallocation (Minor) <span class="req">*</span></label>
+                    <div class="prefix-wrap"><span class="prefix" style="color:var(--orange);">−</span><input class="form-control" type="number" value="100" style="color:var(--orange);"></div>
+                    <div class="form-hint">Poor time tracking, minor breach</div>
+                  </div>
+                  <div class="form-group">
+                    <label>System Inefficiency (Major) <span class="req">*</span></label>
+                    <div class="prefix-wrap"><span class="prefix" style="color:var(--red);">−</span><input class="form-control" type="number" value="500" style="color:var(--red);"></div>
+                    <div class="form-hint">Confidentiality breach, major failure</div>
+                  </div>
+                  <div class="form-group">
+                    <label>Coordination Failure</label>
+                    <div class="prefix-wrap"><span class="prefix" style="color:var(--yellow);">−</span><input class="form-control" type="number" value="200" style="color:var(--yellow);"></div>
+                    <div class="form-hint">Sprint misalignment, unauth. work</div>
+                  </div>
+                </div>
+                <div class="divider" style="margin:4px 0;"></div>
+                <div class="section-label">Period Locking</div>
+                <div class="grid2">
+                  <div class="form-group">
+                    <label>Lock Policy</label>
+                    <select class="form-control">
+                      <option selected>Manual lock (admin approval required)</option>
+                      <option>Auto-lock 3 days after period end</option>
+                      <option>Auto-lock on all events approved</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label>Retroactive Edits</label>
+                    <select class="form-control">
+                      <option selected>Not allowed after lock</option>
+                      <option>Allowed via superseding entry only</option>
+                      <option>Admin override with audit trail</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div style="position:sticky;top:70px;display:flex;flex-direction:column;gap:12px;">
+          <div class="card">
+            <div class="card-header"><div class="card-title">📸 Snapshot Preview</div></div>
+            <div class="card-body" style="padding:14px;">
+              <div style="font-size:10px;font-family:'DM Mono',monospace;font-weight:700;color:var(--blue);margin-bottom:10px;">RS-2026-004 · Will be created</div>
+              <div class="rules-card">
+                <div class="rule-row"><span class="rule-key">OT Threshold</span><span class="rule-val">40 hrs/wk</span></div>
+                <div class="rule-row"><span class="rule-key">OT Coefficient</span><span class="rule-val">×1.5</span></div>
+                <div class="rule-row"><span class="rule-key">Contingent</span><span class="rule-val">10% Base only</span></div>
+                <div class="rule-row"><span class="rule-key">Misallocation</span><span class="rule-val" style="color:var(--orange);">−100</span></div>
+                <div class="rule-row"><span class="rule-key">Sys. Inefficiency</span><span class="rule-val" style="color:var(--red);">−500</span></div>
+                <div class="rule-row"><span class="rule-key">Coord. Failure</span><span class="rule-val" style="color:var(--yellow);">−200</span></div>
+                <div class="rule-row"><span class="rule-key">Lock Policy</span><span class="rule-val" style="font-size:10px;">Manual</span></div>
+              </div>
+              <div style="font-size:11px;color:var(--g500);margin-top:8px;">Immutable once the first event is approved against it.</div>
+            </div>
+          </div>
+          <button class="btn btn-purple btn-sm" style="justify-content:center;" onclick="goTo('screen-simulation')">🧪 Simulate these rules first →</button>
+          <div style="display:flex;gap:8px;">
+            <button class="btn btn-secondary" style="flex:1;justify-content:center;" onclick="fundGoStep(4)">← Back</button>
+            <button class="btn btn-primary" style="flex:1;justify-content:center;" onclick="fundGoStep(6)">Review →</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ STEP 6: REVIEW ══ -->
+    <div id="fund-step-6" class="fund-step-panel" style="display:none;">
+      <div style="display:grid;grid-template-columns:1fr 320px;gap:18px;align-items:start;">
+        <div style="display:flex;flex-direction:column;gap:14px;">
+
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">✅ Fund Summary — Ready to Create</div>
+              <span class="badge badge-green" style="font-size:11px;">All required fields complete</span>
+            </div>
+            <div class="card-body">
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+                <div>
+                  <div class="section-label" style="margin-bottom:8px;">Identity</div>
+                  <div class="rules-card">
+                    <div class="rule-row"><span class="rule-key">Name</span><span class="rule-val" style="font-size:11px;" id="rev-name">—</span></div>
+                    <div class="rule-row"><span class="rule-key">Type</span><span class="rule-val" style="font-size:11px;" id="rev-type">Equity / Sweat Fund</span></div>
+                    <div class="rule-row"><span class="rule-key">Strategy</span><span class="rule-val" style="font-size:11px;color:var(--blue);">SAF Model v3</span></div>
+                    <div class="rule-row"><span class="rule-key">Client</span><span class="rule-val" style="font-size:11px;">021 (Internal)</span></div>
+                    <div class="rule-row"><span class="rule-key">Period</span><span class="rule-val" style="font-size:11px;">Apr 1 – Jun 30, 2026</span></div>
+                    <div class="rule-row"><span class="rule-key">Sprint cadence</span><span class="rule-val" style="font-size:11px;">Weekly (7 days)</span></div>
+                  </div>
+                </div>
+                <div>
+                  <div class="section-label" style="margin-bottom:8px;">Actors (3)</div>
+                  <div class="rules-card">
+                    <div class="rule-row"><span class="rule-key">David Boctor</span><span class="rule-val" style="font-size:11px;">Founder · $120/hr · 🟢</span></div>
+                    <div class="rule-row"><span class="rule-key">Ryker Rinehart</span><span class="rule-val" style="font-size:11px;">Admin · $95/hr · 🟢</span></div>
+                    <div class="rule-row"><span class="rule-key">Alex Chen</span><span class="rule-val" style="font-size:11px;">Contributor · $85/hr · 🟡</span></div>
+                  </div>
+                </div>
+                <div>
+                  <div class="section-label" style="margin-bottom:8px;">Accounts (3)</div>
+                  <div class="rules-card">
+                    <div class="rule-row"><span class="rule-key" style="color:var(--blue);">Equity Pool</span><span class="rule-val" style="font-size:11px;">Primary · USD</span></div>
+                    <div class="rule-row"><span class="rule-key" style="color:var(--green);">Cash Basis</span><span class="rule-val" style="font-size:11px;">Secondary · USD</span></div>
+                    <div class="rule-row"><span class="rule-key" style="color:var(--g500);">Deficit Ledger</span><span class="rule-val" style="font-size:11px;">Optional</span></div>
+                  </div>
+                </div>
+                <div>
+                  <div class="section-label" style="margin-bottom:8px;">Rule Snapshot: RS-2026-004</div>
+                  <div class="rules-card">
+                    <div class="rule-row"><span class="rule-key">OT</span><span class="rule-val" style="font-size:11px;">40 hrs · ×1.5 coef</span></div>
+                    <div class="rule-row"><span class="rule-key">Contingent</span><span class="rule-val" style="font-size:11px;">10% Base only</span></div>
+                    <div class="rule-row"><span class="rule-key">Deficit scale</span><span class="rule-val" style="font-size:11px;color:var(--red);">−100 / −500 / −200</span></div>
+                    <div class="rule-row"><span class="rule-key">Lock policy</span><span class="rule-val" style="font-size:11px;">Manual</span></div>
+                  </div>
+                </div>
+              </div>
+              <div class="divider"></div>
+              <div class="notice notice-info" style="margin-bottom:0;">ℹ️ On creation: fund activates, Rule Snapshot RS-2026-004 is locked, agreements are dispatched to all 3 actors, and the first sprint period (Apr 1–7) opens automatically.</div>
+            </div>
+          </div>
+
+        </div>
+
+        <div style="position:sticky;top:70px;display:flex;flex-direction:column;gap:12px;">
+          <div class="card">
+            <div class="card-header"><div class="card-title">🚀 Create Fund</div></div>
+            <div class="card-body" style="padding:18px;text-align:center;">
+              <div style="font-size:32px;margin-bottom:8px;">🏦</div>
+              <div style="font-weight:800;font-size:15px;color:var(--navy);margin-bottom:4px;" id="rev-name-big">—</div>
+              <div style="font-size:12px;color:var(--g500);margin-bottom:18px;">3 actors · SAF Model v3 · Apr–Jun 2026</div>
+              <button class="btn btn-primary" style="width:100%;justify-content:center;padding:11px;font-size:14px;" onclick="fundFormSubmit()">🚀 Create Fund</button>
+              <div style="font-size:11px;color:var(--g400);margin-top:10px;">Rule Snapshot RS-2026-004 will be locked on creation.</div>
+            </div>
+          </div>
+          <div style="display:flex;gap:8px;">
+            <button class="btn btn-secondary" style="flex:1;justify-content:center;" onclick="fundGoStep(5)">← Back</button>
+            <button class="btn btn-secondary" style="flex:1;justify-content:center;" onclick="alert('Draft saved.')">Save Draft</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
 </div>
 </div>
-
 <!-- ═══════════════════════════════════════ FOUNDER DIRECTORY ══ -->
 <div id="screen-founder-directory" class="screen">
 <div class="main">
@@ -2089,6 +2801,8 @@ function resetSim() {
   });
 }
 
+// ── UPDATE PENALTY AMOUNT FROM
+
 // ── UPDATE PENALTY AMOUNT FROM INFRACTION TYPE ─────────────
 function updatePenalty(sel) {
   const map = { minor: 100, major: 500 };
@@ -2100,8 +2814,57 @@ function updatePenalty(sel) {
 function setCompareMode(mode, el) {
   document.querySelectorAll('.toggle-tab').forEach(t => t.classList.remove('active'));
   el.classList.add('active');
-  // Mode switching is visual only in this wireframe — data stays the same
-  // In production this would reload the comparison columns with the chosen mode's data
+}
+
+// ── FUND CREATION FORM ────────────────────────────────────
+let fundCurrentStep = 1;
+const FUND_TOTAL_STEPS = 6;
+
+function fundGoStep(n) {
+  for (let i = 1; i <= FUND_TOTAL_STEPS; i++) {
+    const p = document.getElementById('fund-step-' + i);
+    if (p) p.style.display = (i === n) ? '' : 'none';
+  }
+  const screen = document.getElementById('screen-fund-details');
+  if (screen) {
+    screen.querySelectorAll('.fund-step').forEach(s => {
+      s.classList.remove('fund-step-active','fund-step-done');
+      const sn = parseInt(s.getAttribute('data-step'));
+      if (sn === n) s.classList.add('fund-step-active');
+      else if (sn < n) s.classList.add('fund-step-done');
+    });
+    screen.querySelectorAll('.fund-step-line').forEach((line, i) => {
+      line.classList.toggle('fund-step-line-done', i < n - 1);
+    });
+  }
+  const nameEl = document.getElementById('ff-name');
+  const typeEl = document.getElementById('ff-type');
+  if (nameEl) {
+    const v = nameEl.value || '—';
+    ['prev-name','rev-name','rev-name-big'].forEach(id => { const el = document.getElementById(id); if (el) el.textContent = v; });
+  }
+  if (typeEl) {
+    const t = typeEl.options[typeEl.selectedIndex]?.text || '—';
+    const el = document.getElementById('rev-type'); if (el) el.textContent = t;
+    const el2 = document.getElementById('prev-type'); if (el2) el2.textContent = t;
+  }
+  fundCurrentStep = n;
+  window.scrollTo(0,0);
+}
+
+function fundPreview() {
+  const nameEl = document.getElementById('ff-name');
+  const typeEl = document.getElementById('ff-type');
+  const v = nameEl?.value || '—';
+  const t = typeEl?.options[typeEl?.selectedIndex]?.text || 'Select type';
+  const pn = document.getElementById('prev-name'); if (pn) pn.textContent = v;
+  const pt = document.getElementById('prev-type'); if (pt) pt.textContent = t;
+}
+
+function fundFormSubmit() {
+  const name = document.getElementById('ff-name')?.value || 'New Fund';
+  alert('✅ Fund created!\n\n' + name + ' is now active.\nRule Snapshot RS-2026-004 has been created and locked.\nAgreements dispatched to all actors.\nFirst sprint period Apr 1–7, 2026 is now open.');
+  goTo('screen-fund-ledger');
 }
 </script>
 </body>
