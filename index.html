@@ -17,14 +17,13 @@
     --g900:#111827; --g700:#374151; --g600:#4B5563; --g500:#6B7280;
     --g400:#9CA3AF; --g300:#D1D5DB; --g200:#E5E7EB; --g100:#F3F4F6; --g50:#F9FAFB;
     --white:#FFFFFF;
-    /* SAF-specific */
-    --basis:#1B3A5C;       /* Capital/Stored */
-    --gain:#0D9488;        /* Performance/Created */
-    --surplus:#16A34A;     /* Net surplus */
-    --deficit:#DC2626;     /* Wealth destruction */
-    --skill:#7C3AED;       /* Skill attribution */
-    --luck:#F59E0B;        /* Favorable conditions */
-    --capital:#2563EB;     /* Capital attribution */
+    --basis:#1B3A5C;
+    --gain:#0D9488;
+    --surplus:#16A34A;
+    --deficit:#DC2626;
+    --skill:#7C3AED;
+    --luck:#F59E0B;
+    --capital:#2563EB;
     --sidebar-w:230px;
     --radius:8px;
     --shadow:0 1px 3px rgba(0,0,0,.10),0 1px 2px rgba(0,0,0,.06);
@@ -37,7 +36,6 @@
   @keyframes fadeIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
   .screen.active{animation:fadeIn .2s ease}
 
-  /* ── SIDEBAR ─────────────────────────────────────────── */
   .sidebar{width:var(--sidebar-w);min-height:100vh;background:var(--navy);display:flex;flex-direction:column;position:fixed;left:0;top:0;z-index:100}
   .sidebar-logo{padding:20px 18px 16px;border-bottom:1px solid rgba(255,255,255,.1)}
   .sidebar-logo .logo-row{display:flex;align-items:center;gap:10px}
@@ -58,7 +56,6 @@
   .s-name{color:#fff;font-size:12px;font-weight:500}
   .s-role{color:rgba(255,255,255,.4);font-size:10px}
 
-  /* ── MAIN ──────────────────────────────────────────── */
   .main{margin-left:var(--sidebar-w);flex:1;min-height:100vh;display:flex;flex-direction:column}
   .topbar{background:#fff;border-bottom:1px solid var(--g200);padding:0 24px;height:58px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50;box-shadow:var(--shadow)}
   .topbar-left .title{font-size:17px;font-weight:700;color:var(--navy)}
@@ -66,7 +63,6 @@
   .topbar-actions{display:flex;align-items:center;gap:8px}
   .page{padding:22px 24px;flex:1}
 
-  /* ── BUTTONS ─────────────────────────────────────────── */
   .btn{display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border-radius:var(--radius);font-family:inherit;font-size:13px;font-weight:600;cursor:pointer;border:none;transition:all .15s}
   .btn-primary{background:var(--blue);color:#fff}.btn-primary:hover{background:#1d4ed8}
   .btn-secondary{background:#fff;color:var(--g700);border:1px solid var(--g200)}.btn-secondary:hover{background:var(--g50)}
@@ -76,13 +72,11 @@
   .btn-teal{background:var(--teal);color:#fff}
   .btn-purple{background:var(--purple);color:#fff}
 
-  /* ── CARDS ───────────────────────────────────────────── */
   .card{background:#fff;border-radius:10px;border:1px solid var(--g200);box-shadow:var(--shadow)}
   .card-header{padding:14px 18px;border-bottom:1px solid var(--g100);display:flex;align-items:center;justify-content:space-between;gap:10px}
   .card-title{font-size:13.5px;font-weight:700;color:var(--navy)}
   .card-body{padding:18px}
 
-  /* ── BADGES ──────────────────────────────────────────── */
   .badge{display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:999px;font-size:11px;font-weight:600}
   .badge::before{content:'';display:inline-block;width:5px;height:5px;border-radius:50%;background:currentColor}
   .badge-green{background:var(--green-light);color:var(--green)}
@@ -95,7 +89,6 @@
   .badge-teal{background:#CCFBF1;color:var(--teal)}
   .badge-no-dot::before{display:none}
 
-  /* ── TABLE ───────────────────────────────────────────── */
   .tbl-wrap{overflow-x:auto;border-radius:10px;border:1px solid var(--g200);background:#fff}
   table{width:100%;border-collapse:collapse;font-size:13px}
   thead th{background:var(--g50);padding:9px 13px;text-align:left;font-size:10.5px;font-weight:700;color:var(--g500);text-transform:uppercase;letter-spacing:.05em;border-bottom:1px solid var(--g200)}
@@ -107,7 +100,6 @@
   tfoot td{padding:9px 13px;font-weight:700;color:var(--navy);background:var(--g50);border-top:2px solid var(--g200)}
   .penalty-row{background:#fff8f8 !important}
 
-  /* ── FORMS ───────────────────────────────────────────── */
   .form-group label{display:block;font-size:12px;font-weight:600;color:var(--g700);margin-bottom:5px}
   .req{color:var(--red);margin-left:2px}
   .form-control{width:100%;padding:7px 11px;border:1px solid var(--g200);border-radius:var(--radius);font-family:inherit;font-size:13px;color:var(--g900);background:#fff;outline:none;transition:border-color .15s}
@@ -123,7 +115,6 @@
   .grid4{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:12px}
   .fg{display:grid;gap:16px}
 
-  /* ── STAT CARDS ──────────────────────────────────────── */
   .stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:18px}
   .stats-row-3{grid-template-columns:repeat(3,1fr)}
   .stats-row-5{grid-template-columns:repeat(5,1fr)}
@@ -134,7 +125,6 @@
   .stat-delta{font-size:11px;margin-top:3px;font-weight:600}
   .delta-up{color:var(--green)}.delta-down{color:var(--red)}
 
-  /* ── NOTICES ─────────────────────────────────────────── */
   .notice{border-radius:7px;padding:9px 13px;font-size:12px;display:flex;align-items:flex-start;gap:8px;margin-bottom:14px}
   .notice-info{background:var(--blue-light);border:1px solid var(--blue-mid);color:var(--blue)}
   .notice-warn{background:var(--orange-light);border:1px solid #FDE68A;color:var(--orange)}
@@ -142,7 +132,6 @@
   .notice-green{background:var(--green-light);border:1px solid #86EFAC;color:var(--green)}
   .notice-purple{background:var(--purple-light);border:1px solid #C4B5FD;color:var(--purple)}
 
-  /* ── LAYOUT HELPERS ──────────────────────────────────── */
   .two-col{display:grid;grid-template-columns:1fr 340px;gap:18px;align-items:start}
   .three-col{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;align-items:start}
   .two-col-eq{display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:start}
@@ -154,7 +143,6 @@
   .toggle-tab.active{background:#fff;color:var(--navy);box-shadow:var(--shadow)}
   .mono{font-family:'DM Mono',monospace}
 
-  /* ── LOGIN ───────────────────────────────────────────── */
   #screen-login{background:linear-gradient(135deg,var(--navy) 0%,#112341 100%);align-items:center;justify-content:center;flex-direction:column}
   .login-card{background:#fff;border-radius:16px;padding:36px 32px;width:380px;box-shadow:0 20px 60px rgba(0,0,0,.25)}
   .login-logo{text-align:center;margin-bottom:24px}
@@ -162,9 +150,6 @@
   .login-name{font-size:20px;font-weight:800;color:var(--navy)}
   .login-sub{font-size:12px;color:var(--g400)}
 
-  /* ── SAF-SPECIFIC COMPONENTS ───────────────────────── */
-
-  /* Flow event card */
   .flow-event{background:#fff;border:1px solid var(--g200);border-radius:8px;padding:14px 16px;display:flex;gap:14px;align-items:flex-start}
   .flow-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;margin-top:4px}
   .flow-event-type{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px}
@@ -172,30 +157,25 @@
   .flow-event-meta{font-size:11px;color:var(--g400);margin-top:2px}
   .flow-arrow{text-align:center;color:var(--g300);font-size:18px;padding:4px 0}
 
-  /* Basis / Gain decomposition bar */
   .decomp-bar-wrap{background:var(--g100);border-radius:999px;height:14px;overflow:hidden;display:flex;position:relative}
   .decomp-seg{height:100%;transition:width .4s}
   .decomp-legend{display:flex;flex-wrap:wrap;gap:10px;margin-top:8px}
   .decomp-item{display:flex;align-items:center;gap:5px;font-size:11.5px;color:var(--g700)}
   .decomp-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0}
 
-  /* Attribution wheel / bar */
   .attr-bar{display:flex;border-radius:8px;overflow:hidden;height:20px;margin-bottom:6px}
   .attr-seg{display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#fff;transition:width .4s}
 
-  /* System boundary diagram */
   .sys-boundary{border:2px dashed var(--blue-mid);border-radius:12px;padding:16px;position:relative;background:var(--blue-light)}
   .sys-label{position:absolute;top:-10px;left:14px;background:var(--blue-light);padding:0 6px;font-size:10px;font-weight:700;color:var(--blue);text-transform:uppercase;letter-spacing:.06em}
   .sys-inflow{display:flex;flex-direction:column;gap:6px}
   .flow-pill{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:999px;font-size:11px;font-weight:600}
 
-  /* Surplus panel */
   .surplus-card{border-radius:10px;padding:16px;border:1px solid}
   .surplus-positive{background:linear-gradient(135deg,#f0fdf4,#dcfce7);border-color:#86efac}
   .surplus-negative{background:linear-gradient(135deg,#fff8f8,#fee2e2);border-color:#fecaca}
   .surplus-val{font-size:32px;font-weight:800;font-family:'DM Mono',monospace}
 
-  /* Simulation controls */
   .sim-param{background:var(--g50);border:1px solid var(--g200);border-radius:8px;padding:12px 14px}
   .sim-param label{font-size:11px;font-weight:700;color:var(--g700);display:block;margin-bottom:6px}
   .sim-slider{width:100%;accent-color:var(--blue);cursor:pointer}
@@ -211,7 +191,6 @@
   .sim-bar{width:100%;border-radius:4px 4px 0 0;transition:height .4s;position:relative}
   .sim-bar-label{font-size:10px;color:rgba(255,255,255,.5);text-align:center}
 
-  /* Causal snapshot */
   .causal-card{border-left:3px solid var(--blue);padding-left:12px;margin-bottom:10px}
   .causal-period{font-size:10px;font-weight:700;color:var(--blue);text-transform:uppercase;letter-spacing:.06em}
   .causal-title{font-size:13px;font-weight:600;color:var(--g900)}
@@ -219,13 +198,11 @@
   .locked-badge{display:inline-flex;align-items:center;gap:4px;background:var(--g900);color:#fff;font-size:9px;font-weight:700;padding:1px 7px;border-radius:999px;margin-left:6px}
   .open-badge{display:inline-flex;align-items:center;gap:4px;background:var(--green-light);color:var(--green);font-size:9px;font-weight:700;padding:1px 7px;border-radius:999px;margin-left:6px}
 
-  /* Deficit framing */
   .deficit-card{background:linear-gradient(135deg,#fff8f8,#fee2e2);border:1px solid #fecaca;border-radius:10px;padding:16px}
   .deficit-val{font-size:28px;font-weight:800;font-family:'DM Mono',monospace;color:var(--red)}
   .deficit-types{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
   .deficit-type-pill{padding:4px 10px;border-radius:6px;font-size:11px;font-weight:600}
 
-  /* Comparison view */
   .compare-col{background:#fff;border:1px solid var(--g200);border-radius:10px;overflow:hidden}
   .compare-header{padding:12px 16px;font-weight:700;font-size:13px;color:#fff}
   .compare-body{padding:14px 16px}
@@ -234,14 +211,12 @@
   .compare-winner{color:var(--green);font-weight:700}
   .compare-loser{color:var(--red)}
 
-  /* Wealth / surplus gauge */
   .wealth-gauge{background:var(--g50);border:1px solid var(--g200);border-radius:10px;padding:16px;text-align:center}
   .gauge-val{font-size:36px;font-weight:800;font-family:'DM Mono',monospace}
   .gauge-label{font-size:11px;color:var(--g500);margin-top:4px}
   .sustainability-bar{background:var(--g200);border-radius:999px;height:8px;overflow:hidden;margin-top:10px}
   .sustainability-fill{height:100%;border-radius:999px;transition:width .4s}
 
-  /* Approval flow */
   .approval-flow{display:flex;align-items:center;gap:0;margin:12px 0}
   .ap-step{display:flex;flex-direction:column;align-items:center;gap:3px}
   .ap-dot{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700}
@@ -253,30 +228,25 @@
   .ap-line-done{background:var(--green)}
   .ap-line-pending{background:var(--g200)}
 
-  /* Audit */
   .audit-entry{display:flex;gap:13px;padding:10px 0;border-bottom:1px solid var(--g100)}
   .audit-entry:last-child{border-bottom:none}
   .audit-dot{width:7px;height:7px;border-radius:50%;margin-top:5px;flex-shrink:0}
   .audit-meta{font-size:11px;color:var(--g400);margin-top:2px}
 
-  /* Chart */
   .chart-bars{display:flex;align-items:flex-end;gap:6px;height:100px;padding:0 2px}
   .chart-col{display:flex;flex-direction:column;align-items:center;gap:3px;flex:1}
   .chart-bar{width:100%;border-radius:4px 4px 0 0}
   .chart-xlabel{font-size:9px;color:var(--g400)}
 
-  /* Award letter */
   .letter-preview{background:#fff;border:1px solid var(--g200);border-radius:8px;padding:24px 28px;font-size:12.5px;line-height:1.7;color:var(--g700)}
   .letter-field{background:var(--blue-light);border:1px dashed var(--blue-mid);border-radius:3px;padding:1px 5px;font-family:'DM Mono',monospace;font-size:11.5px;color:var(--blue)}
 
-  /* Rules card */
   .rules-card{background:var(--g50);border:1px solid var(--g200);border-radius:8px;padding:14px}
   .rule-row{display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px dashed var(--g200);font-size:12.5px}
   .rule-row:last-child{border-bottom:none}
   .rule-key{color:var(--g500)}
   .rule-val{font-weight:700;font-family:'DM Mono',monospace;color:var(--navy)}
 
-  /* Calc summary */
   .calc-summary{background:var(--blue-light);border:1px solid var(--blue-mid);border-radius:10px;padding:16px}
   .calc-title{font-size:11px;font-weight:700;color:var(--blue);text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px}
   .calc-row{display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid var(--blue-mid);font-size:12.5px}
@@ -287,19 +257,16 @@
   .calc-total-lbl{font-size:13px;font-weight:700;color:var(--navy)}
   .calc-total-val{font-size:18px;font-weight:800;font-family:'DM Mono',monospace;color:var(--blue)}
 
-  /* Integration */
   .intg-card{background:#fff;border:1px solid var(--g200);border-radius:10px;padding:16px;display:flex;align-items:center;gap:14px}
   .intg-icon{width:40px;height:40px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
   .intg-dot{width:7px;height:7px;border-radius:50%;display:inline-block;margin-right:4px}
 
-  /* Founder header hero */
   .founder-hero{background:linear-gradient(135deg,var(--navy) 0%,#1e4976 100%);border-radius:10px;padding:18px 22px;color:#fff;display:flex;align-items:center;gap:18px;margin-bottom:18px}
   .founder-avatar{width:48px;height:48px;border-radius:50%;background:var(--blue);display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700;color:#fff;flex-shrink:0}
   .founder-stats{display:flex;gap:22px;margin-left:auto}
   .founder-stat-lbl{font-size:10px;color:rgba(255,255,255,.5)}
   .founder-stat-val{font-size:19px;font-weight:800;font-family:'DM Mono',monospace}
 
-  /* SAF Attribution Colors legend strip */
   .saf-legend{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:14px}
   .saf-item{display:flex;align-items:center;gap:5px;font-size:11px;font-weight:600}
   .saf-dot{width:10px;height:10px;border-radius:3px;flex-shrink:0}
@@ -308,7 +275,6 @@
   ::-webkit-scrollbar-track{background:transparent}
   ::-webkit-scrollbar-thumb{background:var(--g300);border-radius:3px}
 
-  /* ── FUND CREATION STEPPER ────────────────────────────── */
   .fund-step{display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;min-width:64px}
   .fund-step-num{width:30px;height:30px;border-radius:50%;border:2px solid var(--g300);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:var(--g400);background:#fff;transition:all .2s}
   .fund-step-label{font-size:10.5px;font-weight:600;color:var(--g400);text-transform:uppercase;letter-spacing:.05em;transition:color .2s}
@@ -326,11 +292,11 @@
 </head>
 <body>
 
-<!-- ═══════════════════════════════════════ LOGIN ══ -->
+<!-- LOGIN -->
 <div id="screen-login" class="screen active">
   <div class="login-card">
     <div class="login-logo">
-      <div class="login-icon">💰</div>
+      <div class="login-icon">FF</div>
       <div class="login-name">Founders Fund</div>
       <div class="login-sub">SAF-Model Equity System · v3</div>
     </div>
@@ -353,7 +319,7 @@
 <div class="sidebar">
   <div class="sidebar-logo">
     <div class="logo-row">
-      <div class="logo-icon">💰</div>
+      <div class="logo-icon">FF</div>
       <div>
         <div class="logo-name">Founders Fund</div>
         <div class="logo-version">SAF-Model v3.0</div>
@@ -362,24 +328,24 @@
   </div>
   <nav>
     <div class="nav-section">System</div>
-    <a class="nav-link" data-screen="screen-fund-ledger" onclick="goTo('screen-fund-ledger')"><span class="icon">🏦</span>Fund Ledger</a>
-    <a class="nav-link" data-screen="screen-system-boundary" onclick="goTo('screen-system-boundary')"><span class="icon">🔲</span>System Boundary<span class="nav-badge new">NEW</span></a>
+    <a class="nav-link" data-screen="screen-fund-ledger" onclick="goTo('screen-fund-ledger')"><span class="icon">&#9632;</span>Fund Ledger</a>
+    <a class="nav-link" data-screen="screen-system-boundary" onclick="goTo('screen-system-boundary')"><span class="icon">&#9649;</span>System Boundary<span class="nav-badge new">NEW</span></a>
     <div class="nav-section">Founders</div>
-    <a class="nav-link" data-screen="screen-founder-directory" onclick="goTo('screen-founder-directory')"><span class="icon">👥</span>Founder Directory</a>
-    <a class="nav-link" data-screen="screen-contribution-ledger" onclick="goTo('screen-contribution-ledger')"><span class="icon">📒</span>Contribution Ledger</a>
-    <a class="nav-link" data-screen="screen-contribution-details" onclick="goTo('screen-contribution-details')"><span class="icon">⚡</span>Record Flow Event</a>
+    <a class="nav-link" data-screen="screen-founder-directory" onclick="goTo('screen-founder-directory')"><span class="icon">&#9632;</span>Founder Directory</a>
+    <a class="nav-link" data-screen="screen-contribution-ledger" onclick="goTo('screen-contribution-ledger')"><span class="icon">&#9632;</span>Contribution Ledger</a>
+    <a class="nav-link" data-screen="screen-contribution-details" onclick="goTo('screen-contribution-details')"><span class="icon">&#9632;</span>Record Flow Event</a>
     <div class="nav-section">Analysis</div>
-    <a class="nav-link" data-screen="screen-equity-dashboard" onclick="goTo('screen-equity-dashboard')"><span class="icon">📊</span>Equity &amp; Surplus<span class="nav-badge new">SAF</span></a>
-    <a class="nav-link" data-screen="screen-attribution" onclick="goTo('screen-attribution')"><span class="icon">🧩</span>Attribution Layer<span class="nav-badge new">NEW</span></a>
-    <a class="nav-link" data-screen="screen-simulation" onclick="goTo('screen-simulation')"><span class="icon">🧪</span>Simulation<span class="nav-badge new">NEW</span></a>
-    <a class="nav-link" data-screen="screen-comparison" onclick="goTo('screen-comparison')"><span class="icon">⚖️</span>Comparative Lens<span class="nav-badge new">NEW</span></a>
-    <a class="nav-link" data-screen="screen-analytics" onclick="goTo('screen-analytics')"><span class="icon">📈</span>Analytics</a>
-    <a class="nav-link" data-screen="screen-audit-log" onclick="goTo('screen-audit-log')"><span class="icon">🔒</span>Audit &amp; Versioning</a>
-    <a class="nav-link" data-screen="screen-award-letters" onclick="goTo('screen-award-letters')"><span class="icon">📜</span>Award Letters</a>
-    <a class="nav-link" data-screen="screen-penalties" onclick="goTo('screen-penalties')" style="color:rgba(220,38,38,.8)"><span class="icon">⚠️</span>Deficit Events</a>
+    <a class="nav-link" data-screen="screen-equity-dashboard" onclick="goTo('screen-equity-dashboard')"><span class="icon">&#9632;</span>Equity &amp; Surplus<span class="nav-badge new">SAF</span></a>
+    <a class="nav-link" data-screen="screen-attribution" onclick="goTo('screen-attribution')"><span class="icon">&#9632;</span>Attribution Layer<span class="nav-badge new">NEW</span></a>
+    <a class="nav-link" data-screen="screen-simulation" onclick="goTo('screen-simulation')"><span class="icon">&#9632;</span>Simulation<span class="nav-badge new">NEW</span></a>
+    <a class="nav-link" data-screen="screen-comparison" onclick="goTo('screen-comparison')"><span class="icon">&#9632;</span>Comparative Lens<span class="nav-badge new">NEW</span></a>
+    <a class="nav-link" data-screen="screen-analytics" onclick="goTo('screen-analytics')"><span class="icon">&#9632;</span>Analytics</a>
+    <a class="nav-link" data-screen="screen-audit-log" onclick="goTo('screen-audit-log')"><span class="icon">&#9632;</span>Audit &amp; Versioning</a>
+    <a class="nav-link" data-screen="screen-award-letters" onclick="goTo('screen-award-letters')"><span class="icon">&#9632;</span>Award Letters</a>
+    <a class="nav-link" data-screen="screen-penalties" onclick="goTo('screen-penalties')" style="color:rgba(220,38,38,.8)"><span class="icon">&#9650;</span>Deficit Events</a>
     <div class="nav-section">Config</div>
-    <a class="nav-link" data-screen="screen-fund-details" onclick="goTo('screen-fund-details')"><span class="icon">⚙️</span>Fund Rules Engine</a>
-    <a class="nav-link" data-screen="screen-integrations" onclick="goTo('screen-integrations')"><span class="icon">🔌</span>Integrations</a>
+    <a class="nav-link" data-screen="screen-fund-details" onclick="goTo('screen-fund-details')"><span class="icon">&#9632;</span>Fund Rules Engine</a>
+    <a class="nav-link" data-screen="screen-integrations" onclick="goTo('screen-integrations')"><span class="icon">&#9632;</span>Integrations</a>
   </nav>
   <div class="sidebar-footer">
     <div class="sidebar-user">
@@ -390,18 +356,18 @@
 </div>
 </template>
 
-<!-- ═══════════════════════════════════════ FUND LEDGER ══ -->
+<!-- FUND LEDGER -->
 <div id="screen-fund-ledger" class="screen">
 <div class="main">
   <div class="topbar">
     <div class="topbar-left"><div class="title">Fund Ledger</div><div class="bread">All equity funds</div></div>
     <div class="topbar-actions">
-      <input class="form-control" style="width:200px;" placeholder="🔍  Search funds…">
+      <input class="form-control" style="width:200px;" placeholder="Search funds…">
       <button class="btn btn-primary" onclick="goTo('screen-fund-details')">+ New Fund</button>
     </div>
   </div>
   <div class="page">
-    <div class="notice notice-info">ℹ️ Each fund is a bounded system with defined inflows, rules, and claim structure. Click <strong>System Boundary</strong> to visualize the full model.</div>
+    <div class="notice notice-info">Each fund is a bounded system with defined inflows, rules, and claim structure. Click <strong>System Boundary</strong> to visualize the full model.</div>
     <div class="tbl-wrap">
       <table>
         <thead><tr><th>Fund Name</th><th>Period</th><th>OT Threshold</th><th>Contingent</th><th>Rule Snapshot</th><th>Status</th><th>Created</th><th>Actions</th></tr></thead>
@@ -413,8 +379,8 @@
             <td><span class="badge badge-green">Active</span></td>
             <td>Jan 1, 2026</td>
             <td style="display:flex;gap:4px;">
-              <button class="btn btn-ghost" style="padding:4px 7px;font-size:12px;" onclick="goTo('screen-fund-details')">✏️</button>
-              <button class="btn btn-ghost" style="padding:4px 7px;font-size:12px;" onclick="goTo('screen-system-boundary')">🔲</button>
+              <button class="btn btn-ghost" style="padding:4px 7px;font-size:12px;" onclick="goTo('screen-fund-details')">Edit</button>
+              <button class="btn btn-ghost" style="padding:4px 7px;font-size:12px;" onclick="goTo('screen-system-boundary')">Boundary</button>
             </td>
           </tr>
           <tr>
@@ -424,7 +390,7 @@
             <td><span class="badge badge-gray">Archived</span></td>
             <td>Oct 1, 2025</td>
             <td style="display:flex;gap:4px;">
-              <button class="btn btn-ghost" style="padding:4px 7px;font-size:12px;" onclick="goTo('screen-comparison')">⚖️</button>
+              <button class="btn btn-ghost" style="padding:4px 7px;font-size:12px;" onclick="goTo('screen-comparison')">Compare</button>
             </td>
           </tr>
           <tr>
@@ -434,8 +400,8 @@
             <td><span class="badge badge-green">Active</span></td>
             <td>Jul 15, 2025</td>
             <td style="display:flex;gap:4px;">
-              <button class="btn btn-ghost" style="padding:4px 7px;font-size:12px;" onclick="goTo('screen-fund-details')">✏️</button>
-              <button class="btn btn-ghost" style="padding:4px 7px;font-size:12px;" onclick="goTo('screen-system-boundary')">🔲</button>
+              <button class="btn btn-ghost" style="padding:4px 7px;font-size:12px;" onclick="goTo('screen-fund-details')">Edit</button>
+              <button class="btn btn-ghost" style="padding:4px 7px;font-size:12px;" onclick="goTo('screen-system-boundary')">Boundary</button>
             </td>
           </tr>
         </tbody>
@@ -445,18 +411,18 @@
 </div>
 </div>
 
-<!-- ═══════════════════════════════════════ SYSTEM BOUNDARY ══ (GAP 4) -->
+<!-- SYSTEM BOUNDARY -->
 <div id="screen-system-boundary" class="screen">
 <div class="main">
   <div class="topbar">
     <div class="topbar-left"><div class="title">System Boundary</div><div class="bread">Founders Fund Q1 2026 · SAF Model Diagram</div></div>
     <div class="topbar-actions">
       <select class="form-control" style="width:200px;"><option>Founders Fund Q1 2026</option><option>Seed Round Fund 2025</option></select>
-      <button class="btn btn-secondary">⬇ Export Diagram</button>
+      <button class="btn btn-secondary">Export Diagram</button>
     </div>
   </div>
   <div class="page">
-    <div class="notice notice-purple">🔲 The system boundary makes explicit what counts as an inflow, what generates surplus, and what exits as claims. This is the conceptual model — not just the math.</div>
+    <div class="notice notice-purple">The system boundary makes explicit what counts as an inflow, what generates surplus, and what exits as claims. This is the conceptual model — not just the math.</div>
 
     <div class="grid3" style="margin-bottom:18px;">
       <div class="stat-card"><div class="stat-label">System Stock (Total Inputs)</div><div class="stat-val">108,790</div><div class="stat-sub">Accumulated basis + gain</div></div>
@@ -464,24 +430,21 @@
       <div class="stat-card"><div class="stat-label">Total Claims Outstanding</div><div class="stat-val" style="color:var(--orange);">108,790</div><div class="stat-sub">4 founders · pro-rata</div></div>
     </div>
 
-    <!-- System diagram -->
     <div class="card" style="margin-bottom:16px;">
-      <div class="card-header"><div class="card-title">🔲 Fund System Diagram — Flows & Stocks</div></div>
+      <div class="card-header"><div class="card-title">Fund System Diagram — Flows &amp; Stocks</div></div>
       <div class="card-body">
         <div style="display:grid;grid-template-columns:140px 1fr 140px;gap:0;align-items:stretch;">
-          <!-- Inflows column -->
           <div>
-            <div class="section-label" style="margin-bottom:8px;">⬇ INFLOWS</div>
+            <div class="section-label" style="margin-bottom:8px;">INFLOWS</div>
             <div style="display:flex;flex-direction:column;gap:6px;">
-              <div class="flow-pill" style="background:var(--blue-light);color:var(--blue);">💼 Labor (Base)</div>
-              <div class="flow-pill" style="background:var(--blue-light);color:var(--blue);">⏱ Labor (OT)</div>
-              <div class="flow-pill" style="background:var(--purple-light);color:var(--purple);">🌟 Skill (Contingent)</div>
-              <div class="flow-pill" style="background:var(--green-light);color:var(--green);">💵 Cash (Basis)</div>
-              <div class="flow-pill" style="background:var(--g100);color:var(--g500);">📦 Non-Cash (Basis)</div>
+              <div class="flow-pill" style="background:var(--blue-light);color:var(--blue);">Labor (Base)</div>
+              <div class="flow-pill" style="background:var(--blue-light);color:var(--blue);">Labor (OT)</div>
+              <div class="flow-pill" style="background:var(--purple-light);color:var(--purple);">Skill (Contingent)</div>
+              <div class="flow-pill" style="background:var(--green-light);color:var(--green);">Cash (Basis)</div>
+              <div class="flow-pill" style="background:var(--g100);color:var(--g500);">Non-Cash (Basis)</div>
             </div>
           </div>
 
-          <!-- System core -->
           <div style="padding:0 20px;">
             <div class="sys-boundary">
               <div class="sys-label">SYSTEM BOUNDARY — Founders Fund Q1 2026</div>
@@ -495,7 +458,7 @@
                     <div class="decomp-seg" style="width:12.2%;background:var(--teal);" title="Performance Gain"></div>
                     <div class="decomp-seg" style="width:4.7%;background:var(--purple);" title="Skill Attribution"></div>
                     <div class="decomp-seg" style="width:9.2%;background:var(--green);" title="Cash Basis"></div>
-                    <div class="decomp-seg" style="width:-0.7%;background:var(--red);" title="Deficit"></div>
+                    <div class="decomp-seg" style="width:0%;background:var(--red);" title="Deficit"></div>
                   </div>
                   <div class="decomp-legend" style="justify-content:center;margin-top:8px;">
                     <div class="decomp-item"><div class="decomp-dot" style="background:var(--navy);"></div>Basis</div>
@@ -519,43 +482,41 @@
             </div>
           </div>
 
-          <!-- Outflows / claims -->
           <div>
-            <div class="section-label" style="margin-bottom:8px;">⬆ CLAIMS</div>
+            <div class="section-label" style="margin-bottom:8px;">CLAIMS</div>
             <div style="display:flex;flex-direction:column;gap:6px;">
               <div class="flow-pill" style="background:var(--blue-light);color:var(--blue);">DB 44.4% claim</div>
               <div class="flow-pill" style="background:#CCFBF1;color:var(--teal);">RR 29.5% claim</div>
               <div class="flow-pill" style="background:var(--purple-light);color:var(--purple);">AC 18.3% claim</div>
               <div class="flow-pill" style="background:var(--orange-light);color:var(--orange);">MS 7.8% claim</div>
-              <div class="section-label" style="margin-top:10px;margin-bottom:6px;">⬆ OUTFLOWS</div>
-              <div class="flow-pill" style="background:var(--red-light);color:var(--red);">⚠ Deficit −800</div>
-              <div class="flow-pill" style="background:var(--g100);color:var(--g500);">🔒 Locked periods</div>
+              <div class="section-label" style="margin-top:10px;margin-bottom:6px;">OUTFLOWS</div>
+              <div class="flow-pill" style="background:var(--red-light);color:var(--red);">Deficit −800</div>
+              <div class="flow-pill" style="background:var(--g100);color:var(--g500);">Locked periods</div>
             </div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Subsystem table -->
     <div class="two-col-eq">
       <div class="card">
-        <div class="card-header"><div class="card-title">📦 Subsystems — Sprints</div></div>
+        <div class="card-header"><div class="card-title">Subsystems — Sprints</div></div>
         <div class="card-body" style="padding:12px;">
           <div class="tbl-wrap" style="border:none;box-shadow:none;">
             <table>
               <thead><tr><th>Sprint</th><th>Period</th><th>Inflow</th><th>Surplus</th><th>Status</th></tr></thead>
               <tbody>
-                <tr><td>Sp8</td><td>Feb 18–24</td><td class="mono">14,820</td><td class="mono" style="color:var(--green);">+2,100</td><td><span class="open-badge">🟢 Open</span></td></tr>
-                <tr><td>Sp7</td><td>Feb 10–17</td><td class="mono">13,940</td><td class="mono" style="color:var(--green);">+1,840</td><td><span class="locked-badge">🔒 Locked</span></td></tr>
-                <tr><td>Sp6</td><td>Feb 3–9</td><td class="mono">13,200</td><td class="mono" style="color:var(--green);">+1,620</td><td><span class="locked-badge">🔒 Locked</span></td></tr>
-                <tr><td>Sp5</td><td>Jan 27–Feb 2</td><td class="mono">14,100</td><td class="mono" style="color:var(--green);">+2,010</td><td><span class="locked-badge">🔒 Locked</span></td></tr>
+                <tr><td>Sp8</td><td>Feb 18–24</td><td class="mono">14,820</td><td class="mono" style="color:var(--green);">+2,100</td><td><span class="open-badge">Open</span></td></tr>
+                <tr><td>Sp7</td><td>Feb 10–17</td><td class="mono">13,940</td><td class="mono" style="color:var(--green);">+1,840</td><td><span class="locked-badge">Locked</span></td></tr>
+                <tr><td>Sp6</td><td>Feb 3–9</td><td class="mono">13,200</td><td class="mono" style="color:var(--green);">+1,620</td><td><span class="locked-badge">Locked</span></td></tr>
+                <tr><td>Sp5</td><td>Jan 27–Feb 2</td><td class="mono">14,100</td><td class="mono" style="color:var(--green);">+2,010</td><td><span class="locked-badge">Locked</span></td></tr>
               </tbody>
             </table>
           </div>
         </div>
       </div>
       <div class="card">
-        <div class="card-header"><div class="card-title">🧮 Stock vs Flow Summary</div></div>
+        <div class="card-header"><div class="card-title">Stock vs Flow Summary</div></div>
         <div class="card-body">
           <div class="rules-card">
             <div class="rule-row"><span class="rule-key">Opening Stock</span><span class="rule-val">0</span></div>
@@ -572,18 +533,18 @@
 </div>
 </div>
 
-<!-- ═══════════════════════════════════════ CONTRIBUTION LEDGER ══ -->
+<!-- CONTRIBUTION LEDGER -->
 <div id="screen-contribution-ledger" class="screen">
 <div class="main">
   <div class="topbar">
     <div class="topbar-left"><div class="title">Contribution Ledger</div><div class="bread">Flow events — all contribution events by all founders</div></div>
     <div class="topbar-actions">
-      <button class="btn btn-secondary">⬇ Export</button>
+      <button class="btn btn-secondary">Export</button>
       <button class="btn btn-primary" onclick="goTo('screen-contribution-details')">+ Record Flow Event</button>
     </div>
   </div>
   <div class="page">
-    <div class="notice notice-info">⚡ Each row is a <strong>flow event</strong> — a transformation of resource into stock. Events are decomposed into Basis (capital stored) vs Gain (value created).</div>
+    <div class="notice notice-info">Each row is a <strong>flow event</strong> — a transformation of resource into stock. Events are decomposed into Basis (capital stored) vs Gain (value created).</div>
     <div class="filter-bar">
       <select class="form-control" style="width:150px;"><option>All Founders</option><option>David Boctor</option><option>Ryker Rinehart</option><option>Alex Chen</option></select>
       <select class="form-control" style="width:140px;"><option>All Event Types</option><option>Labor Flow</option><option>Cash Basis</option><option>Deficit Event</option></select>
@@ -610,29 +571,29 @@
           <tr>
             <td><span class="td-name">David Boctor</span></td>
             <td style="font-size:11.5px;">Feb 10–17</td>
-            <td><span class="badge badge-blue badge-no-dot">⚡ Labor Flow</span></td>
+            <td><span class="badge badge-blue badge-no-dot">Labor Flow</span></td>
             <td class="mono">4,800</td><td class="mono" style="color:var(--teal);">1,080</td>
             <td class="mono" style="color:var(--purple);">480</td><td class="mono">—</td>
             <td class="mono" style="font-weight:700;">6,360</td>
             <td><span class="badge badge-gray badge-no-dot" style="font-family:'DM Mono',monospace;font-size:10px;">RS-2026-003</span></td>
             <td><span class="badge badge-green">Approved</span></td>
-            <td><a href="#" style="color:var(--blue);font-size:12px;">📄</a></td>
+            <td><a href="#" style="color:var(--blue);font-size:12px;">View</a></td>
           </tr>
           <tr>
             <td><span class="td-name">Ryker Rinehart</span></td>
             <td style="font-size:11.5px;">Feb 10–17</td>
-            <td><span class="badge badge-blue badge-no-dot">⚡ Labor Flow</span></td>
+            <td><span class="badge badge-blue badge-no-dot">Labor Flow</span></td>
             <td class="mono">3,800</td><td class="mono" style="color:var(--teal);">—</td>
             <td class="mono" style="color:var(--purple);">380</td><td class="mono">—</td>
             <td class="mono" style="font-weight:700;">4,180</td>
             <td><span class="badge badge-gray badge-no-dot" style="font-family:'DM Mono',monospace;font-size:10px;">RS-2026-003</span></td>
             <td><span class="badge badge-green">Approved</span></td>
-            <td><a href="#" style="color:var(--blue);font-size:12px;">📄</a></td>
+            <td><a href="#" style="color:var(--blue);font-size:12px;">View</a></td>
           </tr>
           <tr>
             <td><span class="td-name">Alex Chen</span></td>
             <td style="font-size:11.5px;">Feb 10–17</td>
-            <td><span class="badge badge-blue badge-no-dot">⚡ Labor Flow</span></td>
+            <td><span class="badge badge-blue badge-no-dot">Labor Flow</span></td>
             <td class="mono">3,400</td><td class="mono">—</td><td class="mono">—</td><td class="mono">—</td>
             <td class="mono" style="font-weight:700;">3,400</td>
             <td><span class="badge badge-gray badge-no-dot" style="font-family:'DM Mono',monospace;font-size:10px;">RS-2026-003</span></td>
@@ -642,17 +603,17 @@
           <tr>
             <td><span class="td-name">David Boctor</span></td>
             <td style="font-size:11.5px;">Jan 2026</td>
-            <td><span class="badge badge-green badge-no-dot">💵 Cash Basis</span></td>
+            <td><span class="badge badge-green badge-no-dot">Cash Basis</span></td>
             <td class="mono">—</td><td class="mono">—</td><td class="mono">—</td><td class="mono" style="color:var(--green);">10,000</td>
             <td class="mono" style="font-weight:700;">10,000</td>
             <td><span class="badge badge-gray badge-no-dot" style="font-family:'DM Mono',monospace;font-size:10px;">RS-2026-001</span></td>
             <td><span class="badge badge-green">Approved</span></td>
-            <td><a href="#" style="color:var(--blue);font-size:12px;">📄</a></td>
+            <td><a href="#" style="color:var(--blue);font-size:12px;">View</a></td>
           </tr>
           <tr class="penalty-row">
             <td><span class="td-name">Maria Santos</span></td>
             <td style="font-size:11.5px;">Feb 5</td>
-            <td><span class="badge badge-red badge-no-dot">💔 Deficit Event</span></td>
+            <td><span class="badge badge-red badge-no-dot">Deficit Event</span></td>
             <td class="mono" style="color:var(--red);">−100</td><td class="mono">—</td><td class="mono">—</td><td class="mono">—</td>
             <td class="mono" style="font-weight:700;color:var(--red);">−100</td>
             <td><span class="badge badge-gray badge-no-dot" style="font-family:'DM Mono',monospace;font-size:10px;">RS-2026-003</span></td>
@@ -669,7 +630,7 @@
 </div>
 </div>
 
-<!-- ═══════════════════════════════════════ RECORD FLOW EVENT ══ (GAP 1) -->
+<!-- RECORD FLOW EVENT -->
 <div id="screen-contribution-details" class="screen">
 <div class="main">
   <div class="topbar">
@@ -678,12 +639,11 @@
       <button class="btn btn-secondary" onclick="goTo('screen-contribution-ledger')">Cancel</button>
       <button class="btn btn-secondary">Save Draft</button>
       <button class="btn btn-primary">Submit for Approval</button>
-      <button class="btn btn-teal" onclick="alert('Approved! Causal snapshot RS-2026-003 locked to event. Award letter v1 generated.')">✅ Approve &amp; Lock</button>
+      <button class="btn btn-teal" onclick="alert('Approved! Causal snapshot RS-2026-003 locked to event. Award letter v1 generated.')">Approve &amp; Lock</button>
     </div>
   </div>
   <div class="page">
 
-    <!-- Founder hero -->
     <div class="founder-hero">
       <div class="founder-avatar">RR</div>
       <div>
@@ -691,29 +651,27 @@
         <div style="font-size:12px;color:rgba(255,255,255,.6);margin-top:2px;">ryker@021.ceo · $95/hr · Fund: Q1 2026</div>
       </div>
       <div class="founder-stats">
-        <div><div class="founder-stat-lbl">Performance Flag</div><div style="margin-top:4px;"><span class="badge badge-green" style="font-size:12px;">🟢 Green</span></div></div>
+        <div><div class="founder-stat-lbl">Performance Flag</div><div style="margin-top:4px;"><span class="badge badge-green" style="font-size:12px;">Green</span></div></div>
         <div><div class="founder-stat-lbl">Cumulative Stock</div><div class="founder-stat-val">32,150</div></div>
         <div><div class="founder-stat-lbl">Basis</div><div style="font-size:16px;font-weight:800;font-family:'DM Mono',monospace;color:#93c5fd;">26,600</div></div>
         <div><div class="founder-stat-lbl">Gain</div><div style="font-size:16px;font-weight:800;font-family:'DM Mono',monospace;color:#86efac;">5,550</div></div>
       </div>
     </div>
 
-    <!-- Event type selector -->
     <div style="margin-bottom:18px;">
       <div class="section-label">Flow Event Type</div>
       <div class="toggle-tabs">
-        <div class="toggle-tab active" onclick="switchTab('labor',this)">⚡ Labor Flow</div>
-        <div class="toggle-tab" onclick="switchTab('cash',this)">💵 Cash Basis</div>
-        <div class="toggle-tab" onclick="switchTab('penalty',this)" style="color:var(--red);">💔 Deficit Event</div>
+        <div class="toggle-tab active" onclick="switchTab('labor',this)">Labor Flow</div>
+        <div class="toggle-tab" onclick="switchTab('cash',this)">Cash Basis</div>
+        <div class="toggle-tab" onclick="switchTab('penalty',this)" style="color:var(--red);">Deficit Event</div>
       </div>
     </div>
 
     <div class="two-col" style="align-items:start;">
       <div>
-        <!-- LABOR FLOW -->
         <div id="tab-labor" class="card" style="margin-bottom:14px;">
           <div class="card-header">
-            <div class="card-title">⚡ Labor Flow Event</div>
+            <div class="card-title">Labor Flow Event</div>
             <span class="badge badge-blue badge-no-dot">Generates Basis + Gain</span>
           </div>
           <div class="card-body">
@@ -729,7 +687,7 @@
               <div class="divider" style="margin:2px 0;"></div>
               <div style="display:flex;justify-content:space-between;align-items:center;">
                 <div class="section-label" style="margin-bottom:0;">Source Data</div>
-                <button class="btn btn-secondary btn-sm" onclick="alert('Syncing from Harvest…\n\nRyker Rinehart: 44.5 hours logged for Feb 18–24\nClickUp sprint points: 38')">🔄 Sync Harvest + ClickUp</button>
+                <button class="btn btn-secondary btn-sm" onclick="alert('Syncing from Harvest…\n\nRyker Rinehart: 44.5 hours logged for Feb 18–24\nClickUp sprint points: 38')">Sync Harvest + ClickUp</button>
               </div>
               <div class="grid2">
                 <div class="form-group"><label>Hours Worked <span class="req">*</span></label><input class="form-control" type="number" value="44.5" id="hoursInput" oninput="calcFlow()"><div class="form-hint">Auto-filled from Harvest</div></div>
@@ -743,14 +701,13 @@
           </div>
         </div>
 
-        <!-- CASH BASIS -->
         <div id="tab-cash" class="card" style="margin-bottom:14px;display:none;">
           <div class="card-header">
-            <div class="card-title">💵 Cash Basis Event</div>
+            <div class="card-title">Cash Basis Event</div>
             <span class="badge badge-green badge-no-dot">Stored Capital — not performance gain</span>
           </div>
           <div class="card-body">
-            <div class="notice notice-info">ℹ Cash contributions add to <strong>Basis</strong> — stored capital — not to performance gain. This distinction is tracked in the attribution layer.</div>
+            <div class="notice notice-info">Cash contributions add to <strong>Basis</strong> — stored capital — not to performance gain. This distinction is tracked in the attribution layer.</div>
             <div class="fg">
               <div class="form-group"><label>Founder <span class="req">*</span></label><select class="form-control"><option>Ryker Rinehart</option></select></div>
               <div class="form-group"><label>Cash Amount <span class="req">*</span></label><div class="prefix-wrap"><span class="prefix">$</span><input class="form-control" type="number" value="5000"></div></div>
@@ -763,13 +720,12 @@
           </div>
         </div>
 
-        <!-- DEFICIT EVENT -->
         <div id="tab-penalty" class="card" style="margin-bottom:14px;display:none;border-color:var(--red-light);">
           <div class="card-header" style="background:var(--red-light);">
-            <div class="card-title" style="color:var(--red);">💔 Deficit Event — Wealth Destruction</div>
+            <div class="card-title" style="color:var(--red);">Deficit Event — Wealth Destruction</div>
           </div>
           <div class="card-body">
-            <div class="notice notice-red">💔 Deficit events represent <strong>wealth destruction</strong> — not just subtraction. They are categorized by type (Misallocation, System Inefficiency, Negative Surplus) and tracked separately in the attribution layer.</div>
+            <div class="notice notice-red">Deficit events represent <strong>wealth destruction</strong> — not just subtraction. They are categorized by type (Misallocation, System Inefficiency, Negative Surplus) and tracked separately in the attribution layer.</div>
             <div class="fg">
               <div class="form-group"><label>Founder <span class="req">*</span></label><select class="form-control"><option>Maria Santos</option></select></div>
               <div class="grid2">
@@ -790,26 +746,24 @@
         </div>
       </div>
 
-      <!-- CALC SUMMARY (right) -->
       <div style="position:sticky;top:70px;display:flex;flex-direction:column;gap:12px;">
 
-        <!-- Labor calc -->
         <div id="calc-labor" class="calc-summary">
-          <div class="calc-title">⚡ Flow Decomposition — Live</div>
+          <div class="calc-title">Flow Decomposition — Live</div>
           <div class="calc-row"><span class="calc-lbl">Hours Worked</span><span class="calc-val" id="disp-hours">44.5 hrs</span></div>
           <div class="calc-row"><span class="calc-lbl">Regular (≤40 hrs)</span><span class="calc-val" id="disp-reg">40.0 hrs</span></div>
           <div class="calc-row"><span class="calc-lbl">Overtime (&gt;40 hrs)</span><span class="calc-val" id="disp-ot-hrs">4.5 hrs</span></div>
           <div style="height:6px;"></div>
           <div class="calc-row">
-            <span class="calc-lbl">🔵 BASIS — Base Inputs <span style="font-size:10px;color:var(--g400);">(stored capital)</span></span>
+            <span class="calc-lbl">BASIS — Base Inputs <span style="font-size:10px;color:var(--g400);">(stored capital)</span></span>
             <span class="calc-val" id="disp-base" style="color:var(--navy);">3,800</span>
           </div>
           <div class="calc-row">
-            <span class="calc-lbl">🟢 GAIN — OT Performance <span style="font-size:10px;color:var(--g400);">(value created)</span></span>
+            <span class="calc-lbl">GAIN — OT Performance <span style="font-size:10px;color:var(--g400);">(value created)</span></span>
             <span class="calc-val" id="disp-ot" style="color:var(--teal);">641</span>
           </div>
           <div class="calc-row">
-            <span class="calc-lbl">🟣 SKILL — Contingent <span style="font-size:10px;color:var(--green);">🟢 Green</span></span>
+            <span class="calc-lbl">SKILL — Contingent <span style="font-size:10px;color:var(--green);">Green</span></span>
             <span class="calc-val" id="disp-cont" style="color:var(--purple);">380</span>
           </div>
           <div class="calc-total">
@@ -817,7 +771,6 @@
             <span class="calc-total-val" id="disp-total">4,821</span>
           </div>
 
-          <!-- Decomp bar -->
           <div style="margin-top:12px;">
             <div class="decomp-bar-wrap" style="height:10px;">
               <div class="decomp-seg" id="bar-basis" style="width:78.8%;background:var(--navy);"></div>
@@ -833,14 +786,14 @@
         </div>
 
         <div id="calc-cash" style="display:none;background:var(--green-light);border-color:#86efac;" class="calc-summary">
-          <div class="calc-title">💵 Cash Basis Summary</div>
+          <div class="calc-title">Cash Basis Summary</div>
           <div class="calc-row"><span class="calc-lbl">Attribution</span><span class="calc-val" style="color:var(--navy);">Basis (Capital)</span></div>
           <div class="calc-row"><span class="calc-lbl">Not gain-generating</span><span class="calc-val">—</span></div>
           <div class="calc-total"><span class="calc-total-lbl">Total Vested</span><span class="calc-total-val">5,000</span></div>
         </div>
 
         <div id="calc-penalty" style="display:none;background:var(--red-light);border-color:#fecaca;" class="calc-summary">
-          <div class="calc-title" style="color:var(--red);">💔 Deficit Event Summary</div>
+          <div class="calc-title" style="color:var(--red);">Deficit Event Summary</div>
           <div class="calc-row"><span class="calc-lbl">Category</span><span class="calc-val" style="color:var(--orange);">Misallocation</span></div>
           <div class="calc-row"><span class="calc-lbl">Wealth Destroyed</span><span class="calc-val" style="color:var(--red);">−100</span></div>
           <div class="calc-row"><span class="calc-lbl">System Effect</span><span class="calc-val" style="color:var(--red);font-size:11px;">Reduces surplus pool</span></div>
@@ -848,7 +801,7 @@
         </div>
 
         <div class="notice notice-info" style="font-size:11.5px;">
-          🔒 On approval, the current Rule Snapshot <strong>RS-2026-003</strong> will be permanently attached to this event. Future rule changes will not affect this record.
+          On approval, the current Rule Snapshot <strong>RS-2026-003</strong> will be permanently attached to this event. Future rule changes will not affect this record.
         </div>
       </div>
     </div>
@@ -856,20 +809,19 @@
 </div>
 </div>
 
-<!-- ═══════════════════════════════════════ EQUITY & SURPLUS ══ (GAPS 2, 6) -->
+<!-- EQUITY & SURPLUS -->
 <div id="screen-equity-dashboard" class="screen">
 <div class="main">
   <div class="topbar">
     <div class="topbar-left"><div class="title">Equity &amp; Surplus Dashboard</div><div class="bread">Basis / Gain decomposition · Wealth generation · SAF Model</div></div>
     <div class="topbar-actions">
       <select class="form-control" style="width:190px;"><option>Founders Fund Q1 2026</option></select>
-      <button class="btn btn-secondary">⬇ Export</button>
-      <button class="btn btn-purple" onclick="goTo('screen-simulation')">🧪 Simulate</button>
+      <button class="btn btn-secondary">Export</button>
+      <button class="btn btn-purple" onclick="goTo('screen-simulation')">Simulate</button>
     </div>
   </div>
   <div class="page">
 
-    <!-- System wealth summary -->
     <div class="stats-row stats-row-5" style="margin-bottom:16px;">
       <div class="stat-card"><div class="stat-label">System Stock</div><div class="stat-val">108,790</div><div class="stat-sub">Total accumulated inputs</div></div>
       <div class="stat-card"><div class="stat-label">Total Basis</div><div class="stat-val" style="color:var(--navy);">94,510</div><div class="stat-sub">Capital stored</div></div>
@@ -878,10 +830,9 @@
       <div class="stat-card"><div class="stat-label">Total Deficit Events</div><div class="stat-val" style="color:var(--red);">−800</div><div class="stat-sub">Wealth destruction tracked<div class="stat-delta delta-down">↓ 2 events</div></div></div>
     </div>
 
-    <!-- Is the system sustainable? -->
     <div class="two-col-eq" style="margin-bottom:16px;">
       <div class="surplus-card surplus-positive">
-        <div style="font-size:11px;font-weight:700;color:var(--green);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px;">⬆ Surplus Accumulation</div>
+        <div style="font-size:11px;font-weight:700;color:var(--green);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px;">Surplus Accumulation</div>
         <div class="surplus-val" style="color:var(--green);">+14,280</div>
         <div style="font-size:12px;color:var(--green);margin-top:4px;">Value created above basis this quarter</div>
         <div class="sustainability-bar" style="margin-top:12px;">
@@ -893,7 +844,7 @@
         <div style="font-size:11px;color:var(--g500);margin-top:8px;">Configuration is viable. Surplus is accumulating across all 8 sprints. Q4 comparison: +8.3% improvement.</div>
       </div>
       <div class="deficit-card">
-        <div style="font-size:11px;font-weight:700;color:var(--red);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px;">💔 Deficit Events — Wealth Destruction</div>
+        <div style="font-size:11px;font-weight:700;color:var(--red);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px;">Deficit Events — Wealth Destruction</div>
         <div class="deficit-val">−800</div>
         <div style="font-size:12px;color:var(--red);margin-top:4px;">Misallocation + System Inefficiency</div>
         <div class="deficit-types">
@@ -905,10 +856,9 @@
       </div>
     </div>
 
-    <!-- Basis vs Gain decomposition per founder -->
     <div class="card" style="margin-bottom:16px;">
       <div class="card-header">
-        <div class="card-title">🔵🟢🟣 Basis / Gain / Skill Decomposition per Founder</div>
+        <div class="card-title">Basis / Gain / Skill Decomposition per Founder</div>
         <div style="font-size:11.5px;color:var(--g400);">Not all inputs are equal</div>
       </div>
       <div class="card-body">
@@ -924,7 +874,7 @@
             <thead>
               <tr>
                 <th>Founder</th>
-                <th>🔵 Basis</th><th>🟢 Gain (OT)</th><th>🟣 Skill</th><th>💵 Cash</th><th>💔 Deficit</th>
+                <th>Basis</th><th>Gain (OT)</th><th>Skill</th><th>Cash</th><th>Deficit</th>
                 <th>Total Stock</th><th>Equity %</th>
                 <th>Basis / Gain Ratio</th>
                 <th>Dilution</th>
@@ -983,9 +933,8 @@
       </div>
     </div>
 
-    <!-- Formula + wealth question -->
     <div class="card">
-      <div class="card-header"><div class="card-title">🧮 SAF Model Logic</div></div>
+      <div class="card-header"><div class="card-title">SAF Model Logic</div></div>
       <div class="card-body">
         <div class="grid3">
           <div class="rules-card">
@@ -1001,9 +950,9 @@
           <div class="rules-card">
             <div style="font-size:10px;font-weight:700;color:var(--g500);text-transform:uppercase;margin-bottom:10px;">System Wealth Questions</div>
             <div style="font-size:12.5px;line-height:2;color:var(--g700);">
-              Is surplus accumulating? <span style="color:var(--green);font-weight:700;">✓ Yes (+14,280)</span><br>
-              Is configuration sustainable? <span style="color:var(--green);font-weight:700;">✓ 72% index</span><br>
-              Is wealth being destroyed? <span style="color:var(--red);font-weight:700;">⚠ −800 deficit</span><br>
+              Is surplus accumulating? <span style="color:var(--green);font-weight:700;">Yes (+14,280)</span><br>
+              Is configuration sustainable? <span style="color:var(--green);font-weight:700;">72% index</span><br>
+              Is wealth being destroyed? <span style="color:var(--red);font-weight:700;">−800 deficit</span><br>
               Skill vs Capital ratio? <span style="color:var(--purple);font-weight:700;">5.4% skill</span>
             </div>
           </div>
@@ -1011,7 +960,7 @@
             <div style="font-size:10px;font-weight:700;color:var(--g500);text-transform:uppercase;margin-bottom:10px;">Pending (will reallocate)</div>
             <div class="rule-row"><span class="rule-key">Alex Chen (Draft)</span><span class="rule-val badge badge-yellow badge-no-dot">+3,400</span></div>
             <div class="rule-row"><span class="rule-key">If approved</span><span class="rule-val" style="color:var(--g500);font-size:11px;">All % recalculate</span></div>
-            <div style="margin-top:8px;"><button class="btn btn-purple btn-sm" onclick="goTo('screen-simulation')">🧪 Simulate this →</button></div>
+            <div style="margin-top:8px;"><button class="btn btn-purple btn-sm" onclick="goTo('screen-simulation')">Simulate this →</button></div>
           </div>
         </div>
       </div>
@@ -1020,27 +969,26 @@
 </div>
 </div>
 
-<!-- ═══════════════════════════════════════ ATTRIBUTION ══ (GAP 3) -->
+<!-- ATTRIBUTION -->
 <div id="screen-attribution" class="screen">
 <div class="main">
   <div class="topbar">
     <div class="topbar-left"><div class="title">Attribution Layer</div><div class="bread">Capital · Coordination · Favorable Conditions — not just operational categories</div></div>
     <div class="topbar-actions">
       <select class="form-control" style="width:190px;"><option>Founders Fund Q1 2026</option></select>
-      <button class="btn btn-secondary">⬇ Export</button>
+      <button class="btn btn-secondary">Export</button>
     </div>
   </div>
   <div class="page">
-    <div class="notice notice-purple">🧩 Attribution answers: <strong>Where did wealth come from?</strong> This goes beyond operational categories (Base/OT/Cash) to explain the source of surplus — Capital, Coordination, or Favorable Conditions.</div>
+    <div class="notice notice-purple">Attribution answers: <strong>Where did wealth come from?</strong> This goes beyond operational categories (Base/OT/Cash) to explain the source of surplus — Capital, Coordination, or Favorable Conditions.</div>
 
     <div class="stats-row" style="margin-bottom:16px;">
-      <div class="stat-card"><div class="stat-label">🔵 Capital (Basis)</div><div class="stat-val" style="color:var(--navy);">74.2%</div><div class="stat-sub">Labor + Cash stored capital</div></div>
-      <div class="stat-card"><div class="stat-label">🟢 Coordination (Gain)</div><div class="stat-val" style="color:var(--teal);">12.2%</div><div class="stat-sub">OT — time × skills deployed</div></div>
-      <div class="stat-card"><div class="stat-label">🟣 Skill Attribution</div><div class="stat-val" style="color:var(--purple);">4.7%</div><div class="stat-sub">Contingent bonus · Green flag</div></div>
-      <div class="stat-card"><div class="stat-label">💔 Deficit Attribution</div><div class="stat-val" style="color:var(--red);">−0.7%</div><div class="stat-sub">Misallocation / inefficiency</div></div>
+      <div class="stat-card"><div class="stat-label">Capital (Basis)</div><div class="stat-val" style="color:var(--navy);">74.2%</div><div class="stat-sub">Labor + Cash stored capital</div></div>
+      <div class="stat-card"><div class="stat-label">Coordination (Gain)</div><div class="stat-val" style="color:var(--teal);">12.2%</div><div class="stat-sub">OT — time × skills deployed</div></div>
+      <div class="stat-card"><div class="stat-label">Skill Attribution</div><div class="stat-val" style="color:var(--purple);">4.7%</div><div class="stat-sub">Contingent bonus · Green flag</div></div>
+      <div class="stat-card"><div class="stat-label">Deficit Attribution</div><div class="stat-val" style="color:var(--red);">−0.7%</div><div class="stat-sub">Misallocation / inefficiency</div></div>
     </div>
 
-    <!-- Attribution bar per founder -->
     <div class="card" style="margin-bottom:16px;">
       <div class="card-header">
         <div class="card-title">Attribution Breakdown per Founder</div>
@@ -1095,27 +1043,26 @@
       </div>
     </div>
 
-    <!-- Attribution source table -->
     <div class="card">
       <div class="card-header"><div class="card-title">Attribution Source Analysis — System Level</div></div>
       <div class="card-body">
         <div class="grid3">
           <div class="rules-card" style="border-left:3px solid var(--navy);">
-            <div style="font-size:11px;font-weight:700;color:var(--navy);text-transform:uppercase;margin-bottom:10px;">🔵 Capital Attribution</div>
+            <div style="font-size:11px;font-weight:700;color:var(--navy);text-transform:uppercase;margin-bottom:10px;">Capital Attribution</div>
             <div class="rule-row"><span class="rule-key">Labor basis (all founders)</span><span class="rule-val">80,720</span></div>
             <div class="rule-row"><span class="rule-key">Cash contributions</span><span class="rule-val">10,000</span></div>
             <div class="rule-row"><span class="rule-key">% of system stock</span><span class="rule-val">83.4%</span></div>
             <div style="font-size:11px;color:var(--g500);margin-top:8px;">Stored capital — time traded for equity. Not value-creating beyond the exchange itself.</div>
           </div>
           <div class="rules-card" style="border-left:3px solid var(--teal);">
-            <div style="font-size:11px;font-weight:700;color:var(--teal);text-transform:uppercase;margin-bottom:10px;">🟢 Coordination Attribution</div>
+            <div style="font-size:11px;font-weight:700;color:var(--teal);text-transform:uppercase;margin-bottom:10px;">Coordination Attribution</div>
             <div class="rule-row"><span class="rule-key">OT Performance Gain</span><span class="rule-val" style="color:var(--teal);">8,120</span></div>
             <div class="rule-row"><span class="rule-key">Sprint velocity signal</span><span class="rule-val">Moderate</span></div>
             <div class="rule-row"><span class="rule-key">% of system stock</span><span class="rule-val" style="color:var(--teal);">7.5%</span></div>
             <div style="font-size:11px;color:var(--g500);margin-top:8px;">Value created above basis. Overtime reflects coordination efficiency — time deployed beyond threshold generates surplus.</div>
           </div>
           <div class="rules-card" style="border-left:3px solid var(--purple);">
-            <div style="font-size:11px;font-weight:700;color:var(--purple);text-transform:uppercase;margin-bottom:10px;">🟣 Skill / Condition Attribution</div>
+            <div style="font-size:11px;font-weight:700;color:var(--purple);text-transform:uppercase;margin-bottom:10px;">Skill / Condition Attribution</div>
             <div class="rule-row"><span class="rule-key">Skill bonus (contingent)</span><span class="rule-val" style="color:var(--purple);">5,160</span></div>
             <div class="rule-row"><span class="rule-key">Green flag holders</span><span class="rule-val">2 of 4</span></div>
             <div class="rule-row"><span class="rule-key">% of system stock</span><span class="rule-val" style="color:var(--purple);">4.7%</span></div>
@@ -1128,24 +1075,23 @@
 </div>
 </div>
 
-<!-- ═══════════════════════════════════════ SIMULATION ══ (GAPS 5, 7) -->
+<!-- SIMULATION -->
 <div id="screen-simulation" class="screen">
 <div class="main">
   <div class="topbar">
-    <div class="topbar-left"><div class="title">🧪 Simulation — Sandbox Mode</div><div class="bread">Counterfactual analysis · What-if modeling · Rule configuration testing</div></div>
+    <div class="topbar-left"><div class="title">Simulation — Sandbox Mode</div><div class="bread">Counterfactual analysis · What-if modeling · Rule configuration testing</div></div>
     <div class="topbar-actions">
-      <button class="btn btn-secondary" onclick="resetSim()">↩ Reset to Actuals</button>
-      <button class="btn btn-purple" onclick="alert('Simulation saved as Scenario-A. Compare in Comparative Lens →')">💾 Save Scenario</button>
+      <button class="btn btn-secondary" onclick="resetSim()">Reset to Actuals</button>
+      <button class="btn btn-purple" onclick="alert('Simulation saved as Scenario-A. Compare in Comparative Lens →')">Save Scenario</button>
     </div>
   </div>
   <div class="page">
-    <div class="notice notice-purple">🧪 Sandbox mode — changes here do <strong>not</strong> affect the actual ledger. Adjust rule parameters and see in real-time how surplus, equity, and attribution would change. Model → Simulate → Attribute → Compare → Refine.</div>
+    <div class="notice notice-purple">Sandbox mode — changes here do <strong>not</strong> affect the actual ledger. Adjust rule parameters and see in real-time how surplus, equity, and attribution would change. Model → Simulate → Attribute → Compare → Refine.</div>
 
     <div class="two-col" style="align-items:start;">
-      <!-- Controls -->
       <div style="display:flex;flex-direction:column;gap:12px;">
         <div class="card">
-          <div class="card-header"><div class="card-title">⚙ Rule Parameters — Adjust &amp; Simulate</div><span class="badge badge-purple badge-no-dot">Sandbox</span></div>
+          <div class="card-header"><div class="card-title">Rule Parameters — Adjust &amp; Simulate</div><span class="badge badge-purple badge-no-dot">Sandbox</span></div>
           <div class="card-body">
             <div style="display:grid;gap:14px;">
 
@@ -1182,17 +1128,16 @@
               </div>
 
               <div class="notice notice-info" style="font-size:11.5px;margin-bottom:0;">
-                ℹ Simulation uses actual approved contributions but re-runs all calculations with the adjusted rule set above.
+                Simulation uses actual approved contributions but re-runs all calculations with the adjusted rule set above.
               </div>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- Live output -->
       <div style="position:sticky;top:70px;display:flex;flex-direction:column;gap:12px;">
         <div class="sim-output">
-          <div style="font-size:11px;font-weight:700;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px;">📊 Simulated Results vs Actuals</div>
+          <div style="font-size:11px;font-weight:700;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px;">Simulated Results vs Actuals</div>
 
           <div class="sim-row">
             <span class="sim-row-label">System Stock</span>
@@ -1227,7 +1172,6 @@
             <span class="sim-row-val">7.8% → <span id="sim-ms" class="sim-delta-pos">7.8%</span></span>
           </div>
 
-          <!-- Compare bars -->
           <div style="font-size:10px;color:rgba(255,255,255,.4);text-transform:uppercase;margin:12px 0 6px;">Surplus — Actual vs Simulated</div>
           <div class="sim-compare-bar">
             <div class="sim-bar-col">
@@ -1242,30 +1186,29 @@
         </div>
 
         <div class="notice notice-green">
-          ✅ Current simulation shows <strong>+434 surplus improvement</strong>. Consider saving as Scenario-A and comparing against Q4 in the Comparative Lens.
+          Current simulation shows <strong>+434 surplus improvement</strong>. Consider saving as Scenario-A and comparing against Q4 in the Comparative Lens.
         </div>
 
-        <button class="btn btn-secondary" style="width:100%;justify-content:center;" onclick="goTo('screen-comparison')">⚖️ Open Comparative Lens →</button>
+        <button class="btn btn-secondary" style="width:100%;justify-content:center;" onclick="goTo('screen-comparison')">Open Comparative Lens →</button>
       </div>
     </div>
   </div>
 </div>
 </div>
 
-<!-- ═══════════════════════════════════════ COMPARATIVE LENS ══ (GAP 9) -->
+<!-- COMPARATIVE LENS -->
 <div id="screen-comparison" class="screen">
 <div class="main">
   <div class="topbar">
-    <div class="topbar-left"><div class="title">⚖️ Comparative Lens</div><div class="bread">Fund vs Fund · Period vs Period · Scenario vs Scenario</div></div>
+    <div class="topbar-left"><div class="title">Comparative Lens</div><div class="bread">Fund vs Fund · Period vs Period · Scenario vs Scenario</div></div>
     <div class="topbar-actions">
-      <button class="btn btn-secondary">⬇ Export Comparison</button>
-      <button class="btn btn-purple" onclick="goTo('screen-simulation')">🧪 Simulate New Scenario</button>
+      <button class="btn btn-secondary">Export Comparison</button>
+      <button class="btn btn-purple" onclick="goTo('screen-simulation')">Simulate New Scenario</button>
     </div>
   </div>
   <div class="page">
-    <div class="notice notice-info">⚖️ Compare configurations, periods, and scenarios side-by-side. This is where strategy lives — not just record-keeping.</div>
+    <div class="notice notice-info">Compare configurations, periods, and scenarios side-by-side. This is where strategy lives — not just record-keeping.</div>
 
-    <!-- Comparison mode selector -->
     <div style="margin-bottom:16px;display:flex;align-items:center;gap:12px;">
       <div class="section-label" style="margin-bottom:0;">Compare Mode:</div>
       <div class="toggle-tabs">
@@ -1275,7 +1218,6 @@
       </div>
     </div>
 
-    <!-- Side-by-side comparison -->
     <div class="two-col-eq" style="margin-bottom:18px;">
       <div class="compare-col">
         <div class="compare-header" style="background:var(--navy);">Q4 2025 — Baseline</div>
@@ -1309,23 +1251,21 @@
       </div>
     </div>
 
-    <!-- Delta summary card -->
     <div class="card" style="margin-bottom:16px;">
-      <div class="card-header"><div class="card-title">📊 Delta Analysis — Q4 → Q1</div></div>
+      <div class="card-header"><div class="card-title">Delta Analysis — Q4 → Q1</div></div>
       <div class="card-body">
         <div class="grid4">
           <div class="stat-card"><div class="stat-label">Surplus Improvement</div><div class="stat-val" style="color:var(--green);">+25.3%</div><div class="stat-sub">OT coef change drove this</div></div>
           <div class="stat-card"><div class="stat-label">Skill Attribution ↑</div><div class="stat-val" style="color:var(--purple);">+0.9pp</div><div class="stat-sub">More Green flag holders</div></div>
-          <div class="stat-card"><div class="stat-label">Deficit Increase ⚠</div><div class="stat-val" style="color:var(--red);">+3 events</div><div class="stat-sub">Maria Santos — 2 infractions</div></div>
+          <div class="stat-card"><div class="stat-label">Deficit Increase</div><div class="stat-val" style="color:var(--red);">+3 events</div><div class="stat-sub">Maria Santos — 2 infractions</div></div>
           <div class="stat-card"><div class="stat-label">Sustainability ↑</div><div class="stat-val" style="color:var(--teal);">+11pp</div><div class="stat-sub">72% vs 61% baseline</div></div>
         </div>
         <div class="notice notice-green" style="margin-top:14px;margin-bottom:0;">
-          ✅ <strong>Key finding:</strong> OT coefficient change from 1.25× to 1.5× drove +25.3% surplus improvement. Deficit events are the main risk. Run <a href="#" onclick="goTo('screen-simulation')" style="color:var(--green);">simulation</a> to model tighter deficit penalties.
+          <strong>Key finding:</strong> OT coefficient change from 1.25× to 1.5× drove +25.3% surplus improvement. Deficit events are the main risk. Run <a href="#" onclick="goTo('screen-simulation')" style="color:var(--green);">simulation</a> to model tighter deficit penalties.
         </div>
       </div>
     </div>
 
-    <!-- Founder equity migration -->
     <div class="card">
       <div class="card-header"><div class="card-title">Equity % Migration — Q4 vs Q1</div></div>
       <div class="card-body">
@@ -1346,52 +1286,51 @@
 </div>
 </div>
 
-<!-- ═══════════════════════════════════════ AUDIT + CAUSAL VERSIONING ══ (GAP 5) -->
+<!-- AUDIT & CAUSAL VERSIONING -->
 <div id="screen-audit-log" class="screen">
 <div class="main">
   <div class="topbar">
-    <div class="topbar-left"><div class="title">🔒 Audit &amp; Causal Versioning</div><div class="bread">Immutable ledger · Rule snapshots · Causal state preservation</div></div>
+    <div class="topbar-left"><div class="title">Audit &amp; Causal Versioning</div><div class="bread">Immutable ledger · Rule snapshots · Causal state preservation</div></div>
     <div class="topbar-actions">
-      <button class="btn btn-secondary">⬇ Export</button>
-      <button class="btn btn-secondary" onclick="alert('Period Feb 18–24 locked. Rule snapshot RS-2026-003 preserved permanently.')">🔒 Lock Period</button>
-      <button class="btn btn-purple" onclick="goTo('screen-simulation')">🧪 Run Counterfactual</button>
+      <button class="btn btn-secondary">Export</button>
+      <button class="btn btn-secondary" onclick="alert('Period Feb 18–24 locked. Rule snapshot RS-2026-003 preserved permanently.')">Lock Period</button>
+      <button class="btn btn-purple" onclick="goTo('screen-simulation')">Run Counterfactual</button>
     </div>
   </div>
   <div class="page">
-    <div class="notice notice-info">🔒 Every approved event is permanently attached to the <strong>Rule Snapshot</strong> active at the time. This preserves causal state — future rule changes cannot alter past records. Use <strong>Simulation</strong> to run counterfactuals.</div>
+    <div class="notice notice-info">Every approved event is permanently attached to the <strong>Rule Snapshot</strong> active at the time. This preserves causal state — future rule changes cannot alter past records. Use <strong>Simulation</strong> to run counterfactuals.</div>
 
     <div class="three-col" style="margin-bottom:16px;">
-      <div class="stat-card"><div class="stat-label">Current Period</div><div style="margin-top:6px;"><span class="open-badge">🟢 Open</span></div><div class="stat-sub">Feb 18–24 · Editable</div></div>
-      <div class="stat-card"><div class="stat-label">Last Locked</div><div style="margin-top:6px;"><span class="locked-badge">🔒 Locked</span></div><div class="stat-sub">Feb 10–17 · RS-2026-003</div></div>
+      <div class="stat-card"><div class="stat-label">Current Period</div><div style="margin-top:6px;"><span class="open-badge">Open</span></div><div class="stat-sub">Feb 18–24 · Editable</div></div>
+      <div class="stat-card"><div class="stat-label">Last Locked</div><div style="margin-top:6px;"><span class="locked-badge">Locked</span></div><div class="stat-sub">Feb 10–17 · RS-2026-003</div></div>
       <div class="stat-card"><div class="stat-label">Rule Snapshots</div><div class="stat-val">3</div><div class="stat-sub">Causal states preserved</div></div>
     </div>
 
-    <!-- Rule Snapshots -->
     <div class="card" style="margin-bottom:16px;">
       <div class="card-header">
-        <div class="card-title">📸 Rule Snapshots — Causal State Registry</div>
+        <div class="card-title">Rule Snapshots — Causal State Registry</div>
         <div style="font-size:11.5px;color:var(--g400);">Each snapshot is immutable once applied to an event</div>
       </div>
       <div class="card-body">
         <div style="display:flex;flex-direction:column;gap:10px;">
           <div class="causal-card">
             <div class="causal-period">RS-2026-003 · Active</div>
-            <div class="causal-title">Q1 2026 Current Rules <span class="open-badge">🟢 Current</span></div>
+            <div class="causal-title">Q1 2026 Current Rules <span class="open-badge">Current</span></div>
             <div class="causal-rules">OT Coef: 1.5 · Cont%: 10% · OT Threshold: 40hrs · Minor: −100 · Major: −500</div>
             <div style="margin-top:6px;display:flex;gap:8px;align-items:center;">
               <span style="font-size:11px;color:var(--g400);">Applied to 12 events · Effective Jan 15, 2026</span>
-              <button class="btn btn-ghost btn-sm" onclick="goTo('screen-simulation')">🧪 Counterfactual</button>
+              <button class="btn btn-ghost btn-sm" onclick="goTo('screen-simulation')">Counterfactual</button>
             </div>
           </div>
           <div class="causal-card" style="border-left-color:var(--g300);">
             <div class="causal-period">RS-2026-001 · Superseded</div>
-            <div class="causal-title">Q1 2026 Initial Rules <span class="locked-badge">🔒 Superseded</span></div>
+            <div class="causal-title">Q1 2026 Initial Rules <span class="locked-badge">Superseded</span></div>
             <div class="causal-rules">OT Coef: 1.25 · Cont%: 10% · OT Threshold: 40hrs · Minor: −100 · Major: −500</div>
             <div style="margin-top:6px;font-size:11px;color:var(--g400);">Applied to 4 events · Effective Jan 1–14, 2026 · <a href="#" onclick="goTo('screen-simulation')" style="color:var(--blue);">Compare counterfactual →</a></div>
           </div>
           <div class="causal-card" style="border-left-color:var(--g300);">
             <div class="causal-period">RS-2025-012 · Q4 Archive</div>
-            <div class="causal-title">Q4 2025 Final Rules <span class="locked-badge">🔒 Archived</span></div>
+            <div class="causal-title">Q4 2025 Final Rules <span class="locked-badge">Archived</span></div>
             <div class="causal-rules">OT Coef: 1.25 · Cont%: 10% · OT Threshold: 40hrs · Minor: −100 · Major: −500</div>
             <div style="margin-top:6px;font-size:11px;color:var(--g400);">Applied to 48 events · Q4 2025 full quarter · <a href="#" onclick="goTo('screen-comparison')" style="color:var(--blue);">Compare vs Q1 →</a></div>
           </div>
@@ -1399,10 +1338,9 @@
       </div>
     </div>
 
-    <!-- Approval flow + immutable timeline -->
     <div class="two-col-eq">
       <div class="card">
-        <div class="card-header"><div class="card-title">✅ Approval Flow — Alex Chen · Feb 18–24</div><span class="badge badge-yellow">Pending</span></div>
+        <div class="card-header"><div class="card-title">Approval Flow — Alex Chen · Feb 18–24</div><span class="badge badge-yellow">Pending</span></div>
         <div class="card-body">
           <div class="approval-flow">
             <div class="ap-step"><div class="ap-dot ap-done">✓</div><div class="ap-label">Harvest Sync</div></div>
@@ -1418,28 +1356,28 @@
             <div class="ap-step"><div class="ap-dot ap-pending">6</div><div class="ap-label">Letter Gen.</div></div>
           </div>
           <div style="display:flex;gap:8px;margin-top:8px;">
-            <button class="btn btn-primary btn-sm">✅ Approve</button>
-            <button class="btn btn-danger btn-sm">✗ Reject</button>
-            <button class="btn btn-secondary btn-sm" onclick="goTo('screen-contribution-details')">👁 Review</button>
+            <button class="btn btn-primary btn-sm">Approve</button>
+            <button class="btn btn-danger btn-sm">Reject</button>
+            <button class="btn btn-secondary btn-sm" onclick="goTo('screen-contribution-details')">Review</button>
           </div>
         </div>
       </div>
 
       <div class="card">
-        <div class="card-header"><div class="card-title">📜 Change History</div></div>
+        <div class="card-header"><div class="card-title">Change History</div></div>
         <div class="card-body" style="padding:14px 16px;">
           <div class="audit-entry">
             <div class="audit-dot" style="background:var(--green);margin-top:6px;"></div>
             <div>
               <div style="font-weight:600;font-size:12.5px;">Flow Event Approved — David Boctor · Feb 10–17</div>
-              <div class="audit-meta">Feb 17 · Admin: Ryker Rinehart <span class="locked-badge">🔒 RS-2026-003</span></div>
+              <div class="audit-meta">Feb 17 · Admin: Ryker Rinehart <span class="locked-badge">RS-2026-003</span></div>
               <div style="font-size:11.5px;color:var(--g500);margin-top:3px;">Basis: 4,800 · Gain: 1,080 · Skill: 480 · Total: 6,360</div>
             </div>
           </div>
           <div class="audit-entry">
             <div class="audit-dot" style="background:var(--orange);margin-top:6px;"></div>
             <div>
-              <div style="font-weight:600;font-size:12.5px;">⚙ Rule Change — OT Coef 1.25 → 1.5</div>
+              <div style="font-weight:600;font-size:12.5px;">Rule Change — OT Coef 1.25 → 1.5</div>
               <div class="audit-meta">Jan 15 · Admin: Ryker Rinehart · New snapshot: RS-2026-003</div>
               <div style="font-size:11.5px;color:var(--g500);margin-top:3px;">Past events unaffected. Future events use new coefficient. <a href="#" style="color:var(--blue);font-size:11px;" onclick="goTo('screen-simulation')">Counterfactual available →</a></div>
             </div>
@@ -1447,8 +1385,8 @@
           <div class="audit-entry">
             <div class="audit-dot" style="background:var(--red);margin-top:6px;"></div>
             <div>
-              <div style="font-weight:600;font-size:12.5px;">💔 Deficit Event — Maria Santos · Major</div>
-              <div class="audit-meta">Jan 22 · Admin: Ryker Rinehart <span class="locked-badge">🔒 RS-2026-001</span></div>
+              <div style="font-weight:600;font-size:12.5px;">Deficit Event — Maria Santos · Major</div>
+              <div class="audit-meta">Jan 22 · Admin: Ryker Rinehart <span class="locked-badge">RS-2026-001</span></div>
               <div style="font-size:11.5px;color:var(--g500);margin-top:3px;">Category: System Inefficiency. −500. Cannot be reversed — superseding entry required.</div>
             </div>
           </div>
@@ -1459,18 +1397,18 @@
 </div>
 </div>
 
-<!-- ═══════════════════════════════════════ DEFICIT EVENTS ══ (GAP 8) -->
+<!-- DEFICIT EVENTS -->
 <div id="screen-penalties" class="screen">
 <div class="main">
   <div class="topbar">
-    <div class="topbar-left"><div class="title" style="color:var(--red);">💔 Deficit Events</div><div class="bread">Wealth destruction analysis — not just deductions</div></div>
+    <div class="topbar-left"><div class="title">Deficit Events</div><div class="bread">Wealth destruction analysis — not just deductions</div></div>
     <div class="topbar-actions">
-      <button class="btn btn-secondary">⬇ Export</button>
+      <button class="btn btn-secondary">Export</button>
       <button class="btn btn-danger" onclick="goTo('screen-contribution-details')">+ Record Deficit Event</button>
     </div>
   </div>
   <div class="page">
-    <div class="notice notice-red">💔 Deficit events are evidence of <strong>wealth destruction</strong> in the SAF model — not just arithmetic subtraction. They are categorized by <em>type</em> (Misallocation, System Inefficiency, Negative Surplus) to identify where the system is leaking value.</div>
+    <div class="notice notice-red">Deficit events are evidence of <strong>wealth destruction</strong> in the SAF model — not just arithmetic subtraction. They are categorized by <em>type</em> (Misallocation, System Inefficiency, Negative Surplus) to identify where the system is leaking value.</div>
 
     <div class="three-col" style="margin-bottom:16px;">
       <div class="deficit-card">
@@ -1536,7 +1474,6 @@
       </table>
     </div>
 
-    <!-- Deficit type reference — framed as SAF -->
     <div class="two-col-eq">
       <div class="card">
         <div class="card-header"><div class="card-title">SAF Deficit Taxonomy</div></div>
@@ -1560,14 +1497,14 @@
       <div class="card">
         <div class="card-header"><div class="card-title">Deficit Trend — Impact on Surplus</div></div>
         <div class="card-body">
-          <div class="notice notice-warn" style="margin-bottom:12px;">⚠ At current deficit rate, system sustainability index will decline to 68% by Q2 if Maria Santos remains active.</div>
+          <div class="notice notice-warn" style="margin-bottom:12px;">At current deficit rate, system sustainability index will decline to 68% by Q2 if Maria Santos remains active.</div>
           <div class="rules-card">
             <div class="rule-row"><span class="rule-key">Q4 total deficit</span><span class="rule-val" style="color:var(--orange);">−500</span></div>
             <div class="rule-row"><span class="rule-key">Q1 total deficit</span><span class="rule-val" style="color:var(--red);">−800 ↑</span></div>
             <div class="rule-row"><span class="rule-key">Projected Q2 (no change)</span><span class="rule-val" style="color:var(--red);">−1,200 ↑</span></div>
             <div class="rule-row"><span class="rule-key">Surplus impact</span><span class="rule-val" style="color:var(--red);">−5.6% drag</span></div>
           </div>
-          <button class="btn btn-purple btn-sm" style="margin-top:10px;" onclick="goTo('screen-simulation')">🧪 Model impact →</button>
+          <button class="btn btn-purple btn-sm" style="margin-top:10px;" onclick="goTo('screen-simulation')">Model impact →</button>
         </div>
       </div>
     </div>
@@ -1575,15 +1512,15 @@
 </div>
 </div>
 
-<!-- ═══════════════════════════════════════ ANALYTICS ══ -->
+<!-- ANALYTICS -->
 <div id="screen-analytics" class="screen">
 <div class="main">
   <div class="topbar">
-    <div class="topbar-left"><div class="title">📈 Analytics</div><div class="bread">Flow analysis by founder, sprint, attribution type</div></div>
+    <div class="topbar-left"><div class="title">Analytics</div><div class="bread">Flow analysis by founder, sprint, attribution type</div></div>
     <div class="topbar-actions">
       <select class="form-control" style="width:140px;"><option>Q1 2026</option><option>Q4 2025</option></select>
-      <button class="btn btn-secondary">⬇ Export</button>
-      <button class="btn btn-ghost" onclick="goTo('screen-comparison')">⚖️ Compare →</button>
+      <button class="btn btn-secondary">Export</button>
+      <button class="btn btn-ghost" onclick="goTo('screen-comparison')">Compare →</button>
     </div>
   </div>
   <div class="page">
@@ -1643,23 +1580,23 @@
         <div class="card-body">
           <div style="display:flex;flex-direction:column;gap:10px;">
             <div>
-              <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px;"><span><span class="badge badge-blue badge-no-dot">🔵 Capital (Basis)</span></span><span class="mono" style="font-weight:700;">90,720 · 83.4%</span></div>
+              <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px;"><span><span class="badge badge-blue badge-no-dot">Capital (Basis)</span></span><span class="mono" style="font-weight:700;">90,720 · 83.4%</span></div>
               <div style="background:var(--g100);border-radius:999px;height:7px;overflow:hidden;"><div style="width:83.4%;background:var(--navy);height:100%;border-radius:999px;"></div></div>
             </div>
             <div>
-              <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px;"><span><span class="badge badge-teal badge-no-dot">🟢 Coordination Gain</span></span><span class="mono" style="font-weight:700;">8,120 · 7.5%</span></div>
+              <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px;"><span><span class="badge badge-teal badge-no-dot">Coordination Gain</span></span><span class="mono" style="font-weight:700;">8,120 · 7.5%</span></div>
               <div style="background:var(--g100);border-radius:999px;height:7px;overflow:hidden;"><div style="width:7.5%;background:var(--teal);height:100%;border-radius:999px;"></div></div>
             </div>
             <div>
-              <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px;"><span><span class="badge badge-purple badge-no-dot">🟣 Skill Attribution</span></span><span class="mono" style="font-weight:700;">5,160 · 4.7%</span></div>
+              <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px;"><span><span class="badge badge-purple badge-no-dot">Skill Attribution</span></span><span class="mono" style="font-weight:700;">5,160 · 4.7%</span></div>
               <div style="background:var(--g100);border-radius:999px;height:7px;overflow:hidden;"><div style="width:4.7%;background:var(--purple);height:100%;border-radius:999px;"></div></div>
             </div>
             <div>
-              <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px;"><span><span class="badge badge-green badge-no-dot">💵 Cash Basis</span></span><span class="mono" style="font-weight:700;">10,000 · 9.2%</span></div>
+              <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px;"><span><span class="badge badge-green badge-no-dot">Cash Basis</span></span><span class="mono" style="font-weight:700;">10,000 · 9.2%</span></div>
               <div style="background:var(--g100);border-radius:999px;height:7px;overflow:hidden;"><div style="width:9.2%;background:var(--green);height:100%;border-radius:999px;"></div></div>
             </div>
             <div>
-              <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px;"><span><span class="badge badge-red badge-no-dot">💔 Deficit (Destruction)</span></span><span class="mono" style="font-weight:700;color:var(--red);">−800 · −0.7%</span></div>
+              <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px;"><span><span class="badge badge-red badge-no-dot">Deficit (Destruction)</span></span><span class="mono" style="font-weight:700;color:var(--red);">−800 · −0.7%</span></div>
               <div style="background:var(--g100);border-radius:999px;height:7px;overflow:hidden;"><div style="width:0.7%;background:var(--red);height:100%;border-radius:999px;"></div></div>
             </div>
           </div>
@@ -1678,7 +1615,7 @@
           <div class="chart-col"><div class="chart-bar" style="height:70%;background:var(--teal);opacity:.7;"></div><div class="chart-xlabel">Sp5</div></div>
           <div class="chart-col"><div class="chart-bar" style="height:65%;background:var(--teal);opacity:.7;"></div><div class="chart-xlabel">Sp6</div></div>
           <div class="chart-col"><div class="chart-bar" style="height:80%;background:var(--purple);opacity:.7;"></div><div class="chart-xlabel">Sp7</div></div>
-          <div class="chart-col"><div class="chart-bar" style="height:100%;background:var(--blue);"></div><div class="chart-xlabel" style="font-weight:700;color:var(--blue);">Sp8 ←</div></div>
+          <div class="chart-col"><div class="chart-bar" style="height:100%;background:var(--blue);"></div><div class="chart-xlabel" style="font-weight:700;color:var(--blue);">Sp8</div></div>
         </div>
         <div class="saf-legend" style="margin-top:10px;">
           <div class="saf-item"><div class="saf-dot" style="background:var(--blue-mid);"></div>Early sprints (RS-2026-001)</div>
@@ -1692,7 +1629,7 @@
 </div>
 </div>
 
-<!-- ═══════════════════════════════════════ FUND DETAILS ══ -->
+<!-- FUND DETAILS -->
 <div id="screen-fund-details" class="screen">
 <div class="main">
   <div class="topbar">
@@ -1701,14 +1638,13 @@
       <div class="bread">Fund Ledger › Create New Fund</div>
     </div>
     <div class="topbar-actions">
-      <button class="btn btn-secondary" onclick="goTo('screen-fund-ledger')">✕ Cancel</button>
+      <button class="btn btn-secondary" onclick="goTo('screen-fund-ledger')">Cancel</button>
       <button class="btn btn-secondary" onclick="alert('Draft saved.')">Save Draft</button>
       <button class="btn btn-primary" onclick="fundFormSubmit()">Create Fund →</button>
     </div>
   </div>
   <div class="page">
 
-    <!-- Step progress bar -->
     <div style="display:flex;align-items:center;gap:0;margin-bottom:22px;">
       <div class="fund-step fund-step-active" data-step="1" onclick="fundGoStep(1)">
         <div class="fund-step-num">1</div><div class="fund-step-label">Identity</div>
@@ -1735,14 +1671,14 @@
       </div>
     </div>
 
-    <!-- ══ STEP 1: IDENTITY ══ -->
+    <!-- STEP 1: IDENTITY -->
     <div id="fund-step-1" class="fund-step-panel">
       <div style="display:grid;grid-template-columns:1fr 320px;gap:18px;align-items:start;">
         <div style="display:flex;flex-direction:column;gap:14px;">
 
           <div class="card">
             <div class="card-header">
-              <div class="card-title">🏦 Fund Identity</div>
+              <div class="card-title">Fund Identity</div>
               <span class="badge badge-blue badge-no-dot">Core entity metadata</span>
             </div>
             <div class="card-body">
@@ -1809,7 +1745,7 @@
           </div>
 
           <div class="card">
-            <div class="card-header"><div class="card-title">📅 Timeline & Cadence</div></div>
+            <div class="card-header"><div class="card-title">Timeline &amp; Cadence</div></div>
             <div class="card-body">
               <div class="grid2">
                 <div class="form-group">
@@ -1849,10 +1785,9 @@
 
         </div>
 
-        <!-- Right sticky preview -->
         <div style="position:sticky;top:70px;display:flex;flex-direction:column;gap:12px;">
           <div class="card">
-            <div class="card-header"><div class="card-title">👁 Fund Preview</div></div>
+            <div class="card-header"><div class="card-title">Fund Preview</div></div>
             <div class="card-body" style="padding:14px;">
               <div style="background:linear-gradient(135deg,var(--navy) 0%,#1e4976 100%);border-radius:8px;padding:14px;color:#fff;margin-bottom:12px;">
                 <div style="font-size:10px;font-weight:700;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px;">Fund</div>
@@ -1869,7 +1804,7 @@
                 <div class="rule-row"><span class="rule-key">End</span><span class="rule-val" style="font-size:11px;">Jun 30, 2026</span></div>
                 <div class="rule-row"><span class="rule-key">Period</span><span class="rule-val" style="font-size:11px;">Weekly (7 days)</span></div>
               </div>
-              <div class="notice notice-info" style="margin-bottom:0;font-size:11px;">ℹ Rule Snapshot <strong>RS-2026-004</strong> will be created on activation.</div>
+              <div class="notice notice-info" style="margin-bottom:0;font-size:11px;">Rule Snapshot <strong>RS-2026-004</strong> will be created on activation.</div>
             </div>
           </div>
           <div style="display:flex;gap:8px;">
@@ -1880,19 +1815,19 @@
       </div>
     </div>
 
-    <!-- ══ STEP 2: STRUCTURE ══ -->
+    <!-- STEP 2: STRUCTURE -->
     <div id="fund-step-2" class="fund-step-panel" style="display:none;">
       <div style="display:grid;grid-template-columns:1fr 320px;gap:18px;align-items:start;">
         <div style="display:flex;flex-direction:column;gap:14px;">
 
           <div class="card">
             <div class="card-header">
-              <div class="card-title">💰 Investment Basis</div>
+              <div class="card-title">Investment Basis</div>
               <span class="badge badge-blue badge-no-dot">Capital structure</span>
             </div>
             <div class="card-body">
               <div class="fg">
-                <div class="notice notice-info">🔵 The investment basis defines what types of capital can enter this fund and how they are classified as <strong>Basis</strong> (stored capital) vs <strong>Gain</strong> (value created) in the SAF model.</div>
+                <div class="notice notice-info">The investment basis defines what types of capital can enter this fund and how they are classified as <strong>Basis</strong> (stored capital) vs <strong>Gain</strong> (value created) in the SAF model.</div>
                 <div class="grid2">
                   <div class="form-group">
                     <label>Target Fund Size</label>
@@ -1915,42 +1850,42 @@
                   <label class="fund-checkbox-row">
                     <input type="checkbox" checked>
                     <div>
-                      <div style="font-size:13px;font-weight:600;color:var(--navy);">⚡ Labor — Base Inputs</div>
+                      <div style="font-size:13px;font-weight:600;color:var(--navy);">Labor — Base Inputs</div>
                       <div style="font-size:11px;color:var(--g500);">Hours × hourly rate up to the OT threshold. Classified as <strong>Basis</strong> (stored capital — not value-creating beyond the exchange).</div>
                     </div>
                   </label>
                   <label class="fund-checkbox-row">
                     <input type="checkbox" checked>
                     <div>
-                      <div style="font-size:13px;font-weight:600;color:var(--teal);">⏱ Labor — Overtime Gain</div>
+                      <div style="font-size:13px;font-weight:600;color:var(--teal);">Labor — Overtime Gain</div>
                       <div style="font-size:11px;color:var(--g500);">Hours beyond OT threshold × coefficient multiplier. Classified as <strong>Gain</strong> (coordination surplus — value created above basis).</div>
                     </div>
                   </label>
                   <label class="fund-checkbox-row">
                     <input type="checkbox" checked>
                     <div>
-                      <div style="font-size:13px;font-weight:600;color:var(--purple);">🌟 Skill Attribution (Contingent Bonus)</div>
-                      <div style="font-size:11px;color:var(--g500);">Performance bonus applied to Base Inputs for 🟢 Green flag holders only. Classified as <strong>Skill</strong>. Never applies to OT gain.</div>
+                      <div style="font-size:13px;font-weight:600;color:var(--purple);">Skill Attribution (Contingent Bonus)</div>
+                      <div style="font-size:11px;color:var(--g500);">Performance bonus applied to Base Inputs for Green flag holders only. Classified as <strong>Skill</strong>. Never applies to OT gain.</div>
                     </div>
                   </label>
                   <label class="fund-checkbox-row">
                     <input type="checkbox" checked>
                     <div>
-                      <div style="font-size:13px;font-weight:600;color:var(--green);">💵 Cash Contributions</div>
+                      <div style="font-size:13px;font-weight:600;color:var(--green);">Cash Contributions</div>
                       <div style="font-size:11px;color:var(--g500);">Direct cash input by a founder. Always classified as <strong>Basis</strong> — not gain-generating. Tracked separately in the attribution layer.</div>
                     </div>
                   </label>
                   <label class="fund-checkbox-row">
                     <input type="checkbox">
                     <div>
-                      <div style="font-size:13px;font-weight:600;color:var(--g700);">📦 Non-Cash / In-Kind</div>
+                      <div style="font-size:13px;font-weight:600;color:var(--g700);">Non-Cash / In-Kind</div>
                       <div style="font-size:11px;color:var(--g500);">Equipment, IP, services, or other tangible assets. Valued at fair market value. Classified as <strong>Basis</strong>.</div>
                     </div>
                   </label>
                   <label class="fund-checkbox-row">
                     <input type="checkbox" checked>
                     <div>
-                      <div style="font-size:13px;font-weight:600;color:var(--red);">💔 Deficit Events</div>
+                      <div style="font-size:13px;font-weight:600;color:var(--red);">Deficit Events</div>
                       <div style="font-size:11px;color:var(--g500);">Wealth destruction events — Misallocation, System Inefficiency, Coordination Failure. Tracked as negative stock entries.</div>
                     </div>
                   </label>
@@ -1960,7 +1895,7 @@
           </div>
 
           <div class="card">
-            <div class="card-header"><div class="card-title">📊 Equity Model</div></div>
+            <div class="card-header"><div class="card-title">Equity Model</div></div>
             <div class="card-body">
               <div class="fg">
                 <div class="grid2">
@@ -2002,20 +1937,20 @@
 
         <div style="position:sticky;top:70px;display:flex;flex-direction:column;gap:12px;">
           <div class="card">
-            <div class="card-header"><div class="card-title">🔵 Input Classification</div></div>
+            <div class="card-header"><div class="card-title">Input Classification</div></div>
             <div class="card-body" style="padding:14px;">
               <div style="display:flex;flex-direction:column;gap:6px;">
                 <div style="display:flex;align-items:center;justify-content:space-between;font-size:12px;padding:5px 0;border-bottom:1px dashed var(--g200);">
-                  <span style="color:var(--navy);font-weight:600;">🔵 Basis inputs</span><span style="font-size:11px;color:var(--g500);">Labor + Cash</span>
+                  <span style="color:var(--navy);font-weight:600;">Basis inputs</span><span style="font-size:11px;color:var(--g500);">Labor + Cash</span>
                 </div>
                 <div style="display:flex;align-items:center;justify-content:space-between;font-size:12px;padding:5px 0;border-bottom:1px dashed var(--g200);">
-                  <span style="color:var(--teal);font-weight:600;">🟢 Gain inputs</span><span style="font-size:11px;color:var(--g500);">OT Labor only</span>
+                  <span style="color:var(--teal);font-weight:600;">Gain inputs</span><span style="font-size:11px;color:var(--g500);">OT Labor only</span>
                 </div>
                 <div style="display:flex;align-items:center;justify-content:space-between;font-size:12px;padding:5px 0;border-bottom:1px dashed var(--g200);">
-                  <span style="color:var(--purple);font-weight:600;">🟣 Skill inputs</span><span style="font-size:11px;color:var(--g500);">Contingent bonus</span>
+                  <span style="color:var(--purple);font-weight:600;">Skill inputs</span><span style="font-size:11px;color:var(--g500);">Contingent bonus</span>
                 </div>
                 <div style="display:flex;align-items:center;justify-content:space-between;font-size:12px;padding:5px 0;">
-                  <span style="color:var(--red);font-weight:600;">💔 Deficit events</span><span style="font-size:11px;color:var(--g500);">3 types enabled</span>
+                  <span style="color:var(--red);font-weight:600;">Deficit events</span><span style="font-size:11px;color:var(--g500);">3 types enabled</span>
                 </div>
               </div>
             </div>
@@ -2028,14 +1963,14 @@
       </div>
     </div>
 
-    <!-- ══ STEP 3: ACTORS ══ -->
+    <!-- STEP 3: ACTORS -->
     <div id="fund-step-3" class="fund-step-panel" style="display:none;">
       <div style="display:grid;grid-template-columns:1fr 320px;gap:18px;align-items:start;">
         <div style="display:flex;flex-direction:column;gap:14px;">
 
           <div class="card">
             <div class="card-header">
-              <div class="card-title">👥 Actors Involved</div>
+              <div class="card-title">Actors Involved</div>
               <button class="btn btn-secondary btn-sm" onclick="alert('Founder Directory — select actors to link to this fund')">+ Add from Directory</button>
             </div>
             <div class="card-body" style="padding:0;">
@@ -2052,9 +1987,9 @@
                       </td>
                       <td><select class="form-control" style="width:130px;padding:4px 8px;font-size:12px;"><option>Founder</option><option>Admin</option><option>Contributor</option><option>Observer</option></select></td>
                       <td><div class="prefix-wrap" style="width:90px;"><span class="prefix">$</span><input class="form-control" type="number" value="120" style="padding:4px 4px 4px 18px;font-size:12px;"></div></td>
-                      <td><select class="form-control" style="width:100px;padding:4px 8px;font-size:12px;"><option>🟢 Green</option><option>🟡 Yellow</option><option>🔴 Red</option></select></td>
+                      <td><select class="form-control" style="width:100px;padding:4px 8px;font-size:12px;"><option>Green</option><option>Yellow</option><option>Red</option></select></td>
                       <td><select class="form-control" style="width:110px;padding:4px 8px;font-size:12px;"><option>Admin</option><option>Edit</option><option>View only</option></select></td>
-                      <td><button class="btn btn-ghost btn-sm" style="color:var(--red);">✕</button></td>
+                      <td><button class="btn btn-ghost btn-sm" style="color:var(--red);">Remove</button></td>
                     </tr>
                     <tr>
                       <td>
@@ -2065,9 +2000,9 @@
                       </td>
                       <td><select class="form-control" style="width:130px;padding:4px 8px;font-size:12px;"><option selected>Admin</option><option>Founder</option><option>Contributor</option><option>Observer</option></select></td>
                       <td><div class="prefix-wrap" style="width:90px;"><span class="prefix">$</span><input class="form-control" type="number" value="95" style="padding:4px 4px 4px 18px;font-size:12px;"></div></td>
-                      <td><select class="form-control" style="width:100px;padding:4px 8px;font-size:12px;"><option>🟢 Green</option><option>🟡 Yellow</option><option>🔴 Red</option></select></td>
+                      <td><select class="form-control" style="width:100px;padding:4px 8px;font-size:12px;"><option>Green</option><option>Yellow</option><option>Red</option></select></td>
                       <td><select class="form-control" style="width:110px;padding:4px 8px;font-size:12px;"><option>Admin</option><option>Edit</option><option>View only</option></select></td>
-                      <td><button class="btn btn-ghost btn-sm" style="color:var(--red);">✕</button></td>
+                      <td><button class="btn btn-ghost btn-sm" style="color:var(--red);">Remove</button></td>
                     </tr>
                     <tr>
                       <td>
@@ -2078,9 +2013,9 @@
                       </td>
                       <td><select class="form-control" style="width:130px;padding:4px 8px;font-size:12px;"><option>Founder</option><option>Admin</option><option selected>Contributor</option><option>Observer</option></select></td>
                       <td><div class="prefix-wrap" style="width:90px;"><span class="prefix">$</span><input class="form-control" type="number" value="85" style="padding:4px 4px 4px 18px;font-size:12px;"></div></td>
-                      <td><select class="form-control" style="width:100px;padding:4px 8px;font-size:12px;"><option>🟢 Green</option><option selected>🟡 Yellow</option><option>🔴 Red</option></select></td>
+                      <td><select class="form-control" style="width:100px;padding:4px 8px;font-size:12px;"><option>Green</option><option selected>Yellow</option><option>Red</option></select></td>
                       <td><select class="form-control" style="width:110px;padding:4px 8px;font-size:12px;"><option>Admin</option><option selected>Edit</option><option>View only</option></select></td>
-                      <td><button class="btn btn-ghost btn-sm" style="color:var(--red);">✕</button></td>
+                      <td><button class="btn btn-ghost btn-sm" style="color:var(--red);">Remove</button></td>
                     </tr>
                     <tr style="background:var(--g50);">
                       <td colspan="6">
@@ -2094,7 +2029,7 @@
           </div>
 
           <div class="card">
-            <div class="card-header"><div class="card-title">📄 Agreements & Notifications</div></div>
+            <div class="card-header"><div class="card-title">Agreements &amp; Notifications</div></div>
             <div class="card-body">
               <div class="fg">
                 <div class="form-group">
@@ -2125,7 +2060,7 @@
 
         <div style="position:sticky;top:70px;display:flex;flex-direction:column;gap:12px;">
           <div class="card">
-            <div class="card-header"><div class="card-title">👥 Actor Summary</div></div>
+            <div class="card-header"><div class="card-title">Actor Summary</div></div>
             <div class="card-body" style="padding:14px;">
               <div style="display:flex;flex-direction:column;gap:8px;">
                 <div style="display:flex;align-items:center;gap:8px;">
@@ -2156,22 +2091,22 @@
       </div>
     </div>
 
-    <!-- ══ STEP 4: ACCOUNTS ══ -->
+    <!-- STEP 4: ACCOUNTS -->
     <div id="fund-step-4" class="fund-step-panel" style="display:none;">
       <div style="display:grid;grid-template-columns:1fr 320px;gap:18px;align-items:start;">
         <div style="display:flex;flex-direction:column;gap:14px;">
 
           <div class="card">
             <div class="card-header">
-              <div class="card-title">🏛 Linked Accounts</div>
+              <div class="card-title">Linked Accounts</div>
               <button class="btn btn-secondary btn-sm" onclick="alert('Account Directory')">+ Link Account</button>
             </div>
             <div class="card-body">
-              <div class="notice notice-info" style="margin-bottom:14px;">🏛 Accounts are the financial or equity containers linked to this fund — they define where inputs land and how vesting is tracked. Managed in the <a href="#" style="color:var(--blue);">Account Directory →</a></div>
+              <div class="notice notice-info" style="margin-bottom:14px;">Accounts are the financial or equity containers linked to this fund — they define where inputs land and how vesting is tracked. Managed in the <a href="#" style="color:var(--blue);">Account Directory →</a></div>
               <div style="display:flex;flex-direction:column;gap:10px;">
 
                 <div class="intg-card" style="padding:12px 14px;">
-                  <div class="intg-icon" style="background:var(--blue-light);font-size:16px;">💼</div>
+                  <div class="intg-icon" style="background:var(--blue-light);font-size:16px;">&#128188;</div>
                   <div style="flex:1;">
                     <div style="font-weight:700;font-size:13px;color:var(--navy);">Equity Pool — Q2 2026</div>
                     <div style="font-size:11px;color:var(--g500);margin-top:2px;">Type: Equity ledger · Currency: USD · Opening balance: $0</div>
@@ -2179,12 +2114,12 @@
                   </div>
                   <div style="display:flex;flex-direction:column;gap:4px;align-items:flex-end;">
                     <span class="badge badge-green" style="font-size:10px;">Primary</span>
-                    <button class="btn btn-ghost btn-sm" style="color:var(--red);padding:2px 6px;">✕</button>
+                    <button class="btn btn-ghost btn-sm" style="color:var(--red);padding:2px 6px;">Remove</button>
                   </div>
                 </div>
 
                 <div class="intg-card" style="padding:12px 14px;">
-                  <div class="intg-icon" style="background:var(--green-light);font-size:16px;">💵</div>
+                  <div class="intg-icon" style="background:var(--green-light);font-size:16px;">&#128181;</div>
                   <div style="flex:1;">
                     <div style="font-weight:700;font-size:13px;color:var(--navy);">Cash Basis Account</div>
                     <div style="font-size:11px;color:var(--g500);margin-top:2px;">Type: Cash ledger · Currency: USD · Opening balance: $0</div>
@@ -2192,12 +2127,12 @@
                   </div>
                   <div style="display:flex;flex-direction:column;gap:4px;align-items:flex-end;">
                     <span class="badge badge-green" style="font-size:10px;">Secondary</span>
-                    <button class="btn btn-ghost btn-sm" style="color:var(--red);padding:2px 6px;">✕</button>
+                    <button class="btn btn-ghost btn-sm" style="color:var(--red);padding:2px 6px;">Remove</button>
                   </div>
                 </div>
 
                 <div class="intg-card" style="padding:12px 14px;border:1px dashed var(--g300);background:var(--g50);">
-                  <div class="intg-icon" style="background:var(--g100);font-size:16px;">💔</div>
+                  <div class="intg-icon" style="background:var(--g100);font-size:16px;">&#128148;</div>
                   <div style="flex:1;">
                     <div style="font-weight:700;font-size:13px;color:var(--g600);">Deficit Tracking Ledger</div>
                     <div style="font-size:11px;color:var(--g400);margin-top:2px;">Type: Deficit ledger · Records wealth destruction events only</div>
@@ -2205,7 +2140,7 @@
                   </div>
                   <div style="display:flex;flex-direction:column;gap:4px;align-items:flex-end;">
                     <span class="badge badge-gray" style="font-size:10px;">Optional</span>
-                    <button class="btn btn-ghost btn-sm" style="color:var(--red);padding:2px 6px;">✕</button>
+                    <button class="btn btn-ghost btn-sm" style="color:var(--red);padding:2px 6px;">Remove</button>
                   </div>
                 </div>
 
@@ -2215,13 +2150,13 @@
           </div>
 
           <div class="card">
-            <div class="card-header"><div class="card-title">🔗 Integration Sources</div></div>
+            <div class="card-header"><div class="card-title">Integration Sources</div></div>
             <div class="card-body">
               <div class="grid2">
                 <div class="form-group">
                   <label>Time Tracking</label>
                   <select class="form-control">
-                    <option>🌾 Harvest (connected)</option>
+                    <option>Harvest (connected)</option>
                     <option>Toggl</option>
                     <option>Clockify</option>
                     <option>Manual entry only</option>
@@ -2231,7 +2166,7 @@
                 <div class="form-group">
                   <label>Sprint / Task Tracking</label>
                   <select class="form-control">
-                    <option>📋 ClickUp (connected)</option>
+                    <option>ClickUp (connected)</option>
                     <option>Linear</option>
                     <option>Jira</option>
                     <option>None</option>
@@ -2246,7 +2181,7 @@
 
         <div style="position:sticky;top:70px;display:flex;flex-direction:column;gap:12px;">
           <div class="card">
-            <div class="card-header"><div class="card-title">🏛 Account Structure</div></div>
+            <div class="card-header"><div class="card-title">Account Structure</div></div>
             <div class="card-body" style="padding:14px;">
               <div style="display:flex;flex-direction:column;gap:6px;">
                 <div style="display:flex;justify-content:space-between;font-size:12px;padding:5px 0;border-bottom:1px dashed var(--g200);">
@@ -2271,17 +2206,17 @@
       </div>
     </div>
 
-    <!-- ══ STEP 5: RULES ══ -->
+    <!-- STEP 5: RULES -->
     <div id="fund-step-5" class="fund-step-panel" style="display:none;">
       <div style="display:grid;grid-template-columns:1fr 320px;gap:18px;align-items:start;">
         <div style="display:flex;flex-direction:column;gap:14px;">
           <div class="card">
             <div class="card-header">
-              <div class="card-title">⚙ Rules Engine Configuration</div>
+              <div class="card-title">Rules Engine Configuration</div>
               <span class="badge badge-purple badge-no-dot">Will create Rule Snapshot RS-2026-004</span>
             </div>
             <div class="card-body">
-              <div class="notice notice-warn">⚠ These rules are locked into a <strong>Rule Snapshot</strong> on fund creation. All future events reference this snapshot. Updating rules later creates a new snapshot — past events always retain their original.</div>
+              <div class="notice notice-warn">These rules are locked into a <strong>Rule Snapshot</strong> on fund creation. All future events reference this snapshot. Updating rules later creates a new snapshot — past events always retain their original.</div>
               <div class="fg" style="margin-top:4px;">
                 <div class="grid2">
                   <div class="form-group">
@@ -2299,7 +2234,7 @@
                   <div class="form-group">
                     <label>Contingent Bonus % <span class="req">*</span></label>
                     <div class="prefix-wrap"><span class="prefix">%</span><input class="form-control" type="number" value="10"></div>
-                    <div class="form-hint">Applied to Base Inputs · 🟢 Green flag holders only</div>
+                    <div class="form-hint">Applied to Base Inputs · Green flag holders only</div>
                   </div>
                   <div class="form-group">
                     <label>Contingent Applied To</label>
@@ -2309,7 +2244,7 @@
                     </select>
                   </div>
                 </div>
-                <div class="notice notice-purple" style="margin:0;">🟣 Contingent is a <strong>skill attribution</strong> — not a capital return. It rewards demonstrated performance, not just time worked.</div>
+                <div class="notice notice-purple" style="margin:0;">Contingent is a <strong>skill attribution</strong> — not a capital return. It rewards demonstrated performance, not just time worked.</div>
                 <div class="divider" style="margin:4px 0;"></div>
                 <div class="section-label">Deficit Event Penalty Values</div>
                 <div class="grid3">
@@ -2356,7 +2291,7 @@
 
         <div style="position:sticky;top:70px;display:flex;flex-direction:column;gap:12px;">
           <div class="card">
-            <div class="card-header"><div class="card-title">📸 Snapshot Preview</div></div>
+            <div class="card-header"><div class="card-title">Snapshot Preview</div></div>
             <div class="card-body" style="padding:14px;">
               <div style="font-size:10px;font-family:'DM Mono',monospace;font-weight:700;color:var(--blue);margin-bottom:10px;">RS-2026-004 · Will be created</div>
               <div class="rules-card">
@@ -2371,7 +2306,7 @@
               <div style="font-size:11px;color:var(--g500);margin-top:8px;">Immutable once the first event is approved against it.</div>
             </div>
           </div>
-          <button class="btn btn-purple btn-sm" style="justify-content:center;" onclick="goTo('screen-simulation')">🧪 Simulate these rules first →</button>
+          <button class="btn btn-purple btn-sm" style="justify-content:center;" onclick="goTo('screen-simulation')">Simulate these rules first →</button>
           <div style="display:flex;gap:8px;">
             <button class="btn btn-secondary" style="flex:1;justify-content:center;" onclick="fundGoStep(4)">← Back</button>
             <button class="btn btn-primary" style="flex:1;justify-content:center;" onclick="fundGoStep(6)">Review →</button>
@@ -2380,14 +2315,14 @@
       </div>
     </div>
 
-    <!-- ══ STEP 6: REVIEW ══ -->
+    <!-- STEP 6: REVIEW -->
     <div id="fund-step-6" class="fund-step-panel" style="display:none;">
       <div style="display:grid;grid-template-columns:1fr 320px;gap:18px;align-items:start;">
         <div style="display:flex;flex-direction:column;gap:14px;">
 
           <div class="card">
             <div class="card-header">
-              <div class="card-title">✅ Fund Summary — Ready to Create</div>
+              <div class="card-title">Fund Summary — Ready to Create</div>
               <span class="badge badge-green" style="font-size:11px;">All required fields complete</span>
             </div>
             <div class="card-body">
@@ -2406,9 +2341,9 @@
                 <div>
                   <div class="section-label" style="margin-bottom:8px;">Actors (3)</div>
                   <div class="rules-card">
-                    <div class="rule-row"><span class="rule-key">David Boctor</span><span class="rule-val" style="font-size:11px;">Founder · $120/hr · 🟢</span></div>
-                    <div class="rule-row"><span class="rule-key">Ryker Rinehart</span><span class="rule-val" style="font-size:11px;">Admin · $95/hr · 🟢</span></div>
-                    <div class="rule-row"><span class="rule-key">Alex Chen</span><span class="rule-val" style="font-size:11px;">Contributor · $85/hr · 🟡</span></div>
+                    <div class="rule-row"><span class="rule-key">David Boctor</span><span class="rule-val" style="font-size:11px;">Founder · $120/hr · Green</span></div>
+                    <div class="rule-row"><span class="rule-key">Ryker Rinehart</span><span class="rule-val" style="font-size:11px;">Admin · $95/hr · Green</span></div>
+                    <div class="rule-row"><span class="rule-key">Alex Chen</span><span class="rule-val" style="font-size:11px;">Contributor · $85/hr · Yellow</span></div>
                   </div>
                 </div>
                 <div>
@@ -2430,7 +2365,7 @@
                 </div>
               </div>
               <div class="divider"></div>
-              <div class="notice notice-info" style="margin-bottom:0;">ℹ️ On creation: fund activates, Rule Snapshot RS-2026-004 is locked, agreements are dispatched to all 3 actors, and the first sprint period (Apr 1–7) opens automatically.</div>
+              <div class="notice notice-info" style="margin-bottom:0;">On creation: fund activates, Rule Snapshot RS-2026-004 is locked, agreements are dispatched to all 3 actors, and the first sprint period (Apr 1–7) opens automatically.</div>
             </div>
           </div>
 
@@ -2438,12 +2373,12 @@
 
         <div style="position:sticky;top:70px;display:flex;flex-direction:column;gap:12px;">
           <div class="card">
-            <div class="card-header"><div class="card-title">🚀 Create Fund</div></div>
+            <div class="card-header"><div class="card-title">Create Fund</div></div>
             <div class="card-body" style="padding:18px;text-align:center;">
-              <div style="font-size:32px;margin-bottom:8px;">🏦</div>
+              <div style="font-size:32px;margin-bottom:8px;">&#127974;</div>
               <div style="font-weight:800;font-size:15px;color:var(--navy);margin-bottom:4px;" id="rev-name-big">—</div>
               <div style="font-size:12px;color:var(--g500);margin-bottom:18px;">3 actors · SAF Model v3 · Apr–Jun 2026</div>
-              <button class="btn btn-primary" style="width:100%;justify-content:center;padding:11px;font-size:14px;" onclick="fundFormSubmit()">🚀 Create Fund</button>
+              <button class="btn btn-primary" style="width:100%;justify-content:center;padding:11px;font-size:14px;" onclick="fundFormSubmit()">Create Fund</button>
               <div style="font-size:11px;color:var(--g400);margin-top:10px;">Rule Snapshot RS-2026-004 will be locked on creation.</div>
             </div>
           </div>
@@ -2458,7 +2393,8 @@
   </div>
 </div>
 </div>
-<!-- ═══════════════════════════════════════ FOUNDER DIRECTORY ══ -->
+
+<!-- FOUNDER DIRECTORY -->
 <div id="screen-founder-directory" class="screen">
 <div class="main">
   <div class="topbar">
@@ -2470,7 +2406,7 @@
   </div>
   <div class="page">
     <div class="filter-bar">
-      <input class="form-control" style="flex:1;min-width:180px;" placeholder="🔍  Search…">
+      <input class="form-control" style="flex:1;min-width:180px;" placeholder="Search…">
       <select class="form-control" style="width:130px;"><option>All Statuses</option></select>
       <select class="form-control" style="width:130px;"><option>All Flags</option></select>
     </div>
@@ -2482,45 +2418,45 @@
             <td><span class="td-name">David Boctor</span></td>
             <td style="font-size:12px;">david@021.ceo</td><td>$120/hr</td>
             <td><span class="badge badge-green">Active</span></td>
-            <td><span class="badge badge-green">🟢 Green</span></td>
+            <td><span class="badge badge-green">Green</span></td>
             <td class="mono" style="font-weight:700;color:var(--blue);">48,320</td>
             <td class="mono" style="color:var(--navy);">38,800</td>
             <td class="mono" style="color:var(--teal);">9,520</td>
             <td><span class="badge badge-teal badge-no-dot">28% gain</span></td>
-            <td style="display:flex;gap:3px;"><button class="btn btn-ghost btn-sm">✏</button><button class="btn btn-ghost btn-sm" onclick="goTo('screen-contribution-details')">⚡</button><button class="btn btn-ghost btn-sm" onclick="goTo('screen-attribution')">🧩</button></td>
+            <td style="display:flex;gap:3px;"><button class="btn btn-ghost btn-sm">Edit</button><button class="btn btn-ghost btn-sm" onclick="goTo('screen-contribution-details')">Flow</button><button class="btn btn-ghost btn-sm" onclick="goTo('screen-attribution')">Attribution</button></td>
           </tr>
           <tr>
             <td><span class="td-name">Ryker Rinehart</span></td>
             <td style="font-size:12px;">ryker@021.ceo</td><td>$95/hr</td>
             <td><span class="badge badge-green">Active</span></td>
-            <td><span class="badge badge-green">🟢 Green</span></td>
+            <td><span class="badge badge-green">Green</span></td>
             <td class="mono" style="font-weight:700;color:var(--teal);">32,150</td>
             <td class="mono" style="color:var(--navy);">26,600</td>
             <td class="mono" style="color:var(--teal);">5,550</td>
             <td><span class="badge badge-teal badge-no-dot">24% gain</span></td>
-            <td style="display:flex;gap:3px;"><button class="btn btn-ghost btn-sm">✏</button><button class="btn btn-ghost btn-sm" onclick="goTo('screen-contribution-details')">⚡</button><button class="btn btn-ghost btn-sm" onclick="goTo('screen-attribution')">🧩</button></td>
+            <td style="display:flex;gap:3px;"><button class="btn btn-ghost btn-sm">Edit</button><button class="btn btn-ghost btn-sm" onclick="goTo('screen-contribution-details')">Flow</button><button class="btn btn-ghost btn-sm" onclick="goTo('screen-attribution')">Attribution</button></td>
           </tr>
           <tr>
             <td><span class="td-name">Alex Chen</span></td>
             <td style="font-size:12px;">alex@021.ceo</td><td>$85/hr</td>
             <td><span class="badge badge-green">Active</span></td>
-            <td><span class="badge badge-yellow">🟡 Yellow</span></td>
+            <td><span class="badge badge-yellow">Yellow</span></td>
             <td class="mono" style="font-weight:700;color:var(--purple);">19,780</td>
             <td class="mono" style="color:var(--navy);">19,780</td>
             <td class="mono" style="color:var(--g400);">—</td>
             <td><span class="badge badge-gray badge-no-dot">0% gain</span></td>
-            <td style="display:flex;gap:3px;"><button class="btn btn-ghost btn-sm">✏</button><button class="btn btn-ghost btn-sm" onclick="goTo('screen-contribution-details')">⚡</button><button class="btn btn-ghost btn-sm" onclick="goTo('screen-attribution')">🧩</button></td>
+            <td style="display:flex;gap:3px;"><button class="btn btn-ghost btn-sm">Edit</button><button class="btn btn-ghost btn-sm" onclick="goTo('screen-contribution-details')">Flow</button><button class="btn btn-ghost btn-sm" onclick="goTo('screen-attribution')">Attribution</button></td>
           </tr>
           <tr>
             <td><span class="td-name">Maria Santos</span></td>
             <td style="font-size:12px;">maria@021.ceo</td><td>$110/hr</td>
             <td><span class="badge badge-orange">Suspended</span></td>
-            <td><span class="badge badge-red">🔴 Red</span></td>
+            <td><span class="badge badge-red">Red</span></td>
             <td class="mono" style="font-weight:700;color:var(--orange);">8,540</td>
             <td class="mono" style="color:var(--navy);">9,240</td>
             <td class="mono" style="color:var(--red);">−700</td>
             <td><span class="badge badge-red badge-no-dot">−8% deficit</span></td>
-            <td style="display:flex;gap:3px;"><button class="btn btn-ghost btn-sm">✏</button><button class="btn btn-ghost btn-sm" onclick="goTo('screen-penalties')" style="opacity:.4;cursor:not-allowed;">⚡</button><button class="btn btn-ghost btn-sm" onclick="goTo('screen-attribution')">🧩</button></td>
+            <td style="display:flex;gap:3px;"><button class="btn btn-ghost btn-sm">Edit</button><button class="btn btn-ghost btn-sm" onclick="goTo('screen-penalties')" style="opacity:.4;cursor:not-allowed;">Flow</button><button class="btn btn-ghost btn-sm" onclick="goTo('screen-attribution')">Attribution</button></td>
           </tr>
         </tbody>
         <tfoot><tr><td colspan="5">Total (4 founders)</td><td class="mono">108,790</td><td class="mono" style="color:var(--navy);">94,420</td><td class="mono" style="color:var(--teal);">14,370</td><td></td><td></td></tr></tfoot>
@@ -2530,15 +2466,15 @@
 </div>
 </div>
 
-<!-- ═══════════════════════════════════════ AWARD LETTERS ══ -->
+<!-- AWARD LETTERS -->
 <div id="screen-award-letters" class="screen">
 <div class="main">
   <div class="topbar">
-    <div class="topbar-left"><div class="title">📜 Award Letters</div><div class="bread">Dynamically generated · Versioned · Causal snapshot attached</div></div>
-    <div class="topbar-actions"><button class="btn btn-secondary">⬇ Export All PDF</button></div>
+    <div class="topbar-left"><div class="title">Award Letters</div><div class="bread">Dynamically generated · Versioned · Causal snapshot attached</div></div>
+    <div class="topbar-actions"><button class="btn btn-secondary">Export All PDF</button></div>
   </div>
   <div class="page">
-    <div class="notice notice-info">ℹ Letters are generated on approval with the <strong>Rule Snapshot</strong> permanently embedded. They show Basis / Gain decomposition — not just totals. Letters cannot be manually edited.</div>
+    <div class="notice notice-info">Letters are generated on approval with the <strong>Rule Snapshot</strong> permanently embedded. They show Basis / Gain decomposition — not just totals. Letters cannot be manually edited.</div>
     <div class="two-col-eq">
       <div>
         <div class="section-label">All Letters</div>
@@ -2546,9 +2482,9 @@
           <table>
             <thead><tr><th>Founder</th><th>Period</th><th>Version</th><th>Rule Snapshot</th><th>Issued</th><th>View</th></tr></thead>
             <tbody>
-              <tr><td><span class="td-name">David Boctor</span></td><td style="font-size:12px;">Feb 10–17</td><td><span class="badge badge-blue badge-no-dot">v1</span></td><td class="mono" style="font-size:11px;">RS-2026-003</td><td style="font-size:12px;">Feb 17</td><td><button class="btn btn-ghost btn-sm" onclick="document.getElementById('lp').style.display='block'">👁</button></td></tr>
-              <tr><td><span class="td-name">Ryker Rinehart</span></td><td style="font-size:12px;">Feb 10–17</td><td><span class="badge badge-blue badge-no-dot">v1</span></td><td class="mono" style="font-size:11px;">RS-2026-003</td><td style="font-size:12px;">Feb 17</td><td><button class="btn btn-ghost btn-sm">👁</button></td></tr>
-              <tr><td><span class="td-name">David Boctor</span></td><td style="font-size:12px;">Cash · Jan</td><td><span class="badge badge-blue badge-no-dot">v1</span></td><td class="mono" style="font-size:11px;">RS-2026-001</td><td style="font-size:12px;">Jan 31</td><td><button class="btn btn-ghost btn-sm">👁</button></td></tr>
+              <tr><td><span class="td-name">David Boctor</span></td><td style="font-size:12px;">Feb 10–17</td><td><span class="badge badge-blue badge-no-dot">v1</span></td><td class="mono" style="font-size:11px;">RS-2026-003</td><td style="font-size:12px;">Feb 17</td><td><button class="btn btn-ghost btn-sm" onclick="document.getElementById('lp').style.display='block'">View</button></td></tr>
+              <tr><td><span class="td-name">Ryker Rinehart</span></td><td style="font-size:12px;">Feb 10–17</td><td><span class="badge badge-blue badge-no-dot">v1</span></td><td class="mono" style="font-size:11px;">RS-2026-003</td><td style="font-size:12px;">Feb 17</td><td><button class="btn btn-ghost btn-sm">View</button></td></tr>
+              <tr><td><span class="td-name">David Boctor</span></td><td style="font-size:12px;">Cash · Jan</td><td><span class="badge badge-blue badge-no-dot">v1</span></td><td class="mono" style="font-size:11px;">RS-2026-001</td><td style="font-size:12px;">Jan 31</td><td><button class="btn btn-ghost btn-sm">View</button></td></tr>
               <tr style="background:var(--g50);"><td><span class="td-name">Alex Chen</span></td><td style="font-size:12px;">Feb 10–17</td><td><span class="badge badge-yellow badge-no-dot">Draft</span></td><td class="mono" style="font-size:11px;color:var(--g400);">Pending</td><td style="font-size:12px;color:var(--g400);">Pending approval</td><td>—</td></tr>
             </tbody>
           </table>
@@ -2566,9 +2502,9 @@
           <p style="margin-top:8px;">This letter confirms your vested equity contribution for <span class="letter-field">Feb 10–17, 2026</span> in the <span class="letter-field">Founders Fund Q1 2026</span>.</p>
           <p style="margin-top:10px;font-weight:700;font-size:12px;">Flow Event Decomposition:</p>
           <div class="rules-card" style="margin-top:6px;">
-            <div class="rule-row"><span class="rule-key" style="color:var(--navy);">🔵 Basis (capital stored)</span><span class="rule-val">4,800</span></div>
-            <div class="rule-row"><span class="rule-key" style="color:var(--teal);">🟢 Gain (OT performance)</span><span class="rule-val" style="color:var(--teal);">1,080</span></div>
-            <div class="rule-row"><span class="rule-key" style="color:var(--purple);">🟣 Skill attribution (🟢 Green)</span><span class="rule-val" style="color:var(--purple);">480</span></div>
+            <div class="rule-row"><span class="rule-key" style="color:var(--navy);">Basis (capital stored)</span><span class="rule-val">4,800</span></div>
+            <div class="rule-row"><span class="rule-key" style="color:var(--teal);">Gain (OT performance)</span><span class="rule-val" style="color:var(--teal);">1,080</span></div>
+            <div class="rule-row"><span class="rule-key" style="color:var(--purple);">Skill attribution (Green)</span><span class="rule-val" style="color:var(--purple);">480</span></div>
             <div class="rule-row" style="border-top:2px solid var(--g200);margin-top:4px;padding-top:8px;"><span class="rule-key" style="font-weight:700;">Total Vested</span><span class="rule-val" style="font-size:17px;color:var(--blue);">6,360</span></div>
           </div>
           <p style="margin-top:12px;font-size:11px;color:var(--g500);">Approved by <span class="letter-field">Ryker Rinehart (Admin)</span> · Rules active at time: <span class="letter-field">RS-2026-003</span> (OT ×1.5, Cont 10%). This rule snapshot is permanently attached and cannot be modified.</p>
@@ -2580,51 +2516,51 @@
 </div>
 </div>
 
-<!-- ═══════════════════════════════════════ INTEGRATIONS ══ -->
+<!-- INTEGRATIONS -->
 <div id="screen-integrations" class="screen">
 <div class="main">
   <div class="topbar">
-    <div class="topbar-left"><div class="title">🔌 Integrations</div><div class="bread">Harvest + ClickUp · Auto-drive flow calculations</div></div>
-    <div class="topbar-actions"><button class="btn btn-primary">🔄 Sync All Now</button></div>
+    <div class="topbar-left"><div class="title">Integrations</div><div class="bread">Harvest + ClickUp · Auto-drive flow calculations</div></div>
+    <div class="topbar-actions"><button class="btn btn-primary">Sync All Now</button></div>
   </div>
   <div class="page">
-    <div class="notice notice-info">ℹ When connected, Harvest auto-fills hours per founder per sprint. ClickUp syncs sprint points for velocity attribution. Both auto-populate the Basis/Gain calculation in flow events.</div>
+    <div class="notice notice-info">When connected, Harvest auto-fills hours per founder per sprint. ClickUp syncs sprint points for velocity attribution. Both auto-populate the Basis/Gain calculation in flow events.</div>
     <div class="two-col-eq" style="margin-bottom:18px;">
       <div class="intg-card">
-        <div class="intg-icon" style="background:var(--g100);">🌾</div>
+        <div class="intg-icon" style="background:var(--g100);">H</div>
         <div style="flex:1;">
           <div style="font-weight:700;font-size:14px;">Harvest</div>
           <div style="font-size:12px;color:var(--g500);margin-top:2px;">Time tracking · Hours per founder per period</div>
           <div style="margin-top:6px;"><span class="intg-dot" style="background:var(--green);"></span><span style="font-size:12px;color:var(--green);font-weight:600;">Connected</span> · Last: Feb 26, 9:02 AM</div>
         </div>
         <div style="display:flex;flex-direction:column;gap:6px;align-items:flex-end;">
-          <button class="btn btn-secondary btn-sm">⚙ Configure</button>
-          <button class="btn btn-primary btn-sm">🔄 Sync</button>
+          <button class="btn btn-secondary btn-sm">Configure</button>
+          <button class="btn btn-primary btn-sm">Sync</button>
         </div>
       </div>
       <div class="intg-card">
-        <div class="intg-icon" style="background:var(--purple-light);">📋</div>
+        <div class="intg-icon" style="background:var(--purple-light);">CU</div>
         <div style="flex:1;">
           <div style="font-weight:700;font-size:14px;">ClickUp</div>
           <div style="font-size:12px;color:var(--g500);margin-top:2px;">Sprint points · Coordination velocity signal</div>
           <div style="margin-top:6px;"><span class="intg-dot" style="background:var(--green);"></span><span style="font-size:12px;color:var(--green);font-weight:600;">Connected</span> · Last: Feb 26, 9:02 AM</div>
         </div>
         <div style="display:flex;flex-direction:column;gap:6px;align-items:flex-end;">
-          <button class="btn btn-secondary btn-sm">⚙ Configure</button>
-          <button class="btn btn-primary btn-sm">🔄 Sync</button>
+          <button class="btn btn-secondary btn-sm">Configure</button>
+          <button class="btn btn-primary btn-sm">Sync</button>
         </div>
       </div>
     </div>
 
     <div class="card" style="margin-bottom:18px;">
-      <div class="card-header"><div class="card-title">⚙ Auto-Calculation Pipeline</div></div>
+      <div class="card-header"><div class="card-title">Auto-Calculation Pipeline</div></div>
       <div class="card-body">
         <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:8px;text-align:center;">
-          <div style="background:var(--blue-light);border:1px solid var(--blue-mid);border-radius:8px;padding:12px 8px;font-size:11.5px;"><div style="font-size:18px;margin-bottom:4px;">🌾</div><div style="font-weight:700;color:var(--navy);">Harvest Pull</div><div style="font-size:10.5px;color:var(--g500);margin-top:4px;">Hours per period</div></div>
+          <div style="background:var(--blue-light);border:1px solid var(--blue-mid);border-radius:8px;padding:12px 8px;font-size:11.5px;"><div style="font-size:18px;margin-bottom:4px;">H</div><div style="font-weight:700;color:var(--navy);">Harvest Pull</div><div style="font-size:10.5px;color:var(--g500);margin-top:4px;">Hours per period</div></div>
           <div style="display:flex;align-items:center;justify-content:center;font-size:18px;color:var(--blue);">→</div>
-          <div style="background:var(--blue-light);border:1px solid var(--blue-mid);border-radius:8px;padding:12px 8px;font-size:11.5px;"><div style="font-size:18px;margin-bottom:4px;">🧮</div><div style="font-weight:700;color:var(--navy);">Rules Engine</div><div style="font-size:10.5px;color:var(--g500);margin-top:4px;">OT + contingent</div></div>
+          <div style="background:var(--blue-light);border:1px solid var(--blue-mid);border-radius:8px;padding:12px 8px;font-size:11.5px;"><div style="font-size:18px;margin-bottom:4px;">&#9998;</div><div style="font-weight:700;color:var(--navy);">Rules Engine</div><div style="font-size:10.5px;color:var(--g500);margin-top:4px;">OT + contingent</div></div>
           <div style="display:flex;align-items:center;justify-content:center;font-size:18px;color:var(--blue);">→</div>
-          <div style="background:var(--green-light);border:1px solid #86efac;border-radius:8px;padding:12px 8px;font-size:11.5px;"><div style="font-size:18px;margin-bottom:4px;">📒</div><div style="font-weight:700;color:var(--green);">Flow Event Draft</div><div style="font-size:10.5px;color:var(--g500);margin-top:4px;">Basis/Gain split auto-labeled</div></div>
+          <div style="background:var(--green-light);border:1px solid #86efac;border-radius:8px;padding:12px 8px;font-size:11.5px;"><div style="font-size:18px;margin-bottom:4px;">&#128218;</div><div style="font-weight:700;color:var(--green);">Flow Event Draft</div><div style="font-size:10.5px;color:var(--g500);margin-top:4px;">Basis/Gain split auto-labeled</div></div>
         </div>
       </div>
     </div>
@@ -2634,8 +2570,8 @@
       <table>
         <thead><tr><th>Founder</th><th>Harvest ID</th><th>Last Sync</th><th>Hours</th><th>ClickUp ID</th><th>Sprint Pts</th><th>Velocity Signal</th><th>Status</th></tr></thead>
         <tbody>
-          <tr><td><span class="td-name">David Boctor</span></td><td class="mono" style="font-size:12px;">7291048</td><td style="font-size:12px;">Feb 26, 9:02</td><td class="mono">49.0</td><td class="mono" style="font-size:12px;">user_db021</td><td class="mono">42</td><td><span class="badge badge-teal badge-no-dot">High</span></td><td><span class="badge badge-green">✓ Synced</span></td></tr>
-          <tr><td><span class="td-name">Ryker Rinehart</span></td><td class="mono" style="font-size:12px;">9847362</td><td style="font-size:12px;">Feb 26, 9:02</td><td class="mono">44.5</td><td class="mono" style="font-size:12px;">user_rr021</td><td class="mono">38</td><td><span class="badge badge-blue badge-no-dot">Moderate</span></td><td><span class="badge badge-green">✓ Synced</span></td></tr>
+          <tr><td><span class="td-name">David Boctor</span></td><td class="mono" style="font-size:12px;">7291048</td><td style="font-size:12px;">Feb 26, 9:02</td><td class="mono">49.0</td><td class="mono" style="font-size:12px;">user_db021</td><td class="mono">42</td><td><span class="badge badge-teal badge-no-dot">High</span></td><td><span class="badge badge-green">Synced</span></td></tr>
+          <tr><td><span class="td-name">Ryker Rinehart</span></td><td class="mono" style="font-size:12px;">9847362</td><td style="font-size:12px;">Feb 26, 9:02</td><td class="mono">44.5</td><td class="mono" style="font-size:12px;">user_rr021</td><td class="mono">38</td><td><span class="badge badge-blue badge-no-dot">Moderate</span></td><td><span class="badge badge-green">Synced</span></td></tr>
           <tr><td><span class="td-name">Alex Chen</span></td><td class="mono" style="font-size:12px;">8821049</td><td style="font-size:12px;">Feb 26, 9:02</td><td class="mono">40.0</td><td class="mono" style="font-size:12px;">user_ac</td><td class="mono">34</td><td><span class="badge badge-yellow badge-no-dot">Low</span></td><td><span class="badge badge-yellow">Draft Pending</span></td></tr>
           <tr><td><span class="td-name">Maria Santos</span></td><td class="mono" style="font-size:12px;">6610293</td><td style="font-size:12px;">Feb 26, 9:02</td><td class="mono">22.0</td><td class="mono" style="font-size:12px;">user_ms</td><td class="mono">18</td><td><span class="badge badge-red badge-no-dot">Very Low</span></td><td><span class="badge badge-orange">Suspended</span></td></tr>
         </tbody>
@@ -2646,7 +2582,6 @@
 </div>
 
 <script>
-// ── SIDEBAR SCREENS ────────────────────────────────────────
 const SIDEBAR_SCREENS = [
   'screen-fund-ledger','screen-system-boundary','screen-founder-directory',
   'screen-contribution-ledger','screen-contribution-details',
@@ -2675,7 +2610,6 @@ function goTo(id) {
   window.scrollTo(0, 0);
 }
 
-// ── TAB SWITCHER ───────────────────────────────────────────
 function switchTab(type, el) {
   document.querySelectorAll('.toggle-tab').forEach(t => t.classList.remove('active'));
   el.classList.add('active');
@@ -2685,7 +2619,6 @@ function switchTab(type, el) {
   });
 }
 
-// ── LIVE CALC WITH BASIS/GAIN DECOMP ──────────────────────
 function calcFlow() {
   const hours = parseFloat(document.getElementById('hoursInput')?.value) || 0;
   const rate = parseFloat(document.getElementById('rateInput')?.value) || 0;
@@ -2695,7 +2628,7 @@ function calcFlow() {
   const ot = Math.max(0, hours - threshold);
   const basis = reg * rate;
   const gain = ot * rate * otCoef;
-  const skill = basis * bonusPct; // green flag
+  const skill = basis * bonusPct;
   const total = basis + gain + skill;
 
   const f = n => Math.round(n).toLocaleString();
@@ -2709,7 +2642,6 @@ function calcFlow() {
   set('disp-cont', f(skill));
   set('disp-total', f(total));
 
-  // Update decomp bar
   if (total > 0) {
     const bp = (basis/total*100).toFixed(1);
     const gp = (gain/total*100).toFixed(1);
@@ -2723,7 +2655,6 @@ function calcFlow() {
   }
 }
 
-// ── SIMULATION ────────────────────────────────────────────
 const simState = { otCoef: 1.5, contPct: 10, otThreshold: 40, minorPenalty: 100 };
 const actualOT = 8120;
 const actualBase = 80720;
@@ -2747,14 +2678,13 @@ function updateSimToggle() {
 }
 
 function recalcSim() {
-  // Simplified simulation: scale OT gain by new coefficient, scale contingent by new %
-  const otRatio = simState.otCoef / 1.5; // original was 1.5
+  const otRatio = simState.otCoef / 1.5;
   const contRatio = simState.contPct / 10;
   const newOT = Math.round(actualOT * otRatio);
   const newCont = Math.round(actualBase * simState.contPct / 100);
   const applyToOt = document.querySelector('input[name="contOt"]:checked')?.value === 'yes';
   const newContTotal = applyToOt ? Math.round((actualBase + newOT) * simState.contPct / 100) : newCont;
-  const newDeficit = -(3 * simState.minorPenalty * 0.33 + 500 + 200); // simplified
+  const newDeficit = -(3 * simState.minorPenalty * 0.33 + 500 + 200);
   const newStock = actualBase + newOT + newContTotal + actualCash + newDeficit;
   const actualStock = 108790;
   const delta = newStock - actualStock;
@@ -2762,17 +2692,13 @@ function recalcSim() {
 
   const set = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
   const fmt = n => Math.round(n).toLocaleString();
-  const pct = (n, d) => ((n / d) * 100).toFixed(1) + '%';
-
   const col = (v, orig) => v > orig ? 'sim-delta-pos' : v < orig ? 'sim-delta-neg' : '';
 
-  set('sim-stock', `<span class="${col(newStock,actualStock)}">${fmt(newStock)}</span>`);
   document.getElementById('sim-stock').innerHTML = `<span class="${col(newStock,actualStock)}">${fmt(newStock)}</span>`;
   document.getElementById('sim-ot-gain').innerHTML = `<span class="${col(newOT,actualOT)}">${fmt(newOT)}</span>`;
   document.getElementById('sim-cont-total').innerHTML = `<span class="${col(newContTotal,5160)}">${fmt(newContTotal)}</span>`;
   document.getElementById('sim-surplus').innerHTML = `<span class="${col(newSurplus,14280)}">${fmt(newSurplus)}</span>`;
 
-  // Equity % recalc (simplified)
   const dbNew = ((48320 - 4320 + Math.round(4320 * otRatio) + Math.round(28800 * simState.contPct/100)) / newStock * 100).toFixed(1);
   const rrNew = ((22800 + Math.round(3800 * otRatio) + Math.round(22800 * simState.contPct/100)) / newStock * 100).toFixed(1);
   const acNew = (19780 / newStock * 100).toFixed(1);
@@ -2783,7 +2709,6 @@ function recalcSim() {
   document.getElementById('sim-ac').innerHTML = `<span>${acNew}%</span>`;
   document.getElementById('sim-ms').innerHTML = `<span>${msNew}%</span>`;
 
-  // Bar
   const barSim = document.getElementById('sim-bar-sim');
   const barLabel = document.getElementById('sim-bar-label');
   if (barSim) barSim.style.height = (Math.min(newSurplus / 20000, 1) * 100) + '%';
@@ -2791,7 +2716,6 @@ function recalcSim() {
 }
 
 function resetSim() {
-  // Reset sliders
   document.querySelectorAll('.sim-slider').forEach(s => {
     const key = s.getAttribute('oninput').match(/'(\w+)'/)?.[1];
     if (key === 'otCoef') { s.value = 1.5; updateSim(s,'otCoef','sim-ot-val'); }
@@ -2801,22 +2725,17 @@ function resetSim() {
   });
 }
 
-// ── UPDATE PENALTY AMOUNT FROM
-
-// ── UPDATE PENALTY AMOUNT FROM INFRACTION TYPE ─────────────
 function updatePenalty(sel) {
   const map = { minor: 100, major: 500 };
   const el = document.getElementById('penaltyAmt');
   if (el) el.value = map[sel.value] || 100;
 }
 
-// ── COMPARATIVE LENS MODE SWITCHER ────────────────────────
 function setCompareMode(mode, el) {
   document.querySelectorAll('.toggle-tab').forEach(t => t.classList.remove('active'));
   el.classList.add('active');
 }
 
-// ── FUND CREATION FORM ────────────────────────────────────
 let fundCurrentStep = 1;
 const FUND_TOTAL_STEPS = 6;
 
@@ -2863,7 +2782,7 @@ function fundPreview() {
 
 function fundFormSubmit() {
   const name = document.getElementById('ff-name')?.value || 'New Fund';
-  alert('✅ Fund created!\n\n' + name + ' is now active.\nRule Snapshot RS-2026-004 has been created and locked.\nAgreements dispatched to all actors.\nFirst sprint period Apr 1–7, 2026 is now open.');
+  alert('Fund created!\n\n' + name + ' is now active.\nRule Snapshot RS-2026-004 has been created and locked.\nAgreements dispatched to all actors.\nFirst sprint period Apr 1–7, 2026 is now open.');
   goTo('screen-fund-ledger');
 }
 </script>
