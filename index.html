@@ -17,7 +17,7 @@
     --g900:#111827; --g700:#374151; --g600:#4B5563; --g500:#6B7280;
     --g400:#9CA3AF; --g300:#D1D5DB; --g200:#E5E7EB; --g100:#F3F4F6; --g50:#F9FAFB;
     --white:#FFFFFF;
-    --sidebar-w:264px;
+    --sidebar-w:278px;
     --radius:8px;
     --shadow:0 1px 3px rgba(0,0,0,.10),0 1px 2px rgba(0,0,0,.06);
     --shadow-md:0 4px 6px -1px rgba(0,0,0,.10);
@@ -32,7 +32,7 @@
   /* ─── SIDEBAR ─────────────────────────────────────────────────── */
   .sidebar{
     width:var(--sidebar-w);
-    min-height:100vh;
+    height:100vh;
     background:#ffffff;
     border-right:1px solid var(--g200);
     display:flex;
@@ -40,7 +40,7 @@
     position:fixed;
     left:0;top:0;
     z-index:100;
-    overflow-y:auto;
+    overflow:hidden;
     box-shadow:2px 0 16px rgba(0,0,0,.05);
   }
   .sidebar-logo{
@@ -61,12 +61,12 @@
   .logo-name{color:var(--navy);font-weight:800;font-size:15.5px;letter-spacing:-.3px}
   .logo-version{color:var(--g400);font-size:10px;font-family:'DM Mono',monospace;margin-top:2px}
 
-  .sidebar nav{flex:1;padding:8px 0 20px;overflow-y:auto}
+  .sidebar nav{flex:1;padding:8px 0 20px;overflow-y:auto;overflow-x:hidden;min-height:0;}
 
   /* Section headers */
   .nav-section{
-    color:var(--g400);
-    font-size:10px;
+    color:#64748b;
+    font-size:10.5px;
     font-weight:700;
     letter-spacing:.1em;
     text-transform:uppercase;
@@ -81,10 +81,10 @@
   .nav-link{
     display:flex;
     align-items:center;
-    padding:9px 22px;
-    color:var(--g700);
+    padding:10px 22px;
+    color:#1a1a2e;
     cursor:pointer;
-    font-size:13.5px;
+    font-size:14px;
     font-weight:500;
     transition:all .12s;
     border-left:3px solid transparent;
@@ -123,10 +123,13 @@
 
   /* Footer */
   .sidebar-footer{
-    padding:16px 22px;
+    padding:14px 16px 18px;
     border-top:1px solid var(--g100);
     flex-shrink:0;
-    background:var(--g50);
+    background:#fff;
+    display:flex;
+    flex-direction:column;
+    gap:10px;
   }
   .sidebar-user{display:flex;align-items:center;gap:10px}
   .s-avatar{
@@ -137,6 +140,26 @@
   }
   .s-name{color:var(--g900);font-size:13px;font-weight:600}
   .s-role{color:var(--g400);font-size:10.5px;margin-top:1px}
+  .sidebar-logout{
+    display:flex;align-items:center;gap:8px;
+    width:100%;
+    padding:9px 14px;
+    border-radius:8px;
+    border:1px solid var(--g200);
+    background:#fff;
+    color:var(--g600);
+    font-size:13px;font-weight:500;
+    cursor:pointer;
+    transition:all .12s;
+    text-align:left;
+  }
+  .sidebar-logout:hover{
+    background:#fff1f1;
+    border-color:#fca5a5;
+    color:#dc2626;
+  }
+  .sidebar-logout svg{opacity:.6;flex-shrink:0;transition:opacity .12s}
+  .sidebar-logout:hover svg{opacity:1}
 
   /* ─── MAIN ─────────────────────────────────────────────────────── */
   .main{margin-left:var(--sidebar-w);flex:1;min-height:100vh;display:flex;flex-direction:column}
@@ -555,7 +578,7 @@
       <div class="login-sub">SAF-Model Equity System · v4</div>
     </div>
     <div style="font-weight:700;font-size:15px;color:var(--g900);margin-bottom:16px;">Sign in to your account</div>
-    <div class="login-error" id="login-error">Invalid credentials. Try ryker@021.ceo / any password.</div>
+    <div class="login-error" id="login-error">Invalid credentials. Try <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="592b20323c2b19696b68773a3c36">[email&#160;protected]</a> / any password.</div>
     <div class="form-group" style="margin-bottom:12px;">
       <label>Email address</label>
       <input class="form-control" type="email" id="login-email" value="ryker@021.ceo" onkeydown="if(event.key==='Enter')doLogin()">
@@ -565,7 +588,7 @@
       <input class="form-control" type="password" id="login-pw" value="password123" onkeydown="if(event.key==='Enter')doLogin()">
     </div>
     <button class="btn btn-primary" style="width:100%;justify-content:center;padding:9px;" onclick="doLogin()">Sign In →</button>
-    <div style="text-align:center;margin-top:16px;font-size:11px;color:var(--g400);">Demo credentials: ryker@021.ceo / any password</div>
+    <div style="text-align:center;margin-top:16px;font-size:11px;color:var(--g400);">Demo credentials: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="f3818a989681b3c3c1c2dd90969c">[email&#160;protected]</a> / any password</div>
   </div>
 </div>
 
@@ -716,7 +739,7 @@
         <thead><tr><th>Name</th><th>Role</th><th>Status</th><th>Market Wage</th><th>Cash Comp %</th><th>Fund Comp %</th><th>Documents</th><th>Stock</th><th>Equity %</th><th>Actions</th></tr></thead>
         <tbody id="founder-tbody">
           <tr data-name="david boctor" data-status="Contributing" data-role="Fund Leader">
-            <td><span class="td-name">David Boctor</span><div style="font-size:11px;color:var(--g400);">david@021.ceo</div></td>
+            <td><span class="td-name">David Boctor</span><div style="font-size:11px;color:var(--g400);"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="355154435c51750507041b56505a">[email&#160;protected]</a></div></td>
             <td><span class="badge badge-blue badge-no-dot">Fund Leader</span></td>
             <td><span class="badge badge-green">Contributing</span></td>
             <td class="mono">$120/hr</td><td class="mono">60%</td><td class="mono">40%</td>
@@ -729,7 +752,7 @@
             </td>
           </tr>
           <tr data-name="ryker rinehart" data-status="Contributing" data-role="Fund Secretary">
-            <td><span class="td-name">Ryker Rinehart</span><div style="font-size:11px;color:var(--g400);">ryker@021.ceo</div></td>
+            <td><span class="td-name">Ryker Rinehart</span><div style="font-size:11px;color:var(--g400);"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="36444f5d53447606040718555359">[email&#160;protected]</a></div></td>
             <td><span class="badge badge-teal badge-no-dot">Fund Secretary</span></td>
             <td><span class="badge badge-green">Contributing</span></td>
             <td class="mono">$95/hr</td><td class="mono">50%</td><td class="mono">50%</td>
@@ -742,7 +765,7 @@
             </td>
           </tr>
           <tr data-name="alex chen" data-status="Initiated" data-role="Fund Owner">
-            <td><span class="td-name">Alex Chen</span><div style="font-size:11px;color:var(--g400);">alex@021.ceo</div></td>
+            <td><span class="td-name">Alex Chen</span><div style="font-size:11px;color:var(--g400);"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="07666b627f4737353629646268">[email&#160;protected]</a></div></td>
             <td><span class="badge badge-purple badge-no-dot">Fund Owner</span></td>
             <td><span class="badge badge-yellow">Initiated</span></td>
             <td class="mono">$85/hr</td><td class="mono">70%</td><td class="mono">30%</td>
@@ -755,7 +778,7 @@
             </td>
           </tr>
           <tr data-name="maria santos" data-status="Terminated" data-role="Fund Owner" style="opacity:.6;">
-            <td><span class="td-name">Maria Santos</span><div style="font-size:11px;color:var(--g400);">maria@021.ceo</div></td>
+            <td><span class="td-name">Maria Santos</span><div style="font-size:11px;color:var(--g400);"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="b0ddd1c2d9d1f08082819ed3d5df">[email&#160;protected]</a></div></td>
             <td><span class="badge badge-purple badge-no-dot">Fund Owner</span></td>
             <td><span class="badge badge-red">Terminated</span></td>
             <td class="mono">$110/hr</td><td class="mono">80%</td><td class="mono">20%</td>
@@ -867,7 +890,7 @@
       <div class="founder-avatar" id="flow-avatar">RR</div>
       <div>
         <div style="font-size:16px;font-weight:700;" id="flow-founder-name">Ryker Rinehart</div>
-        <div style="font-size:12px;color:rgba(255,255,255,.6);margin-top:2px;" id="flow-founder-meta">ryker@021.ceo · $95/hr · Fund Secretary</div>
+        <div style="font-size:12px;color:rgba(255,255,255,.6);margin-top:2px;" id="flow-founder-meta"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="ed9f9486889faddddfdcc38e8882">[email&#160;protected]</a> · $95/hr · Fund Secretary</div>
       </div>
       <div class="founder-stats">
         <div><div class="founder-stat-lbl">Cumulative Stock</div><div class="founder-stat-val" id="flow-stock">32,150</div></div>
@@ -1531,7 +1554,7 @@
 </div>
 </div>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 // ─── PIE CHART ENGINE ─────────────────────────────────────────────────────────
 function polarToCartesian(cx, cy, r, angleDeg) {
   const rad = (angleDeg - 90) * Math.PI / 180;
@@ -1662,16 +1685,6 @@ function buildSidebar(activeId) {
       ${lnk('screen-attribution','Attribution Layer')}
       ${lnk('screen-simulation','Simulation')}
 
-      <div class="nav-divider"></div>
-      <div class="nav-section">Records</div>
-      ${lnk('screen-audit-log','Audit &amp; Versioning')}
-      ${lnk('screen-award-letters','Award Letters')}
-      <a class="nav-link nav-link-danger${activeId==='screen-penalties'?' active':''}" onclick="goTo('screen-penalties')">Deficit Events</a>
-
-      <div class="nav-divider"></div>
-      <div class="nav-section">Config</div>
-      ${lnk('screen-permissions','Roles &amp; Permissions','REQ')}
-      ${lnk('screen-integrations','Integrations')}
     </nav>
     <div class="sidebar-footer">
       <div class="sidebar-user">
@@ -1681,11 +1694,26 @@ function buildSidebar(activeId) {
           <div class="s-role">Fund Secretary · 021</div>
         </div>
       </div>
+      <button class="sidebar-logout" onclick="handleLogout()">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/>
+        </svg>
+        Log Out
+      </button>
     </div>
   </div>`;
 }
 
 // ─── NAVIGATION ───────────────────────────────────────────────────────────────
+function handleLogout(){
+  if(confirm('Are you sure you want to log out?')){
+    // In production this would clear session and redirect to login
+    document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+    document.getElementById('screen-login').classList.add('active');
+    toast('Logged out successfully','green');
+  }
+}
+
 function goTo(id){
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   const target=document.getElementById(id);
@@ -1808,12 +1836,12 @@ function resetSim(){APP_STATE.simValues={otCoef:1.5,contPct:10,otThreshold:40,in
 function saveScenario(){const name='Scenario-'+String.fromCharCode(65+APP_STATE.scenarios.length);APP_STATE.scenarios.push({name,...APP_STATE.simValues});toast('Simulation saved as '+name,'green');}
 
 // ─── AUDIT ────────────────────────────────────────────────────────────────────
-function addAuditEntry(text,type){const colors={fund:'var(--blue)',update:'var(--green)',terminate:'var(--red)',invite:'var(--teal)',approve:'var(--green)'};const color=colors[type]||'var(--g500)';const history=document.getElementById('audit-history');if(!history)return;const entry=document.createElement('div');entry.className='audit-entry';const now=new Date().toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});entry.innerHTML=`<div class="audit-dot" style="background:${color};"></div><div><div style="font-weight:600;font-size:12.5px;">${text}</div><div class="audit-meta">${now} · Ryker Rinehart <span class="locked-badge">RS-2026-003</span></div></div>`;history.insertBefore(entry,history.firstChild);}
-function filterAudit(val){document.querySelectorAll('#audit-history .audit-entry').forEach(e=>{e.style.display=e.textContent.toLowerCase().includes(val.toLowerCase())?'':'none';});}
-function lockPeriod(){toast('Period locked. RS-2026-003 preserved and immutable.','green');}
+function addAuditEntry(text,type){const colors={fund:'var(--blue)',update:'var(--green)',terminate:'var(--red)',invite:'var(--teal)',approve:'var(--green)'};const color=colors[type]||'var(--g500)';const history=document.getElementById('audit-history');if(!history)return;const entry=document.createElement('div');entry.className='audit-entry';const now=new Date().toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});entry.innerHTML=`<span class="audit-dot" style="background:${color}"></span><span class="audit-text">${text}</span><span class="audit-time">${now}</span>`;history.prepend(entry);}
 
 // ─── INIT ─────────────────────────────────────────────────────────────────────
-calcFlow();calcDeficit();recalcComp();
+document.addEventListener('DOMContentLoaded',function(){
+  initAllPies();
+});
 </script>
 </body>
 </html>
