@@ -17,7 +17,7 @@
     --g900:#111827; --g700:#374151; --g600:#4B5563; --g500:#6B7280;
     --g400:#9CA3AF; --g300:#D1D5DB; --g200:#E5E7EB; --g100:#F3F4F6; --g50:#F9FAFB;
     --white:#FFFFFF;
-    --sidebar-w:230px;
+    --sidebar-w:264px;
     --radius:8px;
     --shadow:0 1px 3px rgba(0,0,0,.10),0 1px 2px rgba(0,0,0,.06);
     --shadow-md:0 4px 6px -1px rgba(0,0,0,.10);
@@ -29,28 +29,116 @@
   @keyframes fadeIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
   .screen.active{animation:fadeIn .2s ease}
 
-  /* SIDEBAR */
-  .sidebar{width:var(--sidebar-w);min-height:100vh;background:var(--navy);display:flex;flex-direction:column;position:fixed;left:0;top:0;z-index:100;overflow-y:auto}
-  .sidebar-logo{padding:20px 18px 16px;border-bottom:1px solid rgba(255,255,255,.1);flex-shrink:0}
-  .sidebar-logo .logo-row{display:flex;align-items:center;gap:10px}
-  .logo-icon{width:36px;height:36px;background:var(--blue);border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;color:#fff;font-weight:700}
-  .logo-name{color:#fff;font-weight:700;font-size:14.5px}
-  .logo-version{color:rgba(255,255,255,.35);font-size:10px;font-family:'DM Mono',monospace;margin-top:1px}
-  .sidebar nav{flex:1;padding:12px 0;overflow-y:auto}
-  .nav-section{color:rgba(255,255,255,.3);font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:10px 18px 4px}
-  .nav-link{display:flex;align-items:center;gap:9px;padding:8px 18px;color:rgba(255,255,255,.6);cursor:pointer;font-size:13px;font-weight:500;transition:all .15s;border-left:3px solid transparent;text-decoration:none}
-  .nav-link:hover{color:#fff;background:rgba(255,255,255,.07)}
-  .nav-link.active{color:#fff;background:rgba(37,99,235,.25);border-left-color:var(--blue)}
-  .nav-link .icon{font-size:14px;width:17px;text-align:center}
-  .nav-badge{margin-left:auto;background:rgba(37,99,235,.4);color:#93c5fd;font-size:9px;font-weight:700;padding:1px 6px;border-radius:999px}
-  .nav-badge.new{background:rgba(22,163,74,.3);color:#86efac}
-  .sidebar-footer{padding:14px 18px;border-top:1px solid rgba(255,255,255,.1);flex-shrink:0}
-  .sidebar-user{display:flex;align-items:center;gap:10px}
-  .s-avatar{width:28px;height:28px;border-radius:50%;background:var(--blue);display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;font-weight:700;flex-shrink:0}
-  .s-name{color:#fff;font-size:12px;font-weight:500}
-  .s-role{color:rgba(255,255,255,.4);font-size:10px}
+  /* ─── SIDEBAR ─────────────────────────────────────────────────── */
+  .sidebar{
+    width:var(--sidebar-w);
+    min-height:100vh;
+    background:#ffffff;
+    border-right:1px solid var(--g200);
+    display:flex;
+    flex-direction:column;
+    position:fixed;
+    left:0;top:0;
+    z-index:100;
+    overflow-y:auto;
+    box-shadow:2px 0 16px rgba(0,0,0,.05);
+  }
+  .sidebar-logo{
+    padding:22px 22px 18px;
+    border-bottom:1px solid var(--g100);
+    flex-shrink:0;
+  }
+  .sidebar-logo .logo-row{display:flex;align-items:center;gap:12px}
+  .logo-icon{
+    width:38px;height:38px;
+    background:var(--navy);
+    border-radius:10px;
+    display:flex;align-items:center;justify-content:center;
+    font-size:13px;flex-shrink:0;
+    color:#fff;font-weight:800;
+    letter-spacing:-.5px;
+  }
+  .logo-name{color:var(--navy);font-weight:800;font-size:15.5px;letter-spacing:-.3px}
+  .logo-version{color:var(--g400);font-size:10px;font-family:'DM Mono',monospace;margin-top:2px}
 
-  /* MAIN */
+  .sidebar nav{flex:1;padding:8px 0 20px;overflow-y:auto}
+
+  /* Section headers */
+  .nav-section{
+    color:var(--g400);
+    font-size:10px;
+    font-weight:700;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    padding:18px 22px 6px;
+  }
+  .nav-section:first-child{padding-top:14px}
+
+  /* Divider between sections */
+  .nav-divider{height:1px;background:var(--g100);margin:6px 22px 8px}
+
+  /* Nav links — no icons, clean text */
+  .nav-link{
+    display:flex;
+    align-items:center;
+    padding:9px 22px;
+    color:var(--g700);
+    cursor:pointer;
+    font-size:13.5px;
+    font-weight:500;
+    transition:all .12s;
+    border-left:3px solid transparent;
+    text-decoration:none;
+    letter-spacing:-.1px;
+    line-height:1.3;
+  }
+  .nav-link:hover{
+    color:var(--navy);
+    background:var(--g50);
+    border-left-color:var(--g300);
+  }
+  .nav-link.active{
+    color:var(--blue);
+    background:var(--blue-light);
+    border-left-color:var(--blue);
+    font-weight:700;
+  }
+  /* hide the old icon spans */
+  .nav-link .icon{display:none}
+
+  .nav-badge{
+    margin-left:auto;
+    background:var(--blue-light);
+    color:var(--blue);
+    font-size:9px;font-weight:700;
+    padding:2px 8px;border-radius:999px;
+    letter-spacing:.03em;
+  }
+  .nav-badge.new{background:var(--green-light);color:var(--green)}
+
+  /* Danger link (Deficit Events) */
+  .nav-link-danger{color:var(--red) !important;opacity:.9}
+  .nav-link-danger:hover{color:var(--red) !important;background:#fff5f5 !important;border-left-color:var(--red) !important}
+  .nav-link-danger.active{color:var(--red) !important;background:#fee2e2 !important;border-left-color:var(--red) !important}
+
+  /* Footer */
+  .sidebar-footer{
+    padding:16px 22px;
+    border-top:1px solid var(--g100);
+    flex-shrink:0;
+    background:var(--g50);
+  }
+  .sidebar-user{display:flex;align-items:center;gap:10px}
+  .s-avatar{
+    width:32px;height:32px;border-radius:50%;
+    background:var(--navy);
+    display:flex;align-items:center;justify-content:center;
+    color:#fff;font-size:11px;font-weight:700;flex-shrink:0;
+  }
+  .s-name{color:var(--g900);font-size:13px;font-weight:600}
+  .s-role{color:var(--g400);font-size:10.5px;margin-top:1px}
+
+  /* ─── MAIN ─────────────────────────────────────────────────────── */
   .main{margin-left:var(--sidebar-w);flex:1;min-height:100vh;display:flex;flex-direction:column}
   .topbar{background:#fff;border-bottom:1px solid var(--g200);padding:0 24px;height:58px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50;box-shadow:var(--shadow)}
   .topbar-left .title{font-size:17px;font-weight:700;color:var(--navy)}
@@ -344,8 +432,8 @@
     .grid2{grid-template-columns:1fr}
     .grid3{grid-template-columns:1fr}
     .stats-row{grid-template-columns:1fr 1fr}
-    .sidebar{width:200px}
-    .main{margin-left:200px}
+    .sidebar{width:220px}
+    .main{margin-left:220px}
   }
 </style>
 </head>
@@ -427,12 +515,12 @@
 
 <div class="modal-overlay" id="approve-contrib-modal">
   <div class="modal-box" style="width:420px;">
-    <div class="modal-title" style="color:var(--green);">✓ Approve & Lock Contribution</div>
+    <div class="modal-title" style="color:var(--green);">✓ Approve &amp; Lock Contribution</div>
     <div class="modal-sub">This will lock the contribution to Rule Snapshot RS-2026-003 and generate an Input Award Letter.</div>
     <div class="notice notice-green" style="margin-bottom:8px;">Rule Snapshot RS-2026-003 will be permanently attached. This action cannot be undone.</div>
     <div class="modal-actions">
       <button class="btn btn-secondary" onclick="closeModal('approve-contrib-modal')">Cancel</button>
-      <button class="btn btn-green" onclick="confirmApprove()">Approve & Lock →</button>
+      <button class="btn btn-green" onclick="confirmApprove()">Approve &amp; Lock →</button>
     </div>
   </div>
 </div>
@@ -458,7 +546,7 @@
   </div>
 </div>
 
-<!-- LOGIN SCREEN -->
+<!-- LOGIN -->
 <div id="screen-login" class="screen active">
   <div class="login-card">
     <div class="login-logo">
@@ -880,7 +968,7 @@
 </div>
 </div>
 
-<!-- EQUITY SUMMARY — PIE CHARTS HERE -->
+<!-- EQUITY SUMMARY -->
 <div id="screen-equity-summary" class="screen">
 <div class="main">
   <div class="topbar">
@@ -892,49 +980,32 @@
   </div>
   <div class="page">
     <div class="notice notice-info"><strong>Bonus inputs do not count toward voting rights.</strong> Voting Share is calculated from base labor and cash inputs only.</div>
-
-    <!-- PIE CHARTS ROW -->
     <div class="grid2" style="margin-bottom:18px;">
-      <!-- Ownership Distribution Pie -->
       <div class="card">
-        <div class="card-header">
-          <div class="card-title">Ownership Distribution</div>
-          <span class="badge badge-blue badge-no-dot">by equity %</span>
-        </div>
+        <div class="card-header"><div class="card-title">Ownership Distribution</div><span class="badge badge-blue badge-no-dot">by equity %</span></div>
         <div class="card-body">
           <div class="pie-container">
             <div class="pie-wrap" style="width:160px;height:160px;flex-shrink:0;">
               <svg id="pie-ownership" width="160" height="160" viewBox="0 0 160 160"></svg>
-              <div class="pie-center-label">
-                <div class="pie-center-val">100%</div>
-                <div class="pie-center-sub">4 Founders</div>
-              </div>
+              <div class="pie-center-label"><div class="pie-center-val">100%</div><div class="pie-center-sub">4 Founders</div></div>
             </div>
             <div class="pie-legend" id="legend-ownership"></div>
           </div>
         </div>
       </div>
-      <!-- Voting Share Distribution Pie -->
       <div class="card">
-        <div class="card-header">
-          <div class="card-title">Voting Share Distribution</div>
-          <span class="badge badge-purple badge-no-dot">excl. bonus</span>
-        </div>
+        <div class="card-header"><div class="card-title">Voting Share Distribution</div><span class="badge badge-purple badge-no-dot">excl. bonus</span></div>
         <div class="card-body">
           <div class="pie-container">
             <div class="pie-wrap" style="width:160px;height:160px;flex-shrink:0;">
               <svg id="pie-voting" width="160" height="160" viewBox="0 0 160 160"></svg>
-              <div class="pie-center-label">
-                <div class="pie-center-val">100%</div>
-                <div class="pie-center-sub">Voting Rights</div>
-              </div>
+              <div class="pie-center-label"><div class="pie-center-val">100%</div><div class="pie-center-sub">Voting Rights</div></div>
             </div>
             <div class="pie-legend" id="legend-voting"></div>
           </div>
         </div>
       </div>
     </div>
-
     <div class="tbl-wrap" style="margin-bottom:16px;">
       <table>
         <thead>
@@ -963,7 +1034,7 @@
 </div>
 </div>
 
-<!-- EQUITY DASHBOARD — PIE CHARTS HERE -->
+<!-- EQUITY DASHBOARD -->
 <div id="screen-equity-dashboard" class="screen">
 <div class="main">
   <div class="topbar">
@@ -982,49 +1053,32 @@
       <div class="stat-card"><div class="stat-label">Net Surplus</div><div class="stat-val" style="color:var(--green);">14,280</div></div>
       <div class="stat-card"><div class="stat-label">Total Deficits</div><div class="stat-val" style="color:var(--red);">−800</div></div>
     </div>
-
-    <!-- TWO PIE CHARTS -->
     <div class="grid2" style="margin-bottom:18px;">
-      <!-- System Stock Composition Pie -->
       <div class="card">
-        <div class="card-header">
-          <div class="card-title">System Stock Composition</div>
-          <span class="badge badge-teal badge-no-dot">Basis · Gain · Skill · Cash</span>
-        </div>
+        <div class="card-header"><div class="card-title">System Stock Composition</div><span class="badge badge-teal badge-no-dot">Basis · Gain · Skill · Cash</span></div>
         <div class="card-body">
           <div class="pie-container">
             <div class="pie-wrap" style="width:160px;height:160px;flex-shrink:0;">
               <svg id="pie-composition" width="160" height="160" viewBox="0 0 160 160"></svg>
-              <div class="pie-center-label">
-                <div class="pie-center-val" style="font-size:17px;">108,790</div>
-                <div class="pie-center-sub">Total Stock</div>
-              </div>
+              <div class="pie-center-label"><div class="pie-center-val" style="font-size:17px;">108,790</div><div class="pie-center-sub">Total Stock</div></div>
             </div>
             <div class="pie-legend" id="legend-composition"></div>
           </div>
         </div>
       </div>
-      <!-- Equity % Per Founder Pie -->
       <div class="card">
-        <div class="card-header">
-          <div class="card-title">Equity % Per Founder</div>
-          <span class="badge badge-blue badge-no-dot">ownership share</span>
-        </div>
+        <div class="card-header"><div class="card-title">Equity % Per Founder</div><span class="badge badge-blue badge-no-dot">ownership share</span></div>
         <div class="card-body">
           <div class="pie-container">
             <div class="pie-wrap" style="width:160px;height:160px;flex-shrink:0;">
               <svg id="pie-equity-per-founder" width="160" height="160" viewBox="0 0 160 160"></svg>
-              <div class="pie-center-label">
-                <div class="pie-center-val">4</div>
-                <div class="pie-center-sub">Founders</div>
-              </div>
+              <div class="pie-center-label"><div class="pie-center-val">4</div><div class="pie-center-sub">Founders</div></div>
             </div>
             <div class="pie-legend" id="legend-equity-per-founder"></div>
           </div>
         </div>
       </div>
     </div>
-
     <div class="card">
       <div class="card-header"><div class="card-title">Basis / Gain / Skill per Founder</div></div>
       <div class="card-body">
@@ -1046,7 +1100,7 @@
 </div>
 </div>
 
-<!-- SYSTEM BOUNDARY — PIE CHART HERE -->
+<!-- SYSTEM BOUNDARY -->
 <div id="screen-system-boundary" class="screen">
 <div class="main">
   <div class="topbar">
@@ -1084,15 +1138,11 @@
                 <div style="font-family:'DM Mono',monospace;font-size:26px;font-weight:800;color:var(--navy);">108,790</div>
                 <div style="font-size:11px;color:var(--g500);margin-top:2px;">Total Accumulated Inputs</div>
               </div>
-              <!-- INFLOW COMPOSITION PIE -->
               <div style="display:flex;justify-content:center;margin:10px 0 6px;">
                 <div class="pie-container" style="gap:14px;">
                   <div class="pie-wrap" style="width:140px;height:140px;flex-shrink:0;">
                     <svg id="pie-inflow" width="140" height="140" viewBox="0 0 140 140"></svg>
-                    <div class="pie-center-label">
-                      <div class="pie-center-val" style="font-size:14px;">74.2%</div>
-                      <div class="pie-center-sub">Basis</div>
-                    </div>
+                    <div class="pie-center-label"><div class="pie-center-val" style="font-size:14px;">74.2%</div><div class="pie-center-sub">Basis</div></div>
                   </div>
                   <div class="pie-legend" id="legend-inflow" style="font-size:11px;"></div>
                 </div>
@@ -1117,7 +1167,7 @@
 </div>
 </div>
 
-<!-- ATTRIBUTION — PIE CHART HERE -->
+<!-- ATTRIBUTION -->
 <div id="screen-attribution" class="screen">
 <div class="main">
   <div class="topbar">
@@ -1132,29 +1182,19 @@
       <div class="stat-card"><div class="stat-label">Skill Attribution</div><div class="stat-val" style="color:var(--purple);">4.7%</div></div>
       <div class="stat-card"><div class="stat-label">Deficit Attribution</div><div class="stat-val" style="color:var(--red);">−0.7%</div></div>
     </div>
-
     <div class="grid2" style="margin-bottom:18px;align-items:start;">
-      <!-- Attribution Breakdown Pie -->
       <div class="card">
-        <div class="card-header">
-          <div class="card-title">Attribution Breakdown</div>
-          <span class="badge badge-purple badge-no-dot">Capital · Coordination · Skill</span>
-        </div>
+        <div class="card-header"><div class="card-title">Attribution Breakdown</div><span class="badge badge-purple badge-no-dot">Capital · Coordination · Skill</span></div>
         <div class="card-body">
           <div class="pie-container">
             <div class="pie-wrap" style="width:170px;height:170px;flex-shrink:0;">
               <svg id="pie-attribution" width="170" height="170" viewBox="0 0 170 170"></svg>
-              <div class="pie-center-label">
-                <div class="pie-center-val" style="font-size:16px;">108,790</div>
-                <div class="pie-center-sub">Total Stock</div>
-              </div>
+              <div class="pie-center-label"><div class="pie-center-val" style="font-size:16px;">108,790</div><div class="pie-center-sub">Total Stock</div></div>
             </div>
             <div class="pie-legend" id="legend-attribution"></div>
           </div>
         </div>
       </div>
-
-      <!-- Per-Founder Attribution -->
       <div class="card">
         <div class="card-header"><div class="card-title">Per-Founder Attribution Breakdown</div></div>
         <div class="card-body">
@@ -1175,7 +1215,7 @@
 </div>
 </div>
 
-<!-- SIMULATION — PIE CHART HERE -->
+<!-- SIMULATION -->
 <div id="screen-simulation" class="screen">
 <div class="main">
   <div class="topbar">
@@ -1208,17 +1248,13 @@
           <div class="sim-row"><span class="sim-row-label">Ryker Rinehart %</span><span class="sim-row-val">29.5% → <span id="sim-rr" class="sim-delta-pos">29.5%</span></span></div>
           <div class="sim-row"><span class="sim-row-label">Alex Chen %</span><span class="sim-row-val">18.3% → <span id="sim-ac" class="sim-delta-pos">18.1%</span></span></div>
         </div>
-        <!-- SIMULATED EQUITY PIE CHART - UPDATES DYNAMICALLY -->
         <div class="card">
           <div class="card-header"><div class="card-title">Simulated Equity Distribution</div><span class="badge badge-purple badge-no-dot">live preview</span></div>
           <div class="card-body">
             <div class="pie-container">
               <div class="pie-wrap" style="width:150px;height:150px;flex-shrink:0;">
                 <svg id="pie-simulation" width="150" height="150" viewBox="0 0 150 150"></svg>
-                <div class="pie-center-label">
-                  <div class="pie-center-val" id="sim-pie-total" style="font-size:15px;">109,224</div>
-                  <div class="pie-center-sub">Sim Stock</div>
-                </div>
+                <div class="pie-center-label"><div class="pie-center-val" id="sim-pie-total" style="font-size:15px;">109,224</div><div class="pie-center-sub">Sim Stock</div></div>
               </div>
               <div class="pie-legend" id="legend-simulation"></div>
             </div>
@@ -1295,7 +1331,7 @@
       <div class="card-header"><div class="card-title">Surplus Accumulation by Sprint</div></div>
       <div class="card-body">
         <div class="chart-bars">
-          <div class="chart-col"><div class="chart-bar" style="height:45%;background:var(--blue-mid);" title="Sprint 1"></div><div class="chart-xlabel">Sp1</div></div>
+          <div class="chart-col"><div class="chart-bar" style="height:45%;background:var(--blue-mid);"></div><div class="chart-xlabel">Sp1</div></div>
           <div class="chart-col"><div class="chart-bar" style="height:55%;background:var(--blue-mid);"></div><div class="chart-xlabel">Sp2</div></div>
           <div class="chart-col"><div class="chart-bar" style="height:62%;background:var(--blue-mid);"></div><div class="chart-xlabel">Sp3</div></div>
           <div class="chart-col"><div class="chart-bar" style="height:50%;background:var(--blue-mid);"></div><div class="chart-xlabel">Sp4</div></div>
@@ -1501,9 +1537,7 @@ function polarToCartesian(cx, cy, r, angleDeg) {
   const rad = (angleDeg - 90) * Math.PI / 180;
   return { x: cx + r * Math.cos(rad), y: cy + r * Math.sin(rad) };
 }
-
 function describeArc(cx, cy, outerR, innerR, startAngle, endAngle) {
-  // Cap to avoid full-circle SVG path edge case
   const sweep = Math.min(endAngle - startAngle, 359.9999);
   const end = startAngle + sweep;
   const o1 = polarToCartesian(cx, cy, outerR, startAngle);
@@ -1511,677 +1545,275 @@ function describeArc(cx, cy, outerR, innerR, startAngle, endAngle) {
   const i1 = polarToCartesian(cx, cy, innerR, end);
   const i2 = polarToCartesian(cx, cy, innerR, startAngle);
   const largeArc = sweep > 180 ? 1 : 0;
-  return [
-    `M ${o1.x} ${o1.y}`,
-    `A ${outerR} ${outerR} 0 ${largeArc} 1 ${o2.x} ${o2.y}`,
-    `L ${i1.x} ${i1.y}`,
-    `A ${innerR} ${innerR} 0 ${largeArc} 0 ${i2.x} ${i2.y}`,
-    'Z'
-  ].join(' ');
+  return [`M ${o1.x} ${o1.y}`,`A ${outerR} ${outerR} 0 ${largeArc} 1 ${o2.x} ${o2.y}`,`L ${i1.x} ${i1.y}`,`A ${innerR} ${innerR} 0 ${largeArc} 0 ${i2.x} ${i2.y}`,'Z'].join(' ');
 }
-
-/**
- * Draw a donut pie chart
- * @param {string} svgId - SVG element id
- * @param {Array} segments - [{label, value, color, sublabel?}]
- * @param {string} legendId - legend container id (optional)
- * @param {Object} opts - {outerR, innerR, gap, tooltipFmt}
- */
 function drawPie(svgId, segments, legendId, opts = {}) {
   const svg = document.getElementById(svgId);
   if (!svg) return;
   svg.innerHTML = '';
-
   const w = parseFloat(svg.getAttribute('width'));
   const h = parseFloat(svg.getAttribute('height'));
-  const cx = w / 2, cy = h / 2;
-  const outerR = opts.outerR || (w / 2) * 0.88;
-  const innerR = opts.innerR || outerR * 0.58;
+  const cx = w/2, cy = h/2;
+  const outerR = opts.outerR || (w/2)*0.88;
+  const innerR = opts.innerR || outerR*0.58;
   const gap = opts.gap !== undefined ? opts.gap : 1.8;
-
-  const total = segments.reduce((s, d) => s + d.value, 0);
-  if (total <= 0) return;
-
+  const total = segments.reduce((s,d)=>s+d.value,0);
+  if (total<=0) return;
   let currentAngle = 0;
   const tooltip = document.getElementById('pie-tooltip');
-
-  segments.forEach((seg, i) => {
-    const fraction = seg.value / total;
-    const sweepAngle = fraction * 360;
-    const startAngle = currentAngle + gap / 2;
-    const endAngle = currentAngle + sweepAngle - gap / 2;
+  segments.forEach((seg) => {
+    const fraction = seg.value/total;
+    const sweepAngle = fraction*360;
+    const startAngle = currentAngle+gap/2;
+    const endAngle = currentAngle+sweepAngle-gap/2;
     currentAngle += sweepAngle;
-
-    if (sweepAngle < 1) return;
-
-    const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-    path.setAttribute('d', describeArc(cx, cy, outerR, innerR, startAngle, endAngle));
+    if (sweepAngle<1) return;
+    const path = document.createElementNS('http://www.w3.org/2000/svg','path');
+    path.setAttribute('d', describeArc(cx,cy,outerR,innerR,startAngle,endAngle));
     path.setAttribute('fill', seg.color);
-    path.setAttribute('class', 'pie-slice');
+    path.setAttribute('class','pie-slice');
     path.style.filter = 'drop-shadow(0 1px 2px rgba(0,0,0,0.15))';
-
-    // Hover: slight scale out
-    const mid = startAngle + (endAngle - startAngle) / 2;
-    const hoverPt = polarToCartesian(cx, cy, (outerR + innerR) / 2, mid);
-    const dx = (hoverPt.x - cx) / (outerR * 0.6) * 3;
-    const dy = (hoverPt.y - cy) / (outerR * 0.6) * 3;
-
-    path.addEventListener('mouseenter', function(e) {
-      this.style.transform = `translate(${dx}px, ${dy}px)`;
-      this.style.filter = `drop-shadow(0 3px 8px rgba(0,0,0,0.25))`;
-      if (tooltip) {
-        const fmt = opts.tooltipFmt || ((s) => `${s.label}: ${(s.value/total*100).toFixed(1)}%`);
-        tooltip.textContent = fmt(seg);
-        tooltip.style.display = 'block';
-      }
+    const mid = startAngle+(endAngle-startAngle)/2;
+    const hoverPt = polarToCartesian(cx,cy,(outerR+innerR)/2,mid);
+    const dx = (hoverPt.x-cx)/(outerR*0.6)*3;
+    const dy = (hoverPt.y-cy)/(outerR*0.6)*3;
+    path.addEventListener('mouseenter',function(e){
+      this.style.transform=`translate(${dx}px,${dy}px)`;
+      this.style.filter=`drop-shadow(0 3px 8px rgba(0,0,0,0.25))`;
+      if(tooltip){const fmt=opts.tooltipFmt||((s)=>`${s.label}: ${(s.value/total*100).toFixed(1)}%`);tooltip.textContent=fmt(seg);tooltip.style.display='block';}
     });
-    path.addEventListener('mousemove', function(e) {
-      if (tooltip) {
-        tooltip.style.left = (e.pageX + 12) + 'px';
-        tooltip.style.top = (e.pageY - 28) + 'px';
-      }
-    });
-    path.addEventListener('mouseleave', function() {
-      this.style.transform = '';
-      this.style.filter = 'drop-shadow(0 1px 2px rgba(0,0,0,0.15))';
-      if (tooltip) tooltip.style.display = 'none';
-    });
-
+    path.addEventListener('mousemove',function(e){if(tooltip){tooltip.style.left=(e.pageX+12)+'px';tooltip.style.top=(e.pageY-28)+'px';}});
+    path.addEventListener('mouseleave',function(){this.style.transform='';this.style.filter='drop-shadow(0 1px 2px rgba(0,0,0,0.15))';if(tooltip)tooltip.style.display='none';});
     svg.appendChild(path);
   });
-
-  // Build legend
   if (legendId) {
     const legendEl = document.getElementById(legendId);
     if (legendEl) {
-      legendEl.innerHTML = '';
-      segments.forEach(seg => {
-        const pct = (seg.value / total * 100).toFixed(1);
-        const item = document.createElement('div');
-        item.className = 'pie-legend-item';
-        item.innerHTML = `
-          <div class="pie-legend-dot" style="background:${seg.color};"></div>
-          <span class="pie-legend-label">${seg.label}</span>
-          <span class="pie-legend-val">${seg.sublabel || pct + '%'}</span>
-        `;
+      legendEl.innerHTML='';
+      segments.forEach(seg=>{
+        const pct=(seg.value/total*100).toFixed(1);
+        const item=document.createElement('div');
+        item.className='pie-legend-item';
+        item.innerHTML=`<div class="pie-legend-dot" style="background:${seg.color};"></div><span class="pie-legend-label">${seg.label}</span><span class="pie-legend-val">${seg.sublabel||pct+'%'}</span>`;
         legendEl.appendChild(item);
       });
     }
   }
 }
 
-// ─── PIE CHART DATA DEFINITIONS ───────────────────────────────────────────────
-const FOUNDER_COLORS = {
-  'David Boctor': '#2563EB',
-  'Ryker Rinehart': '#0D9488',
-  'Alex Chen': '#7C3AED',
-  'Maria Santos': '#D97706'
-};
+// ─── PIE DATA ─────────────────────────────────────────────────────────────────
+const ownershipData=[{label:'David Boctor',value:44.4,color:'#2563EB',sublabel:'44.4%'},{label:'Ryker Rinehart',value:29.5,color:'#0D9488',sublabel:'29.5%'},{label:'Alex Chen',value:18.3,color:'#7C3AED',sublabel:'18.3%'},{label:'Maria Santos',value:7.8,color:'#D97706',sublabel:'7.8%'}];
+const votingData=[{label:'David Boctor',value:42.1,color:'#2563EB',sublabel:'42.1%'},{label:'Ryker Rinehart',value:29.8,color:'#0D9488',sublabel:'29.8%'},{label:'Alex Chen',value:20.6,color:'#7C3AED',sublabel:'20.6%'},{label:'Maria Santos',value:7.5,color:'#D97706',sublabel:'7.5%'}];
+const compositionData=[{label:'Basis (Labor)',value:80720,color:'#1B3A5C',sublabel:'74.2%'},{label:'Gain (OT)',value:8120,color:'#0D9488',sublabel:'7.5%'},{label:'Skill (Bonus)',value:5160,color:'#7C3AED',sublabel:'4.7%'},{label:'Cash',value:10000,color:'#16A34A',sublabel:'9.2%'},{label:'Deficits',value:800,color:'#DC2626',sublabel:'−0.7%'}];
+const equityPerFounderData=[{label:'David Boctor',value:48320,color:'#2563EB',sublabel:'44.4%'},{label:'Ryker Rinehart',value:32150,color:'#0D9488',sublabel:'29.5%'},{label:'Alex Chen',value:19780,color:'#7C3AED',sublabel:'18.3%'},{label:'Maria Santos',value:8540,color:'#D97706',sublabel:'7.8%'}];
+const inflowData=[{label:'Basis (Labor)',value:80720,color:'#1B3A5C',sublabel:'74.2%'},{label:'Gain (OT)',value:8120,color:'#0D9488',sublabel:'7.5%'},{label:'Skill (Bonus)',value:5160,color:'#7C3AED',sublabel:'4.7%'},{label:'Cash Inputs',value:10000,color:'#16A34A',sublabel:'9.2%'}];
+const attributionData=[{label:'Capital (Basis)',value:80720,color:'#1B3A5C',sublabel:'74.2%'},{label:'Coordination (OT)',value:8120,color:'#0D9488',sublabel:'7.5%'},{label:'Skill (Bonus)',value:5160,color:'#7C3AED',sublabel:'4.7%'},{label:'Cash',value:10000,color:'#16A34A',sublabel:'9.2%'},{label:'Deficit (Destruction)',value:800,color:'#DC2626',sublabel:'−0.7%'}];
+let simPieData=[{label:'David Boctor',value:44.3,color:'#2563EB'},{label:'Ryker Rinehart',value:29.5,color:'#0D9488'},{label:'Alex Chen',value:18.1,color:'#7C3AED'},{label:'Maria Santos',value:7.8,color:'#D97706'}];
 
-const ownershipData = [
-  { label: 'David Boctor',   value: 44.4, color: '#2563EB', sublabel: '44.4%' },
-  { label: 'Ryker Rinehart', value: 29.5, color: '#0D9488', sublabel: '29.5%' },
-  { label: 'Alex Chen',      value: 18.3, color: '#7C3AED', sublabel: '18.3%' },
-  { label: 'Maria Santos',   value: 7.8,  color: '#D97706', sublabel: '7.8%'  }
-];
-
-const votingData = [
-  { label: 'David Boctor',   value: 42.1, color: '#2563EB', sublabel: '42.1%' },
-  { label: 'Ryker Rinehart', value: 29.8, color: '#0D9488', sublabel: '29.8%' },
-  { label: 'Alex Chen',      value: 20.6, color: '#7C3AED', sublabel: '20.6%' },
-  { label: 'Maria Santos',   value: 7.5,  color: '#D97706', sublabel: '7.5%'  }
-];
-
-const compositionData = [
-  { label: 'Basis (Labor)',  value: 80720, color: '#1B3A5C', sublabel: '74.2%' },
-  { label: 'Gain (OT)',      value: 8120,  color: '#0D9488', sublabel: '7.5%'  },
-  { label: 'Skill (Bonus)',  value: 5160,  color: '#7C3AED', sublabel: '4.7%'  },
-  { label: 'Cash',           value: 10000, color: '#16A34A', sublabel: '9.2%'  },
-  { label: 'Deficits',       value: 800,   color: '#DC2626', sublabel: '−0.7%' }
-];
-
-const equityPerFounderData = [
-  { label: 'David Boctor',   value: 48320, color: '#2563EB', sublabel: '44.4%' },
-  { label: 'Ryker Rinehart', value: 32150, color: '#0D9488', sublabel: '29.5%' },
-  { label: 'Alex Chen',      value: 19780, color: '#7C3AED', sublabel: '18.3%' },
-  { label: 'Maria Santos',   value: 8540,  color: '#D97706', sublabel: '7.8%'  }
-];
-
-const inflowData = [
-  { label: 'Basis (Labor)',  value: 80720, color: '#1B3A5C', sublabel: '74.2%' },
-  { label: 'Gain (OT)',      value: 8120,  color: '#0D9488', sublabel: '7.5%'  },
-  { label: 'Skill (Bonus)',  value: 5160,  color: '#7C3AED', sublabel: '4.7%'  },
-  { label: 'Cash Inputs',    value: 10000, color: '#16A34A', sublabel: '9.2%'  }
-];
-
-const attributionData = [
-  { label: 'Capital (Basis)',       value: 80720, color: '#1B3A5C', sublabel: '74.2%' },
-  { label: 'Coordination (OT)',     value: 8120,  color: '#0D9488', sublabel: '7.5%'  },
-  { label: 'Skill (Bonus)',         value: 5160,  color: '#7C3AED', sublabel: '4.7%'  },
-  { label: 'Cash',                  value: 10000, color: '#16A34A', sublabel: '9.2%'  },
-  { label: 'Deficit (Destruction)', value: 800,   color: '#DC2626', sublabel: '−0.7%' }
-];
-
-// Simulation pie data (mutable)
-let simPieData = [
-  { label: 'David Boctor',   value: 44.3, color: '#2563EB' },
-  { label: 'Ryker Rinehart', value: 29.5, color: '#0D9488' },
-  { label: 'Alex Chen',      value: 18.1, color: '#7C3AED' },
-  { label: 'Maria Santos',   value: 7.8,  color: '#D97706' }
-];
-
-// Draw all static pies
-function initAllPies() {
-  drawPie('pie-ownership',          ownershipData,       'legend-ownership');
-  drawPie('pie-voting',             votingData,          'legend-voting');
-  drawPie('pie-composition',        compositionData,     'legend-composition');
-  drawPie('pie-equity-per-founder', equityPerFounderData,'legend-equity-per-founder');
-  drawPie('pie-inflow',             inflowData,          'legend-inflow',  { outerR: 58, innerR: 33 });
-  drawPie('pie-attribution',        attributionData,     'legend-attribution');
-  drawPie('pie-simulation',         simPieData,          'legend-simulation', { outerR: 62, innerR: 36 });
+function initAllPies(){
+  drawPie('pie-ownership',ownershipData,'legend-ownership');
+  drawPie('pie-voting',votingData,'legend-voting');
+  drawPie('pie-composition',compositionData,'legend-composition');
+  drawPie('pie-equity-per-founder',equityPerFounderData,'legend-equity-per-founder');
+  drawPie('pie-inflow',inflowData,'legend-inflow',{outerR:58,innerR:33});
+  drawPie('pie-attribution',attributionData,'legend-attribution');
+  drawPie('pie-simulation',simPieData,'legend-simulation',{outerR:62,innerR:36});
 }
 
-// ─── STATE ─────────────────────────────────────────────────────────────────────
-const APP_STATE = {
-  currentScreen: 'screen-login',
-  editingFund: null,
-  editingFounder: null,
-  scheduleB_attached: false,
-  docs: { employment: false, nda: false },
-  scenarios: [],
-  simValues: { otCoef: 1.5, contPct: 10, otThreshold: 40, initPeriod: 90, minorPenalty: 100 }
-};
+// ─── STATE ────────────────────────────────────────────────────────────────────
+const APP_STATE={currentScreen:'screen-login',editingFund:null,editingFounder:null,scheduleB_attached:false,scenarios:[],simValues:{otCoef:1.5,contPct:10,otThreshold:40,initPeriod:90,minorPenalty:100}};
+const VALID_CREDENTIALS=['ryker@021.ceo','david@021.ceo','alex@021.ceo'];
+const SCREENS_WITH_SIDEBAR=['screen-fund-ledger','screen-fund-details','screen-system-boundary','screen-founder-directory','screen-founder-detail','screen-contribution-ledger','screen-contribution-details','screen-equity-summary','screen-equity-dashboard','screen-attribution','screen-simulation','screen-comparison','screen-analytics','screen-audit-log','screen-award-letters','screen-penalties','screen-permissions','screen-integrations'];
 
-const VALID_CREDENTIALS = ['ryker@021.ceo','david@021.ceo','alex@021.ceo'];
-
-const SCREENS_WITH_SIDEBAR = [
-  'screen-fund-ledger','screen-fund-details','screen-system-boundary',
-  'screen-founder-directory','screen-founder-detail',
-  'screen-contribution-ledger','screen-contribution-details',
-  'screen-equity-summary','screen-equity-dashboard',
-  'screen-attribution','screen-simulation','screen-comparison',
-  'screen-analytics','screen-audit-log','screen-award-letters',
-  'screen-penalties','screen-permissions','screen-integrations'
-];
-
-// ─── SIDEBAR ────────────────────────────────────────────────────────────────────
+// ─── SIDEBAR (CLEAN WHITE, NO ICONS, SIMPLIFIED ANALYSIS) ────────────────────
 function buildSidebar(activeId) {
+  const lnk = (id, label, badge) => {
+    const isActive = activeId === id;
+    const cls = `nav-link${isActive ? ' active' : ''}`;
+    const b = badge ? `<span class="nav-badge new">${badge}</span>` : '';
+    return `<a class="${cls}" onclick="goTo('${id}')">${label}${b}</a>`;
+  };
   return `<div class="sidebar">
     <div class="sidebar-logo">
       <div class="logo-row">
         <div class="logo-icon">FF</div>
-        <div><div class="logo-name">Founders Fund</div><div class="logo-version">SAF-Model v4.0</div></div>
+        <div>
+          <div class="logo-name">Founders Fund</div>
+          <div class="logo-version">SAF-Model v4.0</div>
+        </div>
       </div>
     </div>
     <nav>
       <div class="nav-section">Funds</div>
-      <a class="nav-link${activeId==='screen-fund-ledger'?' active':''}" onclick="goTo('screen-fund-ledger')"><span class="icon">▪</span>Fund Ledger</a>
-      <a class="nav-link${activeId==='screen-fund-details'?' active':''}" onclick="goTo('screen-fund-details')"><span class="icon">▪</span>New Fund</a>
-      <a class="nav-link${activeId==='screen-system-boundary'?' active':''}" onclick="goTo('screen-system-boundary')"><span class="icon">▪</span>System Boundary</a>
+      ${lnk('screen-fund-ledger','Fund Ledger')}
+      ${lnk('screen-fund-details','New Fund')}
+      ${lnk('screen-system-boundary','System Boundary')}
+
+      <div class="nav-divider"></div>
       <div class="nav-section">Founders</div>
-      <a class="nav-link${activeId==='screen-founder-directory'?' active':''}" onclick="goTo('screen-founder-directory')"><span class="icon">▪</span>Founder Directory</a>
-      <a class="nav-link${activeId==='screen-founder-detail'?' active':''}" onclick="goTo('screen-founder-detail')"><span class="icon">▪</span>Founder Detail</a>
-      <a class="nav-link${activeId==='screen-contribution-ledger'?' active':''}" onclick="goTo('screen-contribution-ledger')"><span class="icon">▪</span>Contribution Ledger</a>
-      <a class="nav-link${activeId==='screen-contribution-details'?' active':''}" onclick="goTo('screen-contribution-details')"><span class="icon">▪</span>Record Flow Event</a>
+      ${lnk('screen-founder-directory','Founder Directory')}
+      ${lnk('screen-founder-detail','Founder Detail')}
+      ${lnk('screen-contribution-ledger','Contribution Ledger')}
+      ${lnk('screen-contribution-details','Record Flow Event')}
+
+      <div class="nav-divider"></div>
       <div class="nav-section">Analysis</div>
-      <a class="nav-link${activeId==='screen-equity-summary'?' active':''}" onclick="goTo('screen-equity-summary')"><span class="icon">▪</span>Equity Summary <span class="nav-badge new">REQ</span></a>
-      <a class="nav-link${activeId==='screen-equity-dashboard'?' active':''}" onclick="goTo('screen-equity-dashboard')"><span class="icon">▪</span>Equity &amp; Surplus</a>
-      <a class="nav-link${activeId==='screen-attribution'?' active':''}" onclick="goTo('screen-attribution')"><span class="icon">▪</span>Attribution Layer</a>
-      <a class="nav-link${activeId==='screen-simulation'?' active':''}" onclick="goTo('screen-simulation')"><span class="icon">▪</span>Simulation</a>
-      <a class="nav-link${activeId==='screen-comparison'?' active':''}" onclick="goTo('screen-comparison')"><span class="icon">▪</span>Comparative Lens</a>
-      <a class="nav-link${activeId==='screen-analytics'?' active':''}" onclick="goTo('screen-analytics')"><span class="icon">▪</span>Analytics</a>
-      <a class="nav-link${activeId==='screen-audit-log'?' active':''}" onclick="goTo('screen-audit-log')"><span class="icon">▪</span>Audit &amp; Versioning</a>
-      <a class="nav-link${activeId==='screen-award-letters'?' active':''}" onclick="goTo('screen-award-letters')"><span class="icon">▪</span>Award Letters</a>
-      <a class="nav-link${activeId==='screen-penalties'?' active':''}" onclick="goTo('screen-penalties')" style="color:rgba(220,38,38,.8)"><span class="icon">▲</span>Deficit Events</a>
+      ${lnk('screen-equity-summary','Equity Summary','REQ')}
+      ${lnk('screen-attribution','Attribution Layer')}
+      ${lnk('screen-simulation','Simulation')}
+
+      <div class="nav-divider"></div>
+      <div class="nav-section">Records</div>
+      ${lnk('screen-audit-log','Audit &amp; Versioning')}
+      ${lnk('screen-award-letters','Award Letters')}
+      <a class="nav-link nav-link-danger${activeId==='screen-penalties'?' active':''}" onclick="goTo('screen-penalties')">Deficit Events</a>
+
+      <div class="nav-divider"></div>
       <div class="nav-section">Config</div>
-      <a class="nav-link${activeId==='screen-permissions'?' active':''}" onclick="goTo('screen-permissions')"><span class="icon">▪</span>Roles &amp; Permissions <span class="nav-badge new">REQ</span></a>
-      <a class="nav-link${activeId==='screen-integrations'?' active':''}" onclick="goTo('screen-integrations')"><span class="icon">▪</span>Integrations</a>
+      ${lnk('screen-permissions','Roles &amp; Permissions','REQ')}
+      ${lnk('screen-integrations','Integrations')}
     </nav>
     <div class="sidebar-footer">
       <div class="sidebar-user">
         <div class="s-avatar">RR</div>
-        <div><div class="s-name">Ryker Rinehart</div><div class="s-role">Fund Secretary · 021</div></div>
+        <div>
+          <div class="s-name">Ryker Rinehart</div>
+          <div class="s-role">Fund Secretary · 021</div>
+        </div>
       </div>
     </div>
   </div>`;
 }
 
-// ─── NAVIGATION ────────────────────────────────────────────────────────────────
-function goTo(id) {
-  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-  const target = document.getElementById(id);
-  if (!target) return;
-  if (SCREENS_WITH_SIDEBAR.includes(id)) {
-    let sidebar = target.querySelector('.sidebar');
-    if (!sidebar) {
-      const mainEl = target.querySelector('.main');
-      if (mainEl) {
-        const div = document.createElement('div');
-        div.innerHTML = buildSidebar(id);
-        target.insertBefore(div.firstChild, mainEl);
-      }
-    } else {
-      const div = document.createElement('div');
-      div.innerHTML = buildSidebar(id);
-      sidebar.parentNode.replaceChild(div.firstChild, sidebar);
-    }
+// ─── NAVIGATION ───────────────────────────────────────────────────────────────
+function goTo(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  const target=document.getElementById(id);
+  if(!target)return;
+  if(SCREENS_WITH_SIDEBAR.includes(id)){
+    let sidebar=target.querySelector('.sidebar');
+    if(!sidebar){const mainEl=target.querySelector('.main');if(mainEl){const div=document.createElement('div');div.innerHTML=buildSidebar(id);target.insertBefore(div.firstChild,mainEl);}}
+    else{const div=document.createElement('div');div.innerHTML=buildSidebar(id);sidebar.parentNode.replaceChild(div.firstChild,sidebar);}
   }
   target.classList.add('active');
-  APP_STATE.currentScreen = id;
-  window.scrollTo(0, 0);
-  // Re-draw pies after render (they may not exist until screen is active)
-  requestAnimationFrame(() => { initAllPies(); });
+  APP_STATE.currentScreen=id;
+  window.scrollTo(0,0);
+  requestAnimationFrame(()=>{initAllPies();});
 }
 
-// ─── LOGIN ──────────────────────────────────────────────────────────────────────
-function doLogin() {
-  const email = document.getElementById('login-email').value.trim().toLowerCase();
-  const pw = document.getElementById('login-pw').value;
-  const errorEl = document.getElementById('login-error');
-  if (!pw || pw.length < 4) { errorEl.style.display = 'block'; return; }
-  if (VALID_CREDENTIALS.some(v => v === email) || email.includes('@021') || email.includes('@zero')) {
-    errorEl.style.display = 'none';
-    goTo('screen-fund-ledger');
-    toast('Welcome back, Ryker Rinehart!', 'green');
-  } else {
-    errorEl.style.display = 'block';
-  }
+// ─── LOGIN ────────────────────────────────────────────────────────────────────
+function doLogin(){
+  const email=document.getElementById('login-email').value.trim().toLowerCase();
+  const pw=document.getElementById('login-pw').value;
+  const errorEl=document.getElementById('login-error');
+  if(!pw||pw.length<4){errorEl.style.display='block';return;}
+  if(VALID_CREDENTIALS.some(v=>v===email)||email.includes('@021')||email.includes('@zero')){errorEl.style.display='none';goTo('screen-fund-ledger');toast('Welcome back, Ryker Rinehart!','green');}
+  else{errorEl.style.display='block';}
 }
 
-// ─── TOAST ──────────────────────────────────────────────────────────────────────
-function toast(msg, type='') {
-  const el = document.getElementById('toast');
-  el.textContent = msg;
-  el.className = 'toast show' + (type ? ' toast-'+type : '');
-  setTimeout(() => { el.classList.remove('show'); }, 3000);
+// ─── TOAST ────────────────────────────────────────────────────────────────────
+function toast(msg,type=''){const el=document.getElementById('toast');el.textContent=msg;el.className='toast show'+(type?' toast-'+type:'');setTimeout(()=>{el.classList.remove('show');},3000);}
+
+// ─── MODALS ───────────────────────────────────────────────────────────────────
+function openModal(id){document.getElementById(id).classList.add('open');}
+function closeModal(id){document.getElementById(id).classList.remove('open');}
+document.querySelectorAll('.modal-overlay').forEach(m=>{m.addEventListener('click',function(e){if(e.target===this)closeModal(this.id);});});
+
+// ─── FUND ACTIONS ─────────────────────────────────────────────────────────────
+function filterFunds(val){document.querySelectorAll('#fund-tbody tr').forEach(r=>{r.style.display=r.dataset.name.toLowerCase().includes(val.toLowerCase())?'':'none';});}
+function editFund(name){APP_STATE.editingFund=name;const company=name.replace(" Founder's Fund Agreement","");document.getElementById('fd-company').value=company;document.getElementById('fd-name').value=name;goTo('screen-fund-details');}
+function updateFundName(){const company=(document.getElementById('fd-company')?.value||'').trim();const el=document.getElementById('fd-name');if(el)el.value=company?company+" Founder's Fund Agreement":'';}
+function saveDraftFund(){toast('Draft saved','green');}
+function saveFund(){const company=document.getElementById('fd-company')?.value?.trim();if(!company){toast('Company name is required','red');return;}toast('Fund saved successfully!','green');goTo('screen-fund-ledger');}
+function selectSplit(el){document.querySelectorAll('.split-trigger').forEach(e=>e.classList.remove('active'));el.classList.add('active');}
+function confirmSplit(){closeModal('split-modal');toast('Fund split initiated. New fund snapshot created.','green');addAuditEntry('Fund Split Initiated','fund');}
+function confirmTerminateFund(){const reason=document.getElementById('term-fund-reason')?.value;if(!reason?.trim()){toast('Please enter a termination reason','red');return;}closeModal('terminate-fund-modal');toast('Fund terminated. All positions locked.','red');}
+
+// ─── SCHEDULE B ───────────────────────────────────────────────────────────────
+function addStartingInputRow(){const tbody=document.getElementById('schedule-b-body');if(!tbody)return;const tr=document.createElement('tr');tr.innerHTML=`<td><input class="form-control" style="padding:4px 8px;font-size:12px;" placeholder="Fund Owner name"></td><td><input class="form-control" style="padding:4px 8px;font-size:12px;" type="number" value="0" oninput="recalcScheduleB()"></td><td><input class="form-control" style="padding:4px 8px;font-size:12px;" type="number" value="0" oninput="recalcScheduleB()"></td><td class="mono" style="font-weight:700;color:var(--blue);">0</td><td><input class="form-control" style="padding:4px 8px;font-size:12px;" placeholder="Optional note…"></td><td><button class="btn btn-ghost btn-sm" style="color:var(--red);" onclick="removeScheduleBRow(this)">Remove</button></td>`;tbody.appendChild(tr);recalcScheduleB();}
+function removeScheduleBRow(btn){btn.closest('tr').remove();recalcScheduleB();}
+function recalcScheduleB(){const rows=document.querySelectorAll('#schedule-b-body tr');let totalNC=0,totalC=0;rows.forEach(row=>{const cells=row.querySelectorAll('td');const nc=parseFloat(cells[1]?.querySelector('input')?.value)||0;const c=parseFloat(cells[2]?.querySelector('input')?.value)||0;if(cells[3])cells[3].textContent=(nc+c).toLocaleString();totalNC+=nc;totalC+=c;});const s=(id,v)=>{const e=document.getElementById(id);if(e)e.textContent=v;};s('sb-total-noncash',totalNC.toLocaleString());s('sb-total-cash',totalC.toLocaleString());s('sb-total-all',(totalNC+totalC).toLocaleString());}
+function attachScheduleB(){APP_STATE.scheduleB_attached=true;const row=document.getElementById('scheduleb-doc-row');const status=document.getElementById('scheduleb-status');if(row){row.classList.remove('doc-missing');row.classList.add('doc-ok');}if(status){status.textContent='✓ 021_Schedule_B_v1.pdf';status.style.color='var(--green)';}toast('Schedule B attached successfully','green');}
+
+// ─── FOUNDER ACTIONS ──────────────────────────────────────────────────────────
+function filterFounders(val){document.querySelectorAll('#founder-tbody tr').forEach(r=>{r.style.display=(r.dataset.name||'').includes(val.toLowerCase())?'':'none';});}
+function filterFounderStatus(val){document.querySelectorAll('#founder-tbody tr').forEach(r=>{r.style.display=(!val||r.dataset.status===val)?'':'none';});}
+function editFounder(name){
+  APP_STATE.editingFounder=name;
+  const data={'David Boctor':{first:'David',last:'Boctor',email:'david@021.ceo',phone:'+1 (555) 012-3456',role:'fund_leader',status:'contributing',wage:120,cashPct:60,fundPct:40},'Ryker Rinehart':{first:'Ryker',last:'Rinehart',email:'ryker@021.ceo',phone:'+1 (555) 021-0000',role:'fund_secretary',status:'contributing',wage:95,cashPct:50,fundPct:50},'Alex Chen':{first:'Alex',last:'Chen',email:'alex@021.ceo',phone:'+1 (555) 021-0001',role:'fund_owner',status:'initiated',wage:85,cashPct:70,fundPct:30},'Maria Santos':{first:'Maria',last:'Santos',email:'maria@021.ceo',phone:'+1 (555) 021-0002',role:'fund_owner',status:'terminated',wage:110,cashPct:80,fundPct:20}};
+  const d=data[name]||data['David Boctor'];
+  ['fn-first','fn-last','fn-email','fn-phone'].forEach((id,i)=>{const el=document.getElementById(id);if(el)el.value=[d.first,d.last,d.email,d.phone][i];});
+  document.getElementById('founder-role').value=d.role;
+  document.getElementById('founder-status').value=d.status;
+  document.getElementById('market-wage').value=d.wage;
+  document.getElementById('cash-comp-pct').value=d.cashPct;
+  document.getElementById('fund-comp-pct').value=d.fundPct;
+  document.getElementById('founder-detail-bread').textContent='Founder Directory › '+name;
+  recalcComp();goTo('screen-founder-detail');
+}
+function recordFlow(name){
+  APP_STATE.editingFounder=name;
+  const fd={'Ryker Rinehart':{initials:'RR',bg:'var(--teal)',stock:'32,150',role:'Fund Secretary',rate:95},'David Boctor':{initials:'DB',bg:'var(--blue)',stock:'48,320',role:'Fund Leader',rate:120},'Alex Chen':{initials:'AC',bg:'var(--purple)',stock:'19,780',role:'Fund Owner',rate:85}};
+  const d=fd[name]||fd['Ryker Rinehart'];
+  const av=document.getElementById('flow-avatar');const fn=document.getElementById('flow-founder-name');const fm=document.getElementById('flow-founder-meta');const fs=document.getElementById('flow-stock');
+  if(av){av.textContent=d.initials;av.style.background=d.bg;}if(fn)fn.textContent=name;if(fm)fm.textContent=name.toLowerCase().replace(' ','')+'@021.ceo · $'+d.rate+'/hr · '+d.role;if(fs)fs.textContent=d.stock;
+  document.getElementById('rateInput').value=d.rate;calcFlow();goTo('screen-contribution-details');
+}
+function checkFundLeaderRule(sel){}
+function handleStatusChange(sel){const panel=document.getElementById('termination-panel');if(panel)panel.style.display=sel.value==='terminated'?'block':'none';}
+function recalcComp(){const wage=parseFloat(document.getElementById('market-wage')?.value)||0;const cashPct=parseFloat(document.getElementById('cash-comp-pct')?.value)||0;const fundPct=parseFloat(document.getElementById('fund-comp-pct')?.value)||0;const total=cashPct+fundPct;const el=document.getElementById('comp-validation');if(!el)return;if(Math.abs(total-100)<0.01){el.className='comp-validation comp-ok';el.textContent='✓ Cash ('+cashPct+'%) + Fund ('+fundPct+'%) = 100% of Market Wage ($'+wage+'/hr). Balanced.';}else{el.className='comp-validation comp-warn';el.textContent='⚠ Cash ('+cashPct+'%) + Fund ('+fundPct+'%) = '+total+'%. Must sum to exactly 100%.';};}
+function saveFounder(){const cashPct=parseFloat(document.getElementById('cash-comp-pct')?.value)||0;const fundPct=parseFloat(document.getElementById('fund-comp-pct')?.value)||0;if(Math.abs(cashPct+fundPct-100)>0.01){toast('Cash + Fund Compensation must equal 100%','red');return;}const name=document.getElementById('fn-first')?.value+' '+document.getElementById('fn-last')?.value;toast('Founder "'+name+'" saved!','green');goTo('screen-founder-directory');}
+function confirmInvite(){const first=document.getElementById('inv-first')?.value?.trim();const last=document.getElementById('inv-last')?.value?.trim();const email=document.getElementById('inv-email')?.value?.trim();if(!first||!last||!email){toast('Please fill in all required fields','red');return;}closeModal('invite-modal');toast('Invitation sent to '+email+'!','green');addAuditEntry('Founder Invited — '+first+' '+last,'invite');document.getElementById('inv-first').value='';document.getElementById('inv-last').value='';document.getElementById('inv-email').value='';}
+
+// ─── CONTRIBUTION / FLOW ──────────────────────────────────────────────────────
+function newContribution(){goTo('screen-contribution-details');}
+function switchContribTab(type,el){document.querySelectorAll('.toggle-tab').forEach(t=>t.classList.remove('active'));el.classList.add('active');['noncash','cash','penalty'].forEach(t=>{const tab=document.getElementById('tab-'+t);const calc=document.getElementById('calc-'+t);if(tab)tab.style.display=(t===type)?'':'none';if(calc)calc.style.display=(t===type)?'':'none';});}
+function calcFlow(){const hours=parseFloat(document.getElementById('hoursInput')?.value)||0;const rate=parseFloat(document.getElementById('rateInput')?.value)||0;const threshold=40,otCoef=1.5,bonusPct=0.10;const reg=Math.min(hours,threshold);const ot=Math.max(0,hours-threshold);const basis=reg*rate;const gain=ot*rate*otCoef;const skill=basis*bonusPct;const total=basis+gain+skill;const f=n=>Math.round(n).toLocaleString();const s=(id,v)=>{const e=document.getElementById(id);if(e)e.textContent=v;};s('disp-hours',hours.toFixed(1)+' hrs');s('disp-base',f(basis));s('disp-ot',f(gain));s('disp-cont',f(skill));s('disp-total',f(total));if(total>0){const set=(id,pct)=>{const e=document.getElementById(id);if(e)e.style.width=pct.toFixed(1)+'%';};set('bar-basis',basis/total*100);set('bar-gain',gain/total*100);set('bar-skill',skill/total*100);}}
+function calcGuarantee(){const amount=parseFloat(document.getElementById('cash-amount')?.value)||0;const cd=document.getElementById('cash-total-display');if(cd)cd.textContent=amount.toLocaleString();}
+function calcDeficit(){let minor=0,major=0;document.querySelectorAll('.minor-check:checked').forEach(()=>minor+=100);document.querySelectorAll('.major-check:checked').forEach(()=>major+=500);const s=(id,v)=>{const e=document.getElementById(id);if(e)e.textContent=v;};s('minor-total',minor>0?'−'+minor:'−0');s('major-total',major>0?'−'+major:'−0');s('deficit-total',(minor+major)>0?'−'+(minor+major):'−0');}
+function submitForApproval(){toast('Contribution submitted for approval (RS-2026-003 will be attached on approval)','');}
+function confirmApprove(){closeModal('approve-contrib-modal');toast('Contribution approved and locked! RS-2026-003 attached. Award Letter generated.','green');goTo('screen-contribution-ledger');}
+function exportLedger(){toast('Ledger exported as CSV','green');}
+
+// ─── SYNC ─────────────────────────────────────────────────────────────────────
+function syncAll(){openModal('sync-modal');const bar=document.getElementById('sync-bar');const prog=document.getElementById('sync-progress');let w=0;const steps=['Connecting to Harvest & ClickUp...','Syncing Ryker Rinehart (✓)...','Syncing Alex Chen (✓)...','David Boctor blocked — docs missing...','Complete!'];let step=0;const iv=setInterval(()=>{w+=20;bar.style.width=w+'%';if(prog)prog.textContent=steps[step++]||steps[steps.length-1];if(w>=100){clearInterval(iv);setTimeout(()=>{closeModal('sync-modal');toast('Sync complete. 2 founders synced, 1 blocked.','orange');},400);}},400);}
+function syncOne(name){openModal('sync-modal');const bar=document.getElementById('sync-bar');let w=0;const iv=setInterval(()=>{w+=25;bar.style.width=w+'%';if(w>=100){clearInterval(iv);setTimeout(()=>{closeModal('sync-modal');toast(name+' synced!','green');},400);}},300);}
+
+// ─── AWARD LETTERS ────────────────────────────────────────────────────────────
+function viewLetter(name,period,snapshot,hourly,ot,bonus,total){
+  const html=`<div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;padding-bottom:14px;border-bottom:2px solid var(--navy);"><div style="width:32px;height:32px;background:var(--blue);border-radius:7px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:14px;font-weight:700;">FF</div><div><div style="font-weight:800;font-size:13px;color:var(--navy);">021 Founder's Fund Agreement</div><div style="font-size:10px;color:var(--g400);">Input Award Letter · <span class="letter-field">${snapshot}</span></div></div></div><p><strong>Dear <span class="letter-field">${name}</span>,</strong></p><p style="margin-top:8px;">This letter confirms your vested equity contribution for <span class="letter-field">${period}</span>.</p><div class="rules-card" style="margin-top:10px;"><div class="rule-row"><span class="rule-key">Hourly (Base)</span><span class="rule-val">${hourly}</span></div><div class="rule-row"><span class="rule-key">Overtime (Gain)</span><span class="rule-val" style="color:var(--teal);">${ot}</span></div><div class="rule-row"><span class="rule-key">Bonus (Skill)</span><span class="rule-val" style="color:var(--purple);">${bonus}</span></div><div class="rule-row" style="border-top:2px solid var(--g200);margin-top:4px;padding-top:8px;"><span class="rule-key" style="font-weight:700;">Total Vested</span><span class="rule-val" style="font-size:17px;color:var(--blue);">${total}</span></div></div><p style="margin-top:12px;font-size:11px;color:var(--g500);">Rule Snapshot: <span class="letter-field">${snapshot}</span> · Immutable record.</p>`;
+  const panel=document.getElementById('letter-preview-panel');const hint=document.getElementById('letter-hint');if(panel){panel.innerHTML=html;panel.style.display='block';}if(hint)hint.style.display='none';
+  document.getElementById('letter-modal-content').innerHTML=html;openModal('letter-modal');
 }
 
-// ─── MODALS ─────────────────────────────────────────────────────────────────────
-function openModal(id) { document.getElementById(id).classList.add('open'); }
-function closeModal(id) { document.getElementById(id).classList.remove('open'); }
-document.querySelectorAll('.modal-overlay').forEach(m => {
-  m.addEventListener('click', function(e) { if (e.target === this) closeModal(this.id); });
-});
-
-// ─── FUND ACTIONS ──────────────────────────────────────────────────────────────
-function filterFunds(val) {
-  document.querySelectorAll('#fund-tbody tr').forEach(r => {
-    r.style.display = r.dataset.name.toLowerCase().includes(val.toLowerCase()) ? '' : 'none';
-  });
-}
-function editFund(name) {
-  APP_STATE.editingFund = name;
-  const company = name.replace(" Founder's Fund Agreement", "");
-  document.getElementById('fd-company').value = company;
-  document.getElementById('fd-name').value = name;
-  goTo('screen-fund-details');
-}
-function updateFundName() {
-  const company = (document.getElementById('fd-company')?.value || '').trim();
-  const el = document.getElementById('fd-name');
-  if (el) el.value = company ? company + " Founder's Fund Agreement" : '';
-}
-function saveDraftFund() { toast('Draft saved', 'green'); }
-function saveFund() {
-  const company = document.getElementById('fd-company')?.value?.trim();
-  if (!company) { toast('Company name is required', 'red'); return; }
-  toast('Fund saved successfully!', 'green');
-  goTo('screen-fund-ledger');
-}
-function selectSplit(el) {
-  document.querySelectorAll('.split-trigger').forEach(e => e.classList.remove('active'));
-  el.classList.add('active');
-}
-function confirmSplit() {
-  closeModal('split-modal');
-  toast('Fund split initiated. New fund snapshot created.', 'green');
-  addAuditEntry('Fund Split Initiated', 'fund');
-}
-function confirmTerminateFund() {
-  const reason = document.getElementById('term-fund-reason')?.value;
-  if (!reason?.trim()) { toast('Please enter a termination reason', 'red'); return; }
-  closeModal('terminate-fund-modal');
-  toast('Fund terminated. All positions locked.', 'red');
-}
-
-// ─── SCHEDULE B ────────────────────────────────────────────────────────────────
-function addStartingInputRow() {
-  const tbody = document.getElementById('schedule-b-body');
-  if (!tbody) return;
-  const tr = document.createElement('tr');
-  tr.innerHTML = `<td><input class="form-control" style="padding:4px 8px;font-size:12px;" placeholder="Fund Owner name"></td><td><input class="form-control" style="padding:4px 8px;font-size:12px;" type="number" value="0" oninput="recalcScheduleB()"></td><td><input class="form-control" style="padding:4px 8px;font-size:12px;" type="number" value="0" oninput="recalcScheduleB()"></td><td class="mono" style="font-weight:700;color:var(--blue);">0</td><td><input class="form-control" style="padding:4px 8px;font-size:12px;" placeholder="Optional note…"></td><td><button class="btn btn-ghost btn-sm" style="color:var(--red);" onclick="removeScheduleBRow(this)">Remove</button></td>`;
-  tbody.appendChild(tr);
-  recalcScheduleB();
-}
-function removeScheduleBRow(btn) { btn.closest('tr').remove(); recalcScheduleB(); }
-function recalcScheduleB() {
-  const rows = document.querySelectorAll('#schedule-b-body tr');
-  let totalNC = 0, totalC = 0;
-  rows.forEach(row => {
-    const cells = row.querySelectorAll('td');
-    const nc = parseFloat(cells[1]?.querySelector('input')?.value) || 0;
-    const c = parseFloat(cells[2]?.querySelector('input')?.value) || 0;
-    if (cells[3]) cells[3].textContent = (nc + c).toLocaleString();
-    totalNC += nc; totalC += c;
-  });
-  const s = (id, v) => { const e = document.getElementById(id); if (e) e.textContent = v; };
-  s('sb-total-noncash', totalNC.toLocaleString());
-  s('sb-total-cash', totalC.toLocaleString());
-  s('sb-total-all', (totalNC + totalC).toLocaleString());
-}
-function attachScheduleB() {
-  APP_STATE.scheduleB_attached = true;
-  const row = document.getElementById('scheduleb-doc-row');
-  const status = document.getElementById('scheduleb-status');
-  if (row) { row.classList.remove('doc-missing'); row.classList.add('doc-ok'); }
-  if (status) { status.textContent = '✓ 021_Schedule_B_v1.pdf'; status.style.color = 'var(--green)'; }
-  toast('Schedule B attached successfully', 'green');
-}
-
-// ─── FOUNDER ACTIONS ───────────────────────────────────────────────────────────
-function filterFounders(val) {
-  document.querySelectorAll('#founder-tbody tr').forEach(r => {
-    r.style.display = (r.dataset.name || '').includes(val.toLowerCase()) ? '' : 'none';
-  });
-}
-function filterFounderStatus(val) {
-  document.querySelectorAll('#founder-tbody tr').forEach(r => {
-    r.style.display = (!val || r.dataset.status === val) ? '' : 'none';
-  });
-}
-function editFounder(name) {
-  APP_STATE.editingFounder = name;
-  const data = {
-    'David Boctor':   { first:'David',  last:'Boctor',   email:'david@021.ceo',  phone:'+1 (555) 012-3456', role:'fund_leader',    status:'contributing', wage:120, cashPct:60, fundPct:40 },
-    'Ryker Rinehart': { first:'Ryker',  last:'Rinehart', email:'ryker@021.ceo',  phone:'+1 (555) 021-0000', role:'fund_secretary', status:'contributing', wage:95,  cashPct:50, fundPct:50 },
-    'Alex Chen':      { first:'Alex',   last:'Chen',     email:'alex@021.ceo',   phone:'+1 (555) 021-0001', role:'fund_owner',     status:'initiated',    wage:85,  cashPct:70, fundPct:30 },
-    'Maria Santos':   { first:'Maria',  last:'Santos',   email:'maria@021.ceo',  phone:'+1 (555) 021-0002', role:'fund_owner',     status:'terminated',   wage:110, cashPct:80, fundPct:20 }
-  };
-  const d = data[name] || data['David Boctor'];
-  ['fn-first','fn-last','fn-email','fn-phone'].forEach((id, i) => {
-    const el = document.getElementById(id);
-    if (el) el.value = [d.first, d.last, d.email, d.phone][i];
-  });
-  document.getElementById('founder-role').value = d.role;
-  document.getElementById('founder-status').value = d.status;
-  document.getElementById('market-wage').value = d.wage;
-  document.getElementById('cash-comp-pct').value = d.cashPct;
-  document.getElementById('fund-comp-pct').value = d.fundPct;
-  document.getElementById('founder-detail-bread').textContent = 'Founder Directory › ' + name;
-  const panel = document.getElementById('termination-panel');
-  if (panel) panel.style.display = d.status === 'terminated' ? 'block' : 'none';
-  recalcComp();
-  goTo('screen-founder-detail');
-}
-function recordFlow(name) {
-  APP_STATE.editingFounder = name;
-  const flowData = {
-    'Ryker Rinehart': { initials:'RR', bg:'var(--teal)',   stock:'32,150', role:'Fund Secretary', rate:95  },
-    'David Boctor':   { initials:'DB', bg:'var(--blue)',   stock:'48,320', role:'Fund Leader',    rate:120 },
-    'Alex Chen':      { initials:'AC', bg:'var(--purple)', stock:'19,780', role:'Fund Owner',     rate:85  }
-  };
-  const d = flowData[name] || flowData['Ryker Rinehart'];
-  const av = document.getElementById('flow-avatar');
-  const fn = document.getElementById('flow-founder-name');
-  const fm = document.getElementById('flow-founder-meta');
-  const fs = document.getElementById('flow-stock');
-  if (av) { av.textContent = d.initials; av.style.background = d.bg; }
-  if (fn) fn.textContent = name;
-  if (fm) fm.textContent = name.toLowerCase().replace(' ','') + '@021.ceo · $' + d.rate + '/hr · ' + d.role;
-  if (fs) fs.textContent = d.stock;
-  document.getElementById('rateInput').value = d.rate;
-  calcFlow();
-  goTo('screen-contribution-details');
-}
-function checkFundLeaderRule(sel) {
-  const hint = document.getElementById('role-hint');
-  if (hint) hint.style.display = sel.value === 'fund_leader' ? 'block' : 'none';
-}
-function handleStatusChange(sel) {
-  const panel = document.getElementById('termination-panel');
-  if (panel) panel.style.display = sel.value === 'terminated' ? 'block' : 'none';
-}
-function recalcComp() {
-  const wage = parseFloat(document.getElementById('market-wage')?.value) || 0;
-  const cashPct = parseFloat(document.getElementById('cash-comp-pct')?.value) || 0;
-  const fundPct = parseFloat(document.getElementById('fund-comp-pct')?.value) || 0;
-  const total = cashPct + fundPct;
-  const el = document.getElementById('comp-validation');
-  if (!el) return;
-  if (Math.abs(total - 100) < 0.01) {
-    el.className = 'comp-validation comp-ok';
-    el.textContent = '✓ Cash (' + cashPct + '%) + Fund (' + fundPct + '%) = 100% of Market Wage ($' + wage + '/hr). Balanced.';
-  } else {
-    el.className = 'comp-validation comp-warn';
-    el.textContent = '⚠ Cash (' + cashPct + '%) + Fund (' + fundPct + '%) = ' + total + '%. Must sum to exactly 100%.';
-  }
-}
-function saveFounder() {
-  const cashPct = parseFloat(document.getElementById('cash-comp-pct')?.value) || 0;
-  const fundPct = parseFloat(document.getElementById('fund-comp-pct')?.value) || 0;
-  if (Math.abs(cashPct + fundPct - 100) > 0.01) { toast('Cash + Fund Compensation must equal 100%', 'red'); return; }
-  const name = document.getElementById('fn-first')?.value + ' ' + document.getElementById('fn-last')?.value;
-  toast('Founder "' + name + '" saved!', 'green');
-  goTo('screen-founder-directory');
-}
-function confirmInvite() {
-  const first = document.getElementById('inv-first')?.value?.trim();
-  const last = document.getElementById('inv-last')?.value?.trim();
-  const email = document.getElementById('inv-email')?.value?.trim();
-  if (!first || !last || !email) { toast('Please fill in all required fields', 'red'); return; }
-  closeModal('invite-modal');
-  toast('Invitation sent to ' + email + '!', 'green');
-  addAuditEntry('Founder Invited — ' + first + ' ' + last, 'invite');
-  document.getElementById('inv-first').value = '';
-  document.getElementById('inv-last').value = '';
-  document.getElementById('inv-email').value = '';
-}
-
-// ─── CONTRIBUTION / FLOW ───────────────────────────────────────────────────────
-function newContribution() { goTo('screen-contribution-details'); }
-function switchContribTab(type, el) {
-  document.querySelectorAll('.toggle-tab').forEach(t => t.classList.remove('active'));
-  el.classList.add('active');
-  ['noncash','cash','penalty'].forEach(t => {
-    const tab = document.getElementById('tab-'+t);
-    const calc = document.getElementById('calc-'+t);
-    if (tab) tab.style.display = (t === type) ? '' : 'none';
-    if (calc) calc.style.display = (t === type) ? '' : 'none';
-  });
-}
-function calcFlow() {
-  const hours = parseFloat(document.getElementById('hoursInput')?.value) || 0;
-  const rate = parseFloat(document.getElementById('rateInput')?.value) || 0;
-  const threshold = 40, otCoef = 1.5, bonusPct = 0.10;
-  const reg = Math.min(hours, threshold);
-  const ot = Math.max(0, hours - threshold);
-  const basis = reg * rate;
-  const gain = ot * rate * otCoef;
-  const skill = basis * bonusPct;
-  const total = basis + gain + skill;
-  const f = n => Math.round(n).toLocaleString();
-  const s = (id, v) => { const e = document.getElementById(id); if (e) e.textContent = v; };
-  s('disp-hours', hours.toFixed(1) + ' hrs');
-  s('disp-base', f(basis));
-  s('disp-ot', f(gain));
-  s('disp-cont', f(skill));
-  s('disp-total', f(total));
-  if (total > 0) {
-    const set = (id, pct) => { const e = document.getElementById(id); if (e) e.style.width = pct.toFixed(1) + '%'; };
-    set('bar-basis', basis/total*100);
-    set('bar-gain', gain/total*100);
-    set('bar-skill', skill/total*100);
-  }
-}
-function calcGuarantee() {
-  const amount = parseFloat(document.getElementById('cash-amount')?.value) || 0;
-  const cd = document.getElementById('cash-total-display');
-  if (cd) cd.textContent = amount.toLocaleString();
-}
-function calcDeficit() {
-  let minor = 0, major = 0;
-  document.querySelectorAll('.minor-check:checked').forEach(() => minor += 100);
-  document.querySelectorAll('.major-check:checked').forEach(() => major += 500);
-  const s = (id, v) => { const e = document.getElementById(id); if (e) e.textContent = v; };
-  s('minor-total', minor > 0 ? '−' + minor : '−0');
-  s('major-total', major > 0 ? '−' + major : '−0');
-  s('deficit-total', (minor+major) > 0 ? '−' + (minor+major) : '−0');
-}
-function submitForApproval() {
-  toast('Contribution submitted for approval (RS-2026-003 will be attached on approval)', '');
-}
-function confirmApprove() {
-  closeModal('approve-contrib-modal');
-  toast('Contribution approved and locked! RS-2026-003 attached. Award Letter generated.', 'green');
-  goTo('screen-contribution-ledger');
-}
-function filterLedger() { toast('Filter applied', ''); }
-function exportLedger() { toast('Ledger exported as CSV', 'green'); }
-function syncHarvest() {
-  openModal('sync-modal');
-  const bar = document.getElementById('sync-bar');
-  let w = 0;
-  const iv = setInterval(() => {
-    w += 25; bar.style.width = w + '%';
-    if (w >= 100) { clearInterval(iv); setTimeout(() => { closeModal('sync-modal'); toast('Harvest synced! 44.5 hrs, 38 sprint points.', 'green'); }, 400); }
-  }, 300);
-}
-function syncAll() {
-  openModal('sync-modal');
-  const bar = document.getElementById('sync-bar');
-  const prog = document.getElementById('sync-progress');
-  let w = 0;
-  const steps = ['Connecting to Harvest & ClickUp...','Syncing Ryker Rinehart (✓)...','Syncing Alex Chen (✓)...','David Boctor blocked — docs missing...','Complete!'];
-  let step = 0;
-  const iv = setInterval(() => {
-    w += 20; bar.style.width = w + '%';
-    if (prog) prog.textContent = steps[step++] || steps[steps.length-1];
-    if (w >= 100) { clearInterval(iv); setTimeout(() => { closeModal('sync-modal'); toast('Sync complete. 2 founders synced, 1 blocked.', 'orange'); }, 400); }
-  }, 400);
-}
-function syncOne(name) {
-  openModal('sync-modal');
-  const bar = document.getElementById('sync-bar');
-  let w = 0;
-  const iv = setInterval(() => {
-    w += 25; bar.style.width = w + '%';
-    if (w >= 100) { clearInterval(iv); setTimeout(() => { closeModal('sync-modal'); toast(name + ' synced!', 'green'); }, 400); }
-  }, 300);
-}
-
-// ─── AWARD LETTERS ─────────────────────────────────────────────────────────────
-function viewLetter(name, period, snapshot, hourly, ot, bonus, total) {
-  const html = `
-    <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;padding-bottom:14px;border-bottom:2px solid var(--navy);">
-      <div style="width:32px;height:32px;background:var(--blue);border-radius:7px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:14px;font-weight:700;">FF</div>
-      <div><div style="font-weight:800;font-size:13px;color:var(--navy);">021 Founder's Fund Agreement</div><div style="font-size:10px;color:var(--g400);">Input Award Letter · <span class="letter-field">${snapshot}</span></div></div>
-    </div>
-    <p><strong>Dear <span class="letter-field">${name}</span>,</strong></p>
-    <p style="margin-top:8px;">This letter confirms your vested equity contribution for <span class="letter-field">${period}</span>.</p>
-    <div class="rules-card" style="margin-top:10px;">
-      <div class="rule-row"><span class="rule-key">Hourly (Base)</span><span class="rule-val">${hourly}</span></div>
-      <div class="rule-row"><span class="rule-key">Overtime (Gain)</span><span class="rule-val" style="color:var(--teal);">${ot}</span></div>
-      <div class="rule-row"><span class="rule-key">Bonus (Skill)</span><span class="rule-val" style="color:var(--purple);">${bonus}</span></div>
-      <div class="rule-row" style="border-top:2px solid var(--g200);margin-top:4px;padding-top:8px;"><span class="rule-key" style="font-weight:700;">Total Vested</span><span class="rule-val" style="font-size:17px;color:var(--blue);">${total}</span></div>
-    </div>
-    <p style="margin-top:12px;font-size:11px;color:var(--g500);">Rule Snapshot: <span class="letter-field">${snapshot}</span> · Immutable record.</p>`;
-  const panel = document.getElementById('letter-preview-panel');
-  const hint = document.getElementById('letter-hint');
-  if (panel) { panel.innerHTML = html; panel.style.display = 'block'; }
-  if (hint) hint.style.display = 'none';
-  document.getElementById('letter-modal-content').innerHTML = html;
-  openModal('letter-modal');
-}
-function viewDoc(docName) { toast('Opening "' + docName + '"', ''); }
-
-// ─── SIMULATION ────────────────────────────────────────────────────────────────
-function updateSim(input, key, labelId) {
-  APP_STATE.simValues[key] = parseFloat(input.value);
-  const label = document.getElementById(labelId);
-  if (label) {
-    const v = APP_STATE.simValues[key];
-    if (key === 'otCoef') label.textContent = v.toFixed(2) + '×';
-    else if (key === 'contPct') label.textContent = v + '%';
-    else if (key === 'otThreshold') label.textContent = v + ' hrs';
-    else if (key === 'initPeriod') label.textContent = v + ' days';
-    else label.textContent = v;
-  }
+// ─── SIMULATION ───────────────────────────────────────────────────────────────
+function updateSim(input,key,labelId){
+  APP_STATE.simValues[key]=parseFloat(input.value);
+  const label=document.getElementById(labelId);
+  if(label){const v=APP_STATE.simValues[key];if(key==='otCoef')label.textContent=v.toFixed(2)+'×';else if(key==='contPct')label.textContent=v+'%';else if(key==='otThreshold')label.textContent=v+' hrs';else if(key==='initPeriod')label.textContent=v+' days';else label.textContent=v;}
   recalcSim();
 }
-function recalcSim() {
-  const s = APP_STATE.simValues;
-  const otRatio = s.otCoef / 1.5;
-  const newOT = Math.round(8120 * otRatio);
-  const bonusRatio = s.contPct / 10;
-  const newBonus = Math.round(5160 * bonusRatio);
-  const newStock = 80720 + newOT + newBonus + 10000 - (3 * s.minorPenalty);
-  const newSurplus = Math.max(0, 14280 + (newStock - 108790));
-  const f = n => Math.round(n).toLocaleString();
-  const set = (id, v) => { const e = document.getElementById(id); if (e) e.textContent = v; };
-  const dbPct = (48320 / newStock * 100).toFixed(1);
-  const rrPct = (32150 / newStock * 100).toFixed(1);
-  const acPct = (19780 / newStock * 100).toFixed(1);
-  const msPct = (8540  / newStock * 100).toFixed(1);
-  set('sim-stock', f(newStock));
-  set('sim-surplus', f(newSurplus));
-  set('sim-db', dbPct + '%');
-  set('sim-rr', rrPct + '%');
-  set('sim-ac', acPct + '%');
-  const stockEl = document.getElementById('sim-stock');
-  if (stockEl) stockEl.className = newStock > 108790 ? 'sim-delta-pos' : 'sim-delta-neg';
-  // Update simulation pie
-  const simPie = document.getElementById('pie-simulation');
-  const simTotal = document.getElementById('sim-pie-total');
-  if (simTotal) simTotal.textContent = f(newStock);
-  simPieData = [
-    { label: 'David Boctor',   value: parseFloat(dbPct), color: '#2563EB' },
-    { label: 'Ryker Rinehart', value: parseFloat(rrPct), color: '#0D9488' },
-    { label: 'Alex Chen',      value: parseFloat(acPct), color: '#7C3AED' },
-    { label: 'Maria Santos',   value: parseFloat(msPct), color: '#D97706' }
-  ];
-  if (simPie) drawPie('pie-simulation', simPieData, 'legend-simulation', { outerR: 62, innerR: 36 });
+function recalcSim(){
+  const s=APP_STATE.simValues;const otRatio=s.otCoef/1.5;const newOT=Math.round(8120*otRatio);const bonusRatio=s.contPct/10;const newBonus=Math.round(5160*bonusRatio);
+  const newStock=80720+newOT+newBonus+10000-(3*s.minorPenalty);const newSurplus=Math.max(0,14280+(newStock-108790));
+  const f=n=>Math.round(n).toLocaleString();const set=(id,v)=>{const e=document.getElementById(id);if(e)e.textContent=v;};
+  const dbPct=(48320/newStock*100).toFixed(1);const rrPct=(32150/newStock*100).toFixed(1);const acPct=(19780/newStock*100).toFixed(1);const msPct=(8540/newStock*100).toFixed(1);
+  set('sim-stock',f(newStock));set('sim-surplus',f(newSurplus));set('sim-db',dbPct+'%');set('sim-rr',rrPct+'%');set('sim-ac',acPct+'%');
+  const stockEl=document.getElementById('sim-stock');if(stockEl)stockEl.className=newStock>108790?'sim-delta-pos':'sim-delta-neg';
+  const simTotal=document.getElementById('sim-pie-total');if(simTotal)simTotal.textContent=f(newStock);
+  simPieData=[{label:'David Boctor',value:parseFloat(dbPct),color:'#2563EB'},{label:'Ryker Rinehart',value:parseFloat(rrPct),color:'#0D9488'},{label:'Alex Chen',value:parseFloat(acPct),color:'#7C3AED'},{label:'Maria Santos',value:parseFloat(msPct),color:'#D97706'}];
+  drawPie('pie-simulation',simPieData,'legend-simulation',{outerR:62,innerR:36});
 }
-function resetSim() {
-  APP_STATE.simValues = { otCoef: 1.5, contPct: 10, otThreshold: 40, initPeriod: 90, minorPenalty: 100 };
-  const sliders = document.querySelectorAll('.sim-slider');
-  const vals = [1.5, 10, 40, 90, 100];
-  sliders.forEach((s, i) => { if (vals[i] !== undefined) s.value = vals[i]; });
-  ['sim-ot-val','sim-cont-val','sim-thresh-val','sim-init-val','sim-minor-val'].forEach((id, i) => {
-    const el = document.getElementById(id);
-    if (el) el.textContent = ['1.50×','10%','40 hrs','90 days','100'][i];
-  });
-  recalcSim();
-  toast('Simulation reset to actuals', '');
-}
-function saveScenario() {
-  const name = 'Scenario-' + String.fromCharCode(65 + APP_STATE.scenarios.length);
-  APP_STATE.scenarios.push({ name, ...APP_STATE.simValues });
-  toast('Simulation saved as ' + name, 'green');
-}
+function resetSim(){APP_STATE.simValues={otCoef:1.5,contPct:10,otThreshold:40,initPeriod:90,minorPenalty:100};const sliders=document.querySelectorAll('.sim-slider');const vals=[1.5,10,40,90];sliders.forEach((s,i)=>{if(vals[i]!==undefined)s.value=vals[i];});['sim-ot-val','sim-cont-val','sim-thresh-val','sim-init-val'].forEach((id,i)=>{const el=document.getElementById(id);if(el)el.textContent=['1.50×','10%','40 hrs','90 days'][i];});recalcSim();toast('Simulation reset to actuals','');}
+function saveScenario(){const name='Scenario-'+String.fromCharCode(65+APP_STATE.scenarios.length);APP_STATE.scenarios.push({name,...APP_STATE.simValues});toast('Simulation saved as '+name,'green');}
 
-// ─── AUDIT ──────────────────────────────────────────────────────────────────────
-function addAuditEntry(text, type) {
-  const colors = { fund:'var(--blue)', update:'var(--green)', terminate:'var(--red)', invite:'var(--teal)', approve:'var(--green)' };
-  const color = colors[type] || 'var(--g500)';
-  const history = document.getElementById('audit-history');
-  if (!history) return;
-  const entry = document.createElement('div');
-  entry.className = 'audit-entry';
-  const now = new Date().toLocaleDateString('en-US', { month:'short', day:'numeric', year:'numeric' });
-  entry.innerHTML = `<div class="audit-dot" style="background:${color};"></div><div><div style="font-weight:600;font-size:12.5px;">${text}</div><div class="audit-meta">${now} · Ryker Rinehart <span class="locked-badge">RS-2026-003</span></div></div>`;
-  history.insertBefore(entry, history.firstChild);
-}
-function filterAudit(val) {
-  document.querySelectorAll('#audit-history .audit-entry').forEach(e => {
-    e.style.display = e.textContent.toLowerCase().includes(val.toLowerCase()) ? '' : 'none';
-  });
-}
-function lockPeriod() { toast('Period locked. RS-2026-003 preserved and immutable.', 'green'); }
+// ─── AUDIT ────────────────────────────────────────────────────────────────────
+function addAuditEntry(text,type){const colors={fund:'var(--blue)',update:'var(--green)',terminate:'var(--red)',invite:'var(--teal)',approve:'var(--green)'};const color=colors[type]||'var(--g500)';const history=document.getElementById('audit-history');if(!history)return;const entry=document.createElement('div');entry.className='audit-entry';const now=new Date().toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});entry.innerHTML=`<div class="audit-dot" style="background:${color};"></div><div><div style="font-weight:600;font-size:12.5px;">${text}</div><div class="audit-meta">${now} · Ryker Rinehart <span class="locked-badge">RS-2026-003</span></div></div>`;history.insertBefore(entry,history.firstChild);}
+function filterAudit(val){document.querySelectorAll('#audit-history .audit-entry').forEach(e=>{e.style.display=e.textContent.toLowerCase().includes(val.toLowerCase())?'':'none';});}
+function lockPeriod(){toast('Period locked. RS-2026-003 preserved and immutable.','green');}
 
-// ─── INIT ───────────────────────────────────────────────────────────────────────
-calcFlow();
-calcDeficit();
-recalcComp();
+// ─── INIT ─────────────────────────────────────────────────────────────────────
+calcFlow();calcDeficit();recalcComp();
 </script>
 </body>
 </html>
