@@ -63,7 +63,6 @@
 
   .sidebar nav{flex:1;padding:8px 0 20px;overflow-y:auto;overflow-x:hidden;min-height:0;}
 
-  /* Section headers */
   .nav-section{
     color:#64748b;
     font-size:10.5px;
@@ -73,11 +72,8 @@
     padding:18px 22px 6px;
   }
   .nav-section:first-child{padding-top:14px}
-
-  /* Divider between sections */
   .nav-divider{height:1px;background:var(--g100);margin:6px 22px 8px}
 
-  /* Nav links — no icons, clean text */
   .nav-link{
     display:flex;
     align-items:center;
@@ -103,7 +99,6 @@
     border-left-color:var(--blue);
     font-weight:700;
   }
-  /* hide the old icon spans */
   .nav-link .icon{display:none}
 
   .nav-badge{
@@ -116,12 +111,10 @@
   }
   .nav-badge.new{background:var(--green-light);color:var(--green)}
 
-  /* Danger link (Deficit Events) */
   .nav-link-danger{color:var(--red) !important;opacity:.9}
   .nav-link-danger:hover{color:var(--red) !important;background:#fff5f5 !important;border-left-color:var(--red) !important}
   .nav-link-danger.active{color:var(--red) !important;background:#fee2e2 !important;border-left-color:var(--red) !important}
 
-  /* Footer */
   .sidebar-footer{
     padding:14px 16px 18px;
     border-top:1px solid var(--g100);
@@ -283,9 +276,6 @@
   .split-trigger.active{border-color:var(--teal);background:#f0fdf4;box-shadow:0 0 0 2px rgba(13,148,136,.2)}
   .split-trigger-icon{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
 
-  /* SCHEDULE B */
-  .schedule-b-header{background:linear-gradient(135deg,var(--navy),#1e4976);color:#fff;padding:14px 18px;border-radius:10px 10px 0 0;display:flex;align-items:center;justify-content:space-between}
-
   /* ROLE CARDS */
   .role-card{border:1px solid var(--g200);border-radius:10px;padding:14px;background:#fff}
   .role-card-header{display:flex;align-items:center;gap:10px;margin-bottom:10px}
@@ -399,11 +389,6 @@
   .rule-key{color:var(--g500)}
   .rule-val{font-weight:700;font-family:'DM Mono',monospace;color:var(--navy)}
 
-  /* SYSTEM BOUNDARY */
-  .sys-boundary{border:2px dashed var(--blue-mid);border-radius:12px;padding:16px;position:relative;background:var(--blue-light)}
-  .sys-label{position:absolute;top:-10px;left:14px;background:var(--blue-light);padding:0 6px;font-size:10px;font-weight:700;color:var(--blue);text-transform:uppercase;letter-spacing:.06em}
-  .flow-pill{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:999px;font-size:11px;font-weight:600;margin-bottom:6px}
-
   /* SUSTAINABILITY */
   .sustainability-bar{background:var(--g200);border-radius:999px;height:8px;overflow:hidden;margin-top:10px}
   .sustainability-fill{height:100%;border-radius:999px;transition:width .4s}
@@ -439,6 +424,21 @@
   .toast.toast-green{background:var(--green)}
   .toast.toast-red{background:var(--red)}
   .toast.toast-orange{background:var(--orange)}
+
+  /* DROPDOWN MENU */
+  .dropdown-wrap{position:relative;display:inline-block;}
+  .dropdown-menu{display:none;position:absolute;right:0;top:100%;background:#fff;border:1px solid var(--g200);border-radius:8px;box-shadow:var(--shadow-md);z-index:60;min-width:190px;padding:4px 0;}
+  .dropdown-menu.open{display:block;}
+  .dropdown-item{padding:8px 14px;font-size:13px;font-weight:500;color:var(--g700);cursor:pointer;transition:background .12s;}
+  .dropdown-item:hover{background:var(--g50);color:var(--g900);}
+  .dropdown-item.danger{color:var(--red);}
+  .dropdown-item.danger:hover{background:var(--red-light);}
+  .dropdown-divider{height:1px;background:var(--g200);margin:4px 0;}
+
+  /* COMP ACTUAL VALUES */
+  .comp-row-with-actual{display:grid;grid-template-columns:1fr 1fr;gap:10px;align-items:end;}
+  .comp-actual-label{font-size:11px;font-weight:600;color:var(--g500);margin-bottom:5px;}
+  .comp-actual-value{background:var(--g50);border:1px solid var(--g200);border-radius:var(--radius);padding:7px 11px;font-family:'DM Mono',monospace;font-size:13px;color:var(--g600);font-weight:600;}
 
   ::-webkit-scrollbar{width:5px;height:5px}
   ::-webkit-scrollbar-track{background:transparent}
@@ -513,8 +513,8 @@
 
 <div class="modal-overlay" id="invite-modal">
   <div class="modal-box" style="width:440px;">
-    <div class="modal-title" style="color:var(--blue);">Invite New Founder</div>
-    <div class="modal-sub">Only the Fund Leader can invite new founders.</div>
+    <div class="modal-title" style="color:var(--blue);">Add Founder</div>
+    <div class="modal-sub">Only the Fund Leader can add new founders.</div>
     <div class="fg">
       <div class="grid2">
         <div class="form-group"><label>First Name <span class="req">*</span></label><input class="form-control" id="inv-first" placeholder="First name"></div>
@@ -528,10 +528,10 @@
         </select>
       </div>
     </div>
-    <div class="notice notice-warn" style="margin-top:12px;margin-bottom:0;">New founders cannot have contributions recorded until all 3 required documents are attached.</div>
+    <div class="notice notice-warn" style="margin-top:12px;margin-bottom:0;">New founders cannot have contributions recorded until all required documents are attached.</div>
     <div class="modal-actions">
       <button class="btn btn-secondary" onclick="closeModal('invite-modal')">Cancel</button>
-      <button class="btn btn-primary" onclick="confirmInvite()">Send Invitation →</button>
+      <button class="btn btn-primary" onclick="confirmInvite()">Add Founder →</button>
     </div>
   </div>
 </div>
@@ -578,7 +578,7 @@
       <div class="login-sub">SAF-Model Equity System · v4</div>
     </div>
     <div style="font-weight:700;font-size:15px;color:var(--g900);margin-bottom:16px;">Sign in to your account</div>
-    <div class="login-error" id="login-error">Invalid credentials. Try <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="592b20323c2b19696b68773a3c36">[email&#160;protected]</a> / any password.</div>
+    <div class="login-error" id="login-error">Invalid credentials. Try ryker@021.ceo / any password.</div>
     <div class="form-group" style="margin-bottom:12px;">
       <label>Email address</label>
       <input class="form-control" type="email" id="login-email" value="ryker@021.ceo" onkeydown="if(event.key==='Enter')doLogin()">
@@ -588,46 +588,100 @@
       <input class="form-control" type="password" id="login-pw" value="password123" onkeydown="if(event.key==='Enter')doLogin()">
     </div>
     <button class="btn btn-primary" style="width:100%;justify-content:center;padding:9px;" onclick="doLogin()">Sign In →</button>
-    <div style="text-align:center;margin-top:16px;font-size:11px;color:var(--g400);">Demo credentials: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="f3818a989681b3c3c1c2dd90969c">[email&#160;protected]</a> / any password</div>
+    <div style="text-align:center;margin-top:16px;font-size:11px;color:var(--g400);">Demo credentials: ryker@021.ceo / any password</div>
   </div>
 </div>
 
-<!-- FUND LEDGER -->
+<!-- ═══════════════════════════════════════════════════════════════
+     FUND DIRECTORY (renamed from Fund Ledger)
+     ═══════════════════════════════════════════════════════════════ -->
 <div id="screen-fund-ledger" class="screen">
 <div class="main">
   <div class="topbar">
-    <div class="topbar-left"><div class="title">Fund Ledger</div><div class="bread">All equity funds — Actions: Edit · Split only</div></div>
+    <div class="topbar-left">
+      <div class="title">Fund Directory</div>
+      <div class="bread">All equity funds — click ⋯ for actions</div>
+    </div>
     <div class="topbar-actions">
       <input class="form-control" style="width:200px;" placeholder="Search funds…" oninput="filterFunds(this.value)">
       <button class="btn btn-primary" onclick="goTo('screen-fund-details')">+ New Fund</button>
     </div>
   </div>
   <div class="page">
-    <div class="notice notice-info">Fund directory primary actions are <strong>Edit</strong> and <strong>Split</strong> only, per system requirements.</div>
     <div class="tbl-wrap">
       <table id="fund-table">
-        <thead><tr><th>Fund Name</th><th>Company</th><th>Initiation Period</th><th>OT Threshold</th><th>Bonus Pool</th><th>Status</th><th>Effective Date</th><th>Actions</th></tr></thead>
+        <thead>
+          <tr>
+            <th>Fund Name</th>
+            <th>Company</th>
+            <th>Initiation Period</th>
+            <th>OT Threshold</th>
+            <th>Bonus Pool</th>
+            <th>Status</th>
+            <th>Effective Date</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
         <tbody id="fund-tbody">
           <tr data-name="021 Founder's Fund Agreement">
             <td><span class="td-name">021 Founder's Fund Agreement</span></td>
             <td style="font-size:12px;">021 (Internal)</td>
-            <td class="mono">90 days</td><td>40 hrs/wk</td><td class="mono">10% non-cash</td>
+            <td class="mono">90 days</td>
+            <td>40 hrs/wk</td>
+            <td class="mono">10% non-cash</td>
             <td><span class="badge badge-green">Active</span></td>
             <td>Jan 1, 2026</td>
-            <td style="display:flex;gap:4px;">
-              <button class="btn btn-secondary btn-sm" onclick="editFund('021 Founder\'s Fund Agreement')">Edit</button>
-              <button class="btn btn-split btn-sm" onclick="openModal('split-modal')">Split</button>
+            <td>
+              <div class="dropdown-wrap">
+                <button class="btn btn-ghost btn-sm" style="font-size:18px;padding:2px 8px;letter-spacing:1px;" onclick="toggleMenu(this)" title="Actions">⋯</button>
+                <div class="dropdown-menu">
+                  <div class="dropdown-item" onclick="closeAllMenus();editFund('021 Founder\'s Fund Agreement')">Edit</div>
+                  <div class="dropdown-item" onclick="closeAllMenus();goTo('screen-contribution-ledger')">View Contribution Ledger</div>
+                  <div class="dropdown-item" onclick="closeAllMenus();goTo('screen-equity-summary')">Fund Ownership</div>
+                </div>
+              </div>
             </td>
           </tr>
           <tr data-name="Seed Round Founder's Fund Agreement">
             <td><span class="td-name">Seed Round Founder's Fund Agreement</span></td>
             <td style="font-size:12px;">021 (Internal)</td>
-            <td class="mono">90 days</td><td>40 hrs/wk</td><td class="mono">5% non-cash</td>
-            <td><span class="badge badge-gray">Archived</span></td>
+            <td class="mono">90 days</td>
+            <td>40 hrs/wk</td>
+            <td class="mono">5% non-cash</td>
+            <td><span class="badge badge-gray">Archive</span></td>
             <td>Jul 15, 2025</td>
-            <td style="display:flex;gap:4px;">
-              <button class="btn btn-secondary btn-sm" onclick="editFund('Seed Round Founder\'s Fund Agreement')">Edit</button>
-              <button class="btn btn-split btn-sm" disabled style="opacity:.4;">Split</button>
+            <td>
+              <div class="dropdown-wrap">
+                <button class="btn btn-ghost btn-sm" style="font-size:18px;padding:2px 8px;letter-spacing:1px;" onclick="toggleMenu(this)" title="Actions">⋯</button>
+                <div class="dropdown-menu">
+                  <div class="dropdown-item" onclick="closeAllMenus();editFund('Seed Round Founder\'s Fund Agreement')">Edit</div>
+                  <div class="dropdown-item" onclick="closeAllMenus();goTo('screen-contribution-ledger')">View Contribution Ledger</div>
+                  <div class="dropdown-item" onclick="closeAllMenus();goTo('screen-equity-summary')">Fund Ownership</div>
+                </div>
+              </div>
+            </td>
+          </tr>
+          <tr data-name="Beta Fund Agreement">
+            <td><span class="td-name">Beta Fund Agreement</span></td>
+            <td style="font-size:12px;">021 (Internal)</td>
+            <td class="mono">60 days</td>
+            <td>40 hrs/wk</td>
+            <td class="mono">8% non-cash</td>
+            <td>
+              <span class="badge badge-red badge-no-dot" style="background:#FEE2E2;color:var(--red);">
+                ⚠ Missing Administrator
+              </span>
+            </td>
+            <td>Oct 1, 2025</td>
+            <td>
+              <div class="dropdown-wrap">
+                <button class="btn btn-ghost btn-sm" style="font-size:18px;padding:2px 8px;letter-spacing:1px;" onclick="toggleMenu(this)" title="Actions">⋯</button>
+                <div class="dropdown-menu">
+                  <div class="dropdown-item" onclick="closeAllMenus();editFund('Beta Fund Agreement')">Edit</div>
+                  <div class="dropdown-item" onclick="closeAllMenus();goTo('screen-contribution-ledger')">View Contribution Ledger</div>
+                  <div class="dropdown-item" onclick="closeAllMenus();goTo('screen-equity-summary')">Fund Ownership</div>
+                </div>
+              </div>
             </td>
           </tr>
         </tbody>
@@ -637,14 +691,20 @@
 </div>
 </div>
 
-<!-- FUND DETAILS -->
+<!-- ═══════════════════════════════════════════════════════════════
+     FUND DETAILS
+     ═══════════════════════════════════════════════════════════════ -->
 <div id="screen-fund-details" class="screen">
 <div class="main">
   <div class="topbar">
-    <div class="topbar-left"><div class="title">Fund Details</div><div class="bread" id="fund-detail-bread">021 Founder's Fund Agreement · Rules Engine</div></div>
+    <div class="topbar-left">
+      <div class="title">Fund Details</div>
+      <div class="bread" id="fund-detail-bread">021 Founder's Fund Agreement · Rules Engine</div>
+    </div>
     <div class="topbar-actions">
       <button class="btn btn-secondary" onclick="goTo('screen-fund-ledger')">Cancel</button>
       <button class="btn btn-secondary" onclick="saveDraftFund()">Save Draft</button>
+      <button class="btn btn-secondary" onclick="addFounderFromFund()">+ Add Founder</button>
       <button class="btn btn-primary" onclick="saveFund()">Save Fund</button>
       <button class="btn btn-split" onclick="openModal('split-modal')">Split Fund</button>
       <button class="btn btn-terminate" onclick="openModal('terminate-fund-modal')">Terminate Fund</button>
@@ -652,12 +712,14 @@
   </div>
   <div class="page">
     <div class="notice notice-warn">The fund has <strong>no fixed length or contribution period</strong>. It starts on the effective date and continues until terminated or split.</div>
+
+    <!-- Fund Identity -->
     <div class="card" style="margin-bottom:16px;">
       <div class="card-header"><div class="card-title">Fund Identity</div><span class="badge badge-blue badge-no-dot">Core Fields</span></div>
       <div class="card-body">
         <div class="fg">
           <div class="grid2">
-            <div class="form-group"><label>Company <span class="req">*</span></label><input class="form-control" id="fd-company" value="021" oninput="updateFundName()"></div>
+            <div class="form-group"><label>Company Legal Name <span class="req">*</span></label><input class="form-control" id="fd-company" value="021" oninput="updateFundName()"></div>
             <div class="form-group"><label>Fund Name <span class="req">*</span></label><input class="form-control" id="fd-name" value="021 Founder's Fund Agreement" readonly></div>
           </div>
           <div class="grid3">
@@ -668,18 +730,84 @@
         </div>
       </div>
     </div>
+
+    <!-- Overtime Compensation -->
     <div class="card" style="margin-bottom:16px;">
-      <div class="card-header"><div class="card-title">Compensation &amp; Ownership Structure</div></div>
+      <div class="card-header"><div class="card-title">Overtime Compensation</div></div>
       <div class="card-body">
-        <div class="fg">
-          <div class="grid3">
-            <div class="form-group"><label>OT Threshold <span class="req">*</span></label><div class="suffix-wrap"><input class="form-control" type="number" id="fd-otthresh" value="40"><span class="suffix">hrs/wk</span></div></div>
-            <div class="form-group"><label>OT Coefficient <span class="req">*</span></label><input class="form-control" type="number" id="fd-otcoef" value="1.5" step="0.05"></div>
-            <div class="form-group"><label>Bonus Percentage <span class="req">*</span></label><div class="suffix-wrap"><input class="form-control" type="number" id="fd-bonus" value="10"><span class="suffix">%</span></div></div>
-          </div>
+        <div class="grid2">
+          <div class="form-group"><label>OT Threshold <span class="req">*</span></label><div class="suffix-wrap"><input class="form-control" type="number" id="fd-otthresh" value="40"><span class="suffix">hrs/wk</span></div></div>
+          <div class="form-group"><label>OT Coefficient <span class="req">*</span></label><input class="form-control" type="number" id="fd-otcoef" value="1.5" step="0.05"></div>
         </div>
       </div>
     </div>
+
+    <!-- Bonus Compensation -->
+    <div class="card" style="margin-bottom:16px;">
+      <div class="card-header"><div class="card-title">Bonus Compensation</div></div>
+      <div class="card-body">
+        <div style="max-width:280px;">
+          <div class="form-group"><label>Bonus Percentage <span class="req">*</span></label><div class="suffix-wrap"><input class="form-control" type="number" id="fd-bonus" value="10"><span class="suffix">%</span></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Starting Inputs (above Required Fund Documents) -->
+    <div class="card" style="margin-bottom:16px;">
+      <div class="card-header">
+        <div class="card-title">Starting Inputs</div>
+        <span class="badge badge-blue badge-no-dot">Auto-populated per founder · Default 0</span>
+      </div>
+      <div class="card-body" style="padding:0;">
+        <div class="tbl-wrap" style="border:none;border-radius:0 0 10px 10px;box-shadow:none;">
+          <table>
+            <thead>
+              <tr>
+                <th>Fund Owner</th>
+                <th>Non-Cash ($)</th>
+                <th>Cash ($)</th>
+                <th>Total ($)</th>
+                <th>Notes</th>
+              </tr>
+            </thead>
+            <tbody id="starting-inputs-body">
+              <tr>
+                <td><span class="td-name">David Boctor</span></td>
+                <td><input class="form-control" style="padding:4px 8px;font-size:12px;" type="number" value="28800" oninput="recalcStartingInputs()"></td>
+                <td><input class="form-control" style="padding:4px 8px;font-size:12px;" type="number" value="10000" oninput="recalcStartingInputs()"></td>
+                <td class="mono" style="font-weight:700;color:var(--blue);">38,800</td>
+                <td><input class="form-control" style="padding:4px 8px;font-size:12px;" placeholder="Optional note…"></td>
+              </tr>
+              <tr>
+                <td><span class="td-name">Ryker Rinehart</span></td>
+                <td><input class="form-control" style="padding:4px 8px;font-size:12px;" type="number" value="22800" oninput="recalcStartingInputs()"></td>
+                <td><input class="form-control" style="padding:4px 8px;font-size:12px;" type="number" value="0" oninput="recalcStartingInputs()"></td>
+                <td class="mono" style="font-weight:700;color:var(--blue);">22,800</td>
+                <td><input class="form-control" style="padding:4px 8px;font-size:12px;" placeholder="Optional note…"></td>
+              </tr>
+              <tr>
+                <td><span class="td-name">Alex Chen</span></td>
+                <td><input class="form-control" style="padding:4px 8px;font-size:12px;" type="number" value="19880" oninput="recalcStartingInputs()"></td>
+                <td><input class="form-control" style="padding:4px 8px;font-size:12px;" type="number" value="0" oninput="recalcStartingInputs()"></td>
+                <td class="mono" style="font-weight:700;color:var(--blue);">19,880</td>
+                <td><input class="form-control" style="padding:4px 8px;font-size:12px;" placeholder="Optional note…"></td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr>
+                <td>Totals</td>
+                <td class="mono" id="si-total-noncash">71,480</td>
+                <td class="mono" id="si-total-cash">10,000</td>
+                <td class="mono" id="si-total-all">81,480</td>
+                <td></td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Required Fund Documents -->
     <div class="card" style="margin-bottom:16px;">
       <div class="card-header"><div class="card-title">Required Fund Documents</div><span class="badge badge-orange badge-no-dot">Must be attached before activation</span></div>
       <div class="card-body">
@@ -689,47 +817,27 @@
           <div class="doc-attach-status" style="color:var(--green);font-weight:600;">✓ 021_Founders_Fund_Agreement_v3.pdf</div>
           <button class="btn btn-ghost btn-sm" style="margin-left:auto;" onclick="toast('File picker opened','green')">Replace</button>
         </div>
-        <div class="doc-attach-row doc-missing" id="scheduleb-doc-row">
-          <div class="doc-attach-icon" style="background:var(--red-light);">📎</div>
-          <div class="doc-attach-name">Schedule B — Starting Inputs (PDF)</div>
-          <div class="doc-attach-status" style="color:var(--red);font-weight:600;" id="scheduleb-status">⚠ Not attached</div>
-          <button class="btn btn-secondary btn-sm" style="margin-left:auto;" onclick="attachScheduleB()">+ Attach</button>
-        </div>
       </div>
     </div>
-    <div style="margin-bottom:16px;">
-      <div class="schedule-b-header">
-        <div><div style="font-size:14px;font-weight:800;">Schedule B — Starting Inputs</div></div>
-        <button class="btn btn-sm" style="background:rgba(255,255,255,.15);color:#fff;border:1px solid rgba(255,255,255,.3);" onclick="addStartingInputRow()">+ Add Row</button>
-      </div>
-      <div class="tbl-wrap" style="border-radius:0 0 10px 10px;border-top:none;">
-        <table>
-          <thead><tr><th>Fund Owner</th><th>Non-Cash ($)</th><th>Cash ($)</th><th>Total ($)</th><th>Notes</th><th>Actions</th></tr></thead>
-          <tbody id="schedule-b-body">
-            <tr><td><input class="form-control" style="padding:4px 8px;font-size:12px;" value="David Boctor"></td><td><input class="form-control" style="padding:4px 8px;font-size:12px;" type="number" value="28800" oninput="recalcScheduleB()"></td><td><input class="form-control" style="padding:4px 8px;font-size:12px;" type="number" value="10000" oninput="recalcScheduleB()"></td><td class="mono" style="font-weight:700;color:var(--blue);">38,800</td><td><input class="form-control" style="padding:4px 8px;font-size:12px;" placeholder="Optional note…"></td><td><button class="btn btn-ghost btn-sm" style="color:var(--red);" onclick="removeScheduleBRow(this)">Remove</button></td></tr>
-            <tr><td><input class="form-control" style="padding:4px 8px;font-size:12px;" value="Ryker Rinehart"></td><td><input class="form-control" style="padding:4px 8px;font-size:12px;" type="number" value="22800" oninput="recalcScheduleB()"></td><td><input class="form-control" style="padding:4px 8px;font-size:12px;" type="number" value="0" oninput="recalcScheduleB()"></td><td class="mono" style="font-weight:700;color:var(--blue);">22,800</td><td><input class="form-control" style="padding:4px 8px;font-size:12px;" placeholder="Optional note…"></td><td><button class="btn btn-ghost btn-sm" style="color:var(--red);" onclick="removeScheduleBRow(this)">Remove</button></td></tr>
-            <tr><td><input class="form-control" style="padding:4px 8px;font-size:12px;" value="Alex Chen"></td><td><input class="form-control" style="padding:4px 8px;font-size:12px;" type="number" value="19880" oninput="recalcScheduleB()"></td><td><input class="form-control" style="padding:4px 8px;font-size:12px;" type="number" value="0" oninput="recalcScheduleB()"></td><td class="mono" style="font-weight:700;color:var(--blue);">19,880</td><td><input class="form-control" style="padding:4px 8px;font-size:12px;" placeholder="Optional note…"></td><td><button class="btn btn-ghost btn-sm" style="color:var(--red);" onclick="removeScheduleBRow(this)">Remove</button></td></tr>
-          </tbody>
-          <tfoot><tr><td>Totals</td><td class="mono" id="sb-total-noncash">71,480</td><td class="mono" id="sb-total-cash">10,000</td><td class="mono" id="sb-total-all">81,480</td><td colspan="2"></td></tr></tfoot>
-        </table>
-      </div>
-    </div>
+
   </div>
 </div>
 </div>
 
-<!-- FOUNDER DIRECTORY -->
+<!-- ═══════════════════════════════════════════════════════════════
+     FOUNDER DIRECTORY
+     ═══════════════════════════════════════════════════════════════ -->
 <div id="screen-founder-directory" class="screen">
 <div class="main">
   <div class="topbar">
     <div class="topbar-left"><div class="title">Founder Directory</div><div class="bread">All fund owners — roles, status, equity</div></div>
     <div class="topbar-actions">
       <select class="form-control" style="width:220px;"><option>021 Founder's Fund Agreement</option></select>
-      <button class="btn btn-primary" onclick="openModal('invite-modal')">+ Invite Founder</button>
+      <button class="btn btn-primary" onclick="openModal('invite-modal')">+ Add Founder</button>
     </div>
   </div>
   <div class="page">
-    <div class="notice notice-info">Only the <strong>Fund Leader</strong> can invite new founders and change status to Terminated.</div>
+    <div class="notice notice-info">Only the <strong>Fund Leader</strong> can add new founders and change status to Terminated.</div>
     <div class="filter-bar">
       <input class="form-control" style="flex:1;min-width:180px;" placeholder="Search founders…" oninput="filterFounders(this.value)">
       <select class="form-control" style="width:150px;" onchange="filterFounderStatus(this.value)"><option value="">All Statuses</option><option>Initiated</option><option>Contributing</option><option>Terminated</option></select>
@@ -739,7 +847,7 @@
         <thead><tr><th>Name</th><th>Role</th><th>Status</th><th>Market Wage</th><th>Cash Comp %</th><th>Fund Comp %</th><th>Documents</th><th>Stock</th><th>Equity %</th><th>Actions</th></tr></thead>
         <tbody id="founder-tbody">
           <tr data-name="david boctor" data-status="Contributing" data-role="Fund Leader">
-            <td><span class="td-name">David Boctor</span><div style="font-size:11px;color:var(--g400);"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="355154435c51750507041b56505a">[email&#160;protected]</a></div></td>
+            <td><span class="td-name">David Boctor</span><div style="font-size:11px;color:var(--g400);">david@021.ceo</div></td>
             <td><span class="badge badge-blue badge-no-dot">Fund Leader</span></td>
             <td><span class="badge badge-green">Contributing</span></td>
             <td class="mono">$120/hr</td><td class="mono">60%</td><td class="mono">40%</td>
@@ -752,7 +860,7 @@
             </td>
           </tr>
           <tr data-name="ryker rinehart" data-status="Contributing" data-role="Fund Secretary">
-            <td><span class="td-name">Ryker Rinehart</span><div style="font-size:11px;color:var(--g400);"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="36444f5d53447606040718555359">[email&#160;protected]</a></div></td>
+            <td><span class="td-name">Ryker Rinehart</span><div style="font-size:11px;color:var(--g400);">ryker@021.ceo</div></td>
             <td><span class="badge badge-teal badge-no-dot">Fund Secretary</span></td>
             <td><span class="badge badge-green">Contributing</span></td>
             <td class="mono">$95/hr</td><td class="mono">50%</td><td class="mono">50%</td>
@@ -765,7 +873,7 @@
             </td>
           </tr>
           <tr data-name="alex chen" data-status="Initiated" data-role="Fund Owner">
-            <td><span class="td-name">Alex Chen</span><div style="font-size:11px;color:var(--g400);"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="07666b627f4737353629646268">[email&#160;protected]</a></div></td>
+            <td><span class="td-name">Alex Chen</span><div style="font-size:11px;color:var(--g400);">alex@021.ceo</div></td>
             <td><span class="badge badge-purple badge-no-dot">Fund Owner</span></td>
             <td><span class="badge badge-yellow">Initiated</span></td>
             <td class="mono">$85/hr</td><td class="mono">70%</td><td class="mono">30%</td>
@@ -778,7 +886,7 @@
             </td>
           </tr>
           <tr data-name="maria santos" data-status="Terminated" data-role="Fund Owner" style="opacity:.6;">
-            <td><span class="td-name">Maria Santos</span><div style="font-size:11px;color:var(--g400);"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="b0ddd1c2d9d1f08082819ed3d5df">[email&#160;protected]</a></div></td>
+            <td><span class="td-name">Maria Santos</span><div style="font-size:11px;color:var(--g400);">maria@021.ceo</div></td>
             <td><span class="badge badge-purple badge-no-dot">Fund Owner</span></td>
             <td><span class="badge badge-red">Terminated</span></td>
             <td class="mono">$110/hr</td><td class="mono">80%</td><td class="mono">20%</td>
@@ -798,20 +906,24 @@
 </div>
 </div>
 
-<!-- FOUNDER DETAIL -->
+<!-- ═══════════════════════════════════════════════════════════════
+     FOUNDER DETAIL
+     ═══════════════════════════════════════════════════════════════ -->
 <div id="screen-founder-detail" class="screen">
 <div class="main">
   <div class="topbar">
-    <div class="topbar-left"><div class="title">Founder Detail</div><div class="bread" id="founder-detail-bread">Founder Directory › Edit Founder</div></div>
+    <div class="topbar-left"><div class="title">Founder Detail</div><div class="bread" id="founder-detail-bread">021 Founder's Fund Agreement › Add Founder</div></div>
     <div class="topbar-actions">
-      <button class="btn btn-secondary" onclick="goTo('screen-founder-directory')">Cancel</button>
+      <button class="btn btn-secondary" onclick="goTo('screen-fund-details')">Cancel</button>
       <button class="btn btn-primary" onclick="saveFounder()">Save Founder</button>
     </div>
   </div>
   <div class="page">
     <div id="doc-check-banner" class="notice notice-red" style="display:none;">⚠ <strong>Document Check Failed:</strong> Missing required documents.</div>
+
+    <!-- Container 1: Founder Identity (renamed from Personal Information) -->
     <div class="card" style="margin-bottom:16px;">
-      <div class="card-header"><div class="card-title">Personal Information</div></div>
+      <div class="card-header"><div class="card-title">Founder Identity</div></div>
       <div class="card-body">
         <div class="fg">
           <div class="grid2">
@@ -825,56 +937,201 @@
         </div>
       </div>
     </div>
+
+    <!-- Container 2: Role and Status -->
     <div class="card" style="margin-bottom:16px;">
-      <div class="card-header"><div class="card-title">Role, Status &amp; Compensation</div></div>
+      <div class="card-header"><div class="card-title">Role and Status</div></div>
       <div class="card-body">
-        <div class="fg">
-          <div class="grid3">
-            <div class="form-group"><label>Role <span class="req">*</span></label><select class="form-control" id="founder-role" onchange="checkFundLeaderRule(this)"><option value="fund_leader" selected>Fund Leader</option><option value="fund_secretary">Fund Secretary</option><option value="fund_owner">Fund Owner</option></select></div>
-            <div class="form-group"><label>Status <span class="req">*</span></label><select class="form-control" id="founder-status" onchange="handleStatusChange(this)"><option value="initiated">Initiated</option><option value="contributing" selected>Contributing</option><option value="terminated">Terminated</option></select></div>
-            <div class="form-group"><label>Market Wage <span class="req">*</span></label><div class="prefix-wrap"><span class="prefix">$</span><input class="form-control" type="number" id="market-wage" value="120" oninput="recalcComp()"></div></div>
+        <div class="grid2">
+          <div class="form-group">
+            <label>Role <span class="req">*</span></label>
+            <select class="form-control" id="founder-role" onchange="checkFundLeaderRule(this)">
+              <option value="fund_leader" selected>Fund Leader</option>
+              <option value="fund_secretary">Fund Secretary</option>
+              <option value="fund_owner">Fund Owner</option>
+            </select>
           </div>
-          <div class="grid2">
-            <div class="form-group"><label>Cash Compensation <span class="req">*</span></label><div class="suffix-wrap"><input class="form-control" type="number" id="cash-comp-pct" value="60" oninput="recalcComp()"><span class="suffix">%</span></div></div>
-            <div class="form-group"><label>Fund Compensation <span class="req">*</span></label><div class="suffix-wrap"><input class="form-control" type="number" id="fund-comp-pct" value="40" oninput="recalcComp()"><span class="suffix">%</span></div></div>
+          <div class="form-group">
+            <label>Status <span class="req">*</span></label>
+            <select class="form-control" id="founder-status" onchange="handleStatusChange(this)">
+              <option value="initiated">Initiated</option>
+              <option value="contributing" selected>Contributing</option>
+              <option value="terminated">Terminated</option>
+            </select>
           </div>
-          <div id="comp-validation" class="comp-validation comp-ok">✓ Cash (60%) + Fund (40%) = 100%</div>
         </div>
       </div>
     </div>
+
+    <!-- Container 3: Founder Compensation -->
+    <div class="card" style="margin-bottom:16px;">
+      <div class="card-header"><div class="card-title">Founder Compensation</div></div>
+      <div class="card-body">
+        <div class="fg">
+
+          <!-- Market Wage -->
+          <div class="form-group" style="max-width:280px;">
+            <label>Market Wage <span class="req">*</span></label>
+            <div class="prefix-wrap">
+              <span class="prefix">$</span>
+              <input class="form-control" type="number" id="market-wage" value="120" oninput="recalcComp()">
+            </div>
+            <div class="form-hint">Hourly rate used as the basis for all compensation calculations.</div>
+          </div>
+
+          <!-- Cash Compensation row -->
+          <div>
+            <div style="font-size:12px;font-weight:700;color:var(--g700);margin-bottom:8px;text-transform:uppercase;letter-spacing:.04em;">Cash Compensation</div>
+            <div class="comp-row-with-actual">
+              <div class="form-group" style="margin-bottom:0;">
+                <label>Percentage <span class="req">*</span></label>
+                <div class="suffix-wrap">
+                  <input class="form-control" type="number" id="cash-comp-pct" value="60" oninput="recalcComp()">
+                  <span class="suffix">%</span>
+                </div>
+              </div>
+              <div>
+                <div class="comp-actual-label">Actual Value / hr</div>
+                <div class="comp-actual-value" id="cash-comp-actual">$72.00</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Fund Compensation row -->
+          <div>
+            <div style="font-size:12px;font-weight:700;color:var(--g700);margin-bottom:8px;text-transform:uppercase;letter-spacing:.04em;">Fund Compensation</div>
+            <div class="comp-row-with-actual">
+              <div class="form-group" style="margin-bottom:0;">
+                <label>Percentage <span class="req">*</span></label>
+                <div class="suffix-wrap">
+                  <input class="form-control" type="number" id="fund-comp-pct" value="40" oninput="recalcComp()">
+                  <span class="suffix">%</span>
+                </div>
+              </div>
+              <div>
+                <div class="comp-actual-label">Actual Value / hr</div>
+                <div class="comp-actual-value" id="fund-comp-actual">$48.00</div>
+              </div>
+            </div>
+          </div>
+
+          <div id="comp-validation" class="comp-validation comp-ok">✓ Cash (60%) + Fund (40%) = 100% · Market Wage: $120/hr</div>
+        </div>
+      </div>
+    </div>
+
   </div>
 </div>
 </div>
 
-<!-- CONTRIBUTION LEDGER -->
+<!-- ═══════════════════════════════════════════════════════════════
+     CONTRIBUTION LEDGER
+     ═══════════════════════════════════════════════════════════════ -->
 <div id="screen-contribution-ledger" class="screen">
 <div class="main">
   <div class="topbar">
-    <div class="topbar-left"><div class="title">Contribution Ledger</div><div class="bread">Single straight ledger — all contribution events</div></div>
+    <div class="topbar-left">
+      <div class="title">Contribution Ledger</div>
+      <div class="bread">021 Founder's Fund Agreement — all contribution events</div>
+    </div>
     <div class="topbar-actions">
       <button class="btn btn-secondary" onclick="exportLedger()">Export</button>
       <button class="btn btn-primary" onclick="newContribution()">+ Record Contribution</button>
     </div>
   </div>
   <div class="page">
-    <div class="notice notice-info">Single straight ledger. Each row includes Account ID, period dates, input types, vested date, and Input Award Letter link.</div>
     <div class="tbl-wrap">
       <table>
-        <thead><tr><th>Account ID</th><th>Participant</th><th>Begin</th><th>End</th><th>Hourly ($)</th><th>Overtime ($)</th><th>Bonus ($)</th><th>Cash ($)</th><th>Vested Date</th><th>Total</th><th>Status</th><th>Letter</th></tr></thead>
+        <thead>
+          <tr>
+            <th>Participant</th>
+            <th>Begin</th>
+            <th>End</th>
+            <th>Hourly ($)</th>
+            <th>Overtime ($)</th>
+            <th>Bonus ($)</th>
+            <th>Cash ($)</th>
+            <th>Contributed Inputs</th>
+            <th>Vested Inputs</th>
+            <th>Status</th>
+            <th>Award Letter</th>
+          </tr>
+        </thead>
         <tbody>
-          <tr><td class="mono" style="font-size:11px;color:var(--g500);">ACC-0041</td><td><span class="td-name">David Boctor</span></td><td style="font-size:11.5px;">Feb 10</td><td style="font-size:11.5px;">Feb 17</td><td class="mono">3,800</td><td class="mono" style="color:var(--teal);">1,080</td><td class="mono" style="color:var(--purple);">480</td><td class="mono">—</td><td style="font-size:11.5px;">Feb 17</td><td class="mono" style="font-weight:700;">5,360</td><td><span class="badge badge-green badge-no-dot" style="font-size:10px;">Vested</span></td><td><button class="btn btn-ghost btn-sm" style="color:var(--blue);" onclick="viewLetter('David Boctor','Feb 10–17','RS-2026-003','3,800','1,080','480','5,360')">Letter →</button></td></tr>
-          <tr><td class="mono" style="font-size:11px;color:var(--g500);">ACC-0042</td><td><span class="td-name">Ryker Rinehart</span></td><td style="font-size:11.5px;">Feb 10</td><td style="font-size:11.5px;">Feb 17</td><td class="mono">3,200</td><td class="mono">—</td><td class="mono" style="color:var(--purple);">320</td><td class="mono">—</td><td style="font-size:11.5px;">Feb 17</td><td class="mono" style="font-weight:700;">3,520</td><td><span class="badge badge-green badge-no-dot" style="font-size:10px;">Vested</span></td><td><button class="btn btn-ghost btn-sm" style="color:var(--blue);" onclick="viewLetter('Ryker Rinehart','Feb 10–17','RS-2026-003','3,200','—','320','3,520')">Letter →</button></td></tr>
-          <tr><td class="mono" style="font-size:11px;color:var(--g500);">ACC-0043</td><td><span class="td-name">Alex Chen</span></td><td style="font-size:11.5px;">Feb 10</td><td style="font-size:11.5px;">Feb 17</td><td class="mono">3,400</td><td class="mono">—</td><td class="mono">—</td><td class="mono">—</td><td style="font-size:11.5px;color:var(--orange);">Pending</td><td class="mono" style="font-weight:700;">3,400</td><td><span class="badge badge-orange badge-no-dot" style="font-size:10px;">In Initiation</span></td><td><span style="color:var(--g400);font-size:12px;">Pending</span></td></tr>
-          <tr><td class="mono" style="font-size:11px;color:var(--g500);">ACC-0044</td><td><span class="td-name">David Boctor</span></td><td style="font-size:11.5px;">Jan 01</td><td style="font-size:11.5px;">Jan 31</td><td class="mono">—</td><td class="mono">—</td><td class="mono">—</td><td class="mono" style="color:var(--green);">10,000</td><td style="font-size:11.5px;">Jan 01</td><td class="mono" style="font-weight:700;">10,000</td><td><span class="badge badge-green badge-no-dot" style="font-size:10px;">Immediate</span></td><td><button class="btn btn-ghost btn-sm" style="color:var(--blue);" onclick="viewLetter('David Boctor','Jan 2026 — Cash','RS-2026-001','—','—','—','10,000')">Letter →</button></td></tr>
+          <tr>
+            <td><span class="td-name">David Boctor</span></td>
+            <td style="font-size:11.5px;">Feb 10</td>
+            <td style="font-size:11.5px;">Feb 17</td>
+            <td class="mono">3,800</td>
+            <td class="mono" style="color:var(--teal);">1,080</td>
+            <td class="mono" style="color:var(--purple);">480</td>
+            <td class="mono">—</td>
+            <td class="mono" style="font-weight:700;">5,360</td>
+            <td class="mono" style="font-weight:700;color:var(--green);">5,360</td>
+            <td><span class="badge badge-green badge-no-dot" style="font-size:10px;">Vested</span></td>
+            <td><button class="btn btn-ghost btn-sm" style="color:var(--blue);" onclick="viewLetter('David Boctor','Feb 10–17','RS-2026-003','3,800','1,080','480','5,360')">Letter →</button></td>
+          </tr>
+          <tr>
+            <td><span class="td-name">Ryker Rinehart</span></td>
+            <td style="font-size:11.5px;">Feb 10</td>
+            <td style="font-size:11.5px;">Feb 17</td>
+            <td class="mono">3,200</td>
+            <td class="mono">—</td>
+            <td class="mono" style="color:var(--purple);">320</td>
+            <td class="mono">—</td>
+            <td class="mono" style="font-weight:700;">3,520</td>
+            <td class="mono" style="font-weight:700;color:var(--green);">3,520</td>
+            <td><span class="badge badge-green badge-no-dot" style="font-size:10px;">Vested</span></td>
+            <td><button class="btn btn-ghost btn-sm" style="color:var(--blue);" onclick="viewLetter('Ryker Rinehart','Feb 10–17','RS-2026-003','3,200','—','320','3,520')">Letter →</button></td>
+          </tr>
+          <tr>
+            <td><span class="td-name">Alex Chen</span></td>
+            <td style="font-size:11.5px;">Feb 10</td>
+            <td style="font-size:11.5px;">Feb 17</td>
+            <td class="mono">3,400</td>
+            <td class="mono">—</td>
+            <td class="mono">—</td>
+            <td class="mono">—</td>
+            <td class="mono" style="font-weight:700;">3,400</td>
+            <td class="mono" style="color:var(--orange);">Pending</td>
+            <td><span class="badge badge-orange badge-no-dot" style="font-size:10px;">In Initiation</span></td>
+            <td><span style="color:var(--g400);font-size:12px;">Pending</span></td>
+          </tr>
+          <tr>
+            <td><span class="td-name">David Boctor</span></td>
+            <td style="font-size:11.5px;">Jan 01</td>
+            <td style="font-size:11.5px;">Jan 31</td>
+            <td class="mono">—</td>
+            <td class="mono">—</td>
+            <td class="mono">—</td>
+            <td class="mono" style="color:var(--green);">10,000</td>
+            <td class="mono" style="font-weight:700;">10,000</td>
+            <td class="mono" style="font-weight:700;color:var(--green);">10,000</td>
+            <td><span class="badge badge-green badge-no-dot" style="font-size:10px;">Immediate</span></td>
+            <td><button class="btn btn-ghost btn-sm" style="color:var(--blue);" onclick="viewLetter('David Boctor','Jan 2026 — Cash','RS-2026-001','—','—','—','10,000')">Letter →</button></td>
+          </tr>
         </tbody>
-        <tfoot><tr><td colspan="4">Totals</td><td>10,400</td><td style="color:var(--teal);">1,080</td><td style="color:var(--purple);">800</td><td style="color:var(--green);">10,000</td><td colspan="2">27,280</td><td colspan="2"></td></tr></tfoot>
+        <tfoot>
+          <tr>
+            <td colspan="3">Totals</td>
+            <td>10,400</td>
+            <td style="color:var(--teal);">1,080</td>
+            <td style="color:var(--purple);">800</td>
+            <td style="color:var(--green);">10,000</td>
+            <td>27,280</td>
+            <td style="color:var(--green);">18,880</td>
+            <td colspan="2"></td>
+          </tr>
+        </tfoot>
       </table>
     </div>
   </div>
 </div>
 </div>
 
-<!-- RECORD FLOW EVENT -->
+<!-- ═══════════════════════════════════════════════════════════════
+     RECORD FLOW EVENT
+     ═══════════════════════════════════════════════════════════════ -->
 <div id="screen-contribution-details" class="screen">
 <div class="main">
   <div class="topbar">
@@ -890,7 +1147,7 @@
       <div class="founder-avatar" id="flow-avatar">RR</div>
       <div>
         <div style="font-size:16px;font-weight:700;" id="flow-founder-name">Ryker Rinehart</div>
-        <div style="font-size:12px;color:rgba(255,255,255,.6);margin-top:2px;" id="flow-founder-meta"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="ed9f9486889faddddfdcc38e8882">[email&#160;protected]</a> · $95/hr · Fund Secretary</div>
+        <div style="font-size:12px;color:rgba(255,255,255,.6);margin-top:2px;" id="flow-founder-meta">ryker@021.ceo · $95/hr · Fund Secretary</div>
       </div>
       <div class="founder-stats">
         <div><div class="founder-stat-lbl">Cumulative Stock</div><div class="founder-stat-val" id="flow-stock">32,150</div></div>
@@ -991,14 +1248,16 @@
 </div>
 </div>
 
-<!-- EQUITY SUMMARY -->
+<!-- ═══════════════════════════════════════════════════════════════
+     FUND OWNERSHIP (renamed from Equity Summary)
+     ═══════════════════════════════════════════════════════════════ -->
 <div id="screen-equity-summary" class="screen">
 <div class="main">
   <div class="topbar">
-    <div class="topbar-left"><div class="title">Equity Summary</div><div class="bread">Founders Fund Equity Page — per-founder totals</div></div>
+    <div class="topbar-left"><div class="title">Fund Ownership</div><div class="bread">Founders Fund Ownership Page — per-founder totals</div></div>
     <div class="topbar-actions">
       <select class="form-control" style="width:220px;"><option>021 Founder's Fund Agreement</option></select>
-      <button class="btn btn-secondary" onclick="toast('Equity Summary exported as PDF','green')">Export PDF</button>
+      <button class="btn btn-secondary" onclick="toast('Fund Ownership exported as PDF','green')">Export PDF</button>
     </div>
   </div>
   <div class="page">
@@ -1034,7 +1293,7 @@
         <thead>
           <tr style="background:var(--navy);">
             <th style="background:var(--navy);color:rgba(255,255,255,.7);">Fund Owner</th>
-            <th style="background:var(--navy);color:rgba(255,255,255,.7);">Vesting Date</th>
+            <th style="background:var(--navy);color:rgba(255,255,255,.7);">Status</th>
             <th style="background:var(--navy);color:rgba(255,255,255,.7);">Total Starting Inputs</th>
             <th style="background:var(--navy);color:rgba(255,255,255,.7);">Non-Cash Inputs</th>
             <th style="background:var(--navy);color:rgba(255,255,255,.7);">Cash Inputs</th>
@@ -1044,12 +1303,58 @@
           </tr>
         </thead>
         <tbody>
-          <tr><td><div style="display:flex;align-items:center;gap:8px;"><div style="width:26px;height:26px;border-radius:50%;background:var(--blue);display:flex;align-items:center;justify-content:center;color:#fff;font-size:10px;font-weight:700;">DB</div><div><div class="td-name">David Boctor</div><div style="font-size:11px;color:var(--g400);">Fund Leader</div></div></div></td><td style="font-size:12px;">Apr 1, 2026</td><td class="mono">38,800</td><td class="mono">28,800</td><td class="mono" style="color:var(--green);">10,000</td><td class="mono" style="font-weight:700;color:var(--blue);">48,320</td><td style="font-weight:700;color:var(--blue);" class="mono">44.4%</td><td class="mono">42.1%</td></tr>
-          <tr><td><div style="display:flex;align-items:center;gap:8px;"><div style="width:26px;height:26px;border-radius:50%;background:var(--teal);display:flex;align-items:center;justify-content:center;color:#fff;font-size:10px;font-weight:700;">RR</div><div><div class="td-name">Ryker Rinehart</div><div style="font-size:11px;color:var(--g400);">Fund Secretary</div></div></div></td><td style="font-size:12px;">Apr 1, 2026</td><td class="mono">22,800</td><td class="mono">22,800</td><td class="mono" style="color:var(--g400);">—</td><td class="mono" style="font-weight:700;color:var(--teal);">32,150</td><td style="font-weight:700;color:var(--teal);" class="mono">29.5%</td><td class="mono">29.8%</td></tr>
-          <tr><td><div style="display:flex;align-items:center;gap:8px;"><div style="width:26px;height:26px;border-radius:50%;background:var(--purple);display:flex;align-items:center;justify-content:center;color:#fff;font-size:10px;font-weight:700;">AC</div><div><div class="td-name">Alex Chen</div><div style="font-size:11px;color:var(--g400);">Fund Owner</div></div></div></td><td style="font-size:12px;">Apr 1, 2026</td><td class="mono">19,880</td><td class="mono">19,880</td><td class="mono" style="color:var(--g400);">—</td><td class="mono" style="font-weight:700;color:var(--purple);">19,780</td><td style="font-weight:700;color:var(--purple);" class="mono">18.3%</td><td class="mono">20.6%</td></tr>
-          <tr style="opacity:.7;"><td><div style="display:flex;align-items:center;gap:8px;"><div style="width:26px;height:26px;border-radius:50%;background:var(--orange);display:flex;align-items:center;justify-content:center;color:#fff;font-size:10px;font-weight:700;">MS</div><div><div class="td-name">Maria Santos</div><div style="font-size:11px;color:var(--red);">Terminated</div></div></div></td><td style="font-size:12px;color:var(--red);">Mar 15, 2026</td><td class="mono">9,240</td><td class="mono">9,240</td><td class="mono" style="color:var(--g400);">—</td><td class="mono" style="font-weight:700;color:var(--orange);">8,540</td><td style="font-weight:700;color:var(--orange);" class="mono">7.8%</td><td class="mono">7.5%</td></tr>
+          <tr>
+            <td><div style="display:flex;align-items:center;gap:8px;"><div style="width:26px;height:26px;border-radius:50%;background:var(--blue);display:flex;align-items:center;justify-content:center;color:#fff;font-size:10px;font-weight:700;">DB</div><div><div class="td-name">David Boctor</div><div style="font-size:11px;color:var(--g400);">Fund Leader</div></div></div></td>
+            <td><span class="badge badge-green">Contributing</span></td>
+            <td class="mono">38,800</td>
+            <td class="mono">28,800</td>
+            <td class="mono" style="color:var(--green);">10,000</td>
+            <td class="mono" style="font-weight:700;color:var(--blue);">48,320</td>
+            <td style="font-weight:700;color:var(--blue);" class="mono">44.4%</td>
+            <td class="mono">42.1%</td>
+          </tr>
+          <tr>
+            <td><div style="display:flex;align-items:center;gap:8px;"><div style="width:26px;height:26px;border-radius:50%;background:var(--teal);display:flex;align-items:center;justify-content:center;color:#fff;font-size:10px;font-weight:700;">RR</div><div><div class="td-name">Ryker Rinehart</div><div style="font-size:11px;color:var(--g400);">Fund Secretary</div></div></div></td>
+            <td><span class="badge badge-green">Contributing</span></td>
+            <td class="mono">22,800</td>
+            <td class="mono">22,800</td>
+            <td class="mono" style="color:var(--g400);">—</td>
+            <td class="mono" style="font-weight:700;color:var(--teal);">32,150</td>
+            <td style="font-weight:700;color:var(--teal);" class="mono">29.5%</td>
+            <td class="mono">29.8%</td>
+          </tr>
+          <tr>
+            <td><div style="display:flex;align-items:center;gap:8px;"><div style="width:26px;height:26px;border-radius:50%;background:var(--purple);display:flex;align-items:center;justify-content:center;color:#fff;font-size:10px;font-weight:700;">AC</div><div><div class="td-name">Alex Chen</div><div style="font-size:11px;color:var(--g400);">Fund Owner</div></div></div></td>
+            <td><span class="badge badge-yellow">Initiated</span></td>
+            <td class="mono">19,880</td>
+            <td class="mono">19,880</td>
+            <td class="mono" style="color:var(--g400);">—</td>
+            <td class="mono" style="font-weight:700;color:var(--purple);">19,780</td>
+            <td style="font-weight:700;color:var(--purple);" class="mono">18.3%</td>
+            <td class="mono">20.6%</td>
+          </tr>
+          <tr style="opacity:.7;">
+            <td><div style="display:flex;align-items:center;gap:8px;"><div style="width:26px;height:26px;border-radius:50%;background:var(--orange);display:flex;align-items:center;justify-content:center;color:#fff;font-size:10px;font-weight:700;">MS</div><div><div class="td-name">Maria Santos</div><div style="font-size:11px;color:var(--red);">Terminated</div></div></div></td>
+            <td><span class="badge badge-red">Terminated</span></td>
+            <td class="mono">9,240</td>
+            <td class="mono">9,240</td>
+            <td class="mono" style="color:var(--g400);">—</td>
+            <td class="mono" style="font-weight:700;color:var(--orange);">8,540</td>
+            <td style="font-weight:700;color:var(--orange);" class="mono">7.8%</td>
+            <td class="mono">7.5%</td>
+          </tr>
         </tbody>
-        <tfoot><tr><td>Totals (4 Fund Owners)</td><td></td><td class="mono">90,720</td><td class="mono">80,720</td><td class="mono" style="color:var(--green);">10,000</td><td class="mono">108,790</td><td class="mono">100%</td><td class="mono">100%</td></tr></tfoot>
+        <tfoot>
+          <tr>
+            <td colspan="2">Totals (4 Fund Owners)</td>
+            <td class="mono">90,720</td>
+            <td class="mono">80,720</td>
+            <td class="mono" style="color:var(--green);">10,000</td>
+            <td class="mono">108,790</td>
+            <td class="mono">100%</td>
+            <td class="mono">100%</td>
+          </tr>
+        </tfoot>
       </table>
     </div>
     <div class="voting-note"><strong>⚖ Voting Rights Note:</strong> Bonus inputs do <strong>not</strong> count toward voting rights.</div>
@@ -1057,7 +1362,9 @@
 </div>
 </div>
 
-<!-- EQUITY DASHBOARD -->
+<!-- ═══════════════════════════════════════════════════════════════
+     EQUITY DASHBOARD
+     ═══════════════════════════════════════════════════════════════ -->
 <div id="screen-equity-dashboard" class="screen">
 <div class="main">
   <div class="topbar">
@@ -1123,74 +1430,9 @@
 </div>
 </div>
 
-<!-- SYSTEM BOUNDARY -->
-<div id="screen-system-boundary" class="screen">
-<div class="main">
-  <div class="topbar">
-    <div class="topbar-left"><div class="title">System Boundary</div><div class="bread">021 Founder's Fund Agreement · SAF Model Diagram</div></div>
-    <div class="topbar-actions">
-      <select class="form-control" style="width:220px;"><option>021 Founder's Fund Agreement</option></select>
-      <button class="btn btn-secondary" onclick="toast('Diagram exported','green')">Export</button>
-    </div>
-  </div>
-  <div class="page">
-    <div class="notice notice-purple">The system boundary makes explicit what counts as an inflow, what generates surplus, and what exits as claims.</div>
-    <div class="stats-row stats-row-3" style="margin-bottom:18px;">
-      <div class="stat-card"><div class="stat-label">System Stock</div><div class="stat-val">108,790</div></div>
-      <div class="stat-card"><div class="stat-label">Net Surplus</div><div class="stat-val" style="color:var(--green);">14,280</div></div>
-      <div class="stat-card"><div class="stat-label">Total Claims</div><div class="stat-val" style="color:var(--orange);">108,790</div><div class="stat-sub">4 fund owners</div></div>
-    </div>
-    <div class="card">
-      <div class="card-header"><div class="card-title">Fund System Diagram</div></div>
-      <div class="card-body">
-        <div style="display:grid;grid-template-columns:160px 1fr 160px;gap:16px;align-items:stretch;">
-          <div>
-            <div class="section-label">INFLOWS</div>
-            <div style="display:flex;flex-direction:column;gap:6px;">
-              <div class="flow-pill" style="background:var(--blue-light);color:var(--blue);">Labor (Base)</div>
-              <div class="flow-pill" style="background:var(--blue-light);color:var(--blue);">Labor (OT)</div>
-              <div class="flow-pill" style="background:var(--purple-light);color:var(--purple);">Skill (Bonus)</div>
-              <div class="flow-pill" style="background:var(--green-light);color:var(--green);">Cash (Basis)</div>
-              <div class="flow-pill" style="background:var(--g100);color:var(--g500);">Non-Cash (IP, etc)</div>
-            </div>
-          </div>
-          <div>
-            <div class="sys-boundary">
-              <div class="sys-label">SYSTEM BOUNDARY — 021 Founder's Fund Agreement</div>
-              <div style="text-align:center;padding:8px 0 4px;">
-                <div style="font-family:'DM Mono',monospace;font-size:26px;font-weight:800;color:var(--navy);">108,790</div>
-                <div style="font-size:11px;color:var(--g500);margin-top:2px;">Total Accumulated Inputs</div>
-              </div>
-              <div style="display:flex;justify-content:center;margin:10px 0 6px;">
-                <div class="pie-container" style="gap:14px;">
-                  <div class="pie-wrap" style="width:140px;height:140px;flex-shrink:0;">
-                    <svg id="pie-inflow" width="140" height="140" viewBox="0 0 140 140"></svg>
-                    <div class="pie-center-label"><div class="pie-center-val" style="font-size:14px;">74.2%</div><div class="pie-center-sub">Basis</div></div>
-                  </div>
-                  <div class="pie-legend" id="legend-inflow" style="font-size:11px;"></div>
-                </div>
-              </div>
-              <div style="font-size:11px;color:var(--g500);text-align:center;margin-top:4px;">Initiation: 90 days · Split Events: 3 defined</div>
-            </div>
-          </div>
-          <div>
-            <div class="section-label">CLAIMS / OUTFLOWS</div>
-            <div style="display:flex;flex-direction:column;gap:6px;">
-              <div class="flow-pill" style="background:var(--blue-light);color:var(--blue);">DB 44.4%</div>
-              <div class="flow-pill" style="background:#CCFBF1;color:var(--teal);">RR 29.5%</div>
-              <div class="flow-pill" style="background:var(--purple-light);color:var(--purple);">AC 18.3%</div>
-              <div class="flow-pill" style="background:var(--orange-light);color:var(--orange);">MS 7.8%</div>
-              <div class="flow-pill" style="background:var(--red-light);color:var(--red);">Deficit −800</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-</div>
-
-<!-- ATTRIBUTION -->
+<!-- ═══════════════════════════════════════════════════════════════
+     ATTRIBUTION
+     ═══════════════════════════════════════════════════════════════ -->
 <div id="screen-attribution" class="screen">
 <div class="main">
   <div class="topbar">
@@ -1238,7 +1480,9 @@
 </div>
 </div>
 
-<!-- SIMULATION -->
+<!-- ═══════════════════════════════════════════════════════════════
+     SIMULATION
+     ═══════════════════════════════════════════════════════════════ -->
 <div id="screen-simulation" class="screen">
 <div class="main">
   <div class="topbar">
@@ -1290,7 +1534,9 @@
 </div>
 </div>
 
-<!-- COMPARISON -->
+<!-- ═══════════════════════════════════════════════════════════════
+     COMPARISON
+     ═══════════════════════════════════════════════════════════════ -->
 <div id="screen-comparison" class="screen">
 <div class="main">
   <div class="topbar">
@@ -1336,7 +1582,9 @@
 </div>
 </div>
 
-<!-- ANALYTICS -->
+<!-- ═══════════════════════════════════════════════════════════════
+     ANALYTICS
+     ═══════════════════════════════════════════════════════════════ -->
 <div id="screen-analytics" class="screen">
 <div class="main">
   <div class="topbar">
@@ -1398,7 +1646,9 @@
 </div>
 </div>
 
-<!-- AUDIT LOG -->
+<!-- ═══════════════════════════════════════════════════════════════
+     AUDIT LOG
+     ═══════════════════════════════════════════════════════════════ -->
 <div id="screen-audit-log" class="screen">
 <div class="main">
   <div class="topbar">
@@ -1431,7 +1681,9 @@
 </div>
 </div>
 
-<!-- AWARD LETTERS -->
+<!-- ═══════════════════════════════════════════════════════════════
+     AWARD LETTERS
+     ═══════════════════════════════════════════════════════════════ -->
 <div id="screen-award-letters" class="screen">
 <div class="main">
   <div class="topbar">
@@ -1463,7 +1715,9 @@
 </div>
 </div>
 
-<!-- DEFICIT EVENTS -->
+<!-- ═══════════════════════════════════════════════════════════════
+     DEFICIT EVENTS
+     ═══════════════════════════════════════════════════════════════ -->
 <div id="screen-penalties" class="screen">
 <div class="main">
   <div class="topbar">
@@ -1490,7 +1744,9 @@
 </div>
 </div>
 
-<!-- ROLES & PERMISSIONS -->
+<!-- ═══════════════════════════════════════════════════════════════
+     ROLES & PERMISSIONS
+     ═══════════════════════════════════════════════════════════════ -->
 <div id="screen-permissions" class="screen">
 <div class="main">
   <div class="topbar">
@@ -1529,7 +1785,9 @@
 </div>
 </div>
 
-<!-- INTEGRATIONS -->
+<!-- ═══════════════════════════════════════════════════════════════
+     INTEGRATIONS
+     ═══════════════════════════════════════════════════════════════ -->
 <div id="screen-integrations" class="screen">
 <div class="main">
   <div class="topbar">
@@ -1554,7 +1812,7 @@
 </div>
 </div>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script>
 // ─── PIE CHART ENGINE ─────────────────────────────────────────────────────────
 function polarToCartesian(cx, cy, r, angleDeg) {
   const rad = (angleDeg - 90) * Math.PI / 180;
@@ -1629,7 +1887,6 @@ const ownershipData=[{label:'David Boctor',value:44.4,color:'#2563EB',sublabel:'
 const votingData=[{label:'David Boctor',value:42.1,color:'#2563EB',sublabel:'42.1%'},{label:'Ryker Rinehart',value:29.8,color:'#0D9488',sublabel:'29.8%'},{label:'Alex Chen',value:20.6,color:'#7C3AED',sublabel:'20.6%'},{label:'Maria Santos',value:7.5,color:'#D97706',sublabel:'7.5%'}];
 const compositionData=[{label:'Basis (Labor)',value:80720,color:'#1B3A5C',sublabel:'74.2%'},{label:'Gain (OT)',value:8120,color:'#0D9488',sublabel:'7.5%'},{label:'Skill (Bonus)',value:5160,color:'#7C3AED',sublabel:'4.7%'},{label:'Cash',value:10000,color:'#16A34A',sublabel:'9.2%'},{label:'Deficits',value:800,color:'#DC2626',sublabel:'−0.7%'}];
 const equityPerFounderData=[{label:'David Boctor',value:48320,color:'#2563EB',sublabel:'44.4%'},{label:'Ryker Rinehart',value:32150,color:'#0D9488',sublabel:'29.5%'},{label:'Alex Chen',value:19780,color:'#7C3AED',sublabel:'18.3%'},{label:'Maria Santos',value:8540,color:'#D97706',sublabel:'7.8%'}];
-const inflowData=[{label:'Basis (Labor)',value:80720,color:'#1B3A5C',sublabel:'74.2%'},{label:'Gain (OT)',value:8120,color:'#0D9488',sublabel:'7.5%'},{label:'Skill (Bonus)',value:5160,color:'#7C3AED',sublabel:'4.7%'},{label:'Cash Inputs',value:10000,color:'#16A34A',sublabel:'9.2%'}];
 const attributionData=[{label:'Capital (Basis)',value:80720,color:'#1B3A5C',sublabel:'74.2%'},{label:'Coordination (OT)',value:8120,color:'#0D9488',sublabel:'7.5%'},{label:'Skill (Bonus)',value:5160,color:'#7C3AED',sublabel:'4.7%'},{label:'Cash',value:10000,color:'#16A34A',sublabel:'9.2%'},{label:'Deficit (Destruction)',value:800,color:'#DC2626',sublabel:'−0.7%'}];
 let simPieData=[{label:'David Boctor',value:44.3,color:'#2563EB'},{label:'Ryker Rinehart',value:29.5,color:'#0D9488'},{label:'Alex Chen',value:18.1,color:'#7C3AED'},{label:'Maria Santos',value:7.8,color:'#D97706'}];
 
@@ -1638,17 +1895,16 @@ function initAllPies(){
   drawPie('pie-voting',votingData,'legend-voting');
   drawPie('pie-composition',compositionData,'legend-composition');
   drawPie('pie-equity-per-founder',equityPerFounderData,'legend-equity-per-founder');
-  drawPie('pie-inflow',inflowData,'legend-inflow',{outerR:58,innerR:33});
   drawPie('pie-attribution',attributionData,'legend-attribution');
   drawPie('pie-simulation',simPieData,'legend-simulation',{outerR:62,innerR:36});
 }
 
 // ─── STATE ────────────────────────────────────────────────────────────────────
-const APP_STATE={currentScreen:'screen-login',editingFund:null,editingFounder:null,scheduleB_attached:false,scenarios:[],simValues:{otCoef:1.5,contPct:10,otThreshold:40,initPeriod:90,minorPenalty:100}};
+const APP_STATE={currentScreen:'screen-login',editingFund:null,editingFounder:null,currentFund:'021 Founder\'s Fund Agreement',scenarios:[],simValues:{otCoef:1.5,contPct:10,otThreshold:40,initPeriod:90,minorPenalty:100}};
 const VALID_CREDENTIALS=['ryker@021.ceo','david@021.ceo','alex@021.ceo'];
-const SCREENS_WITH_SIDEBAR=['screen-fund-ledger','screen-fund-details','screen-system-boundary','screen-founder-directory','screen-founder-detail','screen-contribution-ledger','screen-contribution-details','screen-equity-summary','screen-equity-dashboard','screen-attribution','screen-simulation','screen-comparison','screen-analytics','screen-audit-log','screen-award-letters','screen-penalties','screen-permissions','screen-integrations'];
+const SCREENS_WITH_SIDEBAR=['screen-fund-ledger','screen-fund-details','screen-founder-directory','screen-founder-detail','screen-contribution-ledger','screen-contribution-details','screen-equity-summary','screen-equity-dashboard','screen-attribution','screen-simulation','screen-comparison','screen-analytics','screen-audit-log','screen-award-letters','screen-penalties','screen-permissions','screen-integrations'];
 
-// ─── SIDEBAR (CLEAN WHITE, NO ICONS, SIMPLIFIED ANALYSIS) ────────────────────
+// ─── SIMPLIFIED SIDEBAR ───────────────────────────────────────────────────────
 function buildSidebar(activeId) {
   const lnk = (id, label, badge) => {
     const isActive = activeId === id;
@@ -1668,23 +1924,13 @@ function buildSidebar(activeId) {
     </div>
     <nav>
       <div class="nav-section">Funds</div>
-      ${lnk('screen-fund-ledger','Fund Ledger')}
-      ${lnk('screen-fund-details','New Fund')}
-      ${lnk('screen-system-boundary','System Boundary')}
-
-      <div class="nav-divider"></div>
-      <div class="nav-section">Founders</div>
-      ${lnk('screen-founder-directory','Founder Directory')}
-      ${lnk('screen-founder-detail','Founder Detail')}
-      ${lnk('screen-contribution-ledger','Contribution Ledger')}
-      ${lnk('screen-contribution-details','Record Flow Event')}
+      ${lnk('screen-fund-ledger','Funds')}
 
       <div class="nav-divider"></div>
       <div class="nav-section">Analysis</div>
-      ${lnk('screen-equity-summary','Equity Summary','REQ')}
+      ${lnk('screen-equity-summary','Fund Ownership','REQ')}
       ${lnk('screen-attribution','Attribution Layer')}
       ${lnk('screen-simulation','Simulation')}
-
     </nav>
     <div class="sidebar-footer">
       <div class="sidebar-user">
@@ -1704,10 +1950,23 @@ function buildSidebar(activeId) {
   </div>`;
 }
 
+// ─── DROPDOWN MENU ────────────────────────────────────────────────────────────
+function toggleMenu(btn) {
+  const menu = btn.nextElementSibling;
+  const isOpen = menu.classList.contains('open');
+  closeAllMenus();
+  if (!isOpen) menu.classList.add('open');
+}
+function closeAllMenus() {
+  document.querySelectorAll('.dropdown-menu').forEach(m => m.classList.remove('open'));
+}
+document.addEventListener('click', function(e) {
+  if (!e.target.closest('.dropdown-wrap')) closeAllMenus();
+});
+
 // ─── NAVIGATION ───────────────────────────────────────────────────────────────
 function handleLogout(){
   if(confirm('Are you sure you want to log out?')){
-    // In production this would clear session and redirect to login
     document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
     document.getElementById('screen-login').classList.add('active');
     toast('Logged out successfully','green');
@@ -1749,19 +2008,48 @@ document.querySelectorAll('.modal-overlay').forEach(m=>{m.addEventListener('clic
 
 // ─── FUND ACTIONS ─────────────────────────────────────────────────────────────
 function filterFunds(val){document.querySelectorAll('#fund-tbody tr').forEach(r=>{r.style.display=r.dataset.name.toLowerCase().includes(val.toLowerCase())?'':'none';});}
-function editFund(name){APP_STATE.editingFund=name;const company=name.replace(" Founder's Fund Agreement","");document.getElementById('fd-company').value=company;document.getElementById('fd-name').value=name;goTo('screen-fund-details');}
+function editFund(name){APP_STATE.editingFund=name;const company=name.replace(" Founder's Fund Agreement","").replace(" Fund Agreement","");document.getElementById('fd-company').value=company;document.getElementById('fd-name').value=name;goTo('screen-fund-details');}
 function updateFundName(){const company=(document.getElementById('fd-company')?.value||'').trim();const el=document.getElementById('fd-name');if(el)el.value=company?company+" Founder's Fund Agreement":'';}
 function saveDraftFund(){toast('Draft saved','green');}
-function saveFund(){const company=document.getElementById('fd-company')?.value?.trim();if(!company){toast('Company name is required','red');return;}toast('Fund saved successfully!','green');goTo('screen-fund-ledger');}
+function saveFund(){const company=document.getElementById('fd-company')?.value?.trim();if(!company){toast('Company legal name is required','red');return;}toast('Fund saved successfully!','green');goTo('screen-fund-ledger');}
 function selectSplit(el){document.querySelectorAll('.split-trigger').forEach(e=>e.classList.remove('active'));el.classList.add('active');}
 function confirmSplit(){closeModal('split-modal');toast('Fund split initiated. New fund snapshot created.','green');addAuditEntry('Fund Split Initiated','fund');}
 function confirmTerminateFund(){const reason=document.getElementById('term-fund-reason')?.value;if(!reason?.trim()){toast('Please enter a termination reason','red');return;}closeModal('terminate-fund-modal');toast('Fund terminated. All positions locked.','red');}
 
-// ─── SCHEDULE B ───────────────────────────────────────────────────────────────
-function addStartingInputRow(){const tbody=document.getElementById('schedule-b-body');if(!tbody)return;const tr=document.createElement('tr');tr.innerHTML=`<td><input class="form-control" style="padding:4px 8px;font-size:12px;" placeholder="Fund Owner name"></td><td><input class="form-control" style="padding:4px 8px;font-size:12px;" type="number" value="0" oninput="recalcScheduleB()"></td><td><input class="form-control" style="padding:4px 8px;font-size:12px;" type="number" value="0" oninput="recalcScheduleB()"></td><td class="mono" style="font-weight:700;color:var(--blue);">0</td><td><input class="form-control" style="padding:4px 8px;font-size:12px;" placeholder="Optional note…"></td><td><button class="btn btn-ghost btn-sm" style="color:var(--red);" onclick="removeScheduleBRow(this)">Remove</button></td>`;tbody.appendChild(tr);recalcScheduleB();}
-function removeScheduleBRow(btn){btn.closest('tr').remove();recalcScheduleB();}
-function recalcScheduleB(){const rows=document.querySelectorAll('#schedule-b-body tr');let totalNC=0,totalC=0;rows.forEach(row=>{const cells=row.querySelectorAll('td');const nc=parseFloat(cells[1]?.querySelector('input')?.value)||0;const c=parseFloat(cells[2]?.querySelector('input')?.value)||0;if(cells[3])cells[3].textContent=(nc+c).toLocaleString();totalNC+=nc;totalC+=c;});const s=(id,v)=>{const e=document.getElementById(id);if(e)e.textContent=v;};s('sb-total-noncash',totalNC.toLocaleString());s('sb-total-cash',totalC.toLocaleString());s('sb-total-all',(totalNC+totalC).toLocaleString());}
-function attachScheduleB(){APP_STATE.scheduleB_attached=true;const row=document.getElementById('scheduleb-doc-row');const status=document.getElementById('scheduleb-status');if(row){row.classList.remove('doc-missing');row.classList.add('doc-ok');}if(status){status.textContent='✓ 021_Schedule_B_v1.pdf';status.style.color='var(--green)';}toast('Schedule B attached successfully','green');}
+// ─── ADD FOUNDER FROM FUND DETAILS ───────────────────────────────────────────
+function addFounderFromFund(){
+  // Clear form for new founder and set context to current fund
+  const fundName = document.getElementById('fd-name')?.value || APP_STATE.currentFund;
+  APP_STATE.editingFounder = null;
+  // Reset founder detail form
+  ['fn-first','fn-last','fn-email','fn-phone'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
+  document.getElementById('founder-role').value='fund_owner';
+  document.getElementById('founder-status').value='initiated';
+  document.getElementById('market-wage').value='0';
+  document.getElementById('cash-comp-pct').value='50';
+  document.getElementById('fund-comp-pct').value='50';
+  const breadEl=document.getElementById('founder-detail-bread');
+  if(breadEl) breadEl.textContent = fundName + ' › Add Founder';
+  recalcComp();
+  goTo('screen-founder-detail');
+}
+
+// ─── STARTING INPUTS ─────────────────────────────────────────────────────────
+function recalcStartingInputs(){
+  const rows=document.querySelectorAll('#starting-inputs-body tr');
+  let totalNC=0,totalC=0;
+  rows.forEach(row=>{
+    const cells=row.querySelectorAll('td');
+    const nc=parseFloat(cells[1]?.querySelector('input')?.value)||0;
+    const c=parseFloat(cells[2]?.querySelector('input')?.value)||0;
+    if(cells[3])cells[3].textContent=(nc+c).toLocaleString();
+    totalNC+=nc;totalC+=c;
+  });
+  const s=(id,v)=>{const e=document.getElementById(id);if(e)e.textContent=v;};
+  s('si-total-noncash',totalNC.toLocaleString());
+  s('si-total-cash',totalC.toLocaleString());
+  s('si-total-all',(totalNC+totalC).toLocaleString());
+}
 
 // ─── FOUNDER ACTIONS ──────────────────────────────────────────────────────────
 function filterFounders(val){document.querySelectorAll('#founder-tbody tr').forEach(r=>{r.style.display=(r.dataset.name||'').includes(val.toLowerCase())?'':'none';});}
@@ -1776,7 +2064,7 @@ function editFounder(name){
   document.getElementById('market-wage').value=d.wage;
   document.getElementById('cash-comp-pct').value=d.cashPct;
   document.getElementById('fund-comp-pct').value=d.fundPct;
-  document.getElementById('founder-detail-bread').textContent='Founder Directory › '+name;
+  document.getElementById('founder-detail-bread').textContent='021 Founder\'s Fund Agreement › '+name;
   recalcComp();goTo('screen-founder-detail');
 }
 function recordFlow(name){
@@ -1788,17 +2076,90 @@ function recordFlow(name){
   document.getElementById('rateInput').value=d.rate;calcFlow();goTo('screen-contribution-details');
 }
 function checkFundLeaderRule(sel){}
-function handleStatusChange(sel){const panel=document.getElementById('termination-panel');if(panel)panel.style.display=sel.value==='terminated'?'block':'none';}
-function recalcComp(){const wage=parseFloat(document.getElementById('market-wage')?.value)||0;const cashPct=parseFloat(document.getElementById('cash-comp-pct')?.value)||0;const fundPct=parseFloat(document.getElementById('fund-comp-pct')?.value)||0;const total=cashPct+fundPct;const el=document.getElementById('comp-validation');if(!el)return;if(Math.abs(total-100)<0.01){el.className='comp-validation comp-ok';el.textContent='✓ Cash ('+cashPct+'%) + Fund ('+fundPct+'%) = 100% of Market Wage ($'+wage+'/hr). Balanced.';}else{el.className='comp-validation comp-warn';el.textContent='⚠ Cash ('+cashPct+'%) + Fund ('+fundPct+'%) = '+total+'%. Must sum to exactly 100%.';};}
-function saveFounder(){const cashPct=parseFloat(document.getElementById('cash-comp-pct')?.value)||0;const fundPct=parseFloat(document.getElementById('fund-comp-pct')?.value)||0;if(Math.abs(cashPct+fundPct-100)>0.01){toast('Cash + Fund Compensation must equal 100%','red');return;}const name=document.getElementById('fn-first')?.value+' '+document.getElementById('fn-last')?.value;toast('Founder "'+name+'" saved!','green');goTo('screen-founder-directory');}
-function confirmInvite(){const first=document.getElementById('inv-first')?.value?.trim();const last=document.getElementById('inv-last')?.value?.trim();const email=document.getElementById('inv-email')?.value?.trim();if(!first||!last||!email){toast('Please fill in all required fields','red');return;}closeModal('invite-modal');toast('Invitation sent to '+email+'!','green');addAuditEntry('Founder Invited — '+first+' '+last,'invite');document.getElementById('inv-first').value='';document.getElementById('inv-last').value='';document.getElementById('inv-email').value='';}
+function handleStatusChange(sel){}
+
+function recalcComp(){
+  const wage=parseFloat(document.getElementById('market-wage')?.value)||0;
+  const cashPct=parseFloat(document.getElementById('cash-comp-pct')?.value)||0;
+  const fundPct=parseFloat(document.getElementById('fund-comp-pct')?.value)||0;
+  const total=cashPct+fundPct;
+
+  // Update actual value displays
+  const cashActual=document.getElementById('cash-comp-actual');
+  const fundActual=document.getElementById('fund-comp-actual');
+  if(cashActual) cashActual.textContent='$'+(wage*(cashPct/100)).toFixed(2);
+  if(fundActual) fundActual.textContent='$'+(wage*(fundPct/100)).toFixed(2);
+
+  const el=document.getElementById('comp-validation');
+  if(!el)return;
+  if(Math.abs(total-100)<0.01){
+    el.className='comp-validation comp-ok';
+    el.textContent='✓ Cash ('+cashPct+'%) + Fund ('+fundPct+'%) = 100% · Market Wage: $'+wage+'/hr';
+  }else{
+    el.className='comp-validation comp-warn';
+    el.textContent='⚠ Cash ('+cashPct+'%) + Fund ('+fundPct+'%) = '+total+'%. Must sum to exactly 100%.';
+  }
+}
+
+function saveFounder(){
+  const cashPct=parseFloat(document.getElementById('cash-comp-pct')?.value)||0;
+  const fundPct=parseFloat(document.getElementById('fund-comp-pct')?.value)||0;
+  if(Math.abs(cashPct+fundPct-100)>0.01){toast('Cash + Fund Compensation must equal 100%','red');return;}
+  const first=document.getElementById('fn-first')?.value?.trim();
+  const last=document.getElementById('fn-last')?.value?.trim();
+  if(!first||!last){toast('First and last name are required','red');return;}
+  toast('Founder "'+first+' '+last+'" saved!','green');
+  goTo('screen-fund-details');
+}
+
+function confirmInvite(){
+  const first=document.getElementById('inv-first')?.value?.trim();
+  const last=document.getElementById('inv-last')?.value?.trim();
+  const email=document.getElementById('inv-email')?.value?.trim();
+  if(!first||!last||!email){toast('Please fill in all required fields','red');return;}
+  closeModal('invite-modal');
+  toast('Founder '+first+' '+last+' added!','green');
+  addAuditEntry('Founder Added — '+first+' '+last,'invite');
+  document.getElementById('inv-first').value='';
+  document.getElementById('inv-last').value='';
+  document.getElementById('inv-email').value='';
+}
 
 // ─── CONTRIBUTION / FLOW ──────────────────────────────────────────────────────
 function newContribution(){goTo('screen-contribution-details');}
-function switchContribTab(type,el){document.querySelectorAll('.toggle-tab').forEach(t=>t.classList.remove('active'));el.classList.add('active');['noncash','cash','penalty'].forEach(t=>{const tab=document.getElementById('tab-'+t);const calc=document.getElementById('calc-'+t);if(tab)tab.style.display=(t===type)?'':'none';if(calc)calc.style.display=(t===type)?'':'none';});}
-function calcFlow(){const hours=parseFloat(document.getElementById('hoursInput')?.value)||0;const rate=parseFloat(document.getElementById('rateInput')?.value)||0;const threshold=40,otCoef=1.5,bonusPct=0.10;const reg=Math.min(hours,threshold);const ot=Math.max(0,hours-threshold);const basis=reg*rate;const gain=ot*rate*otCoef;const skill=basis*bonusPct;const total=basis+gain+skill;const f=n=>Math.round(n).toLocaleString();const s=(id,v)=>{const e=document.getElementById(id);if(e)e.textContent=v;};s('disp-hours',hours.toFixed(1)+' hrs');s('disp-base',f(basis));s('disp-ot',f(gain));s('disp-cont',f(skill));s('disp-total',f(total));if(total>0){const set=(id,pct)=>{const e=document.getElementById(id);if(e)e.style.width=pct.toFixed(1)+'%';};set('bar-basis',basis/total*100);set('bar-gain',gain/total*100);set('bar-skill',skill/total*100);}}
+function switchContribTab(type,el){
+  document.querySelectorAll('.toggle-tab').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+  ['noncash','cash','penalty'].forEach(t=>{
+    const tab=document.getElementById('tab-'+t);
+    const calc=document.getElementById('calc-'+t);
+    if(tab)tab.style.display=(t===type)?'':'none';
+    if(calc)calc.style.display=(t===type)?'':'none';
+  });
+}
+function calcFlow(){
+  const hours=parseFloat(document.getElementById('hoursInput')?.value)||0;
+  const rate=parseFloat(document.getElementById('rateInput')?.value)||0;
+  const threshold=40,otCoef=1.5,bonusPct=0.10;
+  const reg=Math.min(hours,threshold);
+  const ot=Math.max(0,hours-threshold);
+  const basis=reg*rate;
+  const gain=ot*rate*otCoef;
+  const skill=basis*bonusPct;
+  const total=basis+gain+skill;
+  const f=n=>Math.round(n).toLocaleString();
+  const s=(id,v)=>{const e=document.getElementById(id);if(e)e.textContent=v;};
+  s('disp-hours',hours.toFixed(1)+' hrs');s('disp-base',f(basis));s('disp-ot',f(gain));s('disp-cont',f(skill));s('disp-total',f(total));
+  if(total>0){const set=(id,pct)=>{const e=document.getElementById(id);if(e)e.style.width=pct.toFixed(1)+'%';};set('bar-basis',basis/total*100);set('bar-gain',gain/total*100);set('bar-skill',skill/total*100);}
+}
 function calcGuarantee(){const amount=parseFloat(document.getElementById('cash-amount')?.value)||0;const cd=document.getElementById('cash-total-display');if(cd)cd.textContent=amount.toLocaleString();}
-function calcDeficit(){let minor=0,major=0;document.querySelectorAll('.minor-check:checked').forEach(()=>minor+=100);document.querySelectorAll('.major-check:checked').forEach(()=>major+=500);const s=(id,v)=>{const e=document.getElementById(id);if(e)e.textContent=v;};s('minor-total',minor>0?'−'+minor:'−0');s('major-total',major>0?'−'+major:'−0');s('deficit-total',(minor+major)>0?'−'+(minor+major):'−0');}
+function calcDeficit(){
+  let minor=0,major=0;
+  document.querySelectorAll('.minor-check:checked').forEach(()=>minor+=100);
+  document.querySelectorAll('.major-check:checked').forEach(()=>major+=500);
+  const s=(id,v)=>{const e=document.getElementById(id);if(e)e.textContent=v;};
+  s('minor-total',minor>0?'−'+minor:'−0');s('major-total',major>0?'−'+major:'−0');s('deficit-total',(minor+major)>0?'−'+(minor+major):'−0');
+}
 function submitForApproval(){toast('Contribution submitted for approval (RS-2026-003 will be attached on approval)','');}
 function confirmApprove(){closeModal('approve-contrib-modal');toast('Contribution approved and locked! RS-2026-003 attached. Award Letter generated.','green');goTo('screen-contribution-ledger');}
 function exportLedger(){toast('Ledger exported as CSV','green');}
@@ -1837,6 +2198,8 @@ function saveScenario(){const name='Scenario-'+String.fromCharCode(65+APP_STATE.
 
 // ─── AUDIT ────────────────────────────────────────────────────────────────────
 function addAuditEntry(text,type){const colors={fund:'var(--blue)',update:'var(--green)',terminate:'var(--red)',invite:'var(--teal)',approve:'var(--green)'};const color=colors[type]||'var(--g500)';const history=document.getElementById('audit-history');if(!history)return;const entry=document.createElement('div');entry.className='audit-entry';const now=new Date().toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});entry.innerHTML=`<span class="audit-dot" style="background:${color}"></span><span class="audit-text">${text}</span><span class="audit-time">${now}</span>`;history.prepend(entry);}
+function filterAudit(val){document.querySelectorAll('#audit-history .audit-entry').forEach(e=>{e.style.display=e.textContent.toLowerCase().includes(val.toLowerCase())?'':'none';});}
+function lockPeriod(){toast('Period locked successfully','green');}
 
 // ─── INIT ─────────────────────────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded',function(){
