@@ -443,6 +443,21 @@
       </div>
     </div>
 
+    <!-- Client Services (company-level description for ICA recital) -->
+    <div class="card" style="margin-bottom:16px">
+      <div class="card-header"><div class="card-title">Client Services Description</div></div>
+      <div class="card-body">
+        <div class="form-group">
+          <label>Business Description <span class="req">*</span></label>
+          <textarea class="form-control" id="fd-clientservices" rows="2" style="resize:vertical" placeholder="e.g. artificial intelligence accounting, strategy, and alignment software and educational products"></textarea>
+          <div style="font-size:11px;color:var(--g500);margin-top:4px">
+            Describes what the Client company sells. Used verbatim in the ICA "WHEREAS, Client is attempting to offer…" recital.
+            This is a company-level field — it is the same for every founder in this fund.
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- Rules -->
     <div class="card" style="margin-bottom:16px">
       <div class="card-header"><div class="card-title">Fund Rules — Overtime &amp; Bonus</div></div>
@@ -984,9 +999,9 @@ const STATE = {
   prevScreen: 'screen-funds',
   rcContext: null, // where to return after record
   funds: [
-    { id: 'f-021', name: "021 Founder's Fund Agreement", company: '021', status: 'active', isDefault: true, effectiveDate: '2026-01-01', initPeriod: 90, otThreshold: 40, otCoef: 1.5, bonusPct: 10 },
-    { id: 'f-seed', name: "Seed Round Founder's Fund Agreement", company: '021', status: 'archive', isDefault: false, effectiveDate: '2025-07-15', initPeriod: 90, otThreshold: 40, otCoef: 1.25, bonusPct: 5 },
-    { id: 'f-beta', name: "Beta Fund Agreement", company: '021', status: 'initiated', isDefault: false, effectiveDate: '2025-10-01', initPeriod: 60, otThreshold: 40, otCoef: 1.5, bonusPct: 8 }
+    { id: 'f-021', name: "021 Founder's Fund Agreement", company: '021', status: 'active', isDefault: true, effectiveDate: '2026-01-01', initPeriod: 90, otThreshold: 40, otCoef: 1.5, bonusPct: 10, clientServices: 'artificial intelligence accounting, strategy, and alignment software and educational products' },
+    { id: 'f-seed', name: "Seed Round Founder's Fund Agreement", company: '021', status: 'archive', isDefault: false, effectiveDate: '2025-07-15', initPeriod: 90, otThreshold: 40, otCoef: 1.25, bonusPct: 5, clientServices: 'artificial intelligence accounting, strategy, and alignment software and educational products' },
+    { id: 'f-beta', name: "Beta Fund Agreement", company: '021', status: 'initiated', isDefault: false, effectiveDate: '2025-10-01', initPeriod: 60, otThreshold: 40, otCoef: 1.5, bonusPct: 8, clientServices: 'artificial intelligence accounting, strategy, and alignment software and educational products' }
   ],
   founders: [
     { id: 'fnd-1', fundId: 'f-021', fullName: 'David Boctor', title: 'Founder & CEO', address: '3317 Shadybrook Lane, Chico, CA 95928', email021: 'david@021.ceo', emailPersonal: 'dboctor@gmail.com', location: 'Chico, CA', initDate: '2026-01-01', payment: 'Bill Pay', service: 'Strategy, platform architecture, product leadership', rate: 120, role: 'fund_leader', status: 'contributing', offerDate: '2026-01-01', ndaBegin: '2026-01-01', ndaEnd: '2029-01-01', icaBegin: '2026-01-01', icaEnd: '2029-01-01' },
@@ -1214,6 +1229,7 @@ function renderNDA(f, editMode=false) {
 function renderICA(f, editMode=false) {
   const V = editMode ? ve : v;
   const contactEmail = f.emailPersonal || f.email021;
+  const fund = STATE.funds.find(x => x.id === f.fundId);
   return `
     <div class="agreement-doc ${editMode?'edit-mode':''}" id="doc-ica">
       <h1>Independent Contractor Agreement</h1>
@@ -1222,7 +1238,8 @@ function renderICA(f, editMode=false) {
       <p>This INDEPENDENT CONTRACTOR AGREEMENT FOR CONSULTING SERVICES ("Agreement") is made and entered into as of <strong>${V(fmtDate(f.icaBegin), 'icaBegin', 'ICA Effective Date')}</strong>, by and between <strong>${V(f.fullName, 'fullName', 'Consultant Name')}</strong> ("Consultant") at ${V(f.address, 'address', 'Consultant Address')} and David Boctor D.B.A. 021 ("Client"), located at 3317 Shadybrook Lane, Chico, CA 95928.</p>
 
       <h2>Background Information</h2>
-      <p>WHEREAS, Client is developing accounting, strategy, and alignment software and educational products (the "Services"); and</p>
+      <p>WHEREAS, Client is attempting to offer ${v(fund?.clientServices, 'clientServices', 'Client Services Description (set on Fund Details)')} (hereinafter "Services"); and</p>
+      <p>WHEREAS, Client has the need from time to time to retain the services of Consultant to research, develop, modify, or protect certain functional components and/or appearance attributes of its Services; and</p>
       <p>WHEREAS, Consultant has an extensive background in performing ${V(f.service, 'service', 'service definition')} and related work that may be needed by Client from time to time; and</p>
       <p>WHEREAS, Client desires to engage Consultant as an independent contractor, and Consultant is willing to perform such Services on the terms and conditions set forth below.</p>
 
@@ -1410,7 +1427,7 @@ function renderFundsTable(filterText='') {
 function filterFunds(v) { renderFundsTable(v); }
 function newFund() {
   const id = 'f-' + Date.now();
-  STATE.funds.push({ id, name: "New Fund Agreement", company: '', status: 'initiated', isDefault: false, effectiveDate: new Date().toISOString().slice(0,10), initPeriod: 90, otThreshold: 40, otCoef: 1.5, bonusPct: 10 });
+  STATE.funds.push({ id, name: "New Fund Agreement", company: '', status: 'initiated', isDefault: false, effectiveDate: new Date().toISOString().slice(0,10), initPeriod: 90, otThreshold: 40, otCoef: 1.5, bonusPct: 10, clientServices: '' });
   STATE.activeFundId = id;
   editFund(id);
   toast('New fund created — complete details and save', 'green');
@@ -1427,6 +1444,7 @@ function editFund(fundId) {
   document.getElementById('fd-otthresh').value = f.otThreshold;
   document.getElementById('fd-otcoef').value = f.otCoef;
   document.getElementById('fd-bonus').value = f.bonusPct;
+  document.getElementById('fd-clientservices').value = f.clientServices || '';
   document.getElementById('fd-title').textContent = f.name;
   document.getElementById('fd-bread').textContent = 'Fund Details · ' + f.name;
   const banner = document.getElementById('fd-default-banner');
@@ -1490,6 +1508,7 @@ function saveFund() {
   f.otThreshold = parseInt(document.getElementById('fd-otthresh').value, 10);
   f.otCoef = parseFloat(document.getElementById('fd-otcoef').value);
   f.bonusPct = parseFloat(document.getElementById('fd-bonus').value);
+  f.clientServices = document.getElementById('fd-clientservices').value.trim();
   if (!f.company) { toast('Company legal name is required', 'red'); return; }
   toast('Fund saved successfully', 'green');
   goTo('screen-funds');
