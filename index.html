@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Founders Fund v5 — SAF Model</title>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=DM+Mono:wght@400;500&family=Caveat:wght@400;600&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 <style>
   :root {
@@ -270,8 +270,62 @@
     body{background:#fff}
     .sidebar,.topbar,.no-print{display:none !important}
     .main{margin-left:0}
-    .agreement-doc{box-shadow:none;border:none;padding:40px}
+    .agreement-doc,.award-doc{box-shadow:none;border:none;padding:40px}
   }
+
+  /* ─── AWARD DOCUMENT (web version of the official PDF letter) ─── */
+  .award-doc{background:#fff;border:1px solid var(--g200);border-radius:10px;padding:36px 44px;font-size:13px;line-height:1.7;color:var(--g900);box-shadow:var(--shadow-md);position:relative}
+  .award-doc-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:26px;gap:20px;flex-wrap:wrap}
+  .award-doc-from{text-align:right;font-size:12px;color:var(--g700);line-height:1.55}
+  .award-doc-from-co{font-weight:700;color:var(--navy);font-size:13px;margin-bottom:2px}
+  .award-doc-date{font-size:13px;color:var(--g700);margin-bottom:18px}
+  .award-doc-recipient{font-size:13px;line-height:1.55;margin-bottom:18px}
+  .award-doc-recipient-name{font-weight:600;color:var(--g900)}
+  .award-doc-greeting{margin-bottom:14px}
+  .award-doc-body{margin-bottom:18px}
+  .award-doc-period{font-size:13px;color:var(--g700);margin-bottom:18px}
+  .award-doc-period strong{color:var(--g900)}
+
+  .award-summary-table{width:100%;border-collapse:collapse;margin:20px 0;border:1px solid var(--g300)}
+  .award-summary-table th{background:var(--g50);padding:10px 14px;text-align:left;font-size:12px;font-weight:700;color:var(--g700);text-transform:none;letter-spacing:0;border:1px solid var(--g300);border-bottom-width:2px}
+  .award-summary-table th.num,.award-summary-table td.num{text-align:right;font-family:'DM Mono',monospace}
+  .award-summary-table td{padding:9px 14px;border:1px solid var(--g300);font-size:13px;color:var(--g900);background:#fff}
+  .award-summary-table tr.row-total td{background:var(--g50);font-weight:700;border-top-width:2px}
+  .award-summary-table tr.row-penalty td{color:var(--red)}
+  .award-summary-table tr.row-net td{background:var(--blue-light);font-weight:800;color:var(--navy);border-top-width:2px;font-size:14px}
+  .award-summary-table .input-type-label{font-weight:600}
+
+  .award-signature-block{display:grid;grid-template-columns:1fr 1fr;gap:32px 40px;margin-top:36px}
+  .award-sig-slot{padding-top:6px}
+  .award-sig-name{font-family:'Caveat','Brush Script MT',cursive;font-size:22px;color:#1e293b;margin-bottom:2px;min-height:30px}
+  .award-sig-line{border-top:1px solid var(--g500);padding-top:4px;font-size:11px;color:var(--g600);font-weight:600}
+  .award-sig-pending{color:var(--g400);font-style:italic;font-family:inherit;font-size:13px}
+  .award-sig-date{font-size:10px;color:var(--g400);margin-top:1px}
+
+  .award-status-strip{display:flex;justify-content:space-between;align-items:center;gap:14px;padding:11px 18px;background:var(--g50);border:1px solid var(--g200);border-radius:10px;margin-bottom:14px;flex-wrap:wrap}
+  .award-status-strip.unvested{background:var(--orange-light);border-color:#FDE68A}
+  .award-status-strip.vested{background:var(--green-light);border-color:#86EFAC}
+  .award-status-strip.reversed{background:var(--red-light);border-color:#fecaca}
+  .award-meta-list{display:flex;flex-wrap:wrap;gap:18px;font-size:12px;color:var(--g600)}
+  .award-meta-list strong{color:var(--g900);font-weight:700}
+
+  /* Line-item table */
+  .lineitem-table{width:100%;border-collapse:collapse;font-size:13px}
+  .lineitem-table thead th{background:var(--g50);padding:9px 13px;text-align:left;font-size:10.5px;font-weight:700;color:var(--g500);text-transform:uppercase;letter-spacing:.05em;border-bottom:1px solid var(--g200)}
+  .lineitem-table tbody td{padding:10px 13px;color:var(--g700);vertical-align:middle;border-bottom:1px solid var(--g100)}
+  .lineitem-table tbody tr:last-child td{border-bottom:none}
+  .lineitem-table tbody tr.row-reversal{background:#fef9f9;color:var(--red)}
+  .lineitem-table tbody tr.row-reversed{opacity:.55;text-decoration:line-through}
+  .lineitem-table tbody tr.row-penalty td{background:#fff8f8}
+  .lineitem-table tbody tr.row-penalty.row-reversal td{background:#fef0f0}
+  .reversed-tag{display:inline-block;font-size:9.5px;font-weight:700;background:var(--red);color:#fff;padding:1px 6px;border-radius:4px;margin-left:6px;letter-spacing:.04em}
+  .reversal-tag{display:inline-block;font-size:9.5px;font-weight:700;background:var(--g700);color:#fff;padding:1px 6px;border-radius:4px;margin-left:6px;letter-spacing:.04em}
+
+  .award-section-title{font-size:11px;font-weight:700;color:var(--g500);text-transform:uppercase;letter-spacing:.07em;margin:6px 0 10px}
+
+  /* Empty states */
+  .empty-state{padding:30px 20px;text-align:center;color:var(--g400);font-size:12.5px}
+  .empty-state strong{display:block;color:var(--g600);font-size:13px;margin-bottom:4px}
 </style>
 </head>
 <body>
@@ -348,6 +402,172 @@
   </div>
 </div>
 
+<!-- MODAL: ADD AWARD -->
+<div class="modal-overlay" id="add-award-modal">
+  <div class="modal-box" style="width:480px">
+    <div class="modal-title" style="color:var(--blue)">+ Add Award</div>
+    <div class="modal-sub">Create a new Award for a participant and period. You can add Contributions and Penalties as line items on the next screen.</div>
+    <div class="fg">
+      <div class="form-group"><label>Participant <span class="req">*</span></label>
+        <select class="form-control" id="aa-participant"></select>
+      </div>
+      <div class="grid2">
+        <div class="form-group"><label>Period Start <span class="req">*</span></label>
+          <input class="form-control" type="date" id="aa-period-start">
+        </div>
+        <div class="form-group"><label>Period End <span class="req">*</span></label>
+          <input class="form-control" type="date" id="aa-period-end">
+        </div>
+      </div>
+      <div class="form-group"><label>Period Label</label>
+        <input class="form-control" id="aa-period-label" placeholder="Auto-generated from dates if blank">
+        <div class="form-hint">Friendly label shown on the award letter (e.g., "Apr 28 – May 04, 2025").</div>
+      </div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-secondary" onclick="closeModal('add-award-modal')">Cancel</button>
+      <button class="btn btn-primary" onclick="confirmAddAward()">Create &amp; Open →</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: RECORD CONTRIBUTION LINE ITEM -->
+<div class="modal-overlay" id="add-contribution-modal">
+  <div class="modal-box" style="width:520px">
+    <div class="modal-title" style="color:var(--blue)">Record Contribution</div>
+    <div class="modal-sub">Add a single line item to this award. Period is fixed by the parent award.</div>
+    <div class="fg">
+      <div class="form-group"><label>Category <span class="req">*</span></label>
+        <select class="form-control" id="ac-category" onchange="acCategoryChanged()">
+          <option value="labor">Labor Input (Hourly)</option>
+          <option value="non-labor-cash">Non-Labor — Cash</option>
+          <option value="non-labor-non-cash">Non-Labor — Non-Cash (e.g., equipment, IP)</option>
+        </select>
+      </div>
+      <div class="form-group"><label>Task / Description <span class="req">*</span></label>
+        <input class="form-control" id="ac-task" placeholder="e.g., Sprint 14 — auth refactor (CU-abc123)">
+        <div class="form-hint" id="ac-task-hint">Pulled from ClickUp for labor inputs; manual for non-labor.</div>
+      </div>
+      <div id="ac-labor-block">
+        <div class="grid2">
+          <div class="form-group"><label>Hours <span class="req">*</span></label>
+            <div class="suffix-wrap"><input class="form-control" type="number" id="ac-hours" step="0.25" value="8" oninput="acRecalc()"><span class="suffix">hrs</span></div>
+          </div>
+          <div class="form-group"><label>Rate (from profile)</label>
+            <div class="prefix-wrap"><span class="prefix">$</span><input class="form-control" type="number" id="ac-rate" readonly></div>
+          </div>
+        </div>
+        <div class="form-group"><label>Multiplier</label>
+          <select class="form-control" id="ac-multiplier" onchange="acRecalc()">
+            <option value="1">Hourly (×1)</option>
+            <option value="1.5">Overtime (×1.5)</option>
+            <option value="0.1">Bonus (×0.1)</option>
+          </select>
+          <div class="form-hint">Bonus uses 0.1 of the hourly basis per Fund Rules.</div>
+        </div>
+      </div>
+      <div id="ac-cash-block" style="display:none">
+        <div class="form-group"><label>Cash Amount <span class="req">*</span></label>
+          <div class="prefix-wrap"><span class="prefix">$</span><input class="form-control" type="number" id="ac-cash" value="1000" oninput="acRecalc()"></div>
+        </div>
+      </div>
+      <div id="ac-noncash-block" style="display:none">
+        <div class="form-group"><label>Imputed Value <span class="req">*</span></label>
+          <div class="prefix-wrap"><span class="prefix">$</span><input class="form-control" type="number" id="ac-imputed" value="500" oninput="acRecalc()"></div>
+          <div class="form-hint">Fair-market value of non-cash contribution.</div>
+        </div>
+      </div>
+      <div class="calc-summary" style="padding:12px 14px">
+        <div class="calc-total" style="border-top:none;padding-top:0;margin-top:0"><span class="calc-total-lbl">Line Earned</span><span class="calc-total-val" id="ac-earned">720</span></div>
+      </div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-secondary" onclick="closeModal('add-contribution-modal')">Cancel</button>
+      <button class="btn btn-primary" onclick="confirmAddContribution()">Add Contribution</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: RECORD PENALTY LINE ITEM -->
+<div class="modal-overlay" id="add-penalty-modal">
+  <div class="modal-box" style="width:560px">
+    <div class="modal-title" style="color:var(--red)">⚠ Record Penalty</div>
+    <div class="modal-sub">Add a penalty line item to this award. Penalties reduce the Net Award.</div>
+    <div class="fg">
+      <div class="form-group"><label>Severity <span class="req">*</span></label>
+        <div class="toggle-tabs">
+          <div class="toggle-tab active" onclick="apSelectSeverity('minor',this)">Minor (−100)</div>
+          <div class="toggle-tab" onclick="apSelectSeverity('major',this)">Major (−500)</div>
+        </div>
+      </div>
+      <div class="form-group" id="ap-minor-cats"><label>Minor Infraction <span class="req">*</span></label>
+        <select class="form-control" id="ap-cat-minor">
+          <option value="">— Select category —</option>
+          <option>Time Stealing</option>
+          <option>Poor Time Tracking</option>
+          <option>Poor Record Keeping</option>
+          <option>Unauthorized Work</option>
+        </select>
+      </div>
+      <div class="form-group" id="ap-major-cats" style="display:none"><label>Major Infraction <span class="req">*</span></label>
+        <select class="form-control" id="ap-cat-major">
+          <option value="">— Select category —</option>
+          <option>Breach of Confidentiality</option>
+          <option>Misrepresentation</option>
+          <option>Self-Dealing</option>
+          <option>Conflict of Interest</option>
+          <option>Manipulating Records</option>
+          <option>Exploiting Fund Resources</option>
+        </select>
+      </div>
+      <div class="form-group"><label>Description <span class="req">*</span></label>
+        <textarea class="form-control" id="ap-description" rows="3" placeholder="Describe the infraction in detail."></textarea>
+      </div>
+      <div class="form-group" style="max-width:180px"><label>Wealth Destroyed</label>
+        <div class="prefix-wrap"><span class="prefix">−</span><input class="form-control" id="ap-value" value="100" readonly style="font-family:'DM Mono',monospace;font-weight:700"></div>
+        <div class="form-hint">Set automatically by severity.</div>
+      </div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-secondary" onclick="closeModal('add-penalty-modal')">Cancel</button>
+      <button class="btn btn-danger" onclick="confirmAddPenalty()">Add Penalty</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: REVERSE AWARD (entire award reversal) -->
+<div class="modal-overlay" id="reverse-award-modal">
+  <div class="modal-box" style="width:480px">
+    <div class="modal-title" style="color:var(--red)">⟲ Reverse Entire Award</div>
+    <div class="modal-sub" id="ra-sub">This action reverses every line item in this award by adding equal, negative entries. The original award and its line items remain visible for audit purposes.</div>
+    <div class="notice notice-warn" style="margin-bottom:12px"><span><strong>Use this when:</strong> the entire award letter was issued mistakenly or forgotten. To correct individual line items, use the per-line Reverse action instead.</span></div>
+    <div class="form-group">
+      <label>Reversal Reason <span class="req">*</span></label>
+      <textarea class="form-control" id="ra-reason" rows="3" placeholder="e.g., Award issued in error — duplicate of A-2025-014"></textarea>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-secondary" onclick="closeModal('reverse-award-modal')">Cancel</button>
+      <button class="btn btn-danger" onclick="confirmReverseAward()">Reverse Award</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: REVERSE LINE ITEM -->
+<div class="modal-overlay" id="reverse-lineitem-modal">
+  <div class="modal-box" style="width:460px">
+    <div class="modal-title" style="color:var(--red)">⟲ Reverse Line Item</div>
+    <div class="modal-sub" id="rl-sub">A negative, equal entry will be appended to the ledger. The original line item remains visible (struck through) for audit purposes — entries are never deleted.</div>
+    <div class="form-group">
+      <label>Reversal Reason <span class="req">*</span></label>
+      <textarea class="form-control" id="rl-reason" rows="2" placeholder="e.g., Hours logged twice — corrects 30 hrs entered on May 4"></textarea>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-secondary" onclick="closeModal('reverse-lineitem-modal')">Cancel</button>
+      <button class="btn btn-danger" onclick="confirmReverseLineItem()">Reverse Line Item</button>
+    </div>
+  </div>
+</div>
+
 <!-- ═══════════════════════ LOGIN ═══════════════════════ -->
 <div id="screen-login" class="screen active">
   <div class="login-card">
@@ -377,7 +597,7 @@
   <div class="topbar">
     <div class="topbar-left">
       <div class="title">Funds</div>
-      <div class="bread">All equity funds · The default fund drives Ownership &amp; Ledger</div>
+      <div class="bread">All equity funds · The default fund drives Ownership &amp; Award Ledger</div>
     </div>
     <div class="topbar-actions">
       <input class="form-control" style="width:220px" placeholder="Search funds…" oninput="filterFunds(this.value)">
@@ -422,7 +642,7 @@
   </div>
   <div class="page">
     <div id="fd-default-banner" class="notice notice-info" style="display:none">
-      <span>⭐ <strong>This is the Default Fund.</strong> It drives the Ownership and Ledger pages.</span>
+      <span>⭐ <strong>This is the Default Fund.</strong> It drives the Ownership and Award Ledger pages.</span>
     </div>
 
     <!-- Fund Identity -->
@@ -506,7 +726,7 @@
   <div class="topbar">
     <div class="topbar-left">
       <div class="title" id="fnd-title">Founder Detail</div>
-      <div class="bread" id="fnd-bread">Profile · Agreements · Ledger · Penalties</div>
+      <div class="bread" id="fnd-bread">Profile · Agreements · Awards</div>
     </div>
     <div class="topbar-actions">
       <button class="btn btn-secondary" onclick="goTo('screen-fund-details')">← Back to Fund</button>
@@ -536,11 +756,8 @@
       <div class="agreement-tab" data-tab="cover" onclick="switchFounderTab(this)">
         <span>📬</span>NDA Cover Letter
       </div>
-      <div class="agreement-tab" data-tab="ledger" onclick="switchFounderTab(this)">
-        <span>📊</span>Contributions
-      </div>
-      <div class="agreement-tab" data-tab="penalties" onclick="switchFounderTab(this)">
-        <span>⚠</span>Penalties <span class="tab-status-pill tab-status-missing" id="tab-status-pen">0</span>
+      <div class="agreement-tab" data-tab="awards" onclick="switchFounderTab(this)">
+        <span>📊</span>Awards <span class="tab-status-pill tab-status-missing" id="tab-status-awards">0</span>
       </div>
     </div>
 
@@ -617,41 +834,20 @@
     <div id="tab-ica" class="founder-tab-content" style="display:none"></div>
     <div id="tab-cover" class="founder-tab-content" style="display:none"></div>
 
-    <!-- LEDGER TAB -->
-    <div id="tab-ledger" class="founder-tab-content" style="display:none">
+    <!-- AWARDS TAB -->
+    <div id="tab-awards" class="founder-tab-content" style="display:none">
       <div class="card">
         <div class="card-header">
-          <div class="card-title">Contribution History</div>
-          <div style="display:flex;gap:6px">
-            <button class="btn btn-primary btn-sm" onclick="newContributionFor()">+ Record Contribution</button>
-            <button class="btn btn-danger btn-sm" onclick="newPenaltyFor()">+ Record Penalty</button>
-          </div>
+          <div class="card-title">Awards History</div>
+          <button class="btn btn-primary btn-sm" onclick="newAwardForFounder()">+ Add Award</button>
         </div>
         <div class="card-body" style="padding:0">
           <div class="tbl-wrap" style="border:none;box-shadow:none;border-radius:0 0 10px 10px">
             <table>
               <thead>
-                <tr><th>Period</th><th>Type</th><th>Hours</th><th>Inputs</th><th>Status</th></tr>
+                <tr><th>Period</th><th>Total Contributions</th><th>Total Penalties</th><th>Net Award</th><th>Status</th><th style="width:50px"></th></tr>
               </thead>
-              <tbody id="founder-ledger-tbody"></tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- PENALTIES TAB -->
-    <div id="tab-penalties" class="founder-tab-content" style="display:none">
-      <div class="card">
-        <div class="card-header">
-          <div class="card-title">Penalty History</div>
-          <button class="btn btn-danger btn-sm" onclick="newPenaltyFor()">+ Record Penalty</button>
-        </div>
-        <div class="card-body" style="padding:0">
-          <div class="tbl-wrap" style="border:none;box-shadow:none;border-radius:0 0 10px 10px">
-            <table>
-              <thead><tr><th>Date</th><th>Type</th><th>Category</th><th>Description</th><th>Value</th><th>Approved By</th></tr></thead>
-              <tbody id="founder-penalty-tbody"></tbody>
+              <tbody id="founder-awards-tbody"></tbody>
             </table>
           </div>
         </div>
@@ -662,224 +858,97 @@
 </div>
 </div>
 
-<!-- ═══════════════════════ RECORD CONTRIBUTION ═══════════════════════ -->
-<div id="screen-record-contribution" class="screen">
+<!-- ═══════════════════════ AWARD DETAIL ═══════════════════════ -->
+<div id="screen-award-detail" class="screen">
 <div class="main">
   <div class="topbar">
     <div class="topbar-left">
-      <div class="title">Record Contribution</div>
-      <div class="bread" id="rc-bread">Award Letter style · Period dropdown</div>
+      <div class="title" id="ad-title">Award Detail</div>
+      <div class="bread" id="ad-bread">Award Letter · Line-Item Breakdown</div>
     </div>
     <div class="topbar-actions">
-      <button class="btn btn-secondary" onclick="goBack()">Cancel</button>
-      <button class="btn btn-teal" onclick="approveContribution()">Approve &amp; Lock →</button>
+      <button class="btn btn-secondary" onclick="goBack()">← Back</button>
+      <button class="btn btn-secondary" onclick="downloadAwardPdf()">⬇ Download PDF</button>
+      <div class="dropdown-wrap">
+        <button class="btn btn-secondary" onclick="toggleMenu(this)" style="padding:7px 10px">⋯</button>
+        <div class="dropdown-menu">
+          <div class="dropdown-item" onclick="closeAllMenus();toggleVestStatus()" id="ad-vest-toggle">Mark as Vested</div>
+          <div class="dropdown-divider"></div>
+          <div class="dropdown-item danger" onclick="closeAllMenus();askReverseAward()">⟲ Reverse Entire Award</div>
+        </div>
+      </div>
     </div>
   </div>
   <div class="page">
+
+    <!-- Founder Hero -->
     <div class="founder-hero">
-      <div class="founder-avatar" id="rc-avatar">RR</div>
+      <div class="founder-avatar" id="ad-avatar">RR</div>
       <div>
-        <div style="font-size:16px;font-weight:700" id="rc-name">Ryker Rinehart</div>
-        <div style="font-size:12px;color:rgba(255,255,255,.6);margin-top:2px" id="rc-meta">ryker@021.ceo · $95/hr · Fund Secretary</div>
+        <div style="font-size:16px;font-weight:700" id="ad-name">—</div>
+        <div style="font-size:12px;color:rgba(255,255,255,.6);margin-top:2px" id="ad-meta">—</div>
       </div>
       <div class="founder-stats">
-        <div><div class="founder-stat-lbl">Cumulative Inputs</div><div class="founder-stat-val" id="rc-stock">32,150</div></div>
+        <div><div class="founder-stat-lbl">Net Award</div><div class="founder-stat-val" id="ad-net">0</div></div>
+        <div><div class="founder-stat-lbl">Cumulative Inputs</div><div class="founder-stat-val" id="ad-cumulative">0</div></div>
       </div>
     </div>
 
-    <div class="two-col" style="align-items:start">
-      <!-- Award-letter styled form -->
-      <div class="agreement-doc" style="max-width:none">
-        <h1>Input Award — Contribution Record</h1>
-        <p style="text-align:center;color:var(--g500);font-size:12px;margin-top:-10px">021 Founder's Fund Agreement · Rule Snapshot RS-2026-003</p>
-
-        <h2>Participant</h2>
-        <div class="grid2">
-          <div class="form-group"><label>Participant</label>
-            <select class="form-control" id="rc-participant" onchange="rcRefresh()"></select>
-          </div>
-          <div class="form-group"><label>Contribution Type</label>
-            <select class="form-control" id="rc-type" onchange="rcTypeChanged()">
-              <option value="noncash">Non-Cash (Labor)</option>
-              <option value="cash">Cash Input</option>
-            </select>
-          </div>
-        </div>
-
-        <h2 style="margin-top:20px">Contribution Period</h2>
-        <div class="form-group">
-          <label>Period <span class="req">*</span></label>
-          <select class="form-control" id="rc-period" onchange="rcCalc()">
-            <option value="2026-W15|2026-04-13|2026-04-19">Week of Apr 13 – Apr 19, 2026 (Current)</option>
-            <option value="2026-W14|2026-04-06|2026-04-12">Week of Apr 6 – Apr 12, 2026</option>
-            <option value="2026-W13|2026-03-30|2026-04-05">Week of Mar 30 – Apr 5, 2026</option>
-            <option value="2026-Q1|2026-01-01|2026-03-31">Q1 2026 (Jan – Mar)</option>
-            <option value="2026-M3|2026-03-01|2026-03-31">March 2026</option>
-            <option value="2026-M2|2026-02-01|2026-02-28">February 2026</option>
-            <option value="2026-M1|2026-01-01|2026-01-31">January 2026</option>
-          </select>
-          <div class="form-hint" id="rc-period-hint">Dates auto-populate from the selected period.</div>
-        </div>
-
-        <div id="rc-noncash-block">
-          <h2 style="margin-top:20px">Hours Contributed</h2>
-          <div class="form-group">
-            <label>Hours Worked <span class="req">*</span></label>
-            <div class="suffix-wrap"><input class="form-control" type="number" id="rc-hours" value="44.5" step="0.5" oninput="rcCalc()"><span class="suffix">hrs</span></div>
-            <div class="form-hint">Hourly rate is drawn from the founder profile (<span id="rc-rate-display">$95/hr</span>). It is not editable here.</div>
-          </div>
-        </div>
-
-        <div id="rc-cash-block" style="display:none">
-          <h2 style="margin-top:20px">Cash Input</h2>
-          <div class="form-group">
-            <label>Amount <span class="req">*</span></label>
-            <div class="prefix-wrap"><span class="prefix">$</span><input class="form-control" type="number" id="rc-cash" value="10000" oninput="rcCalc()"></div>
-            <div class="form-hint">Cash inputs vest immediately per Section 7(a)(i) of the Fund Agreement.</div>
-          </div>
-        </div>
-
-        <h2 style="margin-top:20px">Notes</h2>
-        <div class="form-group">
-          <textarea class="form-control" id="rc-notes" rows="2" placeholder="Optional task description or sprint reference…"></textarea>
-        </div>
+    <!-- Status Strip -->
+    <div class="award-status-strip" id="ad-status-strip">
+      <div class="award-meta-list">
+        <div><strong>Award ID:</strong> <span class="mono" id="ad-id">—</span></div>
+        <div><strong>Period:</strong> <span id="ad-period-label">—</span></div>
+        <div><strong>Created:</strong> <span id="ad-created">—</span></div>
       </div>
+      <div id="ad-status-badge"></div>
+    </div>
 
-      <!-- Live calc -->
-      <div style="position:sticky;top:76px;display:flex;flex-direction:column;gap:12px">
-        <div class="calc-summary">
-          <div class="calc-title">Non-Cash Input Breakdown — Live</div>
-          <div class="calc-row"><span class="calc-lbl">Hours</span><span class="calc-val" id="disp-hours">44.5 hrs</span></div>
-          <div class="calc-row"><span class="calc-lbl">Regular (≤40 hrs)</span><span class="calc-val" id="disp-base">3,800</span></div>
-          <div class="calc-row"><span class="calc-lbl">Overtime (1.5×)</span><span class="calc-val" id="disp-ot" style="color:var(--teal)">641</span></div>
-          <div class="calc-row"><span class="calc-lbl">Bonus (10%)</span><span class="calc-val" id="disp-bonus" style="color:var(--purple)">380</span></div>
-          <div class="calc-total"><span class="calc-total-lbl">Total Inputs</span><span class="calc-total-val" id="disp-total">4,821</span></div>
-        </div>
-        <div class="notice notice-info" style="margin-bottom:0"><span>📘 <strong>How inputs are calculated:</strong> Regular hours × rate + (overtime hours × rate × OT coef) + bonus on base. The hourly rate comes from the founder profile.</span></div>
+    <!-- Award Document Summary (web version of the official PDF letter) -->
+    <div class="card" style="margin-bottom:18px">
+      <div class="card-header">
+        <div class="card-title">Award Letter — Summary</div>
+        <span class="badge badge-blue badge-no-dot">Web view of official award document</span>
       </div>
-    </div>
-  </div>
-</div>
-</div>
-
-<!-- ═══════════════════════ RECORD PENALTY ═══════════════════════ -->
-<div id="screen-record-penalty" class="screen">
-<div class="main">
-  <div class="topbar">
-    <div class="topbar-left">
-      <div class="title" style="color:var(--red)">⚠ Record Penalty</div>
-      <div class="bread" id="rp-bread">Deficit event · Fund Agreement §4(g)</div>
-    </div>
-    <div class="topbar-actions">
-      <button class="btn btn-secondary" onclick="goBack()">Cancel</button>
-      <button class="btn btn-danger" onclick="approvePenalty()">Record &amp; Apply →</button>
-    </div>
-  </div>
-  <div class="page">
-    <div class="founder-hero" style="background:linear-gradient(135deg,#7f1d1d 0%,#991b1b 100%)">
-      <div class="founder-avatar" id="rp-avatar" style="background:rgba(255,255,255,.2)">RR</div>
-      <div>
-        <div style="font-size:16px;font-weight:700" id="rp-name">Ryker Rinehart</div>
-        <div style="font-size:12px;color:rgba(255,255,255,.7);margin-top:2px" id="rp-meta">Penalties reduce Total Inputs</div>
+      <div class="card-body" style="background:var(--g50)">
+        <div class="award-doc" id="award-doc-summary"><!-- rendered by renderAwardSummary() --></div>
       </div>
     </div>
 
-    <div class="two-col">
-      <div>
-        <div class="card" style="margin-bottom:14px">
-          <div class="card-header"><div class="card-title">Penalty Details</div></div>
-          <div class="card-body">
-            <div class="fg">
-              <div class="grid2">
-                <div class="form-group"><label>Participant <span class="req">*</span></label>
-                  <select class="form-control" id="rp-participant"></select>
-                </div>
-                <div class="form-group"><label>Date <span class="req">*</span></label>
-                  <input class="form-control" type="date" id="rp-date">
-                </div>
-              </div>
-              <div class="form-group"><label>Severity <span class="req">*</span></label>
-                <div class="toggle-tabs">
-                  <div class="toggle-tab active" onclick="rpSelectSeverity('minor',this)">Minor (−100)</div>
-                  <div class="toggle-tab" onclick="rpSelectSeverity('major',this)">Major (−500)</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="card" style="margin-bottom:14px" id="rp-minor-card">
-          <div class="card-header"><div class="card-title" style="color:var(--orange)">Minor Infractions</div><span class="badge badge-orange badge-no-dot">−100 each · Fund Secretary can approve</span></div>
-          <div class="card-body">
-            <div class="fg" style="gap:8px">
-              <label class="penalty-option"><input type="radio" name="rp-minor" value="Time Stealing" onchange="rpSelectCategory(this)">
-                <div><div class="penalty-option-label">Time Stealing</div><div class="penalty-option-desc">Failure to use approved timeclock or recording inaccurate hours</div></div>
-              </label>
-              <label class="penalty-option"><input type="radio" name="rp-minor" value="Poor Time Tracking" onchange="rpSelectCategory(this)">
-                <div><div class="penalty-option-label">Poor Time Tracking</div><div class="penalty-option-desc">Failure to submit hours to Fund Secretary within 14 days</div></div>
-              </label>
-              <label class="penalty-option"><input type="radio" name="rp-minor" value="Poor Record Keeping" onchange="rpSelectCategory(this)">
-                <div><div class="penalty-option-label">Poor Record Keeping</div><div class="penalty-option-desc">Failure to obtain or maintain signed contribution receipts</div></div>
-              </label>
-              <label class="penalty-option"><input type="radio" name="rp-minor" value="Unauthorized Work" onchange="rpSelectCategory(this)">
-                <div><div class="penalty-option-label">Unauthorized Work</div><div class="penalty-option-desc">Contributing to a project without written approval from Fund Leader/Secretary</div></div>
-              </label>
-            </div>
-          </div>
-        </div>
-
-        <div class="card" style="margin-bottom:14px;display:none;border-color:#fca5a5" id="rp-major-card">
-          <div class="card-header" style="background:var(--red-light)"><div class="card-title" style="color:var(--red)">Major Infractions</div><span class="badge badge-red badge-no-dot">−500 · Fund Leader approval required</span></div>
-          <div class="card-body">
-            <div class="fg" style="gap:8px">
-              <label class="penalty-option"><input type="radio" name="rp-major" value="Breach of Confidentiality" onchange="rpSelectCategory(this)">
-                <div><div class="penalty-option-label">Breach of Confidentiality</div><div class="penalty-option-desc">Disclosing Trade Secrets or proprietary information without consent</div></div>
-              </label>
-              <label class="penalty-option"><input type="radio" name="rp-major" value="Misrepresentation" onchange="rpSelectCategory(this)">
-                <div><div class="penalty-option-label">Misrepresentation</div><div class="penalty-option-desc">Presenting misleading financials, metrics, or business conditions</div></div>
-              </label>
-              <label class="penalty-option"><input type="radio" name="rp-major" value="Self-Dealing" onchange="rpSelectCategory(this)">
-                <div><div class="penalty-option-label">Self-Dealing</div><div class="penalty-option-desc">Diverting Fund opportunities to personal ventures</div></div>
-              </label>
-              <label class="penalty-option"><input type="radio" name="rp-major" value="Conflict of Interest" onchange="rpSelectCategory(this)">
-                <div><div class="penalty-option-label">Conflict of Interest</div><div class="penalty-option-desc">Prioritizing personal interests over the Fund</div></div>
-              </label>
-              <label class="penalty-option"><input type="radio" name="rp-major" value="Manipulating Records" onchange="rpSelectCategory(this)">
-                <div><div class="penalty-option-label">Manipulating Records</div><div class="penalty-option-desc">Altering financial statements, reports, or records</div></div>
-              </label>
-              <label class="penalty-option"><input type="radio" name="rp-major" value="Exploiting Fund Resources" onchange="rpSelectCategory(this)">
-                <div><div class="penalty-option-label">Exploiting Fund Resources</div><div class="penalty-option-desc">Unauthorized use of Fund assets, funds, or IP</div></div>
-              </label>
-            </div>
-          </div>
-        </div>
-
-        <div class="card">
-          <div class="card-header"><div class="card-title">Description &amp; Value</div></div>
-          <div class="card-body">
-            <div class="fg">
-              <div class="form-group"><label>Description <span class="req">*</span></label>
-                <textarea class="form-control" id="rp-description" rows="3" placeholder="Describe the infraction in detail. This record is immutable once approved."></textarea>
-              </div>
-              <div class="form-group" style="max-width:220px"><label>Wealth Destroyed (Inputs)</label>
-                <div class="prefix-wrap"><span class="prefix">−</span><input class="form-control" type="number" id="rp-value" value="100" readonly style="font-family:'DM Mono',monospace;font-weight:700"></div>
-                <div class="form-hint">Auto-set from severity. Cannot be overridden.</div>
-              </div>
-            </div>
-          </div>
+    <!-- Line-Item Detail -->
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">Line-Item Breakdown</div>
+        <div style="display:flex;gap:6px">
+          <button class="btn btn-primary btn-sm" onclick="openAddContribution()">+ Record Contribution</button>
+          <button class="btn btn-danger btn-sm" onclick="openAddPenalty()">+ Record Penalty</button>
         </div>
       </div>
+      <div class="card-body">
+        <div class="notice notice-info" style="margin-bottom:14px"><span>📘 <strong>Audit-safe edits:</strong> Line items cannot be deleted. Use the <em>Reverse</em> action on a row to add an equal, negative entry — the original stays visible for the audit trail.</span></div>
 
-      <div style="position:sticky;top:76px">
-        <div class="calc-summary" style="background:var(--red-light);border-color:#fecaca">
-          <div class="calc-title" style="color:var(--red)">Penalty Summary</div>
-          <div class="calc-row"><span class="calc-lbl">Severity</span><span class="calc-val" id="rp-sum-sev" style="color:var(--orange)">Minor</span></div>
-          <div class="calc-row"><span class="calc-lbl">Category</span><span class="calc-val" id="rp-sum-cat" style="color:var(--g500);font-weight:500">—</span></div>
-          <div class="calc-row"><span class="calc-lbl">Approver</span><span class="calc-val" id="rp-sum-app" style="color:var(--navy);font-size:11px">Fund Secretary</span></div>
-          <div class="calc-total" style="border-top-color:#fecaca"><span class="calc-total-lbl" style="color:var(--red)">Wealth Destroyed</span><span class="calc-total-val" id="rp-sum-val" style="color:var(--red)">−100</span></div>
+        <div class="award-section-title">Contributions</div>
+        <div class="tbl-wrap" style="margin-bottom:18px">
+          <table class="lineitem-table">
+            <thead>
+              <tr><th>Task / Description</th><th>Category</th><th class="num">Hours</th><th class="num">Rate</th><th class="num">Mult</th><th class="num">Value</th><th style="width:80px"></th></tr>
+            </thead>
+            <tbody id="ad-contributions-tbody"></tbody>
+          </table>
+        </div>
+
+        <div class="award-section-title" style="color:var(--red)">Penalties</div>
+        <div class="tbl-wrap">
+          <table class="lineitem-table">
+            <thead>
+              <tr><th>Date</th><th>Severity</th><th>Category</th><th>Description</th><th class="num">Value</th><th style="width:80px"></th></tr>
+            </thead>
+            <tbody id="ad-penalties-tbody"></tbody>
+          </table>
         </div>
       </div>
     </div>
+
   </div>
 </div>
 </div>
@@ -930,8 +999,8 @@
           <tr>
             <th>Fund Owner</th>
             <th>Status</th>
-            <th>Non-Cash</th>
-            <th>Cash</th>
+            <th>Labor Inputs</th>
+            <th>Capital Inputs</th>
             <th>Penalties</th>
             <th>Total Inputs</th>
             <th>Ownership %</th>
@@ -945,39 +1014,35 @@
 </div>
 </div>
 
-<!-- ═══════════════════════ LEDGER ═══════════════════════ -->
-<div id="screen-ledger" class="screen">
+<!-- ═══════════════════════ AWARD LEDGER ═══════════════════════ -->
+<div id="screen-award-ledger" class="screen">
 <div class="main">
   <div class="topbar">
     <div class="topbar-left">
-      <div class="title">Contribution Ledger</div>
-      <div class="bread" id="ldg-bread">Default Fund · All contribution events</div>
+      <div class="title">Award Ledger</div>
+      <div class="bread" id="ldg-bread">Default Fund · All awards</div>
     </div>
     <div class="topbar-actions">
-      <button class="btn btn-secondary" onclick="toast('Ledger exported as CSV','green')">Export CSV</button>
-      <button class="btn btn-primary" onclick="newContributionFromLedger()">+ Record Contribution</button>
-      <button class="btn btn-danger" onclick="newPenaltyFromLedger()">+ Record Penalty</button>
+      <button class="btn btn-secondary" onclick="toast('Award Ledger exported as CSV','green')">Export CSV</button>
+      <button class="btn btn-primary" onclick="newAwardFromLedger()">+ Add Award</button>
     </div>
   </div>
   <div class="page">
+    <div class="notice notice-info"><span>📘 <strong>An Award is a complete receipt</strong> bundling Contributions and Penalties for one founder over one period. Click any row to view line-item detail. Use the row menu to reverse an award issued in error.</span></div>
     <div class="tbl-wrap">
       <table>
         <thead>
           <tr>
             <th>Participant</th>
             <th>Period</th>
-            <th>Type</th>
-            <th>Hours</th>
-            <th>Base</th>
-            <th>Overtime</th>
-            <th>Bonus</th>
-            <th>Cash</th>
-            <th>Penalty</th>
-            <th>Net Inputs</th>
+            <th>Total Contributions</th>
+            <th>Total Penalties</th>
+            <th>Net Award</th>
             <th>Status</th>
+            <th style="width:50px">Actions</th>
           </tr>
         </thead>
-        <tbody id="ledger-tbody"></tbody>
+        <tbody id="award-ledger-tbody"></tbody>
       </table>
     </div>
   </div>
@@ -995,6 +1060,7 @@ const STATE = {
   defaultFundId: 'f-021',
   activeFundId: 'f-021',
   activeFounderId: null,
+  activeAwardId: null,
   activeTab: 'profile',
   prevScreen: 'screen-funds',
   rcContext: null, // where to return after record
@@ -1009,16 +1075,71 @@ const STATE = {
     { id: 'fnd-3', fundId: 'f-021', fullName: 'Alex Chen', title: 'Front-End Developer', address: '789 Pine Ave, Portland, OR 97201', email021: 'alex@021.ceo', emailPersonal: 'achen@dev.io', location: 'Portland, OR', initDate: '2026-02-01', payment: 'Upwork', service: 'Front-end development, React components, UI implementation', rate: 85, role: 'fund_owner', status: 'initiated', offerDate: '2026-02-01', ndaBegin: '2026-02-01', ndaEnd: '2029-02-01', icaBegin: '2026-02-01', icaEnd: '2029-02-01' },
     { id: 'fnd-4', fundId: 'f-021', fullName: 'Maria Santos', title: 'Backend Engineer', address: '456 Oak St, Austin, TX 78701', email021: 'maria@021.ceo', emailPersonal: 'msantos@gmail.com', location: 'Austin, TX', initDate: '2025-11-01', payment: 'Bill Pay', service: 'Backend API development, database design', rate: 110, role: 'fund_owner', status: 'terminated', offerDate: '2025-11-01', ndaBegin: '2025-11-01', ndaEnd: '2028-11-01', icaBegin: '2025-11-01', icaEnd: '2022-11-01' /* intentionally expired */ }
   ],
-  contributions: [
-    { id: 'c1', fundId: 'f-021', founderId: 'fnd-1', periodLabel: 'Feb 10 – Feb 17, 2026', type: 'noncash', hours: 40, base: 4800, ot: 0, bonus: 480, cash: 0, penalty: 0, status: 'vested' },
-    { id: 'c2', fundId: 'f-021', founderId: 'fnd-2', periodLabel: 'Feb 10 – Feb 17, 2026', type: 'noncash', hours: 40, base: 3800, ot: 0, bonus: 380, cash: 0, penalty: 0, status: 'vested' },
-    { id: 'c3', fundId: 'f-021', founderId: 'fnd-3', periodLabel: 'Feb 10 – Feb 17, 2026', type: 'noncash', hours: 40, base: 3400, ot: 0, bonus: 340, cash: 0, penalty: 0, status: 'initiating' },
-    { id: 'c4', fundId: 'f-021', founderId: 'fnd-1', periodLabel: 'Jan 2026 — Cash', type: 'cash', hours: 0, base: 0, ot: 0, bonus: 0, cash: 10000, penalty: 0, status: 'vested' }
+  /* AWARDS: parent receipts. Each Award is one (founder × period) bundle of contributions and penalties.
+     status: 'vested' | 'unvested'  (no 'pending' or 'approved' — only these two)
+     reversed: boolean (true if this award has been reversed in its entirety) */
+  awards: [
+    { id: 'a1', fundId: 'f-021', founderId: 'fnd-1', periodLabel: 'Feb 10 – Feb 17, 2026', periodStart: '2026-02-10', periodEnd: '2026-02-17', status: 'vested', createdDate: '2026-02-18', reversed: false,
+      signatures: [
+        { role: 'Co-Founder', name: 'David Boctor', signedAt: '2026-02-19' },
+        { role: 'Fund Secretary', name: 'Ryker Rinehart', signedAt: '2026-02-19' },
+        { role: 'Founder and CEO', name: 'David Boctor', signedAt: '2026-02-20' }
+      ] },
+    { id: 'a2', fundId: 'f-021', founderId: 'fnd-2', periodLabel: 'Feb 10 – Feb 17, 2026', periodStart: '2026-02-10', periodEnd: '2026-02-17', status: 'vested', createdDate: '2026-02-18', reversed: false,
+      signatures: [
+        { role: 'Co-Founder', name: 'David Boctor', signedAt: '2026-02-19' },
+        { role: 'Fund Secretary', name: 'Ryker Rinehart', signedAt: '2026-02-19' },
+        { role: 'Founder and CEO', name: 'David Boctor', signedAt: '2026-02-20' }
+      ] },
+    { id: 'a3', fundId: 'f-021', founderId: 'fnd-3', periodLabel: 'Feb 10 – Feb 17, 2026', periodStart: '2026-02-10', periodEnd: '2026-02-17', status: 'unvested', createdDate: '2026-02-18', reversed: false,
+      signatures: [
+        { role: 'Co-Founder', name: '', signedAt: null },
+        { role: 'Fund Secretary', name: 'Ryker Rinehart', signedAt: '2026-02-19' },
+        { role: 'Founder and CEO', name: '', signedAt: null }
+      ] },
+    { id: 'a4', fundId: 'f-021', founderId: 'fnd-1', periodLabel: 'Jan 2026 — Cash', periodStart: '2026-01-01', periodEnd: '2026-01-31', status: 'vested', createdDate: '2026-02-01', reversed: false,
+      signatures: [
+        { role: 'Co-Founder', name: 'David Boctor', signedAt: '2026-02-02' },
+        { role: 'Fund Secretary', name: 'Ryker Rinehart', signedAt: '2026-02-02' },
+        { role: 'Founder and CEO', name: 'David Boctor', signedAt: '2026-02-03' }
+      ] },
+    { id: 'a5', fundId: 'f-021', founderId: 'fnd-4', periodLabel: 'Jan 22 – Feb 5, 2026', periodStart: '2026-01-22', periodEnd: '2026-02-05', status: 'vested', createdDate: '2026-02-06', reversed: false,
+      signatures: [
+        { role: 'Co-Founder', name: 'David Boctor', signedAt: '2026-02-07' },
+        { role: 'Fund Secretary', name: 'Ryker Rinehart', signedAt: '2026-02-07' },
+        { role: 'Founder and CEO', name: 'David Boctor', signedAt: '2026-02-08' }
+      ] },
+    { id: 'a6', fundId: 'f-021', founderId: 'fnd-3', periodLabel: 'Jan 6 – Jan 12, 2026', periodStart: '2026-01-06', periodEnd: '2026-01-12', status: 'vested', createdDate: '2026-01-13', reversed: false,
+      signatures: [
+        { role: 'Co-Founder', name: 'David Boctor', signedAt: '2026-01-14' },
+        { role: 'Fund Secretary', name: 'Ryker Rinehart', signedAt: '2026-01-14' },
+        { role: 'Founder and CEO', name: 'David Boctor', signedAt: '2026-01-15' }
+      ] }
   ],
+  /* CONTRIBUTIONS: each is a single line item belonging to an Award
+     category: 'labor' | 'non-labor-cash' | 'non-labor-non-cash'
+     multiplier: 1 (hourly), 1.5 (overtime), 0.1 (bonus). null for non-labor.
+     isReversal: true if this entry is a reversal of another. value will be negative.
+     reversesId: id of the original line being reversed (when isReversal=true)
+     reversed: true if this entry has been reversed by a later reversal (display struck-through) */
+  contributions: [
+    // a1 — David, Feb 10-17 (40 base hours @ $120 + 10% bonus = 4800 + 480 = 5280)
+    { id: 'c1a', awardId: 'a1', category: 'labor', task: 'Architecture review and platform planning (CU-9001)', hours: 40, rate: 120, multiplier: 1, value: 4800, isReversal: false, reversesId: null, reversed: false, createdAt: '2026-02-18' },
+    { id: 'c1b', awardId: 'a1', category: 'labor', task: 'Bonus on regular hours (×0.1)', hours: 40, rate: 120, multiplier: 0.1, value: 480, isReversal: false, reversesId: null, reversed: false, createdAt: '2026-02-18' },
+    // a2 — Ryker, Feb 10-17 (40 base @ $95 + 10% = 3800 + 380)
+    { id: 'c2a', awardId: 'a2', category: 'labor', task: 'Ledger management and award reconciliation', hours: 40, rate: 95, multiplier: 1, value: 3800, isReversal: false, reversesId: null, reversed: false, createdAt: '2026-02-18' },
+    { id: 'c2b', awardId: 'a2', category: 'labor', task: 'Bonus on regular hours (×0.1)', hours: 40, rate: 95, multiplier: 0.1, value: 380, isReversal: false, reversesId: null, reversed: false, createdAt: '2026-02-18' },
+    // a3 — Alex, Feb 10-17 (40 base @ $85 + 10% = 3400 + 340)
+    { id: 'c3a', awardId: 'a3', category: 'labor', task: 'Award Detail screen UI implementation', hours: 40, rate: 85, multiplier: 1, value: 3400, isReversal: false, reversesId: null, reversed: false, createdAt: '2026-02-18' },
+    { id: 'c3b', awardId: 'a3', category: 'labor', task: 'Bonus on regular hours (×0.1)', hours: 40, rate: 85, multiplier: 0.1, value: 340, isReversal: false, reversesId: null, reversed: false, createdAt: '2026-02-18' },
+    // a4 — David, Jan cash $10000
+    { id: 'c4a', awardId: 'a4', category: 'non-labor-cash', task: 'Founder cash investment — Jan 2026', hours: 0, rate: 0, multiplier: null, value: 10000, isReversal: false, reversesId: null, reversed: false, createdAt: '2026-02-01' }
+  ],
+  /* PENALTIES: each is a single line item belonging to an Award */
   penalties: [
-    { id: 'p1', fundId: 'f-021', founderId: 'fnd-4', date: '2026-02-05', severity: 'minor', category: 'Poor Time Tracking', description: 'Failed to submit hours within 14-day window for 3 weeks in a row.', value: 100, approvedBy: 'Ryker Rinehart' },
-    { id: 'p2', fundId: 'f-021', founderId: 'fnd-4', date: '2026-01-22', severity: 'major', category: 'Breach of Confidentiality', description: 'Shared internal architecture documents with outside contact without written consent from Fund Leader.', value: 500, approvedBy: 'David Boctor' },
-    { id: 'p3', fundId: 'f-021', founderId: 'fnd-3', date: '2026-01-10', severity: 'minor', category: 'Unauthorized Work', description: 'Began implementation of a feature outside the approved sprint scope.', value: 100, approvedBy: 'Ryker Rinehart' }
+    { id: 'p1', awardId: 'a5', date: '2026-02-05', severity: 'minor', category: 'Poor Time Tracking', description: 'Failed to submit hours within 14-day window for 3 weeks in a row.', value: 100, approvedBy: 'Ryker Rinehart', isReversal: false, reversesId: null, reversed: false, createdAt: '2026-02-06' },
+    { id: 'p2', awardId: 'a5', date: '2026-01-22', severity: 'major', category: 'Breach of Confidentiality', description: 'Shared internal architecture documents with outside contact without written consent from Fund Leader.', value: 500, approvedBy: 'David Boctor', isReversal: false, reversesId: null, reversed: false, createdAt: '2026-02-06' },
+    { id: 'p3', awardId: 'a6', date: '2026-01-10', severity: 'minor', category: 'Unauthorized Work', description: 'Began implementation of a feature outside the approved sprint scope.', value: 100, approvedBy: 'Ryker Rinehart', isReversal: false, reversesId: null, reversed: false, createdAt: '2026-01-13' }
   ]
 };
 
@@ -1417,7 +1538,7 @@ function renderFundsTable(filterText='') {
               ${f.isDefault ? '' : `<div class="dropdown-item" onclick="closeAllMenus();askMakeDefault('${f.id}')">⭐ Make Default</div>`}
               <div class="dropdown-divider"></div>
               <div class="dropdown-item" onclick="closeAllMenus();STATE.activeFundId='${f.id}';goTo('screen-ownership')">View Ownership</div>
-              <div class="dropdown-item" onclick="closeAllMenus();STATE.activeFundId='${f.id}';goTo('screen-ledger')">View Ledger</div>
+              <div class="dropdown-item" onclick="closeAllMenus();STATE.activeFundId='${f.id}';goTo('screen-award-ledger')">View Award Ledger</div>
             </div>
           </div>
         </td>
@@ -1625,8 +1746,7 @@ function openFounder(id) {
   renderAgreementTab('nda');
   renderAgreementTab('ica');
   renderAgreementTab('cover');
-  renderFounderLedger();
-  renderFounderPenalties();
+  renderFounderAwards();
   goTo('screen-founder-detail');
 }
 function onProfileChange() {
@@ -1670,7 +1790,7 @@ function updateAgreementStatuses() {
   const offerSt = f.offerDate ? { label: 'Signed', cls: 'tab-status-active' } : { label: 'Missing', cls: 'tab-status-missing' };
   const ndaSt = agreementStatus(f.ndaEnd);
   const icaSt = agreementStatus(f.icaEnd);
-  const penCount = STATE.penalties.filter(p => p.founderId === f.id).length;
+  const awardsCount = STATE.awards.filter(a => a.founderId === f.id).length;
   const setPill = (id, st) => {
     const el = document.getElementById(id);
     if (!el) return;
@@ -1680,8 +1800,8 @@ function updateAgreementStatuses() {
   setPill('tab-status-offer', offerSt);
   setPill('tab-status-nda', ndaSt);
   setPill('tab-status-ica', icaSt);
-  const penEl = document.getElementById('tab-status-pen');
-  if (penEl) { penEl.textContent = String(penCount); penEl.className = 'tab-status-pill ' + (penCount > 0 ? 'tab-status-expired' : 'tab-status-missing'); }
+  const awEl = document.getElementById('tab-status-awards');
+  if (awEl) { awEl.textContent = String(awardsCount); awEl.className = 'tab-status-pill ' + (awardsCount > 0 ? 'tab-status-active' : 'tab-status-missing'); }
   const anyExpired = ndaSt.label === 'Expired' || icaSt.label === 'Expired';
   document.getElementById('fnd-expired-banner').style.display = anyExpired ? '' : 'none';
 }
@@ -1774,62 +1894,52 @@ function downloadAgreementPdf(kind) {
   }
 }
 
-function renderFounderLedger() {
-  const tbody = document.getElementById('founder-ledger-tbody');
-  if (!tbody) return;
-  const rows = STATE.contributions.filter(c => c.founderId === STATE.activeFounderId);
-  if (rows.length === 0) {
-    tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;color:var(--g400);padding:20px">No contributions recorded yet.</td></tr>';
-    return;
-  }
-  tbody.innerHTML = rows.map(c => {
-    const inputs = c.type === 'cash' ? c.cash : (c.base + c.ot + c.bonus);
-    const statusBadge = c.status === 'vested' ? '<span class="badge badge-green badge-no-dot" style="font-size:10px">Vested</span>'
-      : '<span class="badge badge-orange badge-no-dot" style="font-size:10px">In Initiation</span>';
-    return `<tr>
-      <td style="font-size:12px">${escapeHtml(c.periodLabel)}</td>
-      <td>${c.type === 'cash' ? '<span class="badge badge-green badge-no-dot" style="font-size:10px">Cash</span>' : '<span class="badge badge-blue badge-no-dot" style="font-size:10px">Labor</span>'}</td>
-      <td class="mono">${c.hours || '—'}</td>
-      <td class="mono" style="font-weight:700">${inputs.toLocaleString()}</td>
-      <td>${statusBadge}</td>
-    </tr>`;
-  }).join('');
+/* ═══════════════════════════════════════════════════════════════
+   AWARD HELPERS — calculations operate on line items
+   ═══════════════════════════════════════════════════════════════ */
+function awardContribTotal(awardId) {
+  // Sums contribution line-item values (reversals are negative, so they net out the originals)
+  return STATE.contributions
+    .filter(c => c.awardId === awardId)
+    .reduce((s, c) => s + (c.value || 0), 0);
 }
-function renderFounderPenalties() {
-  const tbody = document.getElementById('founder-penalty-tbody');
-  if (!tbody) return;
-  const rows = STATE.penalties.filter(p => p.founderId === STATE.activeFounderId);
-  if (rows.length === 0) {
-    tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:var(--g400);padding:20px">No penalties recorded. ✓</td></tr>';
-    return;
-  }
-  tbody.innerHTML = rows.map(p => {
-    const sevBadge = p.severity === 'major' ? '<span class="badge badge-red badge-no-dot">Major</span>' : '<span class="badge badge-orange badge-no-dot">Minor</span>';
-    return `<tr>
-      <td style="font-size:12px">${fmtDate(p.date)}</td>
-      <td>${sevBadge}</td>
-      <td style="font-size:12px">${escapeHtml(p.category)}</td>
-      <td style="font-size:12px;color:var(--g600);max-width:300px">${escapeHtml(p.description)}</td>
-      <td class="mono" style="color:var(--red);font-weight:700">−${p.value}</td>
-      <td style="font-size:12px">${escapeHtml(p.approvedBy)}</td>
-    </tr>`;
-  }).join('');
+function awardPenaltyTotal(awardId) {
+  return STATE.penalties
+    .filter(p => p.awardId === awardId)
+    .reduce((s, p) => s + (p.value || 0), 0);
+}
+function awardNet(awardId) {
+  return awardContribTotal(awardId) - awardPenaltyTotal(awardId);
+}
+function awardLineItemCount(awardId) {
+  return STATE.contributions.filter(c => c.awardId === awardId).length
+       + STATE.penalties.filter(p => p.awardId === awardId).length;
 }
 
-/* ═══════════════════════════════════════════════════════════════
-   OWNERSHIP & LEDGER (default fund)
-   ═══════════════════════════════════════════════════════════════ */
+/* Aggregate a founder's totals across all their awards (reversals net out automatically). */
 function computeFounderInputs(founderId) {
-  const contribs = STATE.contributions.filter(c => c.founderId === founderId);
-  const penalties = STATE.penalties.filter(p => p.founderId === founderId);
-  const base = contribs.reduce((s,c) => s + (c.base || 0), 0);
-  const ot = contribs.reduce((s,c) => s + (c.ot || 0), 0);
-  const bonus = contribs.reduce((s,c) => s + (c.bonus || 0), 0);
-  const cash = contribs.reduce((s,c) => s + (c.cash || 0), 0);
-  const penaltyTotal = penalties.reduce((s,p) => s + (p.value || 0), 0);
-  const net = base + ot + bonus + cash - penaltyTotal;
-  return { base, ot, bonus, cash, penalty: penaltyTotal, net };
+  const founderAwards = STATE.awards.filter(a => a.founderId === founderId);
+  let base = 0, ot = 0, bonus = 0, cash = 0, nonCash = 0, penalty = 0;
+  founderAwards.forEach(a => {
+    STATE.contributions.filter(c => c.awardId === a.id).forEach(c => {
+      if (c.category === 'labor') {
+        if (c.multiplier === 1.5) ot += c.value;
+        else if (c.multiplier === 0.1) bonus += c.value;
+        else base += c.value;
+      } else if (c.category === 'non-labor-cash') {
+        cash += c.value;
+      } else if (c.category === 'non-labor-non-cash') {
+        nonCash += c.value;
+      }
+    });
+    STATE.penalties.filter(p => p.awardId === a.id).forEach(p => {
+      penalty += p.value;
+    });
+  });
+  const net = base + ot + bonus + cash + nonCash - penalty;
+  return { base, ot, bonus, cash, nonCash, penalty, net };
 }
+
 function computeFounderEquityPct(founderId) {
   const fund = STATE.founders.find(x => x.id === founderId)?.fundId;
   if (!fund) return 0;
@@ -1846,11 +1956,662 @@ function computeFounderVotingPct(founderId) {
   const votingOf = fid => {
     const i = computeFounderInputs(fid);
     // Voting excludes bonus inputs
-    return Math.max(0, i.base + i.ot + i.cash - i.penalty);
+    return Math.max(0, i.base + i.ot + i.cash + i.nonCash - i.penalty);
   };
   const total = all.reduce((s,x) => s + votingOf(x.id), 0);
   if (total === 0) return 0;
   return (votingOf(founderId) / total) * 100;
+}
+
+/* Status badge for an Award — only 'vested' or 'unvested' (plus a derived 'reversed' indicator). */
+function awardStatusBadge(award) {
+  if (award.reversed) return '<span class="badge badge-red">Reversed</span>';
+  return award.status === 'vested'
+    ? '<span class="badge badge-green">Vested</span>'
+    : '<span class="badge badge-orange">Unvested</span>';
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   FOUNDER AWARDS TAB
+   ═══════════════════════════════════════════════════════════════ */
+function renderFounderAwards() {
+  const tbody = document.getElementById('founder-awards-tbody');
+  if (!tbody) return;
+  const rows = STATE.awards.filter(a => a.founderId === STATE.activeFounderId);
+  if (rows.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="6" class="empty-state"><strong>No awards yet</strong>Click "+ Add Award" to record this founder\'s first input award.</td></tr>';
+    return;
+  }
+  tbody.innerHTML = rows.map(a => {
+    const cTotal = awardContribTotal(a.id);
+    const pTotal = awardPenaltyTotal(a.id);
+    const net = cTotal - pTotal;
+    return `<tr style="cursor:pointer" onclick="openAward('${a.id}')">
+      <td><span class="td-name">${escapeHtml(a.periodLabel)}</span><div style="font-size:11px;color:var(--g400)" class="mono">${a.id.toUpperCase()}</div></td>
+      <td class="mono" style="font-weight:600">${cTotal.toLocaleString()}</td>
+      <td class="mono" style="color:${pTotal?'var(--red)':'var(--g400)'}">${pTotal ? '−' + pTotal.toLocaleString() : '—'}</td>
+      <td class="mono" style="font-weight:700;color:${net<0?'var(--red)':'var(--navy)'}">${net<0?'−':''}${Math.abs(net).toLocaleString()}</td>
+      <td>${awardStatusBadge(a)}</td>
+      <td><button class="btn btn-ghost btn-sm" onclick="event.stopPropagation();openAward('${a.id}')">Open →</button></td>
+    </tr>`;
+  }).join('');
+}
+
+function newAwardForFounder() {
+  STATE.rcContext = 'founder';
+  openAddAwardModal(STATE.activeFounderId);
+}
+function newAwardFromLedger() {
+  STATE.rcContext = 'ledger';
+  openAddAwardModal(null);
+}
+function openAddAwardModal(presetFounderId) {
+  const fund = STATE.funds.find(f => f.isDefault) || STATE.funds[0];
+  const sel = document.getElementById('aa-participant');
+  const candidates = STATE.founders.filter(x => x.fundId === fund.id && x.status !== 'terminated');
+  sel.innerHTML = candidates.map(f => `<option value="${f.id}" ${f.id===presetFounderId?'selected':''}>${escapeHtml(f.fullName)} — ${escapeHtml(f.role.replace('_',' '))}</option>`).join('');
+  // Default period: prior Sun – Sat week
+  const today = new Date();
+  const day = today.getDay(); // 0=Sun
+  const lastSat = new Date(today); lastSat.setDate(today.getDate() - day - 1);
+  const lastSun = new Date(lastSat); lastSun.setDate(lastSat.getDate() - 6);
+  document.getElementById('aa-period-start').value = lastSun.toISOString().slice(0,10);
+  document.getElementById('aa-period-end').value = lastSat.toISOString().slice(0,10);
+  document.getElementById('aa-period-label').value = '';
+  openModal('add-award-modal');
+}
+function confirmAddAward() {
+  const fund = STATE.funds.find(f => f.isDefault) || STATE.funds[0];
+  const founderId = document.getElementById('aa-participant').value;
+  const start = document.getElementById('aa-period-start').value;
+  const end = document.getElementById('aa-period-end').value;
+  let label = document.getElementById('aa-period-label').value.trim();
+  if (!start || !end) { toast('Period start and end are required', 'red'); return; }
+  if (!label) {
+    const s = new Date(start + 'T00:00:00');
+    const e = new Date(end + 'T00:00:00');
+    label = `${s.toLocaleDateString('en-US',{month:'short',day:'numeric'})} – ${e.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'})}`;
+  }
+  const id = 'a-' + Date.now();
+  STATE.awards.push({
+    id, fundId: fund.id, founderId, periodLabel: label,
+    periodStart: start, periodEnd: end,
+    status: 'unvested', createdDate: new Date().toISOString().slice(0,10),
+    reversed: false,
+    signatures: [
+      { role: 'Co-Founder', name: '', signedAt: null },
+      { role: 'Fund Secretary', name: '', signedAt: null },
+      { role: 'Founder and CEO', name: '', signedAt: null }
+    ]
+  });
+  closeModal('add-award-modal');
+  toast('Award created — add line items below', 'green');
+  openAward(id);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   AWARD LEDGER (top-level "Award Ledger" screen)
+   ═══════════════════════════════════════════════════════════════ */
+function renderAwardLedger() {
+  const fund = STATE.funds.find(f => f.isDefault) || STATE.funds[0];
+  if (!fund) return;
+  document.getElementById('ldg-bread').textContent = `Default Fund · ${fund.name}`;
+  const tbody = document.getElementById('award-ledger-tbody');
+  if (!tbody) return;
+  const rows = STATE.awards.filter(a => a.fundId === fund.id);
+  if (rows.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="7" class="empty-state"><strong>No awards yet</strong>Click "+ Add Award" to record the first input award.</td></tr>';
+    return;
+  }
+  // Sort newest first
+  rows.sort((a,b) => (b.createdDate||'').localeCompare(a.createdDate||''));
+  tbody.innerHTML = rows.map(a => {
+    const founder = STATE.founders.find(x => x.id === a.founderId);
+    const cTotal = awardContribTotal(a.id);
+    const pTotal = awardPenaltyTotal(a.id);
+    const net = cTotal - pTotal;
+    const initials = (founder?.fullName || '?').split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase();
+    return `<tr${a.reversed?' style="opacity:.65"':''}>
+      <td><div style="display:flex;align-items:center;gap:8px"><div style="width:26px;height:26px;border-radius:50%;background:var(--navy);display:flex;align-items:center;justify-content:center;color:#fff;font-size:10px;font-weight:700">${initials}</div><div><span class="td-name">${escapeHtml(founder?.fullName || 'Unknown')}</span><div style="font-size:11px;color:var(--g400)">${escapeHtml(founder?.email021 || '')}</div></div></div></td>
+      <td><div style="font-size:13px">${escapeHtml(a.periodLabel)}</div><div class="mono" style="font-size:10.5px;color:var(--g400)">${a.id.toUpperCase()}</div></td>
+      <td class="mono" style="font-weight:600">${cTotal.toLocaleString()}</td>
+      <td class="mono" style="color:${pTotal?'var(--red)':'var(--g400)'}">${pTotal ? '−' + pTotal.toLocaleString() : '—'}</td>
+      <td class="mono" style="font-weight:700;color:${net<0?'var(--red)':'var(--navy)'}">${net<0?'−':''}${Math.abs(net).toLocaleString()}</td>
+      <td>${awardStatusBadge(a)}</td>
+      <td>
+        <div class="dropdown-wrap">
+          <button class="btn btn-ghost btn-sm" style="font-size:18px;padding:2px 8px;letter-spacing:1px" onclick="toggleMenu(this)">⋯</button>
+          <div class="dropdown-menu">
+            <div class="dropdown-item" onclick="closeAllMenus();openAward('${a.id}')">Open Award Detail</div>
+            ${!a.reversed ? `<div class="dropdown-divider"></div><div class="dropdown-item danger" onclick="closeAllMenus();askReverseAwardFromLedger('${a.id}')">⟲ Reverse Award</div>` : ''}
+          </div>
+        </div>
+      </td>
+    </tr>`;
+  }).join('');
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   AWARD DETAIL SCREEN
+   ═══════════════════════════════════════════════════════════════ */
+function openAward(awardId) {
+  STATE.activeAwardId = awardId;
+  const a = STATE.awards.find(x => x.id === awardId);
+  if (!a) return;
+  STATE.activeFounderId = a.founderId;
+  renderAwardDetail();
+  goTo('screen-award-detail');
+}
+
+function renderAwardDetail() {
+  const a = STATE.awards.find(x => x.id === STATE.activeAwardId);
+  if (!a) return;
+  const f = STATE.founders.find(x => x.id === a.founderId);
+  const fund = STATE.funds.find(x => x.id === a.fundId);
+  if (!f || !fund) return;
+
+  // Header bits
+  const initials = f.fullName.split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase();
+  document.getElementById('ad-avatar').textContent = initials;
+  document.getElementById('ad-name').textContent = f.fullName;
+  document.getElementById('ad-meta').textContent = `${f.email021} · $${f.rate}/hr · ${f.role.replace('_',' ')}`;
+  document.getElementById('ad-title').textContent = `Award · ${a.periodLabel}`;
+  document.getElementById('ad-bread').textContent = `${fund.name} › ${f.fullName} › ${a.id.toUpperCase()}`;
+
+  document.getElementById('ad-id').textContent = a.id.toUpperCase();
+  document.getElementById('ad-period-label').textContent = a.periodLabel;
+  document.getElementById('ad-created').textContent = fmtDate(a.createdDate);
+
+  const cTotal = awardContribTotal(a.id);
+  const pTotal = awardPenaltyTotal(a.id);
+  const net = cTotal - pTotal;
+  document.getElementById('ad-net').textContent = (net<0?'−':'') + Math.abs(net).toLocaleString();
+  document.getElementById('ad-cumulative').textContent = computeFounderInputs(f.id).net.toLocaleString();
+
+  // Status strip
+  const strip = document.getElementById('ad-status-strip');
+  strip.classList.remove('vested','unvested','reversed');
+  strip.classList.add(a.reversed ? 'reversed' : a.status);
+  document.getElementById('ad-status-badge').innerHTML = awardStatusBadge(a);
+
+  // Vest toggle label & permissions (only fund leader/secretary)
+  const canEdit = canEditAwards();
+  const vestToggle = document.getElementById('ad-vest-toggle');
+  vestToggle.textContent = a.status === 'vested' ? 'Mark as Unvested' : 'Mark as Vested';
+  vestToggle.style.opacity = canEdit ? '1' : '0.4';
+  vestToggle.style.pointerEvents = canEdit ? '' : 'none';
+
+  // Render the award letter summary
+  document.getElementById('award-doc-summary').innerHTML = renderAwardSummaryHtml(a, f, fund);
+
+  // Render line items
+  renderAwardContributions(a);
+  renderAwardPenalties(a);
+}
+
+function canEditAwards() {
+  const role = STATE.currentUser.role;
+  return role === 'Fund Leader' || role === 'Fund Secretary';
+}
+
+/* Build the web version of the official award letter (mirrors the PDF layout) */
+function renderAwardSummaryHtml(a, f, fund) {
+  // Aggregate contributions by (category × multiplier) for the summary table
+  const aggMap = new Map();
+  STATE.contributions.filter(c => c.awardId === a.id).forEach(c => {
+    let key, label, rate, qty;
+    if (c.category === 'labor') {
+      if (c.multiplier === 1.5) { key='labor-ot'; label='Overtime Inputs (×1.5)'; }
+      else if (c.multiplier === 0.1) { key='labor-bonus'; label='Bonus Inputs (×0.1)'; }
+      else { key='labor-hourly'; label='Hourly Inputs (×1)'; }
+      rate = c.rate * (c.multiplier || 1);
+      qty = c.hours;
+    } else if (c.category === 'non-labor-cash') {
+      key='nonlabor-cash'; label='Cash Inputs (Non-Labor)'; rate = 1; qty = c.value;
+    } else {
+      key='nonlabor-noncash'; label='Non-Cash Inputs (Non-Labor)'; rate = 1; qty = c.value;
+    }
+    if (!aggMap.has(key)) aggMap.set(key, { label, qty: 0, rate, earned: 0, order: ['labor-hourly','labor-ot','labor-bonus','nonlabor-cash','nonlabor-noncash'].indexOf(key) });
+    const row = aggMap.get(key);
+    row.qty += qty;
+    row.earned += c.value;
+  });
+  const aggRows = Array.from(aggMap.values()).sort((x,y) => x.order - y.order);
+
+  // Penalties aggregated
+  const penalties = STATE.penalties.filter(p => p.awardId === a.id);
+  const penaltyTotal = penalties.reduce((s,p) => s + p.value, 0);
+
+  const cTotal = aggRows.reduce((s,r) => s + r.earned, 0);
+  const net = cTotal - penaltyTotal;
+
+  const fundCo = (fund.company || '').toUpperCase();
+  const reversedStamp = a.reversed
+    ? `<div style="position:absolute;top:36px;right:44px;transform:rotate(-12deg);border:3px solid var(--red);color:var(--red);font-weight:800;font-size:22px;padding:6px 14px;border-radius:6px;letter-spacing:.04em;opacity:.85;pointer-events:none">REVERSED</div>`
+    : '';
+
+  return `
+    ${reversedStamp}
+    <div class="award-doc-header">
+      <div></div>
+      <div class="award-doc-from">
+        <div class="award-doc-from-co">${escapeHtml(fundCo + '.CEO')}</div>
+        <div>3317 Shadybrook Lane</div>
+        <div>Chico, CA 95928</div>
+      </div>
+    </div>
+    <div class="award-doc-date">${fmtDate(a.createdDate)}</div>
+    <div class="award-doc-recipient">
+      <div class="award-doc-recipient-name">${escapeHtml(f.fullName)}</div>
+      <div>${escapeHtml(f.address || '')}</div>
+    </div>
+    <div class="award-doc-greeting">Dear ${escapeHtml((f.fullName || '').split(' ')[0] || 'Founder')},</div>
+    <div class="award-doc-body">Your input totals for the current period are as follows. Please review our calculations and be sure you agree.</div>
+    <div class="award-doc-period"><strong>Input Period:</strong> ${escapeHtml(a.periodLabel)}</div>
+
+    <table class="award-summary-table">
+      <thead>
+        <tr><th>Input Type</th><th class="num">Quantity</th><th class="num">Rate</th><th class="num">Earned</th></tr>
+      </thead>
+      <tbody>
+        ${aggRows.length === 0
+          ? `<tr><td colspan="4" style="text-align:center;color:var(--g400);font-style:italic">No contributions on this award yet.</td></tr>`
+          : aggRows.map(r => {
+              const qtyDisplay = (r.label.includes('Cash') || r.label.includes('Non-Cash'))
+                ? '$' + r.qty.toLocaleString()
+                : r.qty.toFixed(2);
+              const rateDisplay = (r.label.includes('Cash') || r.label.includes('Non-Cash'))
+                ? '—'
+                : '$' + r.rate.toFixed(2);
+              return `<tr>
+                <td><span class="input-type-label">${escapeHtml(r.label)}</span></td>
+                <td class="num">${qtyDisplay}</td>
+                <td class="num">${rateDisplay}</td>
+                <td class="num">$${r.earned.toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2})}</td>
+              </tr>`;
+            }).join('')}
+        <tr class="row-total">
+          <td>Total Contributions</td>
+          <td class="num">${aggRows.length ? '—' : ''}</td>
+          <td class="num">N/A</td>
+          <td class="num">$${cTotal.toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2})}</td>
+        </tr>
+        ${penalties.length > 0 ? penalties.map(p => `
+          <tr class="row-penalty">
+            <td>Penalty — ${escapeHtml(p.category)}${p.isReversal?' <span class="reversal-tag">REVERSAL</span>':''}</td>
+            <td class="num">1</td>
+            <td class="num">—</td>
+            <td class="num">${p.value < 0 ? '+' : '−'}$${Math.abs(p.value).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2})}</td>
+          </tr>
+        `).join('') : ''}
+        ${penalties.length > 0 ? `
+          <tr class="row-total row-penalty">
+            <td>Total Penalties</td>
+            <td class="num">${penalties.length}</td>
+            <td class="num">N/A</td>
+            <td class="num">−$${penaltyTotal.toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2})}</td>
+          </tr>
+        ` : ''}
+        <tr class="row-net">
+          <td>Net Award</td>
+          <td class="num">—</td>
+          <td class="num">N/A</td>
+          <td class="num">${net<0?'−':''}$${Math.abs(net).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2})}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div style="margin-top:30px;font-size:13px;color:var(--g700)">Signed by:</div>
+    <div class="award-signature-block">
+      ${a.signatures.map(s => `
+        <div class="award-sig-slot">
+          ${s.name
+            ? `<div class="award-sig-name">${escapeHtml(s.name)}</div>`
+            : `<div class="award-sig-name award-sig-pending">— pending —</div>`}
+          <div class="award-sig-line">${escapeHtml(s.role)}</div>
+          ${s.signedAt ? `<div class="award-sig-date">${fmtDate(s.signedAt)}</div>` : ''}
+        </div>
+      `).join('')}
+    </div>`;
+}
+
+/* Render line-item tables on Award Detail */
+function renderAwardContributions(a) {
+  const tbody = document.getElementById('ad-contributions-tbody');
+  if (!tbody) return;
+  const rows = STATE.contributions.filter(c => c.awardId === a.id);
+  if (rows.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="7" class="empty-state"><strong>No contribution line items</strong>Click "+ Record Contribution" to add labor or non-labor inputs.</td></tr>';
+    return;
+  }
+  const canEdit = canEditAwards() && !a.reversed;
+  tbody.innerHTML = rows.map(c => {
+    const trClass = c.isReversal ? 'row-reversal' : (c.reversed ? 'row-reversed' : '');
+    const catLabel = c.category === 'labor' ? 'Labor' : (c.category === 'non-labor-cash' ? 'Non-Labor · Cash' : 'Non-Labor · Non-Cash');
+    const multLabel = c.category === 'labor' ? (c.multiplier===1.5 ? '×1.5 (OT)' : c.multiplier===0.1 ? '×0.1 (Bonus)' : '×1') : '—';
+    const taskLabel = c.task + (c.isReversal ? ' <span class="reversal-tag">REVERSAL</span>' : (c.reversed ? ' <span class="reversed-tag">REVERSED</span>' : ''));
+    return `<tr class="${trClass}">
+      <td>${taskLabel}</td>
+      <td><span class="badge ${c.category==='labor'?'badge-blue':'badge-green'} badge-no-dot" style="font-size:10px">${catLabel}</span></td>
+      <td class="num mono">${c.hours ? c.hours.toFixed(2) : '—'}</td>
+      <td class="num mono">${c.rate ? '$' + c.rate.toFixed(2) : '—'}</td>
+      <td class="num mono">${multLabel}</td>
+      <td class="num mono" style="font-weight:700;${c.value<0?'color:var(--red)':''}">${c.value<0?'−':''}$${Math.abs(c.value).toLocaleString()}</td>
+      <td>${(canEdit && !c.isReversal && !c.reversed) ? `<button class="btn btn-ghost btn-sm" style="color:var(--red)" onclick="askReverseLineItem('contribution','${c.id}')">⟲ Reverse</button>` : ''}</td>
+    </tr>`;
+  }).join('');
+}
+
+function renderAwardPenalties(a) {
+  const tbody = document.getElementById('ad-penalties-tbody');
+  if (!tbody) return;
+  const rows = STATE.penalties.filter(p => p.awardId === a.id);
+  if (rows.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="6" class="empty-state"><strong>No penalty line items</strong>Penalties reduce the Net Award. Click "+ Record Penalty" to add one.</td></tr>';
+    return;
+  }
+  const canEdit = canEditAwards() && !a.reversed;
+  tbody.innerHTML = rows.map(p => {
+    const trClass = 'row-penalty ' + (p.isReversal ? 'row-reversal' : (p.reversed ? 'row-reversed' : ''));
+    const sevBadge = p.severity === 'major' ? '<span class="badge badge-red badge-no-dot" style="font-size:10px">Major</span>' : '<span class="badge badge-orange badge-no-dot" style="font-size:10px">Minor</span>';
+    const tag = p.isReversal ? ' <span class="reversal-tag">REVERSAL</span>' : (p.reversed ? ' <span class="reversed-tag">REVERSED</span>' : '');
+    return `<tr class="${trClass}">
+      <td style="font-size:12px">${fmtDate(p.date)}</td>
+      <td>${sevBadge}</td>
+      <td style="font-size:12px">${escapeHtml(p.category)}${tag}</td>
+      <td style="font-size:12px;color:var(--g600);max-width:280px">${escapeHtml(p.description)}</td>
+      <td class="num mono" style="font-weight:700;color:var(--red)">${p.value<0?'+':'−'}$${Math.abs(p.value).toLocaleString()}</td>
+      <td>${(canEdit && !p.isReversal && !p.reversed) ? `<button class="btn btn-ghost btn-sm" style="color:var(--red)" onclick="askReverseLineItem('penalty','${p.id}')">⟲ Reverse</button>` : ''}</td>
+    </tr>`;
+  }).join('');
+}
+
+/* Toggle vested/unvested (only fund leader/secretary) */
+function toggleVestStatus() {
+  if (!canEditAwards()) { toast('Only Fund Leader or Fund Secretary can change status', 'red'); return; }
+  const a = STATE.awards.find(x => x.id === STATE.activeAwardId);
+  if (!a || a.reversed) return;
+  a.status = a.status === 'vested' ? 'unvested' : 'vested';
+  // Stamp signature for the current user if marking vested
+  if (a.status === 'vested') {
+    const role = STATE.currentUser.role;
+    const today = new Date().toISOString().slice(0,10);
+    const sigRoleMap = { 'Fund Leader': 'Founder and CEO', 'Fund Secretary': 'Fund Secretary' };
+    const target = sigRoleMap[role];
+    if (target) {
+      const slot = a.signatures.find(s => s.role === target);
+      if (slot && !slot.name) { slot.name = STATE.currentUser.name; slot.signedAt = today; }
+    }
+  }
+  renderAwardDetail();
+  toast(`Award marked as ${a.status}`, a.status === 'vested' ? 'green' : 'orange');
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   ADD CONTRIBUTION / PENALTY LINE ITEM (modals)
+   ═══════════════════════════════════════════════════════════════ */
+function openAddContribution() {
+  const a = STATE.awards.find(x => x.id === STATE.activeAwardId);
+  if (!a) return;
+  if (a.reversed) { toast('This award has been reversed and is read-only', 'red'); return; }
+  if (!canEditAwards()) { toast('Only Fund Leader or Fund Secretary can edit awards', 'red'); return; }
+  const f = STATE.founders.find(x => x.id === a.founderId);
+  document.getElementById('ac-category').value = 'labor';
+  document.getElementById('ac-task').value = '';
+  document.getElementById('ac-hours').value = '8';
+  document.getElementById('ac-rate').value = f?.rate || 0;
+  document.getElementById('ac-multiplier').value = '1';
+  document.getElementById('ac-cash').value = '1000';
+  document.getElementById('ac-imputed').value = '500';
+  acCategoryChanged();
+  acRecalc();
+  openModal('add-contribution-modal');
+}
+function acCategoryChanged() {
+  const cat = document.getElementById('ac-category').value;
+  document.getElementById('ac-labor-block').style.display = cat === 'labor' ? '' : 'none';
+  document.getElementById('ac-cash-block').style.display = cat === 'non-labor-cash' ? '' : 'none';
+  document.getElementById('ac-noncash-block').style.display = cat === 'non-labor-non-cash' ? '' : 'none';
+  const hint = document.getElementById('ac-task-hint');
+  if (cat === 'labor') hint.textContent = 'Pulled from ClickUp for labor inputs; manual entry also supported.';
+  else if (cat === 'non-labor-cash') hint.textContent = 'Cash investment, expense reimbursement, or other monetary input.';
+  else hint.textContent = 'Equipment, IP assignment, or other non-cash input. Provide imputed fair value.';
+  acRecalc();
+}
+function acRecalc() {
+  const cat = document.getElementById('ac-category').value;
+  let earned = 0;
+  if (cat === 'labor') {
+    const hrs = parseFloat(document.getElementById('ac-hours').value) || 0;
+    const rate = parseFloat(document.getElementById('ac-rate').value) || 0;
+    const mult = parseFloat(document.getElementById('ac-multiplier').value) || 1;
+    earned = hrs * rate * mult;
+  } else if (cat === 'non-labor-cash') {
+    earned = parseFloat(document.getElementById('ac-cash').value) || 0;
+  } else {
+    earned = parseFloat(document.getElementById('ac-imputed').value) || 0;
+  }
+  document.getElementById('ac-earned').textContent = '$' + Math.round(earned).toLocaleString();
+}
+function confirmAddContribution() {
+  const a = STATE.awards.find(x => x.id === STATE.activeAwardId);
+  if (!a) return;
+  const cat = document.getElementById('ac-category').value;
+  const task = document.getElementById('ac-task').value.trim();
+  if (!task) { toast('Task description is required', 'red'); return; }
+  const f = STATE.founders.find(x => x.id === a.founderId);
+  let hours = 0, rate = 0, mult = null, value = 0;
+  if (cat === 'labor') {
+    hours = parseFloat(document.getElementById('ac-hours').value) || 0;
+    rate = f?.rate || 0;
+    mult = parseFloat(document.getElementById('ac-multiplier').value) || 1;
+    value = Math.round(hours * rate * mult * 100) / 100;
+    if (hours <= 0) { toast('Hours must be greater than zero', 'red'); return; }
+  } else if (cat === 'non-labor-cash') {
+    value = parseFloat(document.getElementById('ac-cash').value) || 0;
+    if (value <= 0) { toast('Cash amount must be greater than zero', 'red'); return; }
+  } else {
+    value = parseFloat(document.getElementById('ac-imputed').value) || 0;
+    if (value <= 0) { toast('Imputed value must be greater than zero', 'red'); return; }
+  }
+  STATE.contributions.push({
+    id: 'c-' + Date.now(),
+    awardId: a.id,
+    category: cat, task, hours, rate, multiplier: mult, value,
+    isReversal: false, reversesId: null, reversed: false,
+    createdAt: new Date().toISOString().slice(0,10)
+  });
+  closeModal('add-contribution-modal');
+  toast('Contribution line item added', 'green');
+  renderAwardDetail();
+}
+
+function openAddPenalty() {
+  const a = STATE.awards.find(x => x.id === STATE.activeAwardId);
+  if (!a) return;
+  if (a.reversed) { toast('This award has been reversed and is read-only', 'red'); return; }
+  if (!canEditAwards()) { toast('Only Fund Leader or Fund Secretary can edit awards', 'red'); return; }
+  document.getElementById('ap-cat-minor').value = '';
+  document.getElementById('ap-cat-major').value = '';
+  document.getElementById('ap-description').value = '';
+  document.getElementById('ap-value').value = '100';
+  // Reset severity to minor
+  document.querySelectorAll('#add-penalty-modal .toggle-tab').forEach((t,i) => {
+    t.classList.toggle('active', i === 0);
+  });
+  document.getElementById('ap-minor-cats').style.display = '';
+  document.getElementById('ap-major-cats').style.display = 'none';
+  currentApSeverity = 'minor';
+  openModal('add-penalty-modal');
+}
+let currentApSeverity = 'minor';
+function apSelectSeverity(sev, el) {
+  currentApSeverity = sev;
+  el.parentNode.querySelectorAll('.toggle-tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('ap-minor-cats').style.display = sev === 'minor' ? '' : 'none';
+  document.getElementById('ap-major-cats').style.display = sev === 'major' ? '' : 'none';
+  document.getElementById('ap-value').value = sev === 'major' ? 500 : 100;
+}
+function confirmAddPenalty() {
+  const a = STATE.awards.find(x => x.id === STATE.activeAwardId);
+  if (!a) return;
+  const sev = currentApSeverity;
+  const cat = sev === 'minor' ? document.getElementById('ap-cat-minor').value : document.getElementById('ap-cat-major').value;
+  const desc = document.getElementById('ap-description').value.trim();
+  if (!cat) { toast('Select an infraction category', 'red'); return; }
+  if (!desc) { toast('Description is required', 'red'); return; }
+  if (sev === 'major' && STATE.currentUser.role !== 'Fund Leader') {
+    toast('Major infractions require Fund Leader approval', 'orange');
+  }
+  const value = sev === 'major' ? 500 : 100;
+  STATE.penalties.push({
+    id: 'p-' + Date.now(),
+    awardId: a.id,
+    date: new Date().toISOString().slice(0,10),
+    severity: sev, category: cat, description: desc, value,
+    approvedBy: STATE.currentUser.name,
+    isReversal: false, reversesId: null, reversed: false,
+    createdAt: new Date().toISOString().slice(0,10)
+  });
+  closeModal('add-penalty-modal');
+  toast(`${sev === 'major' ? 'Major' : 'Minor'} penalty added: −${value}`, 'red');
+  renderAwardDetail();
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   REVERSAL LOGIC — appends negative entries; never deletes
+   ═══════════════════════════════════════════════════════════════ */
+let pendingReverseAwardId = null;
+function askReverseAward() {
+  if (!canEditAwards()) { toast('Only Fund Leader or Fund Secretary can reverse awards', 'red'); return; }
+  pendingReverseAwardId = STATE.activeAwardId;
+  document.getElementById('ra-reason').value = '';
+  openModal('reverse-award-modal');
+}
+function askReverseAwardFromLedger(awardId) {
+  if (!canEditAwards()) { toast('Only Fund Leader or Fund Secretary can reverse awards', 'red'); return; }
+  pendingReverseAwardId = awardId;
+  document.getElementById('ra-reason').value = '';
+  openModal('reverse-award-modal');
+}
+function confirmReverseAward() {
+  const reason = document.getElementById('ra-reason').value.trim();
+  if (!reason) { toast('Reversal reason is required', 'red'); return; }
+  const a = STATE.awards.find(x => x.id === pendingReverseAwardId);
+  if (!a || a.reversed) { closeModal('reverse-award-modal'); return; }
+  // Append negative reversal entries for every contribution and penalty
+  const today = new Date().toISOString().slice(0,10);
+  const stamp = ' [REVERSED: ' + reason + ']';
+  STATE.contributions.filter(c => c.awardId === a.id && !c.isReversal && !c.reversed).forEach(c => {
+    c.reversed = true;
+    STATE.contributions.push({
+      id: 'c-' + Date.now() + '-' + Math.random().toString(36).slice(2,5),
+      awardId: a.id,
+      category: c.category,
+      task: 'Reversal of ' + c.id.toUpperCase() + stamp,
+      hours: c.hours ? -c.hours : 0,
+      rate: c.rate,
+      multiplier: c.multiplier,
+      value: -c.value,
+      isReversal: true, reversesId: c.id, reversed: false,
+      createdAt: today
+    });
+  });
+  STATE.penalties.filter(p => p.awardId === a.id && !p.isReversal && !p.reversed).forEach(p => {
+    p.reversed = true;
+    STATE.penalties.push({
+      id: 'p-' + Date.now() + '-' + Math.random().toString(36).slice(2,5),
+      awardId: a.id,
+      date: today,
+      severity: p.severity,
+      category: 'Reversal of ' + p.category,
+      description: 'Reversal of ' + p.id.toUpperCase() + stamp,
+      value: -p.value,
+      approvedBy: STATE.currentUser.name,
+      isReversal: true, reversesId: p.id, reversed: false,
+      createdAt: today
+    });
+  });
+  a.reversed = true;
+  a.reversalReason = reason;
+  a.reversedAt = today;
+  closeModal('reverse-award-modal');
+  toast('Award reversed — original entries preserved for audit', 'red');
+  if (STATE.currentScreen === 'screen-award-detail') renderAwardDetail();
+  if (STATE.currentScreen === 'screen-award-ledger') renderAwardLedger();
+}
+
+let pendingReverseLineItem = null; // { kind: 'contribution'|'penalty', id }
+function askReverseLineItem(kind, id) {
+  if (!canEditAwards()) { toast('Only Fund Leader or Fund Secretary can reverse line items', 'red'); return; }
+  pendingReverseLineItem = { kind, id };
+  document.getElementById('rl-reason').value = '';
+  openModal('reverse-lineitem-modal');
+}
+function confirmReverseLineItem() {
+  const reason = document.getElementById('rl-reason').value.trim();
+  if (!reason) { toast('Reversal reason is required', 'red'); return; }
+  const today = new Date().toISOString().slice(0,10);
+  const stamp = ' [REVERSED: ' + reason + ']';
+  if (pendingReverseLineItem.kind === 'contribution') {
+    const c = STATE.contributions.find(x => x.id === pendingReverseLineItem.id);
+    if (!c) { closeModal('reverse-lineitem-modal'); return; }
+    c.reversed = true;
+    STATE.contributions.push({
+      id: 'c-' + Date.now() + '-' + Math.random().toString(36).slice(2,5),
+      awardId: c.awardId,
+      category: c.category,
+      task: 'Reversal of ' + c.id.toUpperCase() + stamp,
+      hours: c.hours ? -c.hours : 0,
+      rate: c.rate,
+      multiplier: c.multiplier,
+      value: -c.value,
+      isReversal: true, reversesId: c.id, reversed: false,
+      createdAt: today
+    });
+  } else {
+    const p = STATE.penalties.find(x => x.id === pendingReverseLineItem.id);
+    if (!p) { closeModal('reverse-lineitem-modal'); return; }
+    p.reversed = true;
+    STATE.penalties.push({
+      id: 'p-' + Date.now() + '-' + Math.random().toString(36).slice(2,5),
+      awardId: p.awardId,
+      date: today,
+      severity: p.severity,
+      category: 'Reversal of ' + p.category,
+      description: 'Reversal of ' + p.id.toUpperCase() + stamp,
+      value: -p.value,
+      approvedBy: STATE.currentUser.name,
+      isReversal: true, reversesId: p.id, reversed: false,
+      createdAt: today
+    });
+  }
+  closeModal('reverse-lineitem-modal');
+  toast('Line item reversed — original kept for audit', 'red');
+  renderAwardDetail();
+}
+
+/* PDF export of the award letter */
+function downloadAwardPdf() {
+  const a = STATE.awards.find(x => x.id === STATE.activeAwardId);
+  const f = STATE.founders.find(x => x.id === a?.founderId);
+  if (!a || !f) { toast('Nothing to export', 'red'); return; }
+  const docEl = document.getElementById('award-doc-summary');
+  if (!docEl) { toast('Nothing to export', 'red'); return; }
+  toast('Preparing PDF…', '');
+  const opt = {
+    margin: 0.5,
+    filename: `Award__${a.id.toUpperCase()}__${(f.fullName||'').replace(/\s+/g,'_')}.pdf`,
+    image: { type: 'jpeg', quality: 0.98 },
+    html2canvas: { scale: 2 },
+    jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+  };
+  if (window.html2pdf) {
+    html2pdf().set(opt).from(docEl).save().then(() => toast('PDF downloaded', 'green'));
+  } else {
+    window.print();
+  }
 }
 const COLORS = ['#2563EB','#0D9488','#7C3AED','#D97706','#16A34A','#DC2626','#CA8A04','#0EA5E9'];
 function renderOwnership() {
@@ -1870,11 +2631,13 @@ function renderOwnership() {
       : f.status === 'terminated' ? '<span class="badge badge-red">Terminated</span>'
       : '<span class="badge badge-yellow">Initiated</span>';
     const initials = f.fullName.split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase();
+    const labor = ip.base + ip.ot + ip.bonus;
+    const capital = ip.cash + ip.nonCash;
     return `<tr${f.status==='terminated'?' style="opacity:.7"':''}>
       <td><div style="display:flex;align-items:center;gap:8px"><div style="width:26px;height:26px;border-radius:50%;background:${color};display:flex;align-items:center;justify-content:center;color:#fff;font-size:10px;font-weight:700">${initials}</div><span class="td-name">${escapeHtml(f.fullName)}</span></div></td>
       <td>${statusBadge}</td>
-      <td class="mono">${(ip.base + ip.ot + ip.bonus).toLocaleString()}</td>
-      <td class="mono" style="color:var(--green)">${ip.cash ? ip.cash.toLocaleString() : '—'}</td>
+      <td class="mono">${labor.toLocaleString()}</td>
+      <td class="mono" style="color:var(--green)">${capital ? capital.toLocaleString() : '—'}</td>
       <td class="mono" style="color:${ip.penalty?'var(--red)':'var(--g400)'}">${ip.penalty ? '−' + ip.penalty.toLocaleString() : '—'}</td>
       <td class="mono" style="font-weight:700">${ip.net.toLocaleString()}</td>
       <td class="mono" style="font-weight:700;color:var(--blue)">${eq.toFixed(1)}%</td>
@@ -1889,252 +2652,17 @@ function renderOwnership() {
   drawPie('pie-voting', votingData, 'legend-voting');
   document.getElementById('pie-ownership-sub').textContent = `${activeFounders.length} Founders`;
 }
-function renderLedger() {
-  const fund = STATE.funds.find(f => f.isDefault) || STATE.funds[0];
-  if (!fund) return;
-  document.getElementById('ldg-bread').textContent = `Default Fund · ${fund.name}`;
-  const tbody = document.getElementById('ledger-tbody');
-  if (!tbody) return;
-  // Merge contributions and penalties into a single stream
-  const entries = [];
-  STATE.contributions.filter(c => c.fundId === fund.id).forEach(c => {
-    const who = STATE.founders.find(x => x.id === c.founderId);
-    const inputs = c.type === 'cash' ? c.cash : (c.base + c.ot + c.bonus);
-    entries.push({
-      name: who?.fullName || 'Unknown',
-      period: c.periodLabel, type: c.type, hours: c.hours || 0,
-      base: c.base || 0, ot: c.ot || 0, bonus: c.bonus || 0, cash: c.cash || 0,
-      penalty: 0, net: inputs, status: c.status, sortDate: c.id
-    });
-  });
-  STATE.penalties.filter(p => p.fundId === fund.id).forEach(p => {
-    const who = STATE.founders.find(x => x.id === p.founderId);
-    entries.push({
-      name: who?.fullName || 'Unknown',
-      period: fmtDate(p.date), type: 'penalty', hours: 0,
-      base: 0, ot: 0, bonus: 0, cash: 0, penalty: p.value, net: -p.value, status: 'approved', sortDate: p.id
-    });
-  });
-  if (entries.length === 0) {
-    tbody.innerHTML = '<tr><td colspan="11" style="text-align:center;color:var(--g400);padding:20px">No ledger entries yet.</td></tr>';
-    return;
-  }
-  tbody.innerHTML = entries.map(e => {
-    const typeBadge = e.type === 'cash' ? '<span class="badge badge-green badge-no-dot" style="font-size:10px">Cash</span>'
-      : e.type === 'penalty' ? '<span class="badge badge-red badge-no-dot" style="font-size:10px">Penalty</span>'
-      : '<span class="badge badge-blue badge-no-dot" style="font-size:10px">Labor</span>';
-    const statusBadge = e.status === 'vested' ? '<span class="badge badge-green badge-no-dot" style="font-size:10px">Vested</span>'
-      : e.status === 'approved' ? '<span class="badge badge-gray badge-no-dot" style="font-size:10px">Approved</span>'
-      : '<span class="badge badge-orange badge-no-dot" style="font-size:10px">Pending</span>';
-    return `<tr${e.type==='penalty'?' style="background:#fff8f8"':''}>
-      <td><span class="td-name">${escapeHtml(e.name)}</span></td>
-      <td style="font-size:12px">${escapeHtml(e.period)}</td>
-      <td>${typeBadge}</td>
-      <td class="mono">${e.hours || '—'}</td>
-      <td class="mono">${e.base ? e.base.toLocaleString() : '—'}</td>
-      <td class="mono" style="color:var(--teal)">${e.ot ? e.ot.toLocaleString() : '—'}</td>
-      <td class="mono" style="color:var(--purple)">${e.bonus ? e.bonus.toLocaleString() : '—'}</td>
-      <td class="mono" style="color:var(--green)">${e.cash ? e.cash.toLocaleString() : '—'}</td>
-      <td class="mono" style="color:var(--red)">${e.penalty ? '−' + e.penalty.toLocaleString() : '—'}</td>
-      <td class="mono" style="font-weight:700;color:${e.net<0?'var(--red)':'var(--navy)'}">${e.net<0?'−':''}${Math.abs(e.net).toLocaleString()}</td>
-      <td>${statusBadge}</td>
-    </tr>`;
-  }).join('');
-}
-
-/* ═══════════════════════════════════════════════════════════════
-   RECORD CONTRIBUTION / PENALTY
-   ═══════════════════════════════════════════════════════════════ */
-function newContributionFor() {
-  STATE.rcContext = 'founder';
-  openRecordContribution(STATE.activeFounderId);
-}
-function newContributionFromLedger() {
-  STATE.rcContext = 'ledger';
-  const fund = STATE.funds.find(f => f.isDefault);
-  const first = STATE.founders.find(x => x.fundId === fund?.id && x.status !== 'terminated');
-  openRecordContribution(first?.id);
-}
-function openRecordContribution(founderId) {
-  const fund = STATE.funds.find(f => f.isDefault) || STATE.funds[0];
-  const select = document.getElementById('rc-participant');
-  const candidates = STATE.founders.filter(x => x.fundId === fund.id && x.status !== 'terminated');
-  select.innerHTML = candidates.map(f => `<option value="${f.id}" ${f.id===founderId?'selected':''}>${escapeHtml(f.fullName)} — ${escapeHtml(f.role.replace('_',' '))}</option>`).join('');
-  rcRefresh();
-  rcCalc();
-  goTo('screen-record-contribution');
-}
-function rcRefresh() {
-  const id = document.getElementById('rc-participant').value;
-  const f = STATE.founders.find(x => x.id === id);
-  if (!f) return;
-  const initials = f.fullName.split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase();
-  document.getElementById('rc-avatar').textContent = initials;
-  document.getElementById('rc-name').textContent = f.fullName;
-  document.getElementById('rc-meta').textContent = `${f.email021} · $${f.rate}/hr · ${f.role.replace('_',' ')}`;
-  document.getElementById('rc-rate-display').textContent = `$${f.rate}/hr`;
-  document.getElementById('rc-stock').textContent = computeFounderInputs(f.id).net.toLocaleString();
-  rcCalc();
-}
-function rcTypeChanged() {
-  const t = document.getElementById('rc-type').value;
-  document.getElementById('rc-noncash-block').style.display = t === 'noncash' ? '' : 'none';
-  document.getElementById('rc-cash-block').style.display = t === 'cash' ? '' : 'none';
-  rcCalc();
-}
-function rcCalc() {
-  const fund = STATE.funds.find(f => f.isDefault) || STATE.funds[0];
-  const f = STATE.founders.find(x => x.id === document.getElementById('rc-participant').value);
-  if (!f) return;
-  const type = document.getElementById('rc-type').value;
-  if (type === 'cash') {
-    const amount = parseFloat(document.getElementById('rc-cash').value) || 0;
-    setText('disp-hours', '—');
-    setText('disp-base', '—');
-    setText('disp-ot', '—');
-    setText('disp-bonus', '—');
-    setText('disp-total', amount.toLocaleString());
-    return;
-  }
-  const hours = parseFloat(document.getElementById('rc-hours').value) || 0;
-  const rate = f.rate || 0;
-  const threshold = fund.otThreshold || 40;
-  const otCoef = fund.otCoef || 1.5;
-  const bonusPct = (fund.bonusPct || 10) / 100;
-  const reg = Math.min(hours, threshold);
-  const ot = Math.max(0, hours - threshold);
-  const base = reg * rate;
-  const otAmt = ot * rate * otCoef;
-  const bonus = base * bonusPct;
-  const total = base + otAmt + bonus;
-  setText('disp-hours', hours.toFixed(1) + ' hrs');
-  setText('disp-base', Math.round(base).toLocaleString());
-  setText('disp-ot', Math.round(otAmt).toLocaleString());
-  setText('disp-bonus', Math.round(bonus).toLocaleString());
-  setText('disp-total', Math.round(total).toLocaleString());
-}
-function setText(id, v) { const el = document.getElementById(id); if (el) el.textContent = v; }
-function approveContribution() {
-  const fund = STATE.funds.find(f => f.isDefault) || STATE.funds[0];
-  const f = STATE.founders.find(x => x.id === document.getElementById('rc-participant').value);
-  if (!f) return;
-  const type = document.getElementById('rc-type').value;
-  const period = document.getElementById('rc-period').value.split('|');
-  const label = document.querySelector('#rc-period option:checked').textContent.split(' (')[0];
-  const id = 'c-' + Date.now();
-  if (type === 'cash') {
-    const amount = parseFloat(document.getElementById('rc-cash').value) || 0;
-    STATE.contributions.push({ id, fundId: fund.id, founderId: f.id, periodLabel: label, type: 'cash', hours: 0, base: 0, ot: 0, bonus: 0, cash: amount, penalty: 0, status: 'vested' });
-  } else {
-    const hours = parseFloat(document.getElementById('rc-hours').value) || 0;
-    const rate = f.rate || 0;
-    const reg = Math.min(hours, fund.otThreshold);
-    const otH = Math.max(0, hours - fund.otThreshold);
-    const base = reg * rate;
-    const otAmt = otH * rate * fund.otCoef;
-    const bonus = base * (fund.bonusPct / 100);
-    STATE.contributions.push({ id, fundId: fund.id, founderId: f.id, periodLabel: label, type: 'noncash', hours, base: Math.round(base), ot: Math.round(otAmt), bonus: Math.round(bonus), cash: 0, penalty: 0, status: f.status === 'initiated' ? 'initiating' : 'vested' });
-  }
-  toast('Contribution approved and locked · Award Letter generated', 'green');
-  if (STATE.rcContext === 'founder') openFounder(f.id);
-  else goTo('screen-ledger');
-}
-
-function newPenaltyFor() {
-  STATE.rcContext = 'founder';
-  openRecordPenalty(STATE.activeFounderId);
-}
-function newPenaltyFromLedger() {
-  STATE.rcContext = 'ledger';
-  const fund = STATE.funds.find(f => f.isDefault);
-  const first = STATE.founders.find(x => x.fundId === fund?.id && x.status !== 'terminated');
-  openRecordPenalty(first?.id);
-}
-function openRecordPenalty(founderId) {
-  const fund = STATE.funds.find(f => f.isDefault) || STATE.funds[0];
-  const select = document.getElementById('rp-participant');
-  const candidates = STATE.founders.filter(x => x.fundId === fund.id);
-  select.innerHTML = candidates.map(f => `<option value="${f.id}" ${f.id===founderId?'selected':''}>${escapeHtml(f.fullName)} — ${escapeHtml(f.role.replace('_',' '))}</option>`).join('');
-  document.getElementById('rp-date').value = new Date().toISOString().slice(0,10);
-  document.getElementById('rp-description').value = '';
-  document.querySelectorAll('input[name="rp-minor"], input[name="rp-major"]').forEach(r => r.checked = false);
-  document.querySelectorAll('.penalty-option').forEach(p => p.classList.remove('selected'));
-  currentPenaltySeverity = 'minor';
-  currentPenaltyCategory = '';
-  rpUpdateSummary();
-  rpRefreshAvatar();
-  goTo('screen-record-penalty');
-}
-function rpRefreshAvatar() {
-  const id = document.getElementById('rp-participant').value;
-  const f = STATE.founders.find(x => x.id === id);
-  if (!f) return;
-  document.getElementById('rp-avatar').textContent = f.fullName.split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase();
-  document.getElementById('rp-name').textContent = f.fullName;
-}
-let currentPenaltySeverity = 'minor';
-let currentPenaltyCategory = '';
-function rpSelectSeverity(sev, el) {
-  currentPenaltySeverity = sev;
-  el.parentNode.querySelectorAll('.toggle-tab').forEach(t => t.classList.remove('active'));
-  el.classList.add('active');
-  document.getElementById('rp-minor-card').style.display = sev === 'minor' ? '' : 'none';
-  document.getElementById('rp-major-card').style.display = sev === 'major' ? '' : 'none';
-  // Clear category when severity changes
-  currentPenaltyCategory = '';
-  document.querySelectorAll('input[name="rp-minor"], input[name="rp-major"]').forEach(r => r.checked = false);
-  document.querySelectorAll('.penalty-option').forEach(p => p.classList.remove('selected'));
-  document.getElementById('rp-value').value = sev === 'major' ? 500 : 100;
-  rpUpdateSummary();
-}
-function rpSelectCategory(input) {
-  currentPenaltyCategory = input.value;
-  const group = input.name === 'rp-minor' ? 'rp-minor' : 'rp-major';
-  document.querySelectorAll(`input[name="${group}"]`).forEach(r => r.closest('.penalty-option').classList.toggle('selected', r === input));
-  rpUpdateSummary();
-}
-function rpUpdateSummary() {
-  const sev = currentPenaltySeverity;
-  const val = sev === 'major' ? 500 : 100;
-  setText('rp-sum-sev', sev === 'major' ? 'Major' : 'Minor');
-  document.getElementById('rp-sum-sev').style.color = sev === 'major' ? 'var(--red)' : 'var(--orange)';
-  setText('rp-sum-cat', currentPenaltyCategory || '—');
-  setText('rp-sum-app', sev === 'major' ? 'Fund Leader only' : 'Fund Secretary');
-  setText('rp-sum-val', '−' + val);
-  document.getElementById('rp-value').value = val;
-}
-function approvePenalty() {
-  const fund = STATE.funds.find(f => f.isDefault) || STATE.funds[0];
-  const founderId = document.getElementById('rp-participant').value;
-  const f = STATE.founders.find(x => x.id === founderId);
-  if (!f) return;
-  const date = document.getElementById('rp-date').value;
-  const description = document.getElementById('rp-description').value.trim();
-  if (!currentPenaltyCategory) { toast('Please select an infraction category', 'red'); return; }
-  if (!description) { toast('Please enter a description', 'red'); return; }
-  if (currentPenaltySeverity === 'major' && STATE.currentUser.role !== 'Fund Leader') {
-    toast('Major infractions require Fund Leader approval', 'orange');
-  }
-  const value = currentPenaltySeverity === 'major' ? 500 : 100;
-  STATE.penalties.push({
-    id: 'p-' + Date.now(), fundId: fund.id, founderId: f.id,
-    date, severity: currentPenaltySeverity, category: currentPenaltyCategory,
-    description, value, approvedBy: STATE.currentUser.name
-  });
-  toast(`${currentPenaltySeverity === 'major' ? 'Major' : 'Minor'} penalty recorded: −${value}`, 'red');
-  if (STATE.rcContext === 'founder') openFounder(f.id);
-  else goTo('screen-ledger');
-}
 
 /* ═══════════════════════════════════════════════════════════════
    NAVIGATION & PLUMBING
    ═══════════════════════════════════════════════════════════════ */
-const SCREENS_WITH_SIDEBAR = ['screen-funds','screen-fund-details','screen-founder-detail','screen-record-contribution','screen-record-penalty','screen-ownership','screen-ledger'];
+const SCREENS_WITH_SIDEBAR = ['screen-funds','screen-fund-details','screen-founder-detail','screen-award-detail','screen-ownership','screen-award-ledger'];
 
 function buildSidebar(activeId) {
   const lnk = (id, label) => {
     const isActive = (activeId === id) ||
-      (id === 'screen-funds' && (activeId === 'screen-fund-details' || activeId === 'screen-founder-detail'));
+      (id === 'screen-funds' && (activeId === 'screen-fund-details' || activeId === 'screen-founder-detail')) ||
+      (id === 'screen-award-ledger' && activeId === 'screen-award-detail');
     return `<a class="nav-link${isActive ? ' active' : ''}" onclick="goTo('${id}')">${label}</a>`;
   };
   return `<div class="sidebar">
@@ -2150,7 +2678,7 @@ function buildSidebar(activeId) {
     <nav>
       <div class="nav-section">Main</div>
       ${lnk('screen-ownership','Ownership')}
-      ${lnk('screen-ledger','Ledger')}
+      ${lnk('screen-award-ledger','Award Ledger')}
       ${lnk('screen-funds','Funds')}
     </nav>
     <div class="sidebar-footer">
@@ -2191,10 +2719,16 @@ function goTo(id) {
   // Hydrate per screen
   if (id === 'screen-funds') renderFundsTable();
   if (id === 'screen-ownership') renderOwnership();
-  if (id === 'screen-ledger') renderLedger();
+  if (id === 'screen-award-ledger') renderAwardLedger();
   if (id === 'screen-fund-details') renderFundFoundersTable();
+  if (id === 'screen-award-detail') renderAwardDetail();
 }
 function goBack() {
+  if (STATE.currentScreen === 'screen-award-detail') {
+    if (STATE.rcContext === 'founder' && STATE.activeFounderId) openFounder(STATE.activeFounderId);
+    else goTo('screen-award-ledger');
+    return;
+  }
   if (STATE.rcContext === 'founder' && STATE.activeFounderId) openFounder(STATE.activeFounderId);
   else goTo(STATE.prevScreen || 'screen-funds');
 }
