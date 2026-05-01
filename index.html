@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Founders Fund v5 — SAF Model</title>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=DM+Mono:wght@400;500&family=Caveat:wght@500;600&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 <style>
   :root {
@@ -264,6 +264,30 @@
     .main{margin-left:220px}
     .agreement-doc{padding:20px}
   }
+
+  /* AWARD LETTER (inline view in Award Detail) */
+  .award-letter{font-family:'DM Sans',sans-serif;color:#000;background:#fff;padding:30px 36px;font-size:13px;line-height:1.55}
+  .award-letter .al-header{text-align:right;margin-bottom:30px;font-size:13px}
+  .award-letter .al-date{margin-bottom:18px}
+  .award-letter .al-recipient{margin-bottom:18px}
+  .award-letter .al-greet{margin-bottom:14px}
+  .award-letter .al-body{margin-bottom:14px}
+  .award-letter .al-period{margin-bottom:18px}
+  .award-letter table.al-table{width:100%;border-collapse:collapse;font-size:12px;margin-bottom:30px}
+  .award-letter table.al-table th{border:1px solid #cbd5e1;padding:9px 11px;background:#fff;font-weight:600;text-align:right;color:var(--g600);font-size:11px;text-transform:none;letter-spacing:0}
+  .award-letter table.al-table th:first-child{text-align:left}
+  .award-letter table.al-table td{border:1px solid #cbd5e1;padding:9px 11px;text-align:right}
+  .award-letter table.al-table td:first-child{text-align:left}
+  .award-letter table.al-table tr.al-total td{font-weight:700;background:#f8fafc}
+  .award-letter table.al-table tr.al-net td{font-weight:700;background:var(--blue-light);color:var(--navy)}
+  .award-letter .al-signed-label{margin-top:8px;margin-bottom:18px}
+  .award-letter .al-sig-grid{display:grid;grid-template-columns:1fr 1fr;gap:36px 50px;margin-bottom:18px}
+  .award-letter .al-sig-block{border-bottom:1px solid #1e293b;padding-bottom:4px;margin-bottom:6px;min-height:36px;font-family:'Caveat','Brush Script MT',cursive;font-size:18px}
+  .award-letter .al-sig-role{font-size:11px;color:var(--g700);font-weight:600}
+  .award-letter .al-sig-date{font-size:11px;color:var(--g400);margin-top:1px}
+
+  /* Status banner override (.notice-green is already styled; add layout) */
+  #ad-status-banner{display:flex;justify-content:space-between;align-items:center;gap:12px}
 
   /* PRINT STYLES (for PDF export) */
   @media print{
@@ -986,20 +1010,25 @@
   <div class="topbar">
     <div class="topbar-left">
       <div class="title" id="ad-title">Award Detail</div>
-      <div class="bread" id="ad-bread">Summary · Line Items · PDF</div>
+      <div class="bread" id="ad-bread">—</div>
     </div>
     <div class="topbar-actions">
-      <button class="btn btn-secondary" onclick="goTo('screen-ledger')">← Back to Award Ledger</button>
-      <button class="btn btn-secondary" onclick="downloadAwardPdf()">Download PDF</button>
-      <button class="btn btn-danger" id="ad-reverse-btn" onclick="confirmReverseAward()">Reverse Award</button>
+      <button class="btn btn-secondary" onclick="goTo('screen-ledger')">← Back</button>
+      <button class="btn btn-primary" onclick="downloadAwardPdf()">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Download PDF
+      </button>
+      <div class="dropdown-wrap">
+        <button class="btn btn-secondary" style="font-size:18px;padding:5px 10px;letter-spacing:1px" onclick="toggleMenu(this)">⋯</button>
+        <div class="dropdown-menu">
+          <div class="dropdown-item" id="ad-menu-reverse" onclick="closeAllMenus();confirmReverseAward()">Reverse Award</div>
+        </div>
+      </div>
     </div>
   </div>
   <div class="page">
-    <div id="ad-reversed-banner" class="notice notice-red" style="display:none">
-      <span><strong>This Award has been reversed.</strong> It is excluded from totals but kept for audit.</span>
-    </div>
 
-    <!-- Summary -->
+    <!-- Founder hero -->
     <div class="founder-hero">
       <div class="founder-avatar" id="ad-avatar">??</div>
       <div>
@@ -1007,37 +1036,80 @@
         <div style="font-size:12px;color:rgba(255,255,255,.6);margin-top:2px" id="ad-meta">—</div>
       </div>
       <div class="founder-stats">
-        <div><div class="founder-stat-lbl">Total Contributions</div><div class="founder-stat-val" id="ad-stat-contrib">0.00</div></div>
-        <div><div class="founder-stat-lbl">Total Penalties</div><div class="founder-stat-val" id="ad-stat-pen" style="color:#fca5a5">0.00</div></div>
-        <div><div class="founder-stat-lbl">Net Award</div><div class="founder-stat-val" id="ad-stat-net">0.00</div></div>
+        <div><div class="founder-stat-lbl">Net Award</div><div class="founder-stat-val" id="ad-stat-net">0</div></div>
+        <div><div class="founder-stat-lbl">Cumulative Inputs</div><div class="founder-stat-val" id="ad-stat-cumulative">0</div></div>
       </div>
     </div>
 
-    <!-- Line items -->
+    <!-- Status banner -->
+    <div id="ad-status-banner" class="notice notice-green" style="margin-bottom:14px;justify-content:space-between;align-items:center">
+      <div style="display:flex;gap:22px;flex-wrap:wrap;font-size:12px">
+        <div><strong>Award ID:</strong> <span id="ad-id" class="mono">—</span></div>
+        <div><strong>Period:</strong> <span id="ad-period">—</span></div>
+        <div><strong>Created:</strong> <span id="ad-created">—</span></div>
+      </div>
+      <div id="ad-status-pill"></div>
+    </div>
+
+    <!-- Award Letter — Summary -->
+    <div class="card" style="margin-bottom:16px">
+      <div class="card-header">
+        <div class="card-title">Award Letter — Summary</div>
+        <a href="#" onclick="event.preventDefault();downloadAwardPdf()" style="font-size:12px;color:var(--blue);font-weight:500;text-decoration:none">Web view of official award document</a>
+      </div>
+      <div class="card-body">
+        <div id="ad-letter" class="award-letter"></div>
+      </div>
+    </div>
+
+    <!-- Line-Item Breakdown -->
     <div class="card">
       <div class="card-header">
-        <div class="card-title">Line Items</div>
+        <div class="card-title">Line-Item Breakdown</div>
         <div style="display:flex;gap:6px">
           <button class="btn btn-primary btn-sm" onclick="addContributionToActiveAward()">+ Record Contribution</button>
           <button class="btn btn-danger btn-sm" onclick="addPenaltyToActiveAward()">+ Record Penalty</button>
         </div>
       </div>
-      <div class="card-body" style="padding:0">
-        <div class="tbl-wrap" style="border:none;box-shadow:none;border-radius:0 0 10px 10px">
+      <div class="card-body" style="padding:14px 18px">
+        <div class="notice notice-info" style="margin-bottom:14px">
+          <span><strong>Audit-safe edits:</strong> Line items cannot be deleted. Use the Reverse action on a row to add an equal, negative entry — the original stays visible for the audit trail.</span>
+        </div>
+
+        <!-- Contributions sub-table -->
+        <div class="section-label" style="margin-bottom:8px">Contributions</div>
+        <div class="tbl-wrap" style="margin-bottom:18px">
           <table>
             <thead>
               <tr>
-                <th>Input Type</th>
-                <th>Quantity</th>
+                <th>Task / Description</th>
+                <th>Category</th>
+                <th>Hours</th>
                 <th>Rate</th>
-                <th>Earned</th>
-                <th>Source</th>
-                <th>Status</th>
-                <th style="width:110px">Actions</th>
+                <th>Mult</th>
+                <th>Value</th>
+                <th style="width:90px"></th>
               </tr>
             </thead>
-            <tbody id="ad-lineitems-tbody"></tbody>
-            <tfoot id="ad-lineitems-tfoot"></tfoot>
+            <tbody id="ad-contrib-tbody"></tbody>
+          </table>
+        </div>
+
+        <!-- Penalties sub-table -->
+        <div class="section-label" style="margin-bottom:8px">Penalties</div>
+        <div class="tbl-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Severity</th>
+                <th>Category</th>
+                <th>Description</th>
+                <th>Value</th>
+                <th style="width:90px"></th>
+              </tr>
+            </thead>
+            <tbody id="ad-penalty-tbody"></tbody>
           </table>
         </div>
       </div>
@@ -1119,10 +1191,22 @@ function newLineItemId() { return 'li-' + Date.now() + '-' + Math.floor(Math.ran
 // Build line items from the legacy contribution shape
 function lineItemsFromContribution(c, founder, fund) {
   const items = [];
+  // Synthesize a realistic ClickUp-style task ref so the breakdown table is populated
+  const cuId = 'CU-' + (9000 + (parseInt((c.id||'').replace(/\D/g,'')) || 1));
+  const taskByFounder = {
+    'fnd-1': 'Architecture review and platform planning',
+    'fnd-2': 'Fund administration and ledger reconciliation',
+    'fnd-3': 'UI implementation — Ownership dashboard',
+    'fnd-4': 'Backend API endpoints and DB migrations'
+  };
+  const taskDesc = taskByFounder[founder?.id] || 'Approved labor contribution';
+
   if (c.type === 'cash') {
     items.push({
       id: newLineItemId(), kind: 'contribution', inputType: 'cash',
-      label: 'Cash Inputs (x 1)', quantity: 1, rate: c.cash || 0,
+      label: 'Cash Inputs (×1)', description: 'Cash injection — Founder bill pay',
+      category: 'Cash', taskRef: '',
+      quantity: 1, rate: c.cash || 0,
       multiplier: 1, earned: c.cash || 0,
       source: 'manual', reversedAt: null, reversedBy: null, notes: ''
     });
@@ -1137,7 +1221,10 @@ function lineItemsFromContribution(c, founder, fund) {
   if (reg > 0 || c.base > 0) {
     items.push({
       id: newLineItemId(), kind: 'contribution', inputType: 'hourly',
-      label: 'Hourly Inputs (x 1)', quantity: reg, rate: rate,
+      label: 'Hourly Inputs (×1)',
+      description: `${taskDesc} (${cuId})`,
+      category: 'Labor', taskRef: cuId,
+      quantity: reg, rate: rate,
       multiplier: 1, earned: c.base || (reg * rate),
       source: 'clickup', reversedAt: null, reversedBy: null, notes: ''
     });
@@ -1145,16 +1232,20 @@ function lineItemsFromContribution(c, founder, fund) {
   if (otH > 0 || c.ot > 0) {
     items.push({
       id: newLineItemId(), kind: 'contribution', inputType: 'overtime',
-      label: `Overtime Inputs (x ${otCoef})`, quantity: otH, rate: rate * otCoef,
+      label: `Overtime Inputs (×${otCoef})`,
+      description: `Overtime hours — ${taskDesc} (${cuId})`,
+      category: 'Labor', taskRef: cuId,
+      quantity: otH, rate: rate * otCoef,
       multiplier: otCoef, earned: c.ot || (otH * rate * otCoef),
       source: 'clickup', reversedAt: null, reversedBy: null, notes: ''
     });
   }
-  // Bonus is always shown as a line so totals match the PDF receipt format,
-  // even when zero (matches reference doc).
+  // Bonus is always shown so totals match the PDF receipt format, even when zero.
   items.push({
     id: newLineItemId(), kind: 'contribution', inputType: 'bonus',
-    label: `Bonus Inputs (x ${bonusPct})`,
+    label: `Bonus Inputs (×${bonusPct})`,
+    description: 'Bonus on regular hours (×0.1)',
+    category: 'Labor', taskRef: '',
     quantity: c.bonus > 0 ? reg : 0,
     rate: c.bonus > 0 ? rate * bonusPct : 0,
     multiplier: bonusPct, earned: c.bonus || 0,
@@ -1167,6 +1258,9 @@ function lineItemFromPenalty(p) {
   return {
     id: newLineItemId(), kind: 'penalty', inputType: 'penalty',
     label: `Penalty: ${p.category} (${p.severity})`,
+    description: p.description || '',
+    category: p.category, taskRef: '',
+    severity: p.severity, date: p.date,
     quantity: 1, rate: -(p.value || 0),
     multiplier: -1, earned: -(p.value || 0),
     source: 'manual', reversedAt: null, reversedBy: null, notes: p.description || ''
@@ -2251,74 +2345,224 @@ function openAward(awardId) {
   STATE.activeAwardId = awardId;
   goTo('screen-award-detail');
 }
+
+// Award sequence ID (A1, A2, …) — stable, indexed off the award's fund list
+function awardSeqId(award) {
+  const list = awardsForFund(award.fundId);
+  const idx = list.findIndex(a => a.id === award.id);
+  return idx >= 0 ? 'A' + (idx + 1) : '—';
+}
+
+// Abbreviated month + day + year (e.g. "Feb 10 – Feb 17, 2026" or "Feb 10, 2026")
+function fmtDateShort(d) {
+  if (!d) return '';
+  const dt = typeof d === 'string' ? new Date(d + 'T00:00:00') : d;
+  return dt.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+}
+
 function renderAwardDetail() {
   const a = STATE.awards.find(x => x.id === STATE.activeAwardId);
   if (!a) { goTo('screen-ledger'); return; }
   const f = STATE.founders.find(x => x.id === a.founderId);
   const fund = STATE.funds.find(x => x.id === a.fundId);
+  const seq = awardSeqId(a);
   const initials = (f?.fullName || '??').split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase();
-  document.getElementById('ad-avatar').textContent = initials;
-  document.getElementById('ad-name').textContent = f?.fullName || 'Unknown';
-  document.getElementById('ad-meta').textContent = `${f?.email021 || ''} · $${f?.rate||0}/hr · ${a.periodLabel}`;
-  document.getElementById('ad-title').textContent = `Award · ${f?.fullName || ''}`;
-  document.getElementById('ad-bread').textContent = `${fund?.name || ''} · ${a.periodLabel}`;
-
   const t = awardTotals(a);
-  document.getElementById('ad-stat-contrib').textContent = fmtMoney(t.contributions);
-  document.getElementById('ad-stat-pen').textContent     = '−' + fmtMoney(t.penalties);
-  document.getElementById('ad-stat-net').textContent     = fmtMoney(t.net);
+  const cumulative = awardsForFounder(f?.id).reduce((s,aw) => s + awardTotals(aw).net, 0);
 
-  // Reversed banner + disable destructive actions
-  const banner = document.getElementById('ad-reversed-banner');
-  const revBtn = document.getElementById('ad-reverse-btn');
+  // Topbar
+  document.getElementById('ad-title').textContent = `Award · ${a.periodLabel}`;
+  document.getElementById('ad-bread').textContent = `${fund?.name || ''} · ${f?.fullName || ''} · ${seq}`;
+
+  // Founder hero
+  document.getElementById('ad-avatar').textContent = initials;
+  document.getElementById('ad-name').textContent = f?.fullName || '—';
+  const roleLabel = (f?.role || '').replace(/_/g,' ');
+  document.getElementById('ad-meta').textContent = `${f?.email021 || ''} · $${f?.rate || 0}/hr · ${roleLabel}`;
+  document.getElementById('ad-stat-net').textContent = Math.round(t.net).toLocaleString();
+  document.getElementById('ad-stat-cumulative').textContent = Math.round(cumulative).toLocaleString();
+
+  // Status banner
+  document.getElementById('ad-id').textContent = seq;
+  document.getElementById('ad-period').textContent = a.periodLabel;
+  document.getElementById('ad-created').textContent = a.awardDate ? fmtDate(a.awardDate) : '—';
+  const banner = document.getElementById('ad-status-banner');
+  const pillEl = document.getElementById('ad-status-pill');
+  banner.className = 'notice';
   if (a.status === 'reversed') {
-    banner.style.display = '';
-    revBtn.disabled = true; revBtn.textContent = 'Award Reversed';
+    banner.classList.add('notice-red');
+    pillEl.innerHTML = '<span class="badge badge-red">Reversed</span>';
+  } else if (a.status === 'draft') {
+    banner.classList.add('notice-warn');
+    pillEl.innerHTML = '<span class="badge badge-yellow">Unvested</span>';
   } else {
-    banner.style.display = 'none';
-    revBtn.disabled = false; revBtn.textContent = 'Reverse Award';
+    banner.classList.add('notice-green');
+    pillEl.innerHTML = '<span class="badge badge-green">Vested</span>';
+  }
+  banner.style.cssText = 'margin-bottom:14px;display:flex;justify-content:space-between;align-items:center;gap:12px';
+
+  // Reverse menu item state
+  const menuItem = document.getElementById('ad-menu-reverse');
+  if (a.status === 'reversed') {
+    menuItem.style.cssText = 'color:var(--g400);cursor:not-allowed';
+    menuItem.textContent = 'Award Reversed';
+    menuItem.onclick = (e) => e.stopPropagation();
+  } else {
+    menuItem.style.cssText = 'color:var(--red)';
+    menuItem.textContent = 'Reverse Award';
+    menuItem.onclick = () => { closeAllMenus(); confirmReverseAward(); };
   }
 
-  // Line items table
-  const tbody = document.getElementById('ad-lineitems-tbody');
-  const tfoot = document.getElementById('ad-lineitems-tfoot');
-  const items = a.lineItems || [];
-  if (items.length === 0) {
-    tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:var(--g400);padding:20px">No line items yet. Use the buttons above to add a Contribution or a Penalty.</td></tr>';
-    tfoot.innerHTML = '';
-    return;
+  // Award letter
+  document.getElementById('ad-letter').innerHTML = renderInlineAwardLetter(a, f, fund);
+
+  // Contributions sub-table
+  const contribTbody = document.getElementById('ad-contrib-tbody');
+  const contribItems = (a.lineItems||[]).filter(li => li.kind === 'contribution');
+  if (contribItems.length === 0) {
+    contribTbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:var(--g400);padding:24px"><div style="font-weight:600;margin-bottom:4px">No contribution line items</div><div style="font-size:11px">Click <strong>+ Record Contribution</strong> to add one.</div></td></tr>';
+  } else {
+    contribTbody.innerHTML = contribItems.map(li => {
+      const isReversed = !!li.reversedAt;
+      const cat = li.category || '—';
+      const catBadge = cat === 'Labor' ? '<span class="badge badge-blue badge-no-dot" style="font-size:10px">Labor</span>'
+        : cat === 'Cash' ? '<span class="badge badge-green badge-no-dot" style="font-size:10px">Cash</span>'
+        : `<span class="badge badge-gray badge-no-dot" style="font-size:10px">${escapeHtml(cat)}</span>`;
+      const multTxt = li.inputType === 'bonus' ? `×${li.multiplier} (Bonus)` : `×${li.multiplier}`;
+      return `<tr style="${isReversed?'opacity:.45;text-decoration:line-through':''}">
+        <td>${escapeHtml(li.description || li.label)}</td>
+        <td>${catBadge}</td>
+        <td class="mono">${(li.quantity||0).toFixed(2)}</td>
+        <td class="mono">$${fmtMoney(li.rate||0)}</td>
+        <td class="mono" style="color:var(--g600)">${multTxt}</td>
+        <td class="mono" style="font-weight:700">$${fmtMoney(li.earned||0)}</td>
+        <td>${isReversed || a.status==='reversed' ? '<span style="color:var(--g400);font-size:11px">—</span>'
+          : `<button class="btn btn-ghost btn-sm" style="color:var(--red);font-weight:600" onclick="reverseLineItemUI('${li.id}')">↺ Reverse</button>`}</td>
+      </tr>`;
+    }).join('');
   }
-  tbody.innerHTML = items.map(li => {
-    const isReversed = !!li.reversedAt;
-    const isPenalty  = li.kind === 'penalty';
-    const sourceBadge = li.source === 'clickup'
-      ? '<span class="badge badge-purple badge-no-dot" style="font-size:10px">ClickUp</span>'
-      : '<span class="badge badge-gray badge-no-dot" style="font-size:10px">Manual</span>';
-    const statusBadge = isReversed
-      ? '<span class="badge badge-red badge-no-dot" style="font-size:10px">Reversed</span>'
-      : '<span class="badge badge-green badge-no-dot" style="font-size:10px">Active</span>';
-    const earnedTxt = (li.earned < 0 ? '−' : '') + fmtMoney(Math.abs(li.earned||0));
-    const earnedColor = li.earned < 0 ? 'var(--red)' : 'var(--navy)';
-    return `<tr style="${isReversed?'opacity:.45;text-decoration:line-through':''}${isPenalty?';background:#fff8f8':''}">
-      <td><strong>${escapeHtml(li.label)}</strong>${li.notes?`<div style="font-size:11px;color:var(--g500);margin-top:2px">${escapeHtml(li.notes)}</div>`:''}</td>
-      <td class="mono">${(li.quantity||0).toString()}</td>
-      <td class="mono">${(li.rate||0)<0?'−':''}${fmtMoney(Math.abs(li.rate||0))}</td>
-      <td class="mono" style="font-weight:700;color:${earnedColor}">${earnedTxt}</td>
-      <td>${sourceBadge}</td>
-      <td>${statusBadge}</td>
-      <td>
-        ${isReversed || a.status==='reversed' ? '<span style="color:var(--g400);font-size:11px">—</span>' :
-          `<button class="btn btn-ghost btn-sm" onclick="reverseLineItemUI('${li.id}')" style="color:var(--red)">Reverse</button>`}
-      </td>
-    </tr>`;
-  }).join('');
-  tfoot.innerHTML = `<tr>
-    <td><strong>Total Inputs</strong></td>
-    <td class="mono"><strong>${(t.qty||0)}</strong></td>
-    <td class="mono"><strong>N/A</strong></td>
-    <td class="mono" style="font-weight:800;color:${t.net<0?'var(--red)':'var(--navy)'}">${t.net<0?'−':''}${fmtMoney(Math.abs(t.net))}</td>
-    <td></td><td></td><td></td>
-  </tr>`;
+
+  // Penalties sub-table
+  const penaltyTbody = document.getElementById('ad-penalty-tbody');
+  const penaltyItems = (a.lineItems||[]).filter(li => li.kind === 'penalty');
+  if (penaltyItems.length === 0) {
+    penaltyTbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:var(--g400);padding:24px"><div style="font-weight:600;margin-bottom:4px">No penalty line items</div><div style="font-size:11px">Penalties reduce the Net Award. Click <strong>+ Record Penalty</strong> to add one.</div></td></tr>';
+  } else {
+    penaltyTbody.innerHTML = penaltyItems.map(li => {
+      const isReversed = !!li.reversedAt;
+      const sev = (li.severity || '').toLowerCase();
+      const sevBadge = sev === 'major' ? '<span class="badge badge-red badge-no-dot">Major</span>'
+        : sev === 'minor' ? '<span class="badge badge-orange badge-no-dot">Minor</span>'
+        : '<span class="badge badge-gray badge-no-dot">—</span>';
+      return `<tr style="${isReversed?'opacity:.45;text-decoration:line-through':''}">
+        <td style="font-size:12px">${li.date ? fmtDate(li.date) : fmtDate(a.awardDate)}</td>
+        <td>${sevBadge}</td>
+        <td style="font-size:12px">${escapeHtml(li.category || '—')}</td>
+        <td style="font-size:12px;color:var(--g600);max-width:280px">${escapeHtml(li.description || li.notes || '')}</td>
+        <td class="mono" style="color:var(--red);font-weight:700">−$${fmtMoney(Math.abs(li.earned||0))}</td>
+        <td>${isReversed || a.status==='reversed' ? '<span style="color:var(--g400);font-size:11px">—</span>'
+          : `<button class="btn btn-ghost btn-sm" style="color:var(--red);font-weight:600" onclick="reverseLineItemUI('${li.id}')">↺ Reverse</button>`}</td>
+      </tr>`;
+    }).join('');
+  }
+}
+
+// Inline Award Letter — same layout as the PDF, rendered in the Award Detail page
+function renderInlineAwardLetter(award, founder, fund) {
+  const leader = STATE.founders.find(x => x.fundId === award.fundId && x.role === 'fund_leader');
+  const secretary = STATE.founders.find(x => x.fundId === award.fundId && x.role === 'fund_secretary');
+  const company = (fund?.company || '021') + '.CEO';
+  const companyAddrParts = (leader?.address || '3317 Shadybrook Lane, Chico, CA 95928').split(',').map(s=>s.trim());
+  const greetingFirstName = (founder?.fullName || '').split(' ')[0] || 'Recipient';
+  const recipientLines = [
+    founder?.fullName || 'Unknown',
+    ...(founder?.address || '').split(',').map(s=>s.trim()).filter(Boolean)
+  ];
+  const live = (award.lineItems||[]).filter(li => !li.reversedAt && li.kind === 'contribution');
+  const totalContributions = live.reduce((s,li)=>s+(li.earned||0),0);
+  const livePenalties = (award.lineItems||[]).filter(li => !li.reversedAt && li.kind === 'penalty');
+  const totalPenalties = livePenalties.reduce((s,li)=>s+Math.abs(li.earned||0),0);
+  const netAward = totalContributions - totalPenalties;
+  const createdDate = fmtDate(award.awardDate);
+
+  const rowsHtml = live.map(li => `
+    <tr>
+      <td>${escapeHtml(li.label)}</td>
+      <td>${(li.quantity||0).toFixed(2)}</td>
+      <td>$${fmtMoney(li.rate||0)}</td>
+      <td>$${fmtMoney(li.earned||0)}</td>
+    </tr>`).join('');
+
+  const penaltyRowsHtml = livePenalties.map(li => `
+    <tr>
+      <td>${escapeHtml(li.label)}</td>
+      <td>1.00</td>
+      <td>−$${fmtMoney(Math.abs(li.rate||0))}</td>
+      <td style="color:var(--red)">−$${fmtMoney(Math.abs(li.earned||0))}</td>
+    </tr>`).join('');
+
+  return `
+    <div class="al-header">
+      <div>${escapeHtml(company)}</div>
+      ${companyAddrParts.map(p => `<div>${escapeHtml(p)}</div>`).join('')}
+    </div>
+    <div class="al-date">${escapeHtml(createdDate)}</div>
+    <div class="al-recipient">
+      ${recipientLines.map(l => `<div>${escapeHtml(l)}</div>`).join('')}
+    </div>
+    <div class="al-greet">Dear ${escapeHtml(greetingFirstName)},</div>
+    <div class="al-body">Your input totals for the current period are as follows. Please review our calculations and be sure you agree.</div>
+    <div class="al-period"><strong>Input Period:</strong> ${escapeHtml(award.periodLabel)}</div>
+
+    <table class="al-table">
+      <thead>
+        <tr>
+          <th>Input Type</th>
+          <th>Quantity</th>
+          <th>Rate</th>
+          <th>Earned</th>
+        </tr>
+      </thead>
+      <tbody>
+        ${rowsHtml || '<tr><td colspan="4" style="color:#666;text-align:center">— no contribution line items —</td></tr>'}
+        <tr class="al-total">
+          <td>Total Contributions</td>
+          <td>—</td>
+          <td>N/A</td>
+          <td>$${fmtMoney(totalContributions)}</td>
+        </tr>
+        ${penaltyRowsHtml}
+        ${penaltyRowsHtml ? `<tr class="al-total"><td>Total Penalties</td><td>—</td><td>N/A</td><td style="color:var(--red)">−$${fmtMoney(totalPenalties)}</td></tr>` : ''}
+        <tr class="al-net">
+          <td>Net Award</td>
+          <td>—</td>
+          <td>N/A</td>
+          <td>${netAward<0?'−':''}$${fmtMoney(Math.abs(netAward))}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="al-signed-label">Signed by:</div>
+    <div class="al-sig-grid">
+      <div>
+        <div class="al-sig-block">${escapeHtml(founder?.fullName || '')}</div>
+        <div class="al-sig-role">Co-Founder</div>
+        <div class="al-sig-date">${escapeHtml(createdDate)}</div>
+      </div>
+      <div>
+        <div class="al-sig-block">${escapeHtml(secretary?.fullName || '')}</div>
+        <div class="al-sig-role">Fund Secretary</div>
+        <div class="al-sig-date">${escapeHtml(createdDate)}</div>
+      </div>
+    </div>
+    <div class="al-sig-grid" style="grid-template-columns:1fr 1fr">
+      <div>
+        <div class="al-sig-block">${escapeHtml(leader?.fullName || '')}</div>
+        <div class="al-sig-role">Founder and CEO</div>
+        <div class="al-sig-date">${escapeHtml(createdDate)}</div>
+      </div>
+      <div></div>
+    </div>`;
 }
 
 function reverseLineItemUI(liId) {
