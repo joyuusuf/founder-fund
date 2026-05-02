@@ -704,7 +704,7 @@
         <div style="font-size:12px;color:rgba(255,255,255,.6);margin-top:2px" id="rc-meta">ryker@021.ceo · $95/hr · Fund Secretary</div>
       </div>
       <div class="founder-stats">
-        <div><div class="founder-stat-lbl">Cumulative Net Award</div><div class="founder-stat-val" id="rc-stock">32,150</div></div>
+        <div><div class="founder-stat-lbl">Cumulative Net Award</div><div class="founder-stat-val" id="rc-stock">$0.00</div></div>
       </div>
     </div>
 
@@ -715,19 +715,12 @@
         <p style="text-align:center;color:var(--g500);font-size:12px;margin-top:-10px">021 Founder's Fund Agreement · Rule Snapshot RS-2026-003</p>
 
         <h2>Participant</h2>
-        <div class="grid2">
-          <div class="form-group"><label>Participant</label>
-            <select class="form-control" id="rc-participant" onchange="rcRefresh()"></select>
-          </div>
-          <div class="form-group"><label>Contribution Type</label>
-            <select class="form-control" id="rc-type" onchange="rcTypeChanged()">
-              <option value="noncash">Non-Cash (Labor)</option>
-              <option value="cash">Cash Input</option>
-            </select>
-          </div>
+        <div class="form-group">
+          <label>Participant <span class="req">*</span></label>
+          <select class="form-control" id="rc-participant" onchange="rcRefresh()"></select>
         </div>
 
-        <h2 style="margin-top:20px">Contribution Period</h2>
+        <h2 style="margin-top:20px">Award Period</h2>
         <div class="form-group">
           <label>Period <span class="req">*</span></label>
           <select class="form-control" id="rc-period" onchange="rcCalc()">
@@ -739,44 +732,64 @@
             <option value="2026-M2|2026-02-01|2026-02-28">February 2026</option>
             <option value="2026-M1|2026-01-01|2026-01-31">January 2026</option>
           </select>
-          <div class="form-hint" id="rc-period-hint">Dates auto-populate from the selected period.</div>
+          <div class="form-hint" id="rc-period-hint">This is the period that appears on the Award Letter.</div>
         </div>
 
-        <div id="rc-noncash-block">
-          <h2 style="margin-top:20px">Hours Contributed</h2>
-          <div class="form-group">
-            <label>Hours Worked <span class="req">*</span></label>
-            <div class="suffix-wrap"><input class="form-control" type="number" id="rc-hours" value="44.5" step="0.5" oninput="rcCalc()"><span class="suffix">hrs</span></div>
-            <div class="form-hint">Hourly rate is drawn from the founder profile (<span id="rc-rate-display">$95/hr</span>). It is not editable here.</div>
-          </div>
+        <h2 style="margin-top:20px">Award Date</h2>
+        <div class="form-group">
+          <label>Date issued <span class="req">*</span></label>
+          <input class="form-control" type="date" id="rc-award-date">
+          <div class="form-hint">Date printed at the top of the Award Letter.</div>
         </div>
 
-        <div id="rc-cash-block" style="display:none">
-          <h2 style="margin-top:20px">Cash Input</h2>
-          <div class="form-group">
-            <label>Amount <span class="req">*</span></label>
-            <div class="prefix-wrap"><span class="prefix">$</span><input class="form-control" type="number" id="rc-cash" value="10000" oninput="rcCalc()"></div>
-            <div class="form-hint">Cash inputs vest immediately per Section 7(a)(i) of the Fund Agreement.</div>
-          </div>
+        <!-- ═══ Award Letter — Line Items (Input Type · Quantity · Rate · Earned) ═══ -->
+        <h2 style="margin-top:24px">Award Letter — Line Items</h2>
+        <div class="notice notice-info" style="margin-bottom:10px"><span><strong>This table is the Award Letter.</strong> Add one row for every line that should appear in the printed letter — Hourly Inputs, Bonus Inputs, Cash Inputs, etc. Earned auto-calculates as Quantity × Rate.</span></div>
+
+        <div class="tbl-wrap" style="margin-bottom:10px">
+          <table>
+            <thead>
+              <tr>
+                <th style="min-width:220px">Input Type <span class="req">*</span></th>
+                <th style="text-align:right;width:110px">Quantity <span class="req">*</span></th>
+                <th style="text-align:right;width:130px">Rate <span class="req">*</span></th>
+                <th style="text-align:right;width:130px">Earned</th>
+                <th style="width:40px"></th>
+              </tr>
+            </thead>
+            <tbody id="rc-lines-tbody"></tbody>
+            <tfoot>
+              <tr>
+                <td colspan="3" style="text-align:right;font-weight:700">Total Contributions</td>
+                <td class="mono" style="text-align:right;font-weight:700;color:var(--green)" id="rc-foot-total">$0.00</td>
+                <td></td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap">
+          <button type="button" class="btn btn-secondary btn-sm" onclick="rcAddLineQuick('hourly')">+ Hourly Inputs</button>
+          <button type="button" class="btn btn-secondary btn-sm" onclick="rcAddLineQuick('overtime')">+ Overtime</button>
+          <button type="button" class="btn btn-secondary btn-sm" onclick="rcAddLineQuick('bonus')">+ Bonus</button>
+          <button type="button" class="btn btn-secondary btn-sm" onclick="rcAddLineQuick('cash')">+ Cash Input</button>
+          <button type="button" class="btn btn-secondary btn-sm" onclick="rcAddLineQuick('custom')">+ Custom Row</button>
         </div>
 
-        <h2 style="margin-top:20px">Notes</h2>
+        <h2 style="margin-top:24px">Notes</h2>
         <div class="form-group">
           <textarea class="form-control" id="rc-notes" rows="2" placeholder="Optional task description or sprint reference…"></textarea>
         </div>
       </div>
 
-      <!-- Live calc -->
+      <!-- Live preview — mirrors the printed Award Letter -->
       <div style="position:sticky;top:76px;display:flex;flex-direction:column;gap:12px">
         <div class="calc-summary">
-          <div class="calc-title">Non-Cash Input Breakdown — Live</div>
-          <div class="calc-row"><span class="calc-lbl">Hours</span><span class="calc-val" id="disp-hours">44.5 hrs</span></div>
-          <div class="calc-row"><span class="calc-lbl">Regular (≤40 hrs)</span><span class="calc-val" id="disp-base">3,800</span></div>
-          <div class="calc-row"><span class="calc-lbl">Overtime (1.5×)</span><span class="calc-val" id="disp-ot" style="color:var(--teal)">641</span></div>
-          <div class="calc-row"><span class="calc-lbl">Bonus (10%)</span><span class="calc-val" id="disp-bonus" style="color:var(--purple)">380</span></div>
-          <div class="calc-total"><span class="calc-total-lbl">Total Inputs</span><span class="calc-total-val" id="disp-total">4,821</span></div>
+          <div class="calc-title">Award Letter — Live Preview</div>
+          <div class="calc-row"><span class="calc-lbl">Line items</span><span class="calc-val" id="rc-prev-count">0</span></div>
+          <div class="calc-row"><span class="calc-lbl">Total Contributions</span><span class="calc-val" style="color:var(--green)" id="rc-prev-contrib">$0.00</span></div>
+          <div class="calc-total"><span class="calc-total-lbl">Net Award</span><span class="calc-total-val" id="rc-prev-net">$0.00</span></div>
         </div>
-        <div class="notice notice-info" style="margin-bottom:0"><span><strong>How inputs are calculated:</strong> Regular hours × rate + (overtime hours × rate × OT coef) + bonus on base. The hourly rate comes from the founder profile.</span></div>
+        <div class="notice notice-info" style="margin-bottom:0"><span><strong>Tip:</strong> A new Award starts with the standard rows (Hourly + Bonus). Edit the Quantity/Rate or remove rows as needed. The hourly rate auto-fills from the participant's profile, but you can override per row.</span></div>
       </div>
     </div>
   </div>
@@ -2853,7 +2866,6 @@ function openRecordContribution(founderId) {
       select.value = a.founderId;
       select.disabled = true;
       const periodSel = document.getElementById('rc-period');
-      // Add a synthetic option for the existing period if not present
       let opt = Array.from(periodSel.options).find(o => o.textContent.startsWith(a.periodLabel));
       if (!opt) {
         opt = document.createElement('option');
@@ -2863,6 +2875,10 @@ function openRecordContribution(founderId) {
       }
       periodSel.value = opt.value;
       periodSel.disabled = true;
+      // Lock the award date too — it belongs to the parent award
+      const dateInput = document.getElementById('rc-award-date');
+      dateInput.value = a.awardDate || new Date().toISOString().slice(0,10);
+      dateInput.disabled = true;
     }
   } else {
     titleEl.textContent = 'Record Award';
@@ -2870,12 +2886,19 @@ function openRecordContribution(founderId) {
     approveBtn.textContent = 'Create Award →';
     select.disabled = false;
     document.getElementById('rc-period').disabled = false;
+    const dateInput = document.getElementById('rc-award-date');
+    dateInput.disabled = false;
+    dateInput.value = new Date().toISOString().slice(0,10);
   }
+
+  // Seed the line-items table with the standard award-letter rows
+  rcSeedDefaultLines();
 
   rcRefresh();
   rcCalc();
   goTo('screen-record-contribution');
 }
+
 function rcRefresh() {
   const id = document.getElementById('rc-participant').value;
   const f = STATE.founders.find(x => x.id === id);
@@ -2884,67 +2907,153 @@ function rcRefresh() {
   document.getElementById('rc-avatar').textContent = initials;
   document.getElementById('rc-name').textContent = f.fullName;
   document.getElementById('rc-meta').textContent = `${f.email021} · $${f.rate}/hr · ${f.role.replace('_',' ')}`;
-  document.getElementById('rc-rate-display').textContent = `$${f.rate}/hr`;
   // Cumulative inputs = sum of all this founder's award nets
   const cum = awardsForFounder(f.id).reduce((s,a) => s + awardTotals(a).net, 0);
-  document.getElementById('rc-stock').textContent = Math.round(cum).toLocaleString();
+  document.getElementById('rc-stock').textContent = (cum<0?'−$':'$') + fmtMoney(Math.abs(cum));
+  // When the participant changes, refill the rate column on rate-driven rows
+  rcRefreshRatesFromProfile();
   rcCalc();
 }
-function rcTypeChanged() {
-  const t = document.getElementById('rc-type').value;
-  document.getElementById('rc-noncash-block').style.display = t === 'noncash' ? '' : 'none';
-  document.getElementById('rc-cash-block').style.display = t === 'cash' ? '' : 'none';
-  rcCalc();
+
+/* ─── Line-item table management ───────────────────────────────────
+   The table mirrors the Award Letter exactly:
+     Input Type · Quantity · Rate · Earned
+   Each row carries a hidden inputType so we can map back to the
+   line-item shape (hourly/overtime/bonus/cash/custom) on save.
+   ────────────────────────────────────────────────────────────────── */
+
+function rcGetParticipant() {
+  return STATE.founders.find(x => x.id === document.getElementById('rc-participant').value);
 }
-function rcCalc() {
-  const fund = STATE.funds.find(f => f.isDefault) || STATE.funds[0];
-  const f = STATE.founders.find(x => x.id === document.getElementById('rc-participant').value);
+
+function rcSeedDefaultLines() {
+  // Default rows = the standard Award Letter rows: Hourly Inputs (×1) + Bonus Inputs (×0.1)
+  const f = rcGetParticipant();
+  const fund = STATE.funds.find(fn => fn.isDefault) || STATE.funds[0];
+  const rate = f?.rate || 0;
+  const bonusPct = (fund?.bonusPct || 10) / 100;
+  const tbody = document.getElementById('rc-lines-tbody');
+  if (!tbody) return;
+  tbody.innerHTML = '';
+  rcAppendRow({ inputType: 'hourly',   label: 'Hourly Inputs (×1)',           quantity: 0,  rate: rate });
+  rcAppendRow({ inputType: 'bonus',    label: `Bonus Inputs (×${bonusPct})`,  quantity: 0,  rate: rate * bonusPct });
+}
+
+function rcRefreshRatesFromProfile() {
+  // When the participant changes, refresh the Rate column on rows whose rate
+  // is derived from the founder profile (hourly/overtime/bonus). User-edited
+  // rates are preserved if the row has data-user-set="1".
+  const f = rcGetParticipant();
+  const fund = STATE.funds.find(fn => fn.isDefault) || STATE.funds[0];
   if (!f) return;
-  const type = document.getElementById('rc-type').value;
-  if (type === 'cash') {
-    const amount = parseFloat(document.getElementById('rc-cash').value) || 0;
-    setText('disp-hours', '—');
-    setText('disp-base', '—');
-    setText('disp-ot', '—');
-    setText('disp-bonus', '—');
-    setText('disp-total', amount.toLocaleString());
-    return;
-  }
-  const hours = parseFloat(document.getElementById('rc-hours').value) || 0;
   const rate = f.rate || 0;
-  const threshold = fund.otThreshold || 40;
-  const otCoef = fund.otCoef || 1.5;
-  const bonusPct = (fund.bonusPct || 10) / 100;
-  const reg = Math.min(hours, threshold);
-  const ot = Math.max(0, hours - threshold);
-  const base = reg * rate;
-  const otAmt = ot * rate * otCoef;
-  const bonus = base * bonusPct;
-  const total = base + otAmt + bonus;
-  setText('disp-hours', hours.toFixed(1) + ' hrs');
-  setText('disp-base', Math.round(base).toLocaleString());
-  setText('disp-ot', Math.round(otAmt).toLocaleString());
-  setText('disp-bonus', Math.round(bonus).toLocaleString());
-  setText('disp-total', Math.round(total).toLocaleString());
+  const otCoef = fund?.otCoef || 1.5;
+  const bonusPct = (fund?.bonusPct || 10) / 100;
+  document.querySelectorAll('#rc-lines-tbody tr').forEach(tr => {
+    if (tr.dataset.userSet === '1') return;
+    const it = tr.dataset.inputType;
+    const rateInput = tr.querySelector('[data-col="rate"]');
+    if (!rateInput) return;
+    if (it === 'hourly')        rateInput.value = rate;
+    else if (it === 'overtime') rateInput.value = (rate * otCoef).toFixed(2);
+    else if (it === 'bonus')    rateInput.value = (rate * bonusPct).toFixed(2);
+  });
 }
+
+function rcAddLineQuick(kind) {
+  const f = rcGetParticipant();
+  const fund = STATE.funds.find(fn => fn.isDefault) || STATE.funds[0];
+  const rate = f?.rate || 0;
+  const otCoef = fund?.otCoef || 1.5;
+  const bonusPct = (fund?.bonusPct || 10) / 100;
+  switch (kind) {
+    case 'hourly':   rcAppendRow({ inputType: 'hourly',   label: 'Hourly Inputs (×1)',           quantity: 0, rate }); break;
+    case 'overtime': rcAppendRow({ inputType: 'overtime', label: `Overtime Inputs (×${otCoef})`, quantity: 0, rate: rate * otCoef }); break;
+    case 'bonus':    rcAppendRow({ inputType: 'bonus',    label: `Bonus Inputs (×${bonusPct})`,  quantity: 0, rate: rate * bonusPct }); break;
+    case 'cash':     rcAppendRow({ inputType: 'cash',     label: 'Cash Inputs (×1)',             quantity: 1, rate: 0 }); break;
+    case 'custom':   rcAppendRow({ inputType: 'custom',   label: '',                              quantity: 0, rate: 0 }); break;
+  }
+  rcCalc();
+}
+
+function rcAppendRow({ inputType, label, quantity, rate }) {
+  const tbody = document.getElementById('rc-lines-tbody');
+  if (!tbody) return;
+  const tr = document.createElement('tr');
+  tr.dataset.inputType = inputType;
+  tr.innerHTML = `
+    <td>
+      <input class="form-control" type="text" data-col="label" value="${escapeHtml(label||'')}" placeholder="e.g. Hourly Inputs (×1)" oninput="rcCalc()">
+    </td>
+    <td>
+      <input class="form-control mono" type="number" step="0.01" data-col="quantity" value="${Number(quantity||0)}" style="text-align:right" oninput="rcCalc()">
+    </td>
+    <td>
+      <div class="prefix-wrap"><span class="prefix">$</span>
+        <input class="form-control mono" type="number" step="0.01" data-col="rate" value="${Number(rate||0).toFixed(2)}" style="text-align:right" oninput="this.closest('tr').dataset.userSet='1';rcCalc()">
+      </div>
+    </td>
+    <td class="mono" data-col="earned" style="text-align:right;font-weight:700">$0.00</td>
+    <td>
+      <button type="button" class="btn btn-ghost btn-sm" title="Remove row" onclick="rcRemoveRow(this)" style="color:var(--red);font-weight:700">×</button>
+    </td>`;
+  tbody.appendChild(tr);
+}
+
+function rcRemoveRow(btn) {
+  const tr = btn.closest('tr');
+  if (tr) tr.remove();
+  rcCalc();
+}
+
+function rcReadRows() {
+  const rows = [];
+  document.querySelectorAll('#rc-lines-tbody tr').forEach(tr => {
+    const inputType = tr.dataset.inputType || 'custom';
+    const label = (tr.querySelector('[data-col="label"]')?.value || '').trim();
+    const quantity = parseFloat(tr.querySelector('[data-col="quantity"]')?.value) || 0;
+    const rate = parseFloat(tr.querySelector('[data-col="rate"]')?.value) || 0;
+    const earned = quantity * rate;
+    rows.push({ inputType, label, quantity, rate, earned, _tr: tr });
+  });
+  return rows;
+}
+
+function rcCalc() {
+  const rows = rcReadRows();
+  let total = 0;
+  rows.forEach(r => {
+    total += r.earned;
+    const earnedCell = r._tr.querySelector('[data-col="earned"]');
+    if (earnedCell) earnedCell.textContent = '$' + fmtMoney(r.earned);
+  });
+  const foot = document.getElementById('rc-foot-total');
+  if (foot) foot.textContent = '$' + fmtMoney(total);
+  setText('rc-prev-count', String(rows.length));
+  setText('rc-prev-contrib', '$' + fmtMoney(total));
+  setText('rc-prev-net',     '$' + fmtMoney(total)); // Penalties added later via Award Detail
+}
+
 function setText(id, v) { const el = document.getElementById(id); if (el) el.textContent = v; }
 
 function approveContribution() {
   const fund = STATE.funds.find(f => f.isDefault) || STATE.funds[0];
   const f = STATE.founders.find(x => x.id === document.getElementById('rc-participant').value);
   if (!f) return;
-  const type = document.getElementById('rc-type').value;
   const periodVal = document.getElementById('rc-period').value.split('|');
   const periodOpt = document.querySelector('#rc-period option:checked');
   const label = periodOpt.textContent.split(' (')[0];
   const periodStart = periodVal[1] || '';
   const periodEnd   = periodVal[2] || '';
+  const awardDate   = document.getElementById('rc-award-date').value || new Date().toISOString().slice(0,10);
 
-  // Build the line item(s) from the form
-  const built = buildLineItemsFromForm(f, fund, type);
+  // Build line items from the table rows
+  const built = buildLineItemsFromForm();
+  if (built.length === 0) { toast('Add at least one line item to the Award Letter table', 'red'); return; }
+  const blank = built.find(li => !li.label || (li.quantity === 0 && li.rate === 0));
+  if (blank) { toast('One or more rows are blank — fill in Input Type / Quantity / Rate or remove the row', 'red'); return; }
 
   if (rcMode === 'append-contrib' && STATE.activeAwardId) {
-    // Append to existing award
     const a = STATE.awards.find(x => x.id === STATE.activeAwardId);
     if (!a) return;
     built.forEach(li => addLineItemToAward(a.id, li));
@@ -2953,11 +3062,11 @@ function approveContribution() {
     return;
   }
 
-  // Create new Award (rcMode === 'new-award')
+  // Create new Award
   const award = {
     id: newAwardId(), fundId: fund.id, founderId: f.id,
     periodLabel: label, periodStart, periodEnd,
-    awardDate: new Date().toISOString().slice(0,10),
+    awardDate,
     status: f.status === 'initiated' ? 'draft' : 'approved',
     reversedAt: null, reversedBy: null,
     approvedBy: STATE.currentUser?.name || 'Fund Secretary',
@@ -2966,54 +3075,30 @@ function approveContribution() {
   };
   STATE.awards.push(award);
   STATE.activeAwardId = award.id;
-  toast('Award created · Open Award Detail to add more line items or download PDF', 'green');
+  toast('Award created · Open Award Detail to review or download PDF', 'green');
   goTo('screen-award-detail');
 }
 
-// Translate the form into one or more line items in PDF-table shape
-function buildLineItemsFromForm(f, fund, type) {
-  if (type === 'cash') {
-    const amount = parseFloat(document.getElementById('rc-cash').value) || 0;
-    return [{
-      id: newLineItemId(), kind: 'contribution', inputType: 'cash',
-      label: 'Cash Inputs (x 1)', quantity: 1, rate: amount,
-      multiplier: 1, earned: amount,
+// Translate the table rows into line-item objects in PDF-table shape
+function buildLineItemsFromForm() {
+  return rcReadRows().map(r => {
+    const label = r.label || (
+      r.inputType === 'hourly'   ? 'Hourly Inputs (×1)' :
+      r.inputType === 'overtime' ? 'Overtime Inputs' :
+      r.inputType === 'bonus'    ? 'Bonus Inputs' :
+      r.inputType === 'cash'     ? 'Cash Inputs (×1)' :
+                                   'Contribution'
+    );
+    const category = r.inputType === 'cash' ? 'Cash' : 'Labor';
+    return {
+      id: newLineItemId(), kind: 'contribution', inputType: r.inputType,
+      label, description: '', category, taskRef: '',
+      quantity: r.quantity, rate: r.rate,
+      multiplier: r.inputType === 'overtime' ? null : (r.inputType === 'bonus' ? null : 1),
+      earned: Math.round(r.earned * 100) / 100,
       source: 'manual', reversedAt: null, reversedBy: null, notes: ''
-    }];
-  }
-  const hours = parseFloat(document.getElementById('rc-hours').value) || 0;
-  const rate = f.rate || 0;
-  const threshold = fund.otThreshold || 40;
-  const otCoef = fund.otCoef || 1.5;
-  const bonusPct = (fund.bonusPct || 10) / 100;
-  const reg = Math.min(hours, threshold);
-  const otH = Math.max(0, hours - threshold);
-  const base = reg * rate;
-  const otAmt = otH * rate * otCoef;
-  const bonus = base * bonusPct;
-  const items = [];
-  if (reg > 0) items.push({
-    id: newLineItemId(), kind: 'contribution', inputType: 'hourly',
-    label: 'Hourly Inputs (x 1)', quantity: reg, rate: rate,
-    multiplier: 1, earned: Math.round(base*100)/100,
-    source: 'clickup', reversedAt: null, reversedBy: null, notes: ''
+    };
   });
-  if (otH > 0) items.push({
-    id: newLineItemId(), kind: 'contribution', inputType: 'overtime',
-    label: `Overtime Inputs (x ${otCoef})`, quantity: otH, rate: rate * otCoef,
-    multiplier: otCoef, earned: Math.round(otAmt*100)/100,
-    source: 'clickup', reversedAt: null, reversedBy: null, notes: ''
-  });
-  // Bonus row always present (matches reference PDF format)
-  items.push({
-    id: newLineItemId(), kind: 'contribution', inputType: 'bonus',
-    label: `Bonus Inputs (x ${bonusPct})`,
-    quantity: bonus > 0 ? reg : 0,
-    rate: bonus > 0 ? rate * bonusPct : 0,
-    multiplier: bonusPct, earned: Math.round(bonus*100)/100,
-    source: 'manual', reversedAt: null, reversedBy: null, notes: ''
-  });
-  return items;
 }
 
 /* ─── PENALTY (now adds a Penalty line item to an Award) ──────── */
