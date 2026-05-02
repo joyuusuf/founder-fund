@@ -286,9 +286,6 @@
   .award-letter .al-sig-role{font-size:11px;color:var(--g700);font-weight:600}
   .award-letter .al-sig-date{font-size:11px;color:var(--g400);margin-top:1px}
 
-  /* Status banner override (.notice-green is already styled; add layout) */
-  #ad-status-banner{display:flex;justify-content:space-between;align-items:center;gap:12px}
-
   /* PRINT STYLES (for PDF export) */
   @media print{
     body{background:#fff}
@@ -655,7 +652,7 @@
           <div class="tbl-wrap" style="border:none;box-shadow:none;border-radius:0 0 10px 10px">
             <table>
               <thead>
-                <tr><th>Period</th><th>Contributions</th><th>Penalties</th><th>Net Award</th><th>Status</th><th></th></tr>
+                <tr><th>Period</th><th>Total Contributions</th><th>Total Penalties</th><th>Net Award</th><th>Status</th><th></th></tr>
               </thead>
               <tbody id="founder-ledger-tbody"></tbody>
             </table>
@@ -1036,19 +1033,42 @@
         <div style="font-size:12px;color:rgba(255,255,255,.6);margin-top:2px" id="ad-meta">—</div>
       </div>
       <div class="founder-stats">
-        <div><div class="founder-stat-lbl">Net Award</div><div class="founder-stat-val" id="ad-stat-net">0</div></div>
-        <div><div class="founder-stat-lbl">Cumulative Inputs</div><div class="founder-stat-val" id="ad-stat-cumulative">0</div></div>
+        <div><div class="founder-stat-lbl">Net Award</div><div class="founder-stat-val" id="ad-stat-net">$0.00</div></div>
+        <div><div class="founder-stat-lbl">Cumulative Inputs</div><div class="founder-stat-val" id="ad-stat-cumulative">$0.00</div></div>
       </div>
     </div>
 
-    <!-- Status banner -->
-    <div id="ad-status-banner" class="notice notice-green" style="margin-bottom:14px;justify-content:space-between;align-items:center">
-      <div style="display:flex;gap:22px;flex-wrap:wrap;font-size:12px">
-        <div><strong>Award ID:</strong> <span id="ad-id" class="mono">—</span></div>
-        <div><strong>Period:</strong> <span id="ad-period">—</span></div>
-        <div><strong>Created:</strong> <span id="ad-created">—</span></div>
+    <!-- ═══ AWARD SUMMARY (top section — replaces old status banner) ═══ -->
+    <div class="card" style="margin-bottom:16px">
+      <div class="card-header">
+        <div class="card-title">Award Summary</div>
+        <div id="ad-status-pill"></div>
       </div>
-      <div id="ad-status-pill"></div>
+      <div class="card-body">
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:14px">
+          <div style="padding:14px 16px;background:var(--green-light);border-radius:8px;border:1px solid #86EFAC">
+            <div class="stat-label" style="color:var(--green)">Total Contributions</div>
+            <div class="stat-val" style="color:var(--green)" id="ad-sum-contrib">$0.00</div>
+            <div class="stat-sub" id="ad-sum-contrib-count">0 line items</div>
+          </div>
+          <div style="padding:14px 16px;background:var(--red-light);border-radius:8px;border:1px solid #FECACA">
+            <div class="stat-label" style="color:var(--red)">Total Penalties</div>
+            <div class="stat-val" style="color:var(--red)" id="ad-sum-pen">$0.00</div>
+            <div class="stat-sub" id="ad-sum-pen-count">0 line items</div>
+          </div>
+          <div style="padding:14px 16px;background:var(--blue-light);border-radius:8px;border:1px solid var(--blue-mid)">
+            <div class="stat-label" style="color:var(--blue)">Net Award</div>
+            <div class="stat-val" style="color:var(--blue)" id="ad-sum-net">$0.00</div>
+            <div class="stat-sub">Contributions − Penalties</div>
+          </div>
+        </div>
+        <div style="display:flex;gap:22px;flex-wrap:wrap;font-size:12px;padding-top:12px;border-top:1px solid var(--g100)">
+          <div><strong>Award ID:</strong> <span id="ad-id" class="mono">—</span></div>
+          <div><strong>Period:</strong> <span id="ad-period">—</span></div>
+          <div><strong>Created:</strong> <span id="ad-created">—</span></div>
+          <div><strong>Approved By:</strong> <span id="ad-approved-by">—</span></div>
+        </div>
+      </div>
     </div>
 
     <!-- Award Letter — Summary -->
@@ -1073,21 +1093,19 @@
       </div>
       <div class="card-body" style="padding:14px 18px">
         <div class="notice notice-info" style="margin-bottom:14px">
-          <span><strong>Audit-safe edits:</strong> Line items cannot be deleted. Use the Reverse action on a row to add an equal, negative entry — the original stays visible for the audit trail.</span>
+          <span><strong>Audit-safe edits:</strong> Line items cannot be deleted. Use the Reverse action on a row to exclude it from totals — the original stays visible for the audit trail.</span>
         </div>
 
-        <!-- Contributions sub-table -->
+        <!-- Contributions sub-table — PDF format: Input Type | Quantity | Rate | Earned -->
         <div class="section-label" style="margin-bottom:8px">Contributions</div>
         <div class="tbl-wrap" style="margin-bottom:18px">
           <table>
             <thead>
               <tr>
-                <th>Task / Description</th>
-                <th>Category</th>
-                <th>Hours</th>
-                <th>Rate</th>
-                <th>Mult</th>
-                <th>Value</th>
+                <th>Input Type</th>
+                <th style="text-align:right">Quantity</th>
+                <th style="text-align:right">Rate</th>
+                <th style="text-align:right">Earned</th>
                 <th style="width:90px"></th>
               </tr>
             </thead>
@@ -1101,11 +1119,11 @@
           <table>
             <thead>
               <tr>
+                <th>Input Type</th>
                 <th>Date</th>
                 <th>Severity</th>
-                <th>Category</th>
-                <th>Description</th>
-                <th>Value</th>
+                <th style="text-align:right">Quantity</th>
+                <th style="text-align:right">Earned</th>
                 <th style="width:90px"></th>
               </tr>
             </thead>
@@ -2146,9 +2164,9 @@ function renderFounderLedger() {
       : '<span class="badge badge-orange badge-no-dot" style="font-size:10px">Draft</span>';
     return `<tr style="cursor:pointer${a.status==='reversed'?';opacity:.55':''}" onclick="openAward('${a.id}')">
       <td style="font-size:12px">${escapeHtml(a.periodLabel)}</td>
-      <td class="mono" style="color:var(--green)">${t.contributions ? fmtMoney(t.contributions) : '—'}</td>
-      <td class="mono" style="color:var(--red)">${t.penalties ? '−'+fmtMoney(t.penalties) : '—'}</td>
-      <td class="mono" style="font-weight:700">${t.net<0?'−':''}${fmtMoney(Math.abs(t.net))}</td>
+      <td class="mono" style="color:var(--green)">${t.contributions ? '$'+fmtMoney(t.contributions) : '—'}</td>
+      <td class="mono" style="color:var(--red)">${t.penalties ? '−$'+fmtMoney(t.penalties) : '—'}</td>
+      <td class="mono" style="font-weight:700">${t.net<0?'−$':'$'}${fmtMoney(Math.abs(t.net))}</td>
       <td>${statusBadge}</td>
       <td><button class="btn btn-secondary btn-sm" onclick="event.stopPropagation();openAward('${a.id}')">Open →</button></td>
     </tr>`;
@@ -2308,9 +2326,9 @@ function renderLedger() {
         <div style="font-size:13px">${escapeHtml(a.periodLabel)}</div>
         <div style="font-size:11px;color:var(--g400);margin-top:1px;font-family:'DM Mono',monospace">${awardSeq[a.id]}</div>
       </td>
-      <td class="mono" style="color:var(--green);font-weight:700">${t.contributions ? fmtInt(t.contributions) : '—'}</td>
-      <td class="mono" style="color:var(--red);font-weight:700">${t.penalties ? '−'+fmtInt(t.penalties) : '—'}</td>
-      <td class="mono" style="font-weight:700;color:${t.net<0?'var(--red)':'var(--g900)'}">${t.net<0?'−':''}${fmtInt(Math.abs(t.net))}</td>
+      <td class="mono" style="color:var(--green);font-weight:700">${t.contributions ? '$'+fmtMoney(t.contributions) : '—'}</td>
+      <td class="mono" style="color:var(--red);font-weight:700">${t.penalties ? '−$'+fmtMoney(t.penalties) : '—'}</td>
+      <td class="mono" style="font-weight:700;color:${t.net<0?'var(--red)':'var(--g900)'}">${t.net<0?'−$':'$'}${fmtMoney(Math.abs(t.net))}</td>
       <td>${statusBadge}</td>
       <td style="text-align:center" onclick="event.stopPropagation()">
         <div class="dropdown-wrap">
@@ -2374,32 +2392,34 @@ function renderAwardDetail() {
   document.getElementById('ad-title').textContent = `Award · ${a.periodLabel}`;
   document.getElementById('ad-bread').textContent = `${fund?.name || ''} · ${f?.fullName || ''} · ${seq}`;
 
-  // Founder hero
+  // Founder hero — currency-formatted
   document.getElementById('ad-avatar').textContent = initials;
   document.getElementById('ad-name').textContent = f?.fullName || '—';
   const roleLabel = (f?.role || '').replace(/_/g,' ');
   document.getElementById('ad-meta').textContent = `${f?.email021 || ''} · $${f?.rate || 0}/hr · ${roleLabel}`;
-  document.getElementById('ad-stat-net').textContent = Math.round(t.net).toLocaleString();
-  document.getElementById('ad-stat-cumulative').textContent = Math.round(cumulative).toLocaleString();
+  document.getElementById('ad-stat-net').textContent = (t.net<0?'−$':'$') + fmtMoney(Math.abs(t.net));
+  document.getElementById('ad-stat-cumulative').textContent = (cumulative<0?'−$':'$') + fmtMoney(Math.abs(cumulative));
 
-  // Status banner
-  document.getElementById('ad-id').textContent = seq;
-  document.getElementById('ad-period').textContent = a.periodLabel;
-  document.getElementById('ad-created').textContent = a.awardDate ? fmtDate(a.awardDate) : '—';
-  const banner = document.getElementById('ad-status-banner');
+  // ── AWARD SUMMARY (top section) ──
+  const liveContribs   = (a.lineItems||[]).filter(li => !li.reversedAt && li.kind === 'contribution');
+  const livePenalties  = (a.lineItems||[]).filter(li => !li.reversedAt && li.kind === 'penalty');
+
+  document.getElementById('ad-sum-contrib').textContent       = '$' + fmtMoney(t.contributions);
+  document.getElementById('ad-sum-contrib-count').textContent = `${liveContribs.length} line item${liveContribs.length===1?'':'s'}`;
+  document.getElementById('ad-sum-pen').textContent           = t.penalties > 0 ? '−$' + fmtMoney(t.penalties) : '$0.00';
+  document.getElementById('ad-sum-pen-count').textContent     = `${livePenalties.length} line item${livePenalties.length===1?'':'s'}`;
+  document.getElementById('ad-sum-net').textContent           = (t.net<0?'−$':'$') + fmtMoney(Math.abs(t.net));
+
+  document.getElementById('ad-id').textContent          = seq;
+  document.getElementById('ad-period').textContent      = a.periodLabel;
+  document.getElementById('ad-created').textContent     = a.awardDate ? fmtDate(a.awardDate) : '—';
+  document.getElementById('ad-approved-by').textContent = a.approvedBy || '—';
+
+  // Status pill
   const pillEl = document.getElementById('ad-status-pill');
-  banner.className = 'notice';
-  if (a.status === 'reversed') {
-    banner.classList.add('notice-red');
-    pillEl.innerHTML = '<span class="badge badge-red">Reversed</span>';
-  } else if (a.status === 'draft') {
-    banner.classList.add('notice-warn');
-    pillEl.innerHTML = '<span class="badge badge-yellow">Unvested</span>';
-  } else {
-    banner.classList.add('notice-green');
-    pillEl.innerHTML = '<span class="badge badge-green">Vested</span>';
-  }
-  banner.style.cssText = 'margin-bottom:14px;display:flex;justify-content:space-between;align-items:center;gap:12px';
+  if (a.status === 'reversed')      pillEl.innerHTML = '<span class="badge badge-red">Reversed</span>';
+  else if (a.status === 'draft')    pillEl.innerHTML = '<span class="badge badge-yellow">Unvested</span>';
+  else                              pillEl.innerHTML = '<span class="badge badge-green">Vested</span>';
 
   // Reverse menu item state
   const menuItem = document.getElementById('ad-menu-reverse');
@@ -2413,57 +2433,89 @@ function renderAwardDetail() {
     menuItem.onclick = () => { closeAllMenus(); confirmReverseAward(); };
   }
 
-  // Award letter
+  // Award letter (inline)
   document.getElementById('ad-letter').innerHTML = renderInlineAwardLetter(a, f, fund);
 
-  // Contributions sub-table
+  // ── Contributions sub-table — PDF format: Input Type | Quantity | Rate | Earned ──
   const contribTbody = document.getElementById('ad-contrib-tbody');
-  const contribItems = (a.lineItems||[]).filter(li => li.kind === 'contribution');
-  if (contribItems.length === 0) {
-    contribTbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:var(--g400);padding:24px"><div style="font-weight:600;margin-bottom:4px">No contribution line items</div><div style="font-size:11px">Click <strong>+ Record Contribution</strong> to add one.</div></td></tr>';
+  const allContrib   = (a.lineItems||[]).filter(li => li.kind === 'contribution');
+
+  if (allContrib.length === 0) {
+    contribTbody.innerHTML = `<tr><td colspan="5" style="text-align:center;color:var(--g400);padding:24px">
+      <div style="font-weight:600;margin-bottom:4px">No contribution line items</div>
+      <div style="font-size:11px">Click <strong>+ Record Contribution</strong> to add one.</div>
+    </td></tr>`;
   } else {
-    contribTbody.innerHTML = contribItems.map(li => {
+    let body = allContrib.map(li => {
       const isReversed = !!li.reversedAt;
-      const cat = li.category || '—';
-      const catBadge = cat === 'Labor' ? '<span class="badge badge-blue badge-no-dot" style="font-size:10px">Labor</span>'
-        : cat === 'Cash' ? '<span class="badge badge-green badge-no-dot" style="font-size:10px">Cash</span>'
-        : `<span class="badge badge-gray badge-no-dot" style="font-size:10px">${escapeHtml(cat)}</span>`;
-      const multTxt = li.inputType === 'bonus' ? `×${li.multiplier} (Bonus)` : `×${li.multiplier}`;
-      return `<tr style="${isReversed?'opacity:.45;text-decoration:line-through':''}">
-        <td>${escapeHtml(li.description || li.label)}</td>
-        <td>${catBadge}</td>
-        <td class="mono">${(li.quantity||0).toFixed(2)}</td>
-        <td class="mono">$${fmtMoney(li.rate||0)}</td>
-        <td class="mono" style="color:var(--g600)">${multTxt}</td>
-        <td class="mono" style="font-weight:700">$${fmtMoney(li.earned||0)}</td>
-        <td>${isReversed || a.status==='reversed' ? '<span style="color:var(--g400);font-size:11px">—</span>'
+      const locked     = isReversed || a.status === 'reversed';
+      const rowStyle   = isReversed ? 'opacity:.45;text-decoration:line-through' : '';
+      return `<tr style="${rowStyle}">
+        <td>
+          <div style="font-weight:600">${escapeHtml(li.label)}</div>
+          ${li.description ? `<div style="font-size:11px;color:var(--g500);margin-top:2px">${escapeHtml(li.description)}</div>` : ''}
+        </td>
+        <td class="mono" style="text-align:right">${(li.quantity||0).toFixed(2)}</td>
+        <td class="mono" style="text-align:right">$${fmtMoney(li.rate||0)}</td>
+        <td class="mono" style="text-align:right;font-weight:700">$${fmtMoney(li.earned||0)}</td>
+        <td>${locked
+          ? '<span style="color:var(--g400);font-size:11px">—</span>'
           : `<button class="btn btn-ghost btn-sm" style="color:var(--red);font-weight:600" onclick="reverseLineItemUI('${li.id}')">↺ Reverse</button>`}</td>
       </tr>`;
     }).join('');
+    // Footer total row matching PDF
+    const contribQty = liveContribs.reduce((s,li)=>s+(li.quantity||0),0);
+    body += `<tr style="background:var(--g50);font-weight:700">
+      <td>Total Contributions</td>
+      <td class="mono" style="text-align:right">${contribQty.toFixed(2)}</td>
+      <td class="mono" style="text-align:right;color:var(--g500)">N/A</td>
+      <td class="mono" style="text-align:right;color:var(--green)">$${fmtMoney(t.contributions)}</td>
+      <td></td>
+    </tr>`;
+    contribTbody.innerHTML = body;
   }
 
-  // Penalties sub-table
+  // ── Penalties sub-table ──
   const penaltyTbody = document.getElementById('ad-penalty-tbody');
-  const penaltyItems = (a.lineItems||[]).filter(li => li.kind === 'penalty');
-  if (penaltyItems.length === 0) {
-    penaltyTbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:var(--g400);padding:24px"><div style="font-weight:600;margin-bottom:4px">No penalty line items</div><div style="font-size:11px">Penalties reduce the Net Award. Click <strong>+ Record Penalty</strong> to add one.</div></td></tr>';
+  const allPenalty   = (a.lineItems||[]).filter(li => li.kind === 'penalty');
+
+  if (allPenalty.length === 0) {
+    penaltyTbody.innerHTML = `<tr><td colspan="6" style="text-align:center;color:var(--g400);padding:24px">
+      <div style="font-weight:600;margin-bottom:4px">No penalty line items</div>
+      <div style="font-size:11px">Penalties reduce the Net Award. Click <strong>+ Record Penalty</strong> to add one.</div>
+    </td></tr>`;
   } else {
-    penaltyTbody.innerHTML = penaltyItems.map(li => {
+    let body = allPenalty.map(li => {
       const isReversed = !!li.reversedAt;
-      const sev = (li.severity || '').toLowerCase();
-      const sevBadge = sev === 'major' ? '<span class="badge badge-red badge-no-dot">Major</span>'
-        : sev === 'minor' ? '<span class="badge badge-orange badge-no-dot">Minor</span>'
-        : '<span class="badge badge-gray badge-no-dot">—</span>';
-      return `<tr style="${isReversed?'opacity:.45;text-decoration:line-through':''}">
+      const locked     = isReversed || a.status === 'reversed';
+      const rowStyle   = isReversed ? 'opacity:.45;text-decoration:line-through' : '';
+      const sev        = (li.severity || '').toLowerCase();
+      const sevBadge   = sev === 'major' ? '<span class="badge badge-red badge-no-dot">Major</span>'
+                       : sev === 'minor' ? '<span class="badge badge-orange badge-no-dot">Minor</span>'
+                       : '<span class="badge badge-gray badge-no-dot">—</span>';
+      return `<tr style="${rowStyle}">
+        <td>
+          <div style="font-weight:600">${escapeHtml(li.category || 'Penalty')}</div>
+          ${li.description ? `<div style="font-size:11px;color:var(--g500);margin-top:2px">${escapeHtml(li.description)}</div>` : ''}
+        </td>
         <td style="font-size:12px">${li.date ? fmtDate(li.date) : fmtDate(a.awardDate)}</td>
         <td>${sevBadge}</td>
-        <td style="font-size:12px">${escapeHtml(li.category || '—')}</td>
-        <td style="font-size:12px;color:var(--g600);max-width:280px">${escapeHtml(li.description || li.notes || '')}</td>
-        <td class="mono" style="color:var(--red);font-weight:700">−$${fmtMoney(Math.abs(li.earned||0))}</td>
-        <td>${isReversed || a.status==='reversed' ? '<span style="color:var(--g400);font-size:11px">—</span>'
+        <td class="mono" style="text-align:right">${(li.quantity||1).toFixed(2)}</td>
+        <td class="mono" style="text-align:right;color:var(--red);font-weight:700">−$${fmtMoney(Math.abs(li.earned||0))}</td>
+        <td>${locked
+          ? '<span style="color:var(--g400);font-size:11px">—</span>'
           : `<button class="btn btn-ghost btn-sm" style="color:var(--red);font-weight:600" onclick="reverseLineItemUI('${li.id}')">↺ Reverse</button>`}</td>
       </tr>`;
     }).join('');
+    body += `<tr style="background:var(--g50);font-weight:700">
+      <td>Total Penalties</td>
+      <td></td>
+      <td></td>
+      <td class="mono" style="text-align:right">${livePenalties.reduce((s,li)=>s+(li.quantity||1),0).toFixed(2)}</td>
+      <td class="mono" style="text-align:right;color:var(--red)">−$${fmtMoney(t.penalties)}</td>
+      <td></td>
+    </tr>`;
+    penaltyTbody.innerHTML = body;
   }
 }
 
@@ -2496,10 +2548,13 @@ function renderInlineAwardLetter(award, founder, fund) {
   const penaltyRowsHtml = livePenalties.map(li => `
     <tr>
       <td>${escapeHtml(li.label)}</td>
-      <td>1.00</td>
+      <td>${(li.quantity||1).toFixed(2)}</td>
       <td>−$${fmtMoney(Math.abs(li.rate||0))}</td>
       <td style="color:var(--red)">−$${fmtMoney(Math.abs(li.earned||0))}</td>
     </tr>`).join('');
+
+  const contribQty = live.reduce((s,li)=>s+(li.quantity||0),0);
+  const penaltyQty = livePenalties.reduce((s,li)=>s+(li.quantity||1),0);
 
   return `
     <div class="al-header">
@@ -2527,12 +2582,12 @@ function renderInlineAwardLetter(award, founder, fund) {
         ${rowsHtml || '<tr><td colspan="4" style="color:#666;text-align:center">— no contribution line items —</td></tr>'}
         <tr class="al-total">
           <td>Total Contributions</td>
-          <td>—</td>
+          <td>${contribQty.toFixed(2)}</td>
           <td>N/A</td>
           <td>$${fmtMoney(totalContributions)}</td>
         </tr>
         ${penaltyRowsHtml}
-        ${penaltyRowsHtml ? `<tr class="al-total"><td>Total Penalties</td><td>—</td><td>N/A</td><td style="color:var(--red)">−$${fmtMoney(totalPenalties)}</td></tr>` : ''}
+        ${penaltyRowsHtml ? `<tr class="al-total"><td>Total Penalties</td><td>${penaltyQty.toFixed(2)}</td><td>N/A</td><td style="color:var(--red)">−$${fmtMoney(totalPenalties)}</td></tr>` : ''}
         <tr class="al-net">
           <td>Net Award</td>
           <td>—</td>
@@ -2583,33 +2638,43 @@ function confirmReverseAward() {
    matches the reference document. Uses an offscreen DOM + html2pdf.
    ═══════════════════════════════════════════════════════════════ */
 function buildAwardLetterHtml(award) {
-  const f = STATE.founders.find(x => x.id === award.founderId);
-  const fund = STATE.funds.find(x => x.id === award.fundId);
-  const leader = STATE.founders.find(x => x.fundId === award.fundId && x.role === 'fund_leader');
-  const secretary = STATE.founders.find(x => x.fundId === award.fundId && x.role === 'fund_secretary');
+  const f       = STATE.founders.find(x => x.id === award.founderId);
+  const fund    = STATE.funds.find(x => x.id === award.fundId);
+  const leader  = STATE.founders.find(x => x.fundId === award.fundId && x.role === 'fund_leader');
   const company = (fund?.company || '021') + '.CEO';
   const companyAddress = leader?.address || '3317 Shadybrook Lane, Chico, CA 95928';
   const [companyStreet, ...companyCityParts] = companyAddress.split(',').map(s=>s.trim());
   const companyCity = companyCityParts.join(', ');
 
-  // Recipient block
   const greetingName = (f?.fullName || '').split(' ')[0] || 'Recipient';
   const recipientLines = [
     f?.fullName || 'Unknown',
     ...(f?.address || '').split(',').map(s=>s.trim()).filter(Boolean)
   ];
 
-  // Live (non-reversed) line items
-  const live = (award.lineItems||[]).filter(li => !li.reversedAt);
-  const totals = awardTotals(award);
-  const totalQty = live.reduce((s,li)=>s+(li.quantity||0),0);
+  // Live (non-reversed) line items, split by kind
+  const liveContribs  = (award.lineItems||[]).filter(li => !li.reversedAt && li.kind === 'contribution');
+  const livePenalties = (award.lineItems||[]).filter(li => !li.reversedAt && li.kind === 'penalty');
+  const totals        = awardTotals(award);
+  const contribQty    = liveContribs.reduce((s,li)=>s+(li.quantity||0),0);
+  const penaltyQty    = livePenalties.reduce((s,li)=>s+(li.quantity||1),0);
 
-  const rows = live.map(li => `
+  const cell = 'border:1px solid #000;padding:8px 10px;';
+
+  const contribRows = liveContribs.map(li => `
     <tr>
-      <td style="border:1px solid #000;padding:8px 10px;font-weight:600">${escapeHtml(li.label)}</td>
-      <td style="border:1px solid #000;padding:8px 10px;text-align:center">${Number(li.quantity||0).toFixed(2)}</td>
-      <td style="border:1px solid #000;padding:8px 10px;text-align:center">${(li.rate||0)<0?'−':''}${fmtMoney(Math.abs(li.rate||0)).replace(/\.00$/,'')}</td>
-      <td style="border:1px solid #000;padding:8px 10px;text-align:right;font-weight:700">${(li.earned||0)<0?'−':''}${fmtMoney(Math.abs(li.earned||0))}</td>
+      <td style="${cell}font-weight:600">${escapeHtml(li.label)}</td>
+      <td style="${cell}text-align:center">${Number(li.quantity||0).toFixed(2)}</td>
+      <td style="${cell}text-align:center">$${fmtMoney(li.rate||0)}</td>
+      <td style="${cell}text-align:right;font-weight:700">$${fmtMoney(li.earned||0)}</td>
+    </tr>`).join('');
+
+  const penaltyRows = livePenalties.map(li => `
+    <tr>
+      <td style="${cell}font-weight:600">${escapeHtml(li.label)}</td>
+      <td style="${cell}text-align:center">${Number(li.quantity||1).toFixed(2)}</td>
+      <td style="${cell}text-align:center">−$${fmtMoney(Math.abs(li.rate||0))}</td>
+      <td style="${cell}text-align:right;font-weight:700;color:#b91c1c">−$${fmtMoney(Math.abs(li.earned||0))}</td>
     </tr>`).join('');
 
   return `
@@ -2634,30 +2699,43 @@ function buildAwardLetterHtml(award) {
       <div style="margin-bottom:18px">Your input totals for the current period are as follows. Please review our calculations and be sure you agree.</div>
 
       <!-- Period -->
-      <div style="margin-bottom:22px">Input Period: ${escapeHtml(award.periodLabel)}</div>
+      <div style="margin-bottom:22px"><strong>Input Period:</strong> ${escapeHtml(award.periodLabel)}</div>
 
-      <!-- Table -->
+      <!-- Table — Contributions, Penalties, Net Award -->
       <table style="width:100%;border-collapse:collapse;margin-bottom:42px;font-size:13px">
         <thead>
           <tr>
-            <th style="border:1px solid #000;padding:9px 10px;background:#fff;text-align:center">Input Type</th>
-            <th style="border:1px solid #000;padding:9px 10px;background:#fff;text-align:center">Quantity</th>
-            <th style="border:1px solid #000;padding:9px 10px;background:#fff;text-align:center">Rate</th>
-            <th style="border:1px solid #000;padding:9px 10px;background:#fff;text-align:center">Earned</th>
+            <th style="${cell}background:#fff;text-align:center">Input Type</th>
+            <th style="${cell}background:#fff;text-align:center">Quantity</th>
+            <th style="${cell}background:#fff;text-align:center">Rate</th>
+            <th style="${cell}background:#fff;text-align:center">Earned</th>
           </tr>
         </thead>
         <tbody>
-          ${rows || `<tr><td colspan="4" style="border:1px solid #000;padding:14px;text-align:center;color:#666">— no line items —</td></tr>`}
-          <tr>
-            <td style="border:1px solid #000;padding:9px 10px;font-weight:700">Total Inputs</td>
-            <td style="border:1px solid #000;padding:9px 10px;text-align:center;font-weight:700">${totalQty.toFixed(2)}</td>
-            <td style="border:1px solid #000;padding:9px 10px;text-align:center;font-weight:700">N/A</td>
-            <td style="border:1px solid #000;padding:9px 10px;text-align:right;font-weight:700">${(totals.net||0)<0?'−':''}${fmtMoney(Math.abs(totals.net||0))}</td>
+          ${contribRows || `<tr><td colspan="4" style="${cell}text-align:center;color:#666">— no contribution line items —</td></tr>`}
+          <tr style="background:#f8fafc">
+            <td style="${cell}font-weight:700">Total Contributions</td>
+            <td style="${cell}text-align:center;font-weight:700">${contribQty.toFixed(2)}</td>
+            <td style="${cell}text-align:center;font-weight:700">N/A</td>
+            <td style="${cell}text-align:right;font-weight:700">$${fmtMoney(totals.contributions)}</td>
+          </tr>
+          ${penaltyRows ? penaltyRows + `
+          <tr style="background:#f8fafc">
+            <td style="${cell}font-weight:700">Total Penalties</td>
+            <td style="${cell}text-align:center;font-weight:700">${penaltyQty.toFixed(2)}</td>
+            <td style="${cell}text-align:center;font-weight:700">N/A</td>
+            <td style="${cell}text-align:right;font-weight:700;color:#b91c1c">−$${fmtMoney(totals.penalties)}</td>
+          </tr>` : ''}
+          <tr style="background:#dbeafe">
+            <td style="${cell}font-weight:700">Net Award</td>
+            <td style="${cell}text-align:center;font-weight:700">—</td>
+            <td style="${cell}text-align:center;font-weight:700">N/A</td>
+            <td style="${cell}text-align:right;font-weight:700">${(totals.net||0)<0?'−':''}$${fmtMoney(Math.abs(totals.net||0))}</td>
           </tr>
         </tbody>
       </table>
 
-      <!-- Signatures -->
+      <!-- Signatures (placeholders only — signing logic not implemented yet) -->
       <div style="margin-top:60px">
         <div style="margin-bottom:8px">Signed by:</div>
         <div style="display:flex;gap:60px;flex-wrap:wrap;margin-top:24px">
