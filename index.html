@@ -744,7 +744,7 @@
 
         <!-- ═══ Award Letter — Line Items (Input Type · Quantity · Rate · Earned) ═══ -->
         <h2 style="margin-top:24px">Award Letter — Line Items</h2>
-        <div class="notice notice-info" style="margin-bottom:10px"><span><strong>Edit the Quantity and Rate</strong> for each row. Earned auto-calculates. Rate is prefilled from the participant's profile.</span></div>
+        <div class="notice notice-info" style="margin-bottom:10px"><span><strong>Edit the Quantity and Rate</strong> for the rows that apply (Hourly, Overtime, Bonus, Cash). Earned auto-calculates. Rate is prefilled from the participant's profile. Rows you leave blank are dropped automatically — they won't appear on the printed letter.</span></div>
 
         <div class="tbl-wrap" style="margin-bottom:16px">
           <table>
@@ -2931,16 +2931,21 @@ function rcGetParticipant() {
 }
 
 function rcSeedDefaultLines() {
-  // Default rows = the standard Award Letter rows: Hourly Inputs (×1) + Bonus Inputs (×0.1)
+  // Default rows = the four standard Award Letter rows.
+  // Empty rows (quantity=0) are auto-dropped on save, so the printed letter
+  // only shows the rows the user actually filled in.
   const f = rcGetParticipant();
   const fund = STATE.funds.find(fn => fn.isDefault) || STATE.funds[0];
   const rate = f?.rate || 0;
+  const otCoef = fund?.otCoef || 1.5;
   const bonusPct = (fund?.bonusPct || 10) / 100;
   const tbody = document.getElementById('rc-lines-tbody');
   if (!tbody) return;
   tbody.innerHTML = '';
-  rcAppendRow({ inputType: 'hourly',   label: 'Hourly Inputs (×1)',           quantity: 0,  rate: rate });
-  rcAppendRow({ inputType: 'bonus',    label: `Bonus Inputs (×${bonusPct})`,  quantity: 0,  rate: rate * bonusPct });
+  rcAppendRow({ inputType: 'hourly',   label: 'Hourly Inputs (×1)',           quantity: 0, rate: rate });
+  rcAppendRow({ inputType: 'overtime', label: `Overtime Inputs (×${otCoef})`, quantity: 0, rate: rate * otCoef });
+  rcAppendRow({ inputType: 'bonus',    label: `Bonus Inputs (×${bonusPct})`,  quantity: 0, rate: rate * bonusPct });
+  rcAppendRow({ inputType: 'cash',     label: 'Cash Inputs (×1)',             quantity: 0, rate: 0 });
 }
 
 function rcRefreshRatesFromProfile() {
