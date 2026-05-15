@@ -286,6 +286,18 @@
   .award-letter .al-sig-role{font-size:11px;color:var(--g700);font-weight:600}
   .award-letter .al-sig-date{font-size:11px;color:var(--g400);margin-top:1px}
 
+
+  /* ── CONSOLIDATED (MY FUNDS) VIEW ─────────────────────────────── */
+  .consolidated-total-bar{background:linear-gradient(135deg,var(--navy) 0%,#1e4976 100%);border-radius:10px;padding:18px 22px;color:#fff;display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;flex-wrap:wrap;gap:14px}
+  .fund-participation-card{background:#fff;border:1px solid var(--g200);border-radius:10px;box-shadow:var(--shadow);margin-bottom:12px;overflow:hidden}
+  .fund-participation-card.is-default{border-left:4px solid var(--blue)}
+  .fund-participation-header{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border-bottom:1px solid var(--g100);gap:10px;flex-wrap:wrap}
+  .fund-participation-body{display:grid;grid-template-columns:repeat(4,1fr)}
+  .fund-stat-cell{padding:14px 18px;border-right:1px solid var(--g100)}
+  .fund-stat-cell:last-child{border-right:none}
+  .fund-stat-lbl{font-size:10.5px;font-weight:600;color:var(--g500);text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px}
+  .fund-stat-val{font-size:20px;font-weight:700;font-family:'DM Mono',monospace;color:var(--navy)}
+
   /* PRINT STYLES (for PDF export) */
   @media print{
     body{background:#fff}
@@ -390,6 +402,24 @@
     <button class="btn btn-primary" style="width:100%;justify-content:center;padding:9px" onclick="doLogin()">Sign In →</button>
     <div style="text-align:center;margin-top:16px;font-size:11px;color:var(--g400)">Demo: any @021.ceo email / any password</div>
   </div>
+</div>
+
+
+<!-- ═══════════════════════ MY FUNDS (CONSOLIDATED) ═══════════════════════ -->
+<div id="screen-consolidated" class="screen">
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-left">
+      <div class="title">My Funds</div>
+      <div class="bread">Your consolidated holdings across all funds you participate in</div>
+    </div>
+  </div>
+  <div class="page">
+    <div id="consolidated-total-bar"></div>
+    <div class="section-label" style="margin-bottom:12px">Funds you participate in</div>
+    <div id="consolidated-fund-list"></div>
+  </div>
+</div>
 </div>
 
 <!-- ═══════════════════════ FUNDS ═══════════════════════ -->
@@ -1160,10 +1190,10 @@ const STATE = {
     { id: 'f-beta', name: "Beta Fund Agreement", company: '021', status: 'initiated', isDefault: false, effectiveDate: '2025-10-01', initPeriod: 60, otThreshold: 40, otCoef: 1.5, bonusPct: 8, clientServices: 'artificial intelligence accounting, strategy, and alignment software and educational products' }
   ],
   founders: [
-    { id: 'fnd-1', fundId: 'f-021', fullName: 'David Boctor', title: 'Founder & CEO', address: '3317 Shadybrook Lane, Chico, CA 95928', email021: 'david@021.ceo', emailPersonal: 'dboctor@gmail.com', location: 'Chico, CA', initDate: '2026-01-01', payment: 'Bill Pay', service: 'Strategy, platform architecture, product leadership', rate: 120, role: 'fund_leader', status: 'contributing', offerDate: '2026-01-01', ndaBegin: '2026-01-01', ndaEnd: '2029-01-01', icaBegin: '2026-01-01', icaEnd: '2029-01-01' },
-    { id: 'fnd-2', fundId: 'f-021', fullName: 'Ryker Rinehart', title: 'Fund Secretary', address: '1234 Market St, Miami, FL 33101', email021: 'ryker@021.ceo', emailPersonal: 'ryker@me.com', location: 'Miami, FL', initDate: '2026-01-15', payment: 'Zelle', service: 'Fund administration, ledger management, contribution tracking', rate: 95, role: 'fund_secretary', status: 'contributing', offerDate: '2026-01-15', ndaBegin: '2026-01-15', ndaEnd: '2029-01-15', icaBegin: '2026-01-15', icaEnd: '2029-01-15' },
-    { id: 'fnd-3', fundId: 'f-021', fullName: 'Alex Chen', title: 'Front-End Developer', address: '789 Pine Ave, Portland, OR 97201', email021: 'alex@021.ceo', emailPersonal: 'achen@dev.io', location: 'Portland, OR', initDate: '2026-02-01', payment: 'Upwork', service: 'Front-end development, React components, UI implementation', rate: 85, role: 'fund_owner', status: 'initiated', offerDate: '2026-02-01', ndaBegin: '2026-02-01', ndaEnd: '2029-02-01', icaBegin: '2026-02-01', icaEnd: '2029-02-01' },
-    { id: 'fnd-4', fundId: 'f-021', fullName: 'Maria Santos', title: 'Backend Engineer', address: '456 Oak St, Austin, TX 78701', email021: 'maria@021.ceo', emailPersonal: 'msantos@gmail.com', location: 'Austin, TX', initDate: '2025-11-01', payment: 'Bill Pay', service: 'Backend API development, database design', rate: 110, role: 'fund_owner', status: 'terminated', offerDate: '2025-11-01', ndaBegin: '2025-11-01', ndaEnd: '2028-11-01', icaBegin: '2025-11-01', icaEnd: '2022-11-01' /* intentionally expired */ }
+    { id: 'fnd-1', fundId: 'f-021', fundIds: ['f-021','f-seed','f-beta'], fullName: 'David Boctor', title: 'Founder & CEO', address: '3317 Shadybrook Lane, Chico, CA 95928', email021: 'david@021.ceo', emailPersonal: 'dboctor@gmail.com', location: 'Chico, CA', initDate: '2026-01-01', payment: 'Bill Pay', service: 'Strategy, platform architecture, product leadership', rate: 120, role: 'fund_leader', status: 'contributing', offerDate: '2026-01-01', ndaBegin: '2026-01-01', ndaEnd: '2029-01-01', icaBegin: '2026-01-01', icaEnd: '2029-01-01' },
+    { id: 'fnd-2', fundId: 'f-021', fundIds: ['f-021','f-beta'], fullName: 'Ryker Rinehart', title: 'Fund Secretary', address: '1234 Market St, Miami, FL 33101', email021: 'ryker@021.ceo', emailPersonal: 'ryker@me.com', location: 'Miami, FL', initDate: '2026-01-15', payment: 'Zelle', service: 'Fund administration, ledger management, contribution tracking', rate: 95, role: 'fund_secretary', status: 'contributing', offerDate: '2026-01-15', ndaBegin: '2026-01-15', ndaEnd: '2029-01-15', icaBegin: '2026-01-15', icaEnd: '2029-01-15' },
+    { id: 'fnd-3', fundId: 'f-021', fundIds: ['f-021'], fullName: 'Alex Chen', title: 'Front-End Developer', address: '789 Pine Ave, Portland, OR 97201', email021: 'alex@021.ceo', emailPersonal: 'achen@dev.io', location: 'Portland, OR', initDate: '2026-02-01', payment: 'Upwork', service: 'Front-end development, React components, UI implementation', rate: 85, role: 'fund_owner', status: 'initiated', offerDate: '2026-02-01', ndaBegin: '2026-02-01', ndaEnd: '2029-02-01', icaBegin: '2026-02-01', icaEnd: '2029-02-01' },
+    { id: 'fnd-4', fundId: 'f-021', fundIds: ['f-021'], fullName: 'Maria Santos', title: 'Backend Engineer', address: '456 Oak St, Austin, TX 78701', email021: 'maria@021.ceo', emailPersonal: 'msantos@gmail.com', location: 'Austin, TX', initDate: '2025-11-01', payment: 'Bill Pay', service: 'Backend API development, database design', rate: 110, role: 'fund_owner', status: 'terminated', offerDate: '2025-11-01', ndaBegin: '2025-11-01', ndaEnd: '2028-11-01', icaBegin: '2025-11-01', icaEnd: '2022-11-01' /* intentionally expired */ }
   ],
   // ─── LEGACY (kept for backward compat; canonical store is `awards`) ────
   contributions: [
@@ -1451,6 +1481,142 @@ function reverseAward(awardId) {
   a.status = 'reversed';
   a.reversedAt = new Date().toISOString();
   a.reversedBy = STATE.currentUser?.name || 'Unknown';
+}
+
+
+/* ═══════════════════════════════════════════════════════════════
+   CONSOLIDATED VIEW — Multi-fund membership
+   ═══════════════════════════════════════════════════════════════ */
+
+/* Returns all funds a founder participates in (uses fundIds if present) */
+function getParticipantFunds(founderId) {
+  const f = STATE.founders.find(x => x.id === founderId);
+  if (!f) return [];
+  const ids = f.fundIds || [f.fundId];
+  return STATE.funds.filter(fn => ids.includes(fn.id));
+}
+
+/* Inputs scoped to a specific fund — for cross-fund breakdown */
+function computeFounderInputsForFund(founderId, fundId) {
+  let base=0, ot=0, bonus=0, cash=0, penalty=0;
+  STATE.awards.filter(a => a.founderId===founderId && a.fundId===fundId).forEach(a => {
+    if (a.status==='reversed') return;
+    (a.lineItems||[]).forEach(li => {
+      if (li.reversedAt) return;
+      if (li.kind==='penalty') { penalty+=Math.abs(li.earned||0); return; }
+      if (li.inputType==='hourly')        base+=li.earned||0;
+      else if (li.inputType==='overtime') ot+=li.earned||0;
+      else if (li.inputType==='bonus')    bonus+=li.earned||0;
+      else if (li.inputType==='cash')     cash+=li.earned||0;
+    });
+  });
+  return { base, ot, bonus, cash, penalty, net: base+ot+bonus+cash-penalty };
+}
+
+/* Equity % within a specific fund */
+function computeFounderEquityPctForFund(founderId, fundId) {
+  const participants = STATE.founders.filter(x => (x.fundIds||[x.fundId]).includes(fundId));
+  const total = participants.reduce((s,x) => s+Math.max(0, computeFounderInputsForFund(x.id,fundId).net), 0);
+  if (total===0) return 0;
+  return (Math.max(0, computeFounderInputsForFund(founderId,fundId).net) / total) * 100;
+}
+
+/* Render the My Funds consolidated screen */
+function renderConsolidated() {
+  const me = STATE.founders.find(f => f.email021===STATE.currentUser.email)
+          || STATE.founders.find(f => f.email021.split('@')[0]===STATE.currentUser.email.split('@')[0]);
+  const totalBarEl = document.getElementById('consolidated-total-bar');
+  const fundListEl = document.getElementById('consolidated-fund-list');
+  if (!totalBarEl || !fundListEl) return;
+
+  if (!me) {
+    totalBarEl.innerHTML = '';
+    fundListEl.innerHTML = '<div class="notice notice-warn"><span>No participant record found for the current user.</span></div>';
+    return;
+  }
+
+  const funds = getParticipantFunds(me.id);
+  let totalNet=0, totalContribs=0, totalPenalties=0;
+  funds.forEach(fn => {
+    const inp = computeFounderInputsForFund(me.id, fn.id);
+    totalNet       += inp.net;
+    totalContribs  += inp.base+inp.ot+inp.bonus+inp.cash;
+    totalPenalties += inp.penalty;
+  });
+
+  const defaultFund = STATE.funds.find(f => f.isDefault);
+  totalBarEl.innerHTML = `
+    <div class="consolidated-total-bar">
+      <div>
+        <div style="font-size:11px;color:rgba(255,255,255,.55);font-weight:600;text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px">Total Holdings</div>
+        <div style="font-size:28px;font-weight:800;font-family:'DM Mono',monospace">$${fmtMoney(totalNet)}</div>
+        <div style="font-size:12px;color:rgba(255,255,255,.55);margin-top:2px">across ${funds.length} fund${funds.length===1?'':'s'}</div>
+      </div>
+      <div style="display:flex;gap:28px;flex-wrap:wrap">
+        <div>
+          <div style="font-size:10px;color:rgba(255,255,255,.45);font-weight:600;text-transform:uppercase;letter-spacing:.05em">Contributions</div>
+          <div style="font-size:18px;font-weight:700;font-family:'DM Mono',monospace;margin-top:3px">$${fmtMoney(totalContribs)}</div>
+        </div>
+        <div>
+          <div style="font-size:10px;color:rgba(255,255,255,.45);font-weight:600;text-transform:uppercase;letter-spacing:.05em">Penalties</div>
+          <div style="font-size:18px;font-weight:700;font-family:'DM Mono',monospace;margin-top:3px;color:${totalPenalties?'#fca5a5':'rgba(255,255,255,.6)'}">−$${fmtMoney(totalPenalties)}</div>
+        </div>
+        <div>
+          <div style="font-size:10px;color:rgba(255,255,255,.45);font-weight:600;text-transform:uppercase;letter-spacing:.05em">Primary Fund</div>
+          <div style="font-size:14px;font-weight:600;margin-top:5px">${escapeHtml(defaultFund?.company||'—')}</div>
+        </div>
+      </div>
+    </div>`;
+
+  if (funds.length === 0) {
+    fundListEl.innerHTML = '<div class="notice notice-info"><span>You are not a participant in any fund yet.</span></div>';
+    return;
+  }
+
+  fundListEl.innerHTML = funds.map(fn => {
+    const inp    = computeFounderInputsForFund(me.id, fn.id);
+    const equity = computeFounderEquityPctForFund(me.id, fn.id);
+    const statusBadge = fn.status==='active'?'<span class="badge badge-green">Active</span>'
+      :fn.status==='archive'?'<span class="badge badge-gray">Archive</span>'
+      :fn.status==='terminated'?'<span class="badge badge-red">Terminated</span>'
+      :'<span class="badge badge-yellow">Initiated</span>';
+    return `
+      <div class="fund-participation-card${fn.isDefault?' is-default':''}">
+        <div class="fund-participation-header">
+          <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+            <div class="card-title">${escapeHtml(fn.name)}</div>
+            ${fn.isDefault?'<span class="default-badge">Default</span>':''}
+            ${statusBadge}
+          </div>
+          <button class="btn btn-secondary btn-sm" onclick="drillIntoFund('${fn.id}','${me.id}')">View Holdings →</button>
+        </div>
+        <div class="fund-participation-body">
+          <div class="fund-stat-cell">
+            <div class="fund-stat-lbl">Net Holdings</div>
+            <div class="fund-stat-val">$${fmtMoney(inp.net)}</div>
+          </div>
+          <div class="fund-stat-cell">
+            <div class="fund-stat-lbl">Equity %</div>
+            <div class="fund-stat-val" style="color:var(--blue)">${equity.toFixed(1)}%</div>
+          </div>
+          <div class="fund-stat-cell">
+            <div class="fund-stat-lbl">Contributions</div>
+            <div class="fund-stat-val" style="color:var(--green)">$${fmtMoney(inp.base+inp.ot+inp.bonus+inp.cash)}</div>
+          </div>
+          <div class="fund-stat-cell">
+            <div class="fund-stat-lbl">Penalties</div>
+            <div class="fund-stat-val" style="color:${inp.penalty?'var(--red)':'var(--g400)'}">${inp.penalty?'−$'+fmtMoney(inp.penalty):'—'}</div>
+          </div>
+        </div>
+      </div>`;
+  }).join('');
+}
+
+/* Drill from consolidated view into a single fund's detail */
+function drillIntoFund(fundId, founderId) {
+  STATE.activeFundId    = fundId;
+  STATE.activeFounderId = founderId;
+  editFund(fundId);
 }
 
 /* ============ OFFER LETTER ============ */
@@ -1780,7 +1946,7 @@ function renderFundsTable(filterText='') {
   tbody.innerHTML = STATE.funds
     .filter(f => !needle || f.name.toLowerCase().includes(needle))
     .map(f => {
-      const founderCount = STATE.founders.filter(x => x.fundId === f.id && x.status !== 'terminated').length;
+      const founderCount = STATE.founders.filter(x => (x.fundIds||[x.fundId]).includes(f.id) && x.status !== 'terminated').length;
       const statusBadge = f.status === 'active' ? '<span class="badge badge-green">Active</span>'
         : f.status === 'terminated' ? '<span class="badge badge-red">Terminated</span>'
         : f.status === 'archive' ? '<span class="badge badge-gray">Archive</span>'
@@ -1840,7 +2006,7 @@ function editFund(fundId) {
 function renderFundFoundersTable() {
   const tbody = document.getElementById('fd-founders-tbody');
   if (!tbody) return;
-  const founders = STATE.founders.filter(x => x.fundId === STATE.activeFundId);
+  const founders = STATE.founders.filter(x => (x.fundIds||[x.fundId]).includes(STATE.activeFundId));
   if (founders.length === 0) {
     tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:var(--g400);padding:24px">No founders yet. Click "+ Add Founder" to start.</td></tr>';
     return;
@@ -1933,7 +2099,7 @@ function confirmAddFounder() {
   const id = 'fnd-' + Date.now();
   const today = new Date().toISOString().slice(0,10);
   STATE.founders.push({
-    id, fundId: STATE.activeFundId, fullName: `${first} ${last}`, title: '', address: '', email021: email, emailPersonal: '',
+    id, fundId: STATE.activeFundId, fundIds: [STATE.activeFundId], fullName: `${first} ${last}`, title: '', address: '', email021: email, emailPersonal: '',
     location: '', initDate: today, payment: 'Bill Pay', service: '', rate: 0,
     role, status: 'initiated',
     offerDate: today, ndaBegin: today, ndaEnd: addYears(today, 3), icaBegin: today, icaEnd: addYears(today, 3)
@@ -3216,7 +3382,7 @@ function approvePenalty() {
 /* ═══════════════════════════════════════════════════════════════
    NAVIGATION & PLUMBING
    ═══════════════════════════════════════════════════════════════ */
-const SCREENS_WITH_SIDEBAR = ['screen-funds','screen-fund-details','screen-founder-detail','screen-record-contribution','screen-record-penalty','screen-ownership','screen-ledger','screen-award-detail'];
+const SCREENS_WITH_SIDEBAR = ['screen-funds','screen-fund-details','screen-founder-detail','screen-record-contribution','screen-record-penalty','screen-ownership','screen-ledger','screen-award-detail','screen-consolidated'];
 
 function buildSidebar(activeId) {
   const lnk = (id, label) => {
@@ -3237,6 +3403,7 @@ function buildSidebar(activeId) {
     </div>
     <nav>
       <div class="nav-section">Main</div>
+      ${lnk('screen-consolidated','My Funds')}
       ${lnk('screen-ownership','Ownership')}
       ${lnk('screen-ledger','Award Ledger')}
       ${lnk('screen-funds','Funds')}
@@ -3282,6 +3449,7 @@ function goTo(id) {
   if (id === 'screen-ledger') renderLedger();
   if (id === 'screen-fund-details') renderFundFoundersTable();
   if (id === 'screen-award-detail') renderAwardDetail();
+  if (id === 'screen-consolidated') renderConsolidated();
 }
 function goBack() {
   if (STATE.rcContext === 'founder' && STATE.activeFounderId) openFounder(STATE.activeFounderId);
@@ -3302,7 +3470,7 @@ function doLogin() {
   if (email.includes('david')) STATE.currentUser = { name: 'David Boctor', email: 'david@021.ceo', role: 'Fund Leader' };
   else if (email.includes('ryker')) STATE.currentUser = { name: 'Ryker Rinehart', email: 'ryker@021.ceo', role: 'Fund Secretary' };
   else STATE.currentUser = { name: 'Fund Owner', email, role: 'Fund Owner' };
-  goTo('screen-ownership'); // Default fund loads here
+  goTo('screen-consolidated'); // Lands on My Funds consolidated view
   toast(`Welcome, ${STATE.currentUser.name}`, 'green');
 }
 
