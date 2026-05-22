@@ -3,8 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Founders Fund</title>
-<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<title>Founders Fund — v6</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=DM+Serif+Display:ital@0;1&family=Caveat:wght@500;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 <style>
 :root {
   --ink:      #1B3A5C;
@@ -106,6 +107,13 @@ body { font-family: var(--font); background: var(--surface); color: var(--ink); 
 .sb-avatar { width: 32px; height: 32px; border-radius: 50%; background: var(--ink); display: flex; align-items: center; justify-content: center; color: #fff; font-size: 11px; font-weight: 700; flex-shrink: 0; }
 .sb-user-name { color: var(--ink); font-size: 13px; font-weight: 600; }
 .sb-user-role { color: var(--slate-2); font-size: 10.5px; margin-top: 1px; }
+.btn-logout {
+  display:flex; align-items:center; gap:8px; width:100%; padding:8px 12px;
+  border-radius:var(--r); border:1px solid var(--border); background:transparent;
+  color:var(--slate); font-family:var(--font); font-size:12px; font-weight:500;
+  cursor:pointer; transition:all .12s; margin-top:8px;
+}
+.btn-logout:hover { background:var(--ruby-light); border-color:var(--ruby-mid); color:var(--ruby); }
 .sb-logout {
   display: flex; align-items: center; gap: 8px; width: 100%; padding: 8px 12px; border-radius: 8px;
   border: 1px solid var(--border); background: transparent; color: var(--slate);
@@ -275,6 +283,12 @@ select.form-control { appearance: none; background-image: url("data:image/svg+xm
 .search-wrap .form-control { padding-left: 34px; }
 
 /* ══ TABS ══════════════════════════════════════════════ */
+.tab-badge {
+  display:inline-flex; align-items:center; justify-content:center;
+  background:var(--ruby); color:#fff; font-size:9px; font-weight:700;
+  min-width:16px; height:16px; border-radius:99px; padding:0 4px;
+  font-family:var(--mono); margin-left:4px;
+}
 .tabs-bar { display: flex; gap: 2px; border-bottom: 2px solid var(--border); margin-bottom: 20px; overflow-x: auto; }
 .tab { padding: 10px 18px; font-size: 13px; font-weight: 600; color: var(--slate); cursor: pointer; border-bottom: 2.5px solid transparent; margin-bottom: -2px; white-space: nowrap; transition: all .12s; }
 .tab:hover { color: var(--ink); }
@@ -286,11 +300,18 @@ select.form-control { appearance: none; background-image: url("data:image/svg+xm
 .perm-hidden { display: none !important; }
 
 /* ══ LOGIN SCREEN ══════════════════════════════════════ */
-#screen-login {
+#screen-login, #screen-signup {
   background: linear-gradient(135deg, var(--ink) 0%, #112341 100%);
   align-items: center; justify-content: center; flex-direction: column;
 }
-.login-card { background: var(--white); border-radius: 18px; padding: 40px 36px; width: 400px; box-shadow: var(--shadow-lg); }
+.signup-card { background: var(--white); border-radius: 18px; padding: 40px 36px; width: 480px; box-shadow: var(--shadow-lg); max-height: 92vh; overflow-y: auto; }
+.role-explain-card { border-radius: 12px; padding: 16px 18px; margin-bottom: 18px; display: flex; align-items: flex-start; gap: 14px; border: 2px solid; }
+.role-explain-icon { font-size: 26px; flex-shrink: 0; margin-top: 2px; }
+.role-explain-title { font-size: 14px; font-weight: 800; color: var(--ink); margin-bottom: 3px; }
+.role-explain-desc { font-size: 12.5px; color: var(--slate); line-height: 1.5; }
+.role-explain-perms { margin-top: 8px; display: flex; flex-wrap: wrap; gap: 5px; }
+.role-perm-tag { font-size: 10.5px; font-weight: 600; padding: 2px 8px; border-radius: 99px; }
+.login-card { background: var(--white); border-radius: 18px; padding: 40px 36px; width: 420px; box-shadow: var(--shadow-lg); }
 .login-header { text-align: center; margin-bottom: 28px; }
 .login-icon { width: 52px; height: 52px; background: var(--sapphire); border-radius: 14px; display: inline-flex; align-items: center; justify-content: center; font-size: 18px; font-weight: 800; color: #fff; margin-bottom: 12px; letter-spacing: -.5px; }
 .login-title { font-size: 22px; font-weight: 800; color: var(--ink); letter-spacing: -.5px; }
@@ -367,6 +388,27 @@ select.form-control { appearance: none; background-image: url("data:image/svg+xm
 ::-webkit-scrollbar { width: 5px; height: 5px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: var(--border-2); border-radius: 3px; }
+
+/* ── AWARD LETTER (inline + PDF) ── */
+.award-letter{font-family:'DM Sans',sans-serif;color:#000;background:#fff;padding:30px 36px;font-size:13px;line-height:1.55}
+.award-letter .al-header{text-align:right;margin-bottom:30px;font-size:13px}
+.award-letter .al-date{margin-bottom:18px}
+.award-letter .al-recipient{margin-bottom:18px}
+.award-letter .al-greet{margin-bottom:14px}
+.award-letter .al-body{margin-bottom:14px}
+.award-letter .al-period{margin-bottom:18px}
+.award-letter table.al-table{width:100%;border-collapse:collapse;font-size:12px;margin-bottom:30px}
+.award-letter table.al-table th{border:1px solid #cbd5e1;padding:9px 11px;background:#fff;font-weight:600;text-align:right;color:var(--slate);font-size:11px;text-transform:none;letter-spacing:0}
+.award-letter table.al-table th:first-child{text-align:left}
+.award-letter table.al-table td{border:1px solid #cbd5e1;padding:9px 11px;text-align:right}
+.award-letter table.al-table td:first-child{text-align:left}
+.award-letter table.al-table tr.al-total td{font-weight:700;background:#f8fafc}
+.award-letter table.al-table tr.al-net td{font-weight:700;background:var(--sapphire-light);color:var(--sapphire)}
+.award-letter .al-signed-label{margin-top:8px;margin-bottom:18px}
+.award-letter .al-sig-grid{display:grid;grid-template-columns:1fr 1fr;gap:36px 50px;margin-bottom:18px}
+.award-letter .al-sig-block{border-bottom:1px solid #1e293b;padding-bottom:4px;margin-bottom:6px;min-height:36px;font-family:'Caveat','Brush Script MT',cursive;font-size:18px}
+.award-letter .al-sig-role{font-size:11px;color:var(--t2);font-weight:600}
+.award-letter .al-sig-date{font-size:11px;color:var(--t3);margin-top:1px}
 
 @media (max-width: 960px) {
   .four-col { grid-template-columns: 1fr 1fr; }
@@ -521,18 +563,133 @@ select.form-control { appearance: none; background-image: url("data:image/svg+xm
     <div class="login-header">
       <div class="login-icon">FF</div>
       <div class="login-title">Founders Fund</div>
-      <div class="login-sub">SAF-Model Equity System</div>
+      <div class="login-sub">SAF-Model Equity System · v6</div>
     </div>
     <div style="font-weight:700;font-size:14px;color:var(--ink);margin-bottom:14px">Sign in to your account</div>
-    <div id="login-err" class="notice notice-red" style="display:none;margin-bottom:12px"><span class="notice-icon">✕</span><span>Invalid credentials</span></div>
+    <div id="login-err" class="notice notice-red" style="display:none;margin-bottom:12px"><span class="notice-icon">✕</span><span>Invalid credentials. Check your email and password.</span></div>
     <div class="fg" style="gap:12px">
       <div class="form-group"><label>Email address</label><input class="form-control" type="email" id="l-email" placeholder="name@021.ceo" onkeydown="if(event.key==='Enter')doLogin()"></div>
       <div class="form-group"><label>Password</label><input class="form-control" type="password" id="l-pw" placeholder="Password" onkeydown="if(event.key==='Enter')doLogin()"></div>
     </div>
     <button class="btn btn-primary" style="width:100%;justify-content:center;margin-top:16px;padding:9px" onclick="doLogin()">Sign In →</button>
+
+    <!-- Demo credentials -->
+    <div style="margin-top:18px;padding:14px;background:var(--surface);border-radius:10px;border:1px solid var(--border)">
+      <div style="font-size:11px;font-weight:700;color:var(--slate);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px">Demo Credentials</div>
+      <div style="display:flex;flex-direction:column;gap:7px">
+        <div style="display:flex;align-items:center;justify-content:space-between;cursor:pointer;padding:6px 10px;border-radius:7px;border:1px solid var(--border);background:var(--white)" onclick="setLoginDemo('david@021.ceo')">
+          <div>
+            <div style="font-size:12.5px;font-weight:700;color:var(--ink)">David Boctor</div>
+            <div style="font-size:11px;color:var(--slate)">david@021.ceo</div>
+          </div>
+          <span class="role-pill role-manager">Fund Manager</span>
+        </div>
+        <div style="display:flex;align-items:center;justify-content:space-between;cursor:pointer;padding:6px 10px;border-radius:7px;border:1px solid var(--border);background:var(--white)" onclick="setLoginDemo('ryker@021.ceo')">
+          <div>
+            <div style="font-size:12.5px;font-weight:700;color:var(--ink)">Ryker Rinehart</div>
+            <div style="font-size:11px;color:var(--slate)">ryker@021.ceo</div>
+          </div>
+          <span class="role-pill role-secretary">Fund Secretary</span>
+        </div>
+        <div style="display:flex;align-items:center;justify-content:space-between;cursor:pointer;padding:6px 10px;border-radius:7px;border:1px solid var(--border);background:var(--white)" onclick="setLoginDemo('alex@021.ceo')">
+          <div>
+            <div style="font-size:12.5px;font-weight:700;color:var(--ink)">Alex Chen</div>
+            <div style="font-size:11px;color:var(--slate)">alex@021.ceo</div>
+          </div>
+          <span class="role-pill role-owner">Fund Owner</span>
+        </div>
+      </div>
+      <div style="font-size:10.5px;color:var(--slate-2);margin-top:10px;text-align:center">Click any row to fill · any password works in demo</div>
+    </div>
+
+    <div style="text-align:center;margin-top:16px;padding-top:16px;border-top:1px solid var(--border)">
+      <div style="font-size:11.5px;color:var(--slate);margin-bottom:6px">New to the platform? You need an invitation from a Fund Manager or Secretary.</div>
+      <a href="#" onclick="event.preventDefault();openSignup()" style="font-size:12.5px;font-weight:700;color:var(--sapphire);text-decoration:none">Have an invite? Create your account →</a>
+    </div>
   </div>
 </div>
 
+
+
+<!-- ══════════════════════════════════════════════════════
+     SIGN UP (invited users only)
+══════════════════════════════════════════════════════ -->
+<div id="screen-signup" class="screen">
+  <div class="signup-card">
+    <div class="login-header">
+      <div class="login-icon">FF</div>
+      <div class="login-title">Create Your Account</div>
+      <div class="login-sub">Founders Fund · SAF-Model Equity System</div>
+    </div>
+
+    <!-- STEP 1: Find invitation by email -->
+    <div id="su-step-1">
+      <p style="font-size:13px;color:var(--slate);margin-bottom:18px;text-align:center;line-height:1.6">Enter the email address where you received your invitation. We'll look up your details automatically.</p>
+      <div id="su-step1-err" class="notice notice-red" style="display:none;margin-bottom:12px"><span class="notice-icon">✕</span><span id="su-step1-err-msg">No invitation found for this email.</span></div>
+      <div class="form-group" style="margin-bottom:16px">
+        <label>Invitation Email <span class="req">*</span></label>
+        <input class="form-control" type="email" id="su-email" placeholder="name@021.ceo" onkeydown="if(event.key==='Enter')suLookup()">
+      </div>
+      <button class="btn btn-primary" style="width:100%;justify-content:center;padding:9px" onclick="suLookup()">Look Up My Invitation →</button>
+      <div style="text-align:center;margin-top:16px">
+        <a href="#" onclick="event.preventDefault();goToLogin()" style="font-size:12.5px;color:var(--slate);text-decoration:none">← Back to Sign In</a>
+      </div>
+    </div>
+
+    <!-- STEP 2: Complete profile & set password -->
+    <div id="su-step-2" style="display:none">
+      <!-- Role explanation card — filled dynamically -->
+      <div id="su-role-card" class="role-explain-card"></div>
+
+      <div class="notice notice-info" style="margin-bottom:18px">
+        <span class="notice-icon">ℹ</span>
+        <span>Your email and role are set by your invitation and cannot be changed. Contact your Fund Manager if something looks wrong.</span>
+      </div>
+
+      <div id="su-step2-err" class="notice notice-red" style="display:none;margin-bottom:12px"><span class="notice-icon">✕</span><span id="su-step2-err-msg">Please complete all required fields.</span></div>
+
+      <div class="fg" style="gap:14px;margin-bottom:18px">
+        <div class="grid2">
+          <div class="form-group">
+            <label>First Name <span class="req">*</span></label>
+            <input class="form-control" id="su-first" placeholder="First name">
+          </div>
+          <div class="form-group">
+            <label>Last Name <span class="req">*</span></label>
+            <input class="form-control" id="su-last" placeholder="Last name">
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Email Address</label>
+          <input class="form-control" id="su-email-display" readonly style="background:var(--surface);color:var(--slate)">
+        </div>
+        <div class="form-group">
+          <label>Fund</label>
+          <input class="form-control" id="su-fund-display" readonly style="background:var(--surface);color:var(--slate)">
+        </div>
+        <div class="form-group">
+          <label>Role</label>
+          <input class="form-control" id="su-role-display" readonly style="background:var(--surface);color:var(--slate)">
+        </div>
+        <div class="grid2">
+          <div class="form-group">
+            <label>Password <span class="req">*</span></label>
+            <input class="form-control" type="password" id="su-pw" placeholder="Set a password">
+          </div>
+          <div class="form-group">
+            <label>Confirm Password <span class="req">*</span></label>
+            <input class="form-control" type="password" id="su-pw2" placeholder="Confirm password">
+          </div>
+        </div>
+      </div>
+
+      <button class="btn btn-primary" style="width:100%;justify-content:center;padding:9px" onclick="suComplete()">Create Account &amp; Sign In →</button>
+      <div style="text-align:center;margin-top:14px">
+        <a href="#" onclick="event.preventDefault();suBack()" style="font-size:12.5px;color:var(--slate);text-decoration:none">← Back</a>
+      </div>
+    </div>
+  </div>
+</div>
 
 <!-- ══════════════════════════════════════════════════════
      MY FUNDS (consolidated)
@@ -540,14 +697,14 @@ select.form-control { appearance: none; background-image: url("data:image/svg+xm
 <div id="screen-my-funds" class="screen">
 <div class="main">
   <div class="topbar">
-    <div><div class="tb-title">My Funds</div><div class="tb-bread">Consolidated view of all funds you participate in</div></div>
+    <div><div class="tb-title" id="my-funds-title">My Funds</div><div class="tb-bread" id="my-funds-bread">Consolidated view of all funds you participate in</div></div>
     <div class="tb-actions">
       <button class="btn btn-primary perm-manager" onclick="createNewFund()">+ New Fund</button>
     </div>
   </div>
   <div class="page">
     <div id="my-funds-hero"></div>
-    <div class="section-label" style="margin-bottom:12px">Your fund memberships</div>
+    <div class="section-label" style="margin-bottom:12px" id="my-funds-section-label">Your fund memberships</div>
     <div id="my-funds-grid" class="three-col"></div>
   </div>
 </div>
@@ -662,10 +819,10 @@ select.form-control { appearance: none; background-image: url("data:image/svg+xm
   </div>
   <div class="page">
     <div id="fd-access-guard" class="access-guard" style="display:none">
-      <span class="access-guard-icon"></span>
+      <span class="access-guard-icon">🔒</span>
       <div><div class="access-guard-title">Read-only access</div><div class="access-guard-sub">Fund Owners cannot edit fund settings. Contact a Fund Manager or Secretary.</div></div>
     </div>
-    <div id="fd-default-banner" class="notice notice-info" style="display:none"><span class="notice-icon"></span><span><strong>Default Fund.</strong> This fund drives the consolidated dashboard view.</span></div>
+    <div id="fd-default-banner" class="notice notice-info" style="display:none"><span class="notice-icon">⭐</span><span><strong>Default Fund.</strong> This fund drives the consolidated dashboard view.</span></div>
 
     <div class="tabs-bar">
       <div class="tab active" data-tab="fd-settings" onclick="switchFdTab(this)">Settings</div>
@@ -704,6 +861,10 @@ select.form-control { appearance: none; background-image: url("data:image/svg+xm
 
     <!-- MEMBERS TAB -->
     <div class="tab-content" id="fd-members">
+      <div id="fd-no-sec-notice" class="notice notice-warn" style="display:none;margin-bottom:14px">
+        <span class="notice-icon">⚠</span>
+        <span><strong>No Fund Secretary assigned.</strong> As Fund Manager, you must explicitly appoint a Secretary for this fund. Use the <strong>"Set as Secretary"</strong> action on any Fund Owner in the table below, or invite a new member with the Fund Secretary role.</span>
+      </div>
       <div class="card">
         <div class="card-header">
           <div>
@@ -768,7 +929,7 @@ select.form-control { appearance: none; background-image: url("data:image/svg+xm
   <div class="page">
     <div class="breadcrumb" id="hold-breadcrumb"></div>
     <div id="hold-access-guard" class="access-guard" style="display:none">
-      <span class="access-guard-icon"></span>
+      <span class="access-guard-icon">🔒</span>
       <div><div class="access-guard-title">View-only access</div><div class="access-guard-sub">Fund Owners can view holdings but cannot edit fund settings.</div></div>
     </div>
 
@@ -976,6 +1137,15 @@ select.form-control { appearance: none; background-image: url("data:image/svg+xm
       </div>
     </div>
 
+    <!-- Award Detail Tabs -->
+    <div class="tabs-bar" style="margin-bottom:18px">
+      <div class="tab active" data-tab="ad-tab-summary"   onclick="switchAdTab(this)">Summary</div>
+      <div class="tab"        data-tab="ad-tab-letter"    onclick="switchAdTab(this)">Award Letter</div>
+      <div class="tab"        data-tab="ad-tab-penalties" onclick="switchAdTab(this)">Penalties <span class="tab-badge" id="ad-pen-badge" style="display:none">0</span></div>
+    </div>
+
+    <!-- SUMMARY TAB -->
+    <div class="tab-content active" id="ad-tab-summary">
     <div class="two-col" style="align-items:start">
       <div style="display:flex;flex-direction:column;gap:14px">
         <!-- Summary -->
@@ -1018,29 +1188,89 @@ select.form-control { appearance: none; background-image: url("data:image/svg+xm
           </div>
         </div>
 
-        <!-- Penalty line items -->
-        <div class="card" id="ad-penalty-card">
-          <div class="card-header"><div class="card-title">Penalty Line Items</div></div>
-          <div class="tbl-wrap">
-            <table>
-              <thead><tr><th>Category</th><th>Severity</th><th>Description</th><th style="text-align:right">Value</th><th style="width:80px"></th></tr></thead>
-              <tbody id="ad-penalty-tbody"></tbody>
-            </table>
-          </div>
-        </div>
       </div>
-
-      <!-- Award Letter -->
+      <!-- right col: mini summary -->
       <div style="position:sticky;top:72px">
         <div class="card">
-          <div class="card-header">
-            <div class="card-title">Award Letter</div>
-            <span class="badge badge-blue badge-no-dot">Official Receipt</span>
+          <div class="card-header"><div class="card-title">Quick Actions</div></div>
+          <div class="card-body" style="display:flex;flex-direction:column;gap:8px">
+            <button class="btn btn-secondary" style="width:100%;justify-content:flex-start" onclick="switchAdTabById('ad-tab-letter')">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+              View Award Letter
+            </button>
+            <button class="btn btn-secondary" style="width:100%;justify-content:flex-start;color:var(--ruby)" onclick="switchAdTabById('ad-tab-penalties')">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+              View Penalties
+            </button>
+            <button class="btn btn-primary" style="width:100%;justify-content:flex-start" onclick="downloadAwardPdf()">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              Download PDF
+            </button>
           </div>
-          <div class="card-body" style="font-size:12.5px;line-height:1.7" id="ad-letter-body"></div>
         </div>
       </div>
     </div>
+    </div><!-- /ad-tab-summary -->
+
+    <!-- AWARD LETTER TAB -->
+    <div class="tab-content" id="ad-tab-letter">
+      <div class="two-col" style="align-items:start">
+        <div>
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">Award Letter</div>
+              <div style="display:flex;gap:8px">
+                <span class="badge badge-blue badge-no-dot">Official Receipt</span>
+                <button class="btn btn-primary btn-sm" onclick="downloadAwardPdf()">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                  Download PDF
+                </button>
+              </div>
+            </div>
+            <div class="card-body" style="font-size:13px;line-height:1.75;max-width:760px" id="ad-letter-body"></div>
+          </div>
+        </div>
+        <div style="position:sticky;top:72px;display:flex;flex-direction:column;gap:12px">
+          <div class="card">
+            <div class="card-header"><div class="card-title">Letter Actions</div></div>
+            <div class="card-body" style="display:flex;flex-direction:column;gap:8px">
+              <button class="btn btn-secondary" style="width:100%;justify-content:flex-start" onclick="downloadAwardPdf()">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                Download PDF
+              </button>
+              <button class="btn btn-secondary" style="width:100%;justify-content:flex-start;color:var(--ruby)" onclick="openAddPenaltyModal()">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                + Add Penalty
+              </button>
+              <button class="btn btn-secondary" style="width:100%;justify-content:flex-start;color:var(--ruby)" id="ad-reverse-btn2" onclick="confirmReverseAward()">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7v6h6"/><path d="M21 17a9 9 0 00-15-6.7L3 13"/></svg>
+                Reverse Award
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div><!-- /ad-tab-letter -->
+
+    <!-- PENALTIES TAB -->
+    <div class="tab-content" id="ad-tab-penalties">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+        <div>
+          <div style="font-size:14px;font-weight:700">Penalty Line Items</div>
+          <div style="font-size:12px;color:var(--slate)">Penalties reduce the Net Award</div>
+        </div>
+        <button class="btn btn-danger btn-sm" onclick="openAddPenaltyModal()">+ Add Penalty</button>
+      </div>
+      <div class="card" id="ad-penalty-card">
+        <div class="tbl-wrap">
+          <table>
+            <thead><tr><th>Category</th><th>Severity</th><th>Description</th><th style="text-align:right">Value</th><th style="width:80px"></th></tr></thead>
+            <tbody id="ad-penalty-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div><!-- /ad-tab-penalties -->
+
   </div>
 </div>
 </div>
@@ -1099,6 +1329,7 @@ select.form-control { appearance: none; background-image: url("data:image/svg+xm
   <div class="page">
     <div class="tabs-bar" style="margin-bottom:18px">
       <div class="tab active" data-tab="up-tab-profile" onclick="switchUpTab(this)">Profile</div>
+      <div class="tab" data-tab="up-tab-docs" onclick="switchUpTab(this)">Documents &amp; Letters</div>
       <div class="tab" data-tab="up-tab-offer" onclick="switchUpTab(this)">Offer Letter</div>
       <div class="tab" data-tab="up-tab-nda" onclick="switchUpTab(this)">NDA</div>
       <div class="tab" data-tab="up-tab-ica" onclick="switchUpTab(this)">IC Agreement</div>
@@ -1174,6 +1405,58 @@ select.form-control { appearance: none; background-image: url("data:image/svg+xm
       </div>
     </div>
     </div><!-- /up-tab-profile -->
+
+    <!-- DOCUMENTS & LETTERS TAB -->
+    <div class="tab-content" id="up-tab-docs">
+      <div style="display:flex;flex-direction:column;gap:16px">
+
+        <!-- Agreements section -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">Agreements &amp; Onboarding Documents</div>
+            <span class="badge badge-blue badge-no-dot">Tied to this user globally</span>
+          </div>
+          <div class="card-body" style="padding:0">
+            <table style="width:100%">
+              <thead><tr><th>Document</th><th>Status</th><th>Date</th><th style="width:180px">Actions</th></tr></thead>
+              <tbody id="up-docs-agreements-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Award Letters section -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">Award Letters</div>
+            <span class="badge badge-slate badge-no-dot">All awards across all funds</span>
+          </div>
+          <div class="card-body" style="padding:0">
+            <table style="width:100%">
+              <thead><tr><th>Period</th><th>Fund</th><th>Net Award</th><th>Status</th><th style="width:160px">Actions</th></tr></thead>
+              <tbody id="up-docs-awards-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Uploaded Signed Files section -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">Signed Files &amp; Uploads</div>
+            <span class="badge badge-slate badge-no-dot">Signed copies, receipts, certificates</span>
+          </div>
+          <div class="card-body">
+            <div id="up-docs-uploads"></div>
+            <div style="margin-top:12px;padding:16px;border:2px dashed var(--border-2);border-radius:var(--r);text-align:center;color:var(--slate-2)">
+              <div style="font-size:22px;margin-bottom:6px">📎</div>
+              <div style="font-weight:600;font-size:13px;color:var(--slate);margin-bottom:4px">Upload signed documents</div>
+              <div style="font-size:12px">Drop signed PDFs, images, or any document files here</div>
+              <button class="btn btn-secondary btn-sm" style="margin-top:10px" onclick="toast('File upload requires backend integration','amber')">Choose Files</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div><!-- /up-tab-docs -->
 
     <!-- OFFER LETTER TAB -->
     <div class="tab-content" id="up-tab-offer">
@@ -1382,39 +1665,44 @@ const SIDEBAR_SCREENS = ['screen-my-funds','screen-users','screen-funds','screen
 
 function buildSidebar(activeId) {
   const u=CUR.user;
-  const isSorM=isSecretaryOrManager(CUR.activeFundId);
-  const isM=isManager(CUR.activeFundId)||u?.systemRole==='fund_manager';
-  const lnk=(id,icon,label,badge='')=>{
-    const on=activeId===id||(id==='screen-funds'&&(activeId==='screen-fund-details'))||(id==='screen-my-funds'&&activeId==='screen-my-funds');
-    return `<div class="sb-link${on?' active':''}" onclick="goTo('${id}')">
-      <svg class="sb-icon" viewBox="0 0 20 20" fill="currentColor">${icon}</svg>
-      ${label}${badge?`<span class="sb-badge${badge==='pending'?' orange':''}">●</span>`:''}
-    </div>`;
-  };
+  const role=u?.systemRole||'fund_owner';
+  const isOp=role==='fund_manager'||role==='fund_secretary';
+  const pendingInvites=isOp?INVITATIONS.filter(i=>i.status==='pending').length:0;
   const icons={
     home:`<path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"/>`,
     users:`<path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z"/>`,
     funds:`<path fill-rule="evenodd" d="M4 4a2 2 0 012-2h8a2 2 0 012 2v12a1 1 0 110 2h-3a1 1 0 01-1-1v-2a1 1 0 00-1-1H9a1 1 0 00-1 1v2a1 1 0 01-1 1H4a1 1 0 110-2V4zm3 1h2v2H7V5zm2 4H7v2h2V9zm2-4h2v2h-2V5zm2 4h-2v2h2V9z" clip-rule="evenodd"/>`,
-    settings:`<path fill-rule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd"/>`,
   };
-  const pendingInvites = INVITATIONS.filter(i=>i.status==='pending').length;
+  const lnk=(id,icon,label,badge='')=>{
+    const on=activeId===id||(id==='screen-funds'&&activeId==='screen-fund-details')||(id==='screen-ledger'&&activeId==='screen-award-detail');
+    return `<div class="sb-link${on?' active':''}" onclick="goTo('${id}')">
+      <svg class="sb-icon" viewBox="0 0 20 20" fill="currentColor">${icon}</svg>
+      ${label}${badge?`<span class="sb-badge">${badge}</span>`:''}
+    </div>`;
+  };
+  const roleColor=role==='fund_manager'?'var(--sapphire)':role==='fund_secretary'?'var(--emerald)':'var(--slate)';
+  // Operational nav (Manager + Secretary): full admin access
+  const opNav=`
+    <div class="sb-section">Overview</div>
+    ${lnk('screen-my-funds',icons.home,'My Funds')}
+    ${lnk('screen-users',icons.users,'User Directory',pendingInvites>0?String(pendingInvites):'')}
+    <div class="sb-section">Administration</div>
+    ${lnk('screen-funds',icons.funds,'Funds')}`;
+  // Owner nav: stripped — just their own holdings + profile
+  const ownerNav=`
+    <div class="sb-section">My Portfolio</div>
+    ${lnk('screen-my-funds',icons.home,'My Holdings')}`;
   return `<div class="sidebar">
     <div class="sb-brand">
       <div class="sb-brand-row">
         <div class="sb-logo">FF</div>
-        <div><div class="sb-name">Founders Fund</div><div class="sb-version">SAF-Model</div></div>
+        <div><div class="sb-name">Founders Fund</div><div class="sb-version">SAF-Model v6.0</div></div>
       </div>
     </div>
-    <nav class="sb-nav">
-      <div class="sb-section">Overview</div>
-      ${lnk('screen-my-funds',icons.home,'My Funds')}
-      ${lnk('screen-users',icons.users,'User Directory',pendingInvites>0?String(pendingInvites):'')}
-      <div class="sb-section">Administration</div>
-      ${lnk('screen-funds',icons.funds,'Funds')}
-    </nav>
+    <nav class="sb-nav">${isOp?opNav:ownerNav}</nav>
     <div class="sb-footer">
       <div class="sb-user" onclick="openUserProfile(CUR.user?.id)" style="cursor:pointer">
-        <div class="sb-avatar" style="background:${COLORS[0]}">${u?initials(u.name):'?'}</div>
+        <div class="sb-avatar" style="background:${roleColor}">${u?initials(u.name):'?'}</div>
         <div>
           <div class="sb-user-name">${escHtml(u?.name||'')}</div>
           <div class="sb-user-role">${roleName(u?.systemRole||'')}</div>
@@ -1474,6 +1762,9 @@ function doLogin() {
   if(!user||!$('l-pw').value){ $('login-err').style.display='flex'; return; }
   $('login-err').style.display='none';
   CUR.user=user;
+  const isOp=user.systemRole==='fund_manager'||user.systemRole==='fund_secretary';
+  // Operators → full dashboard (My Funds with admin nav)
+  // Owners    → personal holdings view (My Funds with stripped nav)
   goTo('screen-my-funds');
   toast(`Welcome back, ${user.name.split(' ')[0]}!`,'green');
 }
@@ -1486,28 +1777,50 @@ function handleLogout() {
 
 /* ══ MY FUNDS ════════════════════════════════════════════ */
 function renderMyFunds() {
+  const role=CUR.user?.systemRole||'fund_owner';
+  const isOp=role==='fund_manager'||role==='fund_secretary';
+
+  // Role-aware topbar
+  const titleEl=$('my-funds-title');
+  const breadEl=$('my-funds-bread');
+  const sectionEl=$('my-funds-section-label');
+  if(titleEl) titleEl.textContent=isOp?'My Funds':'My Holdings';
+  if(breadEl)  breadEl.textContent=isOp
+    ?'Operational dashboard · Manage funds, members, and awards'
+    :'Your personal equity holdings across all funds you participate in';
+  if(sectionEl) sectionEl.textContent=isOp?'Funds you manage or administer':'Your fund memberships';
+
   const myMemberships=membershipsForUser(CUR.user?.id);
   let totalNet=0, totalContrib=0, totalPenalty=0;
   myMemberships.forEach(m=>{
     const i=computeUserInputsInFund(m.userId,m.fundId);
     totalNet+=i.net; totalContrib+=i.base+i.ot+i.bonus+i.cash; totalPenalty+=i.penalty;
   });
+
+  // Hero — consistent navy for all roles, same as original
+  const heroBg='linear-gradient(135deg,var(--ink) 0%,#1e4976 100%)';
+  const avatarColor=COLORS[0];
+
   $('my-funds-hero').innerHTML = `
-    <div class="hero-bar">
-      <div class="avatar avatar-lg" style="background:${COLORS[0]}">${initials(CUR.user?.name||'')}</div>
+    <div class="hero-bar" style="background:${heroBg}">
+      <div class="avatar avatar-lg" style="background:${avatarColor}">${initials(CUR.user?.name||'')}</div>
       <div>
         <div style="font-size:18px;font-weight:800;letter-spacing:-.4px">${escHtml(CUR.user?.name||'')}</div>
         <div style="font-size:12px;color:rgba(255,255,255,.5);margin-top:3px">${roleName(CUR.user?.systemRole||'')} · ${escHtml(CUR.user?.email||'')}</div>
       </div>
       <div class="hero-stats">
-        <div><div class="hero-stat-lbl">Total Net Holdings</div><div class="hero-stat-val">$${fmt$(totalNet)}</div></div>
+        <div><div class="hero-stat-lbl">${isOp?'Total Net Holdings':'My Net Holdings'}</div><div class="hero-stat-val">$${fmt$(totalNet)}</div></div>
         <div><div class="hero-stat-lbl">Contributions</div><div class="hero-stat-val" style="color:#6EE7B7">$${fmt$(totalContrib)}</div></div>
         <div><div class="hero-stat-lbl">Penalties</div><div class="hero-stat-val" style="color:${totalPenalty?'#FCA5A5':'rgba(255,255,255,.35)'}">−$${fmt$(totalPenalty)}</div></div>
         <div><div class="hero-stat-lbl">Funds</div><div class="hero-stat-val">${myMemberships.length}</div></div>
       </div>
     </div>`;
+
   if(myMemberships.length===0){
-    $('my-funds-grid').innerHTML = `<div class="card" style="grid-column:1/-1"><div class="card-empty"><div class="card-empty-icon">📂</div><div class="card-empty-title">No fund memberships</div><div class="card-empty-desc">You haven't been added to any funds yet. Contact a Fund Manager to get started.</div></div></div>`;
+    const emptyMsg=isOp
+      ?'No fund memberships yet. Use <strong>+ New Fund</strong> to create your first fund.'
+      :'You haven\'t been added to any funds yet. Contact a Fund Manager to get started.';
+    $('my-funds-grid').innerHTML = `<div class="card" style="grid-column:1/-1"><div class="card-empty"><div class="card-empty-icon">${isOp?'🏛️':'📂'}</div><div class="card-empty-title">No fund memberships</div><div class="card-empty-desc">${emptyMsg}</div></div></div>`;
     return;
   }
   $('my-funds-grid').innerHTML = myMemberships.map(m=>{
@@ -1749,11 +2062,19 @@ function renderFdMembersTable(){
   const tbody=$('fd-members-tbody'); if(!tbody)return;
   const mems=membershipsForFund(CUR.activeFundId);
   if(mems.length===0){
-    tbody.innerHTML=`<tr><td colspan="7"><div class="card-empty"><div class="card-empty-icon">👥</div><div class="card-empty-title">No members yet</div><div class="card-empty-desc">Use "Add Member" to invite or assign users to this fund.</div></div></td></tr>`;
+    const noSec=!membershipsForFund(CUR.activeFundId).some(m=>m.fundRole==='fund_secretary');
+    tbody.innerHTML=`<tr><td colspan="7"><div class="card-empty"><div class="card-empty-icon">👥</div><div class="card-empty-title">No members yet</div><div class="card-empty-desc">Use "Invite Member" to add users to this fund.</div></div></td></tr>`;
+    if(noSec&&(isManager(CUR.activeFundId)||CUR.user?.systemRole==='fund_manager')){
+      const notice=$('fd-no-sec-notice');
+      if(notice) notice.style.display='flex';
+    }
     return;
   }
   const canManage=isSecretaryOrManager(CUR.activeFundId);
   const iAmManager=isManager(CUR.activeFundId)||CUR.user?.systemRole==='fund_manager';
+  const hasSecretary=mems.some(m=>m.fundRole==='fund_secretary');
+  const noSecNotice=$('fd-no-sec-notice');
+  if(noSecNotice) noSecNotice.style.display=(iAmManager&&!hasSecretary)?'flex':'none';
   tbody.innerHTML=mems.map((m,i)=>{
     const u=USERS.find(x=>x.id===m.userId);
     if(!u)return'';
@@ -1886,7 +2207,7 @@ function renderLedger(){
   const list=awardsForFund(CUR.activeFundId);
   const tbody=$('ledger-tbody'); if(!tbody)return;
   if(list.length===0){
-    tbody.innerHTML=`<tr><td colspan="7"><div class="card-empty"><div class="card-empty-icon"></div><div class="card-empty-title">No awards recorded</div><div class="card-empty-desc">Awards bundle contributions and penalties for a member over a period. Click "+ Add Award" to create one.</div></div></td></tr>`;
+    tbody.innerHTML=`<tr><td colspan="7"><div class="card-empty"><div class="card-empty-icon">📋</div><div class="card-empty-title">No awards recorded</div><div class="card-empty-desc">Awards bundle contributions and penalties for a member over a period. Click "+ Add Award" to create one.</div></div></td></tr>`;
     return;
   }
   tbody.innerHTML=list.map((a,i)=>{
@@ -2021,6 +2342,9 @@ function inviteNext(){
     if(CUR.activeFundId){
       Array.from(fundSel.options).forEach(o=>{if(o.value===CUR.activeFundId)o.selected=true;});
     }
+    // Enforce single-manager / single-secretary per fund when role changes
+    fundSel.onchange=refreshRoleOptions;
+    refreshRoleOptions();
   } else if(inviteCurrentStep===2){
     inviteCurrentStep=3;
     $('invite-step-2').style.display='none';
@@ -2036,20 +2360,52 @@ function inviteBack(){
   if(inviteCurrentStep===3){inviteCurrentStep=2;$('invite-step-3').style.display='none';$('invite-step-2').style.display='';$('inv-next-btn').textContent='Review →';}
   else if(inviteCurrentStep===2){inviteCurrentStep=1;$('invite-step-2').style.display='none';$('invite-step-1').style.display='';$('inv-back-btn').style.display='none';$('inv-next-btn').textContent='Next →';}
 }
+function refreshRoleOptions(){
+  const fid=$('inv-fund').value;
+  const roleSel=$('inv-fund-role');
+  const mems=membershipsForFund(fid);
+  const hasManager  = mems.some(m=>m.fundRole==='fund_manager');
+  const hasSecretary= mems.some(m=>m.fundRole==='fund_secretary');
+  Array.from(roleSel.options).forEach(o=>{
+    if(o.value==='fund_manager'){
+      o.disabled=hasManager;
+      o.text='Fund Manager — Full administrative access'+(hasManager?' (already assigned)':'');
+    }
+    if(o.value==='fund_secretary'){
+      o.disabled=hasSecretary;
+      o.text='Fund Secretary — Manage membership & edit fund'+(hasSecretary?' (already assigned)':'');
+    }
+  });
+  // If current selection is disabled, switch to fund_owner
+  if(roleSel.options[roleSel.selectedIndex]?.disabled){
+    roleSel.value='fund_owner';
+  }
+}
+
 function sendInvite(){
   const email=$('inv-email').value.trim();
   const name=($('inv-first').value.trim()+' '+$('inv-last').value.trim()).trim();
   const existingUser=USERS.find(u=>u.email.toLowerCase()===email.toLowerCase());
+  const chosenFundId=$('inv-fund').value;
+  const chosenRole=$('inv-fund-role').value;
+  const fundMems=membershipsForFund(chosenFundId);
+  // Enforce single manager/secretary per fund
+  if(chosenRole==='fund_manager'&&fundMems.some(m=>m.fundRole==='fund_manager')){
+    toast('This fund already has a Fund Manager. Only one is allowed.','red'); return;
+  }
+  if(chosenRole==='fund_secretary'&&fundMems.some(m=>m.fundRole==='fund_secretary')){
+    toast('This fund already has a Fund Secretary. Use "Set as Secretary" to reassign.','amber'); return;
+  }
   if(existingUser){
-    const mem=membershipFor(existingUser.id,$('inv-fund').value);
+    const mem=membershipFor(existingUser.id,chosenFundId);
     if(!mem){
-      MEMBERSHIPS.push({id:uid(),userId:existingUser.id,fundId:$('inv-fund').value,fundRole:$('inv-fund-role').value,status:'initiated',joinedAt:todayISO()});
+      MEMBERSHIPS.push({id:uid(),userId:existingUser.id,fundId:chosenFundId,fundRole:chosenRole,status:'initiated',joinedAt:todayISO()});
       toast(`${name} added to fund`,'green');
     } else { toast('User already a member of this fund','amber'); }
   } else {
     const newUser={id:uid(),name,email,email2:'',title:$('inv-title').value.trim(),address:'',location:'',rate:0,service:'',payment:'Bill Pay',systemRole:'fund_owner',status:'pending',offerDate:'',ndaBegin:'',ndaEnd:'',joinedAt:''};
     USERS.push(newUser);
-    INVITATIONS.push({id:uid(),email,userId:newUser.id,fundId:$('inv-fund').value,fundRole:$('inv-fund-role').value,sentAt:todayISO(),expiresAt:'',status:'pending',sentBy:CUR.user?.id});
+    INVITATIONS.push({id:uid(),email,userId:newUser.id,fundId:chosenFundId,fundRole:chosenRole,sentAt:todayISO(),expiresAt:'',status:'pending',sentBy:CUR.user?.id});
     toast(`Invite sent to ${email}`,'green');
   }
   closeModal('modal-invite');
@@ -2215,6 +2571,12 @@ function openAwardDetail(awardId){
 }
 function renderAwardDetail(){
   const a=AWARDS.find(x=>x.id===CUR.activeAwardId); if(!a) return;
+  // Reset to Summary tab each time award detail opens
+  document.querySelectorAll('#screen-award-detail [data-tab]').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('#screen-award-detail .tab-content').forEach(t=>t.classList.remove('active'));
+  const sumTab=document.querySelector('#screen-award-detail [data-tab="ad-tab-summary"]');
+  if(sumTab)sumTab.classList.add('active');
+  const sumContent=$('ad-tab-summary'); if(sumContent)sumContent.classList.add('active');
   const u=USERS.find(x=>x.id===a.userId);
   const color=COLORS[USERS.indexOf(u)%COLORS.length];
   const t=awardTotals(a);
@@ -2252,6 +2614,9 @@ function renderAwardDetail(){
   // Penalties
   const pc=document.getElementById('ad-penalty-card');
   const ptb=document.getElementById('ad-penalty-tbody');
+  // Update penalty tab badge
+  const penBadge=$('ad-pen-badge');
+  if(penBadge){ penBadge.textContent=String(liveP.length); penBadge.style.display=liveP.length?'':'none'; }
   if(!liveP.length){
     pc.style.display='none';
   } else {
@@ -2261,39 +2626,123 @@ function renderAwardDetail(){
   // Award Letter
   renderAwardLetter(a, u);
 }
+function switchAdTab(el){
+  document.querySelectorAll('#screen-award-detail [data-tab]').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+  document.querySelectorAll('#screen-award-detail .tab-content').forEach(t=>t.classList.remove('active'));
+  const tc=$(el.dataset.tab); if(tc)tc.classList.add('active');
+  // Render letter when that tab is opened
+  if(el.dataset.tab==='ad-tab-letter'){
+    const a=AWARDS.find(x=>x.id===CUR.activeAwardId);
+    const u=USERS.find(x=>x.id===a?.userId);
+    if(a&&u)renderAwardLetter(a,u);
+  }
+}
+function switchAdTabById(tabId){
+  const el=document.querySelector(`#screen-award-detail [data-tab="${tabId}"]`);
+  if(el)switchAdTab(el);
+}
+
 function renderAwardLetter(a, u){
   const el=document.getElementById('ad-letter-body'); if(!el) return;
   const fund=FUNDS.find(f=>f.id===a.fundId);
   const t=awardTotals(a);
+  // Find the Fund Manager (Co-Founder / CEO) and Fund Secretary for this fund
+  const managerMem  = MEMBERSHIPS.find(m=>m.fundId===a.fundId&&m.fundRole==='fund_manager');
+  const secretaryMem= MEMBERSHIPS.find(m=>m.fundId===a.fundId&&m.fundRole==='fund_secretary');
+  const manager  = managerMem  ? USERS.find(x=>x.id===managerMem.userId)  : null;
+  const secretary= secretaryMem? USERS.find(x=>x.id===secretaryMem.userId): null;
+  const company=(fund?.company||'021')+'.CEO';
+  const managerAddress=(manager?.address||'3317 Shadybrook Lane, Chico, CA 95928');
+  const addrParts=managerAddress.split(',').map(s=>s.trim());
+  const greetName=(u?.name||'').split(' ')[0]||'Recipient';
+  const recipientLines=[u?.name||'Unknown',...(u?.address||'').split(',').map(s=>s.trim()).filter(Boolean)];
   const live=(a.lineItems||[]).filter(li=>!li.reversedAt);
   const liveC=live.filter(li=>li.kind==='contribution');
   const liveP=live.filter(li=>li.kind==='penalty');
-  const greet=(u?.name||'').split(' ')[0]||'Recipient';
-  const rows=liveC.map(li=>`<tr><td style="border:1px solid var(--border);padding:7px 10px">${escHtml(li.label)}</td><td style="border:1px solid var(--border);padding:7px 10px;text-align:right">${Number(li.quantity).toFixed(2)}</td><td style="border:1px solid var(--border);padding:7px 10px;text-align:right">$${fmt$(li.rate)}</td><td style="border:1px solid var(--border);padding:7px 10px;text-align:right;font-weight:700">$${fmt$(li.earned)}</td></tr>`).join('');
-  const penRows=liveP.map(li=>`<tr style="color:var(--ruby)"><td style="border:1px solid var(--border);padding:7px 10px">${escHtml(li.label||li.category||'Penalty')}</td><td style="border:1px solid var(--border);padding:7px 10px;text-align:right">1</td><td style="border:1px solid var(--border);padding:7px 10px;text-align:right">—</td><td style="border:1px solid var(--border);padding:7px 10px;text-align:right;font-weight:700">−$${fmt$(Math.abs(li.earned||0))}</td></tr>`).join('');
-  el.innerHTML=`
-    <div style="text-align:right;font-size:12px;color:var(--slate);margin-bottom:20px">${escHtml((fund?.company||'021')+'.CEO')}<br>3317 Shadybrook Lane, Chico, CA 95928</div>
-    <div style="margin-bottom:16px">${fmtDate(a.awardDate)}</div>
-    <div style="margin-bottom:16px">${escHtml(u?.name||'')}<br><span style="color:var(--slate)">${escHtml(u?.address||'')}</span></div>
-    <p style="margin-bottom:12px">Dear ${escHtml(greet)},</p>
-    <p style="margin-bottom:16px;color:var(--slate-2)">Your input totals for the period below. Please review and confirm.</p>
-    <p style="margin-bottom:16px"><strong>Input Period:</strong> ${escHtml(a.periodLabel)}</p>
-    <table style="width:100%;border-collapse:collapse;font-size:12.5px;margin-bottom:24px">
-      <thead><tr>
-        <th style="border:1px solid var(--border);padding:7px 10px;background:var(--surface);text-align:left">Input Type</th>
-        <th style="border:1px solid var(--border);padding:7px 10px;background:var(--surface);text-align:right">Qty</th>
-        <th style="border:1px solid var(--border);padding:7px 10px;background:var(--surface);text-align:right">Rate</th>
-        <th style="border:1px solid var(--border);padding:7px 10px;background:var(--surface);text-align:right">Earned</th>
-      </tr></thead>
+  const contribQty=liveC.reduce((s,li)=>s+(li.quantity||0),0);
+  const penaltyQty=liveP.reduce((s,li)=>s+(li.quantity||1),0);
+  const createdDate=fmtDate(a.awardDate);
+
+  const contribRows=liveC.map(li=>`
+    <tr>
+      <td>${escHtml(li.label)}</td>
+      <td>${Number(li.quantity||0).toFixed(2)}</td>
+      <td>$${fmt$(li.rate||0)}</td>
+      <td>$${fmt$(li.earned||0)}</td>
+    </tr>`).join('');
+
+  const penRows=liveP.map(li=>`
+    <tr>
+      <td>${escHtml(li.label||li.category||'Penalty')}</td>
+      <td>${Number(li.quantity||1).toFixed(2)}</td>
+      <td>−$${fmt$(Math.abs(li.rate||0))}</td>
+      <td style="color:#dc2626">−$${fmt$(Math.abs(li.earned||0))}</td>
+    </tr>`).join('');
+
+  el.innerHTML=`<div class="award-letter">
+    <div class="al-header">
+      <div>${escHtml(company)}</div>
+      ${addrParts.map(p=>`<div>${escHtml(p)}</div>`).join('')}
+    </div>
+    <div class="al-date">${escHtml(createdDate)}</div>
+    <div class="al-recipient">
+      ${recipientLines.map(l=>`<div>${escHtml(l)}</div>`).join('')}
+    </div>
+    <div class="al-greet">Dear ${escHtml(greetName)},</div>
+    <div class="al-body">Your input totals for the current period are as follows. Please review our calculations and be sure you agree.</div>
+    <div class="al-period"><strong>Input Period:</strong> ${escHtml(a.periodLabel)}</div>
+
+    <table class="al-table">
+      <thead>
+        <tr>
+          <th>Input Type</th>
+          <th>Quantity</th>
+          <th>Rate</th>
+          <th>Earned</th>
+        </tr>
+      </thead>
       <tbody>
-        ${rows||'<tr><td colspan="4" style="text-align:center;color:var(--slate-2);padding:12px">—</td></tr>'}
-        <tr style="background:var(--surface)"><td style="border:1px solid var(--border);padding:7px 10px;font-weight:700">Total Contributions</td><td style="border:1px solid var(--border);padding:7px 10px;text-align:right"></td><td style="border:1px solid var(--border);padding:7px 10px;text-align:right"></td><td style="border:1px solid var(--border);padding:7px 10px;text-align:right;font-weight:700">$${fmt$(t.contributions)}</td></tr>
+        ${contribRows||'<tr><td colspan="4" style="text-align:center;color:#94a3b8;padding:14px">— no contribution line items —</td></tr>'}
+        <tr class="al-total">
+          <td>Total Contributions</td>
+          <td>${contribQty.toFixed(2)}</td>
+          <td>N/A</td>
+          <td>$${fmt$(t.contributions)}</td>
+        </tr>
         ${penRows}
-        ${liveP.length?`<tr style="background:var(--ruby-light)"><td style="border:1px solid var(--border);padding:7px 10px;font-weight:700;color:var(--ruby)">Total Penalties</td><td style="border:1px solid var(--border);padding:7px 10px;text-align:right"></td><td style="border:1px solid var(--border);padding:7px 10px;text-align:right"></td><td style="border:1px solid var(--border);padding:7px 10px;text-align:right;font-weight:700;color:var(--ruby)">−$${fmt$(t.penalties)}</td></tr>`:''}
-        <tr style="background:var(--sapphire-light)"><td style="border:1px solid var(--border);padding:7px 10px;font-weight:700;color:var(--sapphire)">Net Award</td><td style="border:1px solid var(--border);padding:7px 10px;text-align:right"></td><td style="border:1px solid var(--border);padding:7px 10px;text-align:right"></td><td style="border:1px solid var(--border);padding:7px 10px;text-align:right;font-weight:700;color:var(--sapphire)">${t.net<0?'−':''}$${fmt$(Math.abs(t.net))}</td></tr>
+        ${liveP.length?`<tr class="al-total"><td>Total Penalties</td><td>${penaltyQty.toFixed(2)}</td><td>N/A</td><td style="color:#dc2626">−$${fmt$(t.penalties)}</td></tr>`:''}
+        <tr class="al-net">
+          <td>Net Award</td>
+          <td>—</td>
+          <td>N/A</td>
+          <td>${t.net<0?'−':''}$${fmt$(Math.abs(t.net))}</td>
+        </tr>
       </tbody>
     </table>
-    <div style="font-size:11px;color:var(--slate-2);margin-top:8px">Approved by: ${escHtml(a.approvedBy||'—')} · ${fmtDate(a.awardDate)}</div>`;
+
+    <div class="al-signed-label">Signed by:</div>
+    <div class="al-sig-grid">
+      <div>
+        <div class="al-sig-block">${escHtml(u?.name||'')}</div>
+        <div class="al-sig-role">Co-Founder</div>
+        <div class="al-sig-date">${escHtml(createdDate)}</div>
+      </div>
+      <div>
+        <div class="al-sig-block">${escHtml(secretary?.name||'')}</div>
+        <div class="al-sig-role">Fund Secretary</div>
+        <div class="al-sig-date">${escHtml(createdDate)}</div>
+      </div>
+    </div>
+    <div class="al-sig-grid">
+      <div>
+        <div class="al-sig-block">${escHtml(manager?.name||'')}</div>
+        <div class="al-sig-role">Founder and CEO</div>
+        <div class="al-sig-date">${escHtml(createdDate)}</div>
+      </div>
+      <div></div>
+    </div>
+  </div>`;
 }
 function confirmReverseAward(){
   const a=AWARDS.find(x=>x.id===CUR.activeAwardId); if(!a||a.status==='reversed')return;
@@ -2336,36 +2785,107 @@ function downloadAwardPdf(){
   const a=AWARDS.find(x=>x.id===CUR.activeAwardId); if(!a)return;
   const u=USERS.find(x=>x.id===a.userId);
   const fund=FUNDS.find(f=>f.id===a.fundId);
+  const managerMem  =MEMBERSHIPS.find(m=>m.fundId===a.fundId&&m.fundRole==='fund_manager');
+  const secretaryMem=MEMBERSHIPS.find(m=>m.fundId===a.fundId&&m.fundRole==='fund_secretary');
+  const manager  =managerMem  ?USERS.find(x=>x.id===managerMem.userId)  :null;
+  const secretary=secretaryMem?USERS.find(x=>x.id===secretaryMem.userId):null;
   const t=awardTotals(a);
   const live=(a.lineItems||[]).filter(li=>!li.reversedAt);
   const liveC=live.filter(li=>li.kind==='contribution');
   const liveP=live.filter(li=>li.kind==='penalty');
-  const cell='border:1px solid #ccc;padding:8px 12px;';
-  const rows=liveC.map(li=>`<tr><td style="${cell}">${li.label}</td><td style="${cell}text-align:right">${Number(li.quantity).toFixed(2)}</td><td style="${cell}text-align:right">$${fmt$(li.rate)}</td><td style="${cell}text-align:right;font-weight:700">$${fmt$(li.earned)}</td></tr>`).join('');
+  const company=(fund?.company||'021')+'.CEO';
+  const managerAddr=(manager?.address||'3317 Shadybrook Lane, Chico, CA 95928');
+  const addrParts=managerAddr.split(',').map(s=>s.trim());
+  const recipientLines=[u?.name||'Unknown',...(u?.address||'').split(',').map(s=>s.trim()).filter(Boolean)];
+  const greetName=(u?.name||'').split(' ')[0]||'Recipient';
+  const createdDate=fmtDate(a.awardDate);
+  const contribQty=liveC.reduce((s,li)=>s+(li.quantity||0),0);
+  const penaltyQty=liveP.reduce((s,li)=>s+(li.quantity||1),0);
+  const cell='border:1px solid #000;padding:8px 11px;font-size:13px;';
+
+  const contribRows=liveC.map(li=>`<tr>
+    <td style="${cell}font-weight:600">${escHtml(li.label)}</td>
+    <td style="${cell}text-align:center">${Number(li.quantity||0).toFixed(2)}</td>
+    <td style="${cell}text-align:center">$${fmt$(li.rate||0)}</td>
+    <td style="${cell}text-align:right;font-weight:700">$${fmt$(li.earned||0)}</td>
+  </tr>`).join('');
+
+  const penRows=liveP.map(li=>`<tr>
+    <td style="${cell}font-weight:600">${escHtml(li.label||li.category||'Penalty')}</td>
+    <td style="${cell}text-align:center">${Number(li.quantity||1).toFixed(2)}</td>
+    <td style="${cell}text-align:center">−$${fmt$(Math.abs(li.rate||0))}</td>
+    <td style="${cell}text-align:right;font-weight:700;color:#b91c1c">−$${fmt$(Math.abs(li.earned||0))}</td>
+  </tr>`).join('');
+
   const wrap=document.createElement('div');
   wrap.style.cssText='position:fixed;left:-10000px;top:0';
-  wrap.innerHTML=`<div style="font-family:Arial,sans-serif;padding:56px;width:8.5in;background:#fff;font-size:13px;color:#000">
-    <div style="text-align:right;margin-bottom:32px">${(fund?.company||'021')}.CEO<br>3317 Shadybrook Lane, Chico, CA</div>
-    <div style="margin-bottom:24px">${fmtDate(a.awardDate)}</div>
-    <div style="margin-bottom:20px">${u?.name||'—'}<br>${u?.address||''}</div>
-    <div style="margin-bottom:16px">Dear ${(u?.name||'').split(' ')[0]||'Recipient'},</div>
-    <div style="margin-bottom:16px">Your input totals for the period are as follows. Please review and confirm.</div>
-    <div style="margin-bottom:20px"><strong>Input Period:</strong> ${a.periodLabel}</div>
-    <table style="width:100%;border-collapse:collapse;margin-bottom:40px">
-      <thead><tr><th style="${cell}background:#f5f5f5">Input Type</th><th style="${cell}background:#f5f5f5;text-align:right">Quantity</th><th style="${cell}background:#f5f5f5;text-align:right">Rate</th><th style="${cell}background:#f5f5f5;text-align:right">Earned</th></tr></thead>
-      <tbody>${rows}<tr style="background:#f5f5f5;font-weight:700"><td style="${cell}">Total Contributions</td><td style="${cell}text-align:right">—</td><td style="${cell}text-align:right">N/A</td><td style="${cell}text-align:right">$${fmt$(t.contributions)}</td></tr>
-      <tr style="background:#EFF6FF;font-weight:700"><td style="${cell}">Net Award</td><td style="${cell}text-align:right">—</td><td style="${cell}text-align:right">—</td><td style="${cell}text-align:right">${t.net<0?'−':''}$${fmt$(Math.abs(t.net))}</td></tr></tbody>
+  wrap.innerHTML=`<div style="font-family:'DM Sans',Arial,sans-serif;color:#000;padding:48px 56px;width:8.5in;min-height:11in;background:#fff;font-size:13px;line-height:1.55">
+    <div style="text-align:right;margin-bottom:36px">
+      <div>${escHtml(company)}</div>
+      ${addrParts.map(p=>`<div>${escHtml(p)}</div>`).join('')}
+    </div>
+    <div style="margin-bottom:24px">${escHtml(createdDate)}</div>
+    <div style="margin-bottom:22px">${recipientLines.map(l=>`<div>${escHtml(l)}</div>`).join('')}</div>
+    <div style="margin-bottom:16px">Dear ${escHtml(greetName)},</div>
+    <div style="margin-bottom:16px">Your input totals for the current period are as follows. Please review our calculations and be sure you agree.</div>
+    <div style="margin-bottom:20px"><strong>Input Period:</strong> ${escHtml(a.periodLabel)}</div>
+    <table style="width:100%;border-collapse:collapse;margin-bottom:44px">
+      <thead><tr>
+        <th style="${cell}background:#fff;text-align:center">Input Type</th>
+        <th style="${cell}background:#fff;text-align:center">Quantity</th>
+        <th style="${cell}background:#fff;text-align:center">Rate</th>
+        <th style="${cell}background:#fff;text-align:center">Earned</th>
+      </tr></thead>
+      <tbody>
+        ${contribRows||`<tr><td colspan="4" style="${cell}text-align:center;color:#94a3b8">— no contribution line items —</td></tr>`}
+        <tr style="background:#f8fafc">
+          <td style="${cell}font-weight:700">Total Contributions</td>
+          <td style="${cell}text-align:center;font-weight:700">${contribQty.toFixed(2)}</td>
+          <td style="${cell}text-align:center;font-weight:700">N/A</td>
+          <td style="${cell}text-align:right;font-weight:700">$${fmt$(t.contributions)}</td>
+        </tr>
+        ${penRows}
+        ${liveP.length?`<tr style="background:#f8fafc">
+          <td style="${cell}font-weight:700">Total Penalties</td>
+          <td style="${cell}text-align:center;font-weight:700">${penaltyQty.toFixed(2)}</td>
+          <td style="${cell}text-align:center;font-weight:700">N/A</td>
+          <td style="${cell}text-align:right;font-weight:700;color:#b91c1c">−$${fmt$(t.penalties)}</td>
+        </tr>`:''}
+        <tr style="background:#dbeafe">
+          <td style="${cell}font-weight:700">Net Award</td>
+          <td style="${cell}text-align:center;font-weight:700">—</td>
+          <td style="${cell}text-align:center;font-weight:700">N/A</td>
+          <td style="${cell}text-align:right;font-weight:700">${t.net<0?'−':''}$${fmt$(Math.abs(t.net))}</td>
+        </tr>
+      </tbody>
     </table>
-    <div style="margin-top:60px"><div style="margin-bottom:8px">Signed by:</div>
-      <div style="display:flex;gap:60px;margin-top:24px">
-        <div><div style="border-bottom:1px solid #000;height:36px;min-width:220px"></div><div style="font-size:12px;margin-top:4px">Co-Founder</div></div>
-        <div><div style="border-bottom:1px solid #000;height:36px;min-width:220px"></div><div style="font-size:12px;margin-top:4px">Fund Secretary</div></div>
+    <div style="margin-bottom:10px;font-size:13px">Signed by:</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:36px 50px;margin-bottom:18px">
+      <div>
+        <div style="border-bottom:1px solid #1e293b;height:38px;font-family:'Caveat','Brush Script MT',cursive;font-size:20px">${escHtml(u?.name||'')}</div>
+        <div style="font-size:11px;font-weight:600;margin-top:4px">Co-Founder</div>
+        <div style="font-size:11px;color:#64748b;margin-top:1px">${escHtml(createdDate)}</div>
       </div>
+      <div>
+        <div style="border-bottom:1px solid #1e293b;height:38px;font-family:'Caveat','Brush Script MT',cursive;font-size:20px">${escHtml(secretary?.name||'')}</div>
+        <div style="font-size:11px;font-weight:600;margin-top:4px">Fund Secretary</div>
+        <div style="font-size:11px;color:#64748b;margin-top:1px">${escHtml(createdDate)}</div>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:36px 50px">
+      <div>
+        <div style="border-bottom:1px solid #1e293b;height:38px;font-family:'Caveat','Brush Script MT',cursive;font-size:20px">${escHtml(manager?.name||'')}</div>
+        <div style="font-size:11px;font-weight:600;margin-top:4px">Founder and CEO</div>
+        <div style="font-size:11px;color:#64748b;margin-top:1px">${escHtml(createdDate)}</div>
+      </div>
+      <div></div>
     </div>
   </div>`;
   document.body.appendChild(wrap);
+  const datePart=(a.awardDate||'').replace(/-/g,'');
+  const filename=`${datePart||'Award'}_Input_Award_${(u?.name||'').replace(/\s+/g,'_')}.pdf`;
   if(window.html2pdf){
-    html2pdf().set({margin:0,filename:`Award_${a.awardDate}_${(u?.name||'').replace(/\s+/g,'_')}.pdf`,image:{type:'jpeg',quality:.97},html2canvas:{scale:2},jsPDF:{unit:'in',format:'letter',orientation:'portrait'}}).from(wrap.firstChild).save().then(()=>{document.body.removeChild(wrap);toast('PDF downloaded','green');});
+    html2pdf().set({margin:0,filename,image:{type:'jpeg',quality:.98},html2canvas:{scale:2},jsPDF:{unit:'in',format:'letter',orientation:'portrait'}}).from(wrap.firstChild).save().then(()=>{document.body.removeChild(wrap);toast('PDF downloaded','green');}).catch(()=>{document.body.removeChild(wrap);toast('PDF export failed','red');});
   } else { document.body.removeChild(wrap); window.print(); }
 }
 
@@ -2376,10 +2896,91 @@ function switchUpTab(el){
   document.querySelectorAll('#screen-user-profile .tab-content').forEach(t=>t.classList.remove('active'));
   const tc=document.getElementById(el.dataset.tab);
   if(tc) tc.classList.add('active');
+  if(el.dataset.tab==='up-tab-docs')  renderDocsTab();
   if(el.dataset.tab==='up-tab-offer') renderAgreementDoc('offer');
   if(el.dataset.tab==='up-tab-nda')   renderAgreementDoc('nda');
   if(el.dataset.tab==='up-tab-ica')   renderAgreementDoc('ica');
   if(el.dataset.tab==='up-tab-cover') renderAgreementDoc('cover');
+}
+
+function renderDocsTab(){
+  const u=USERS.find(x=>x.id===CUR.activeUserId); if(!u) return;
+
+  // Agreements table
+  const agrTbody=$('up-docs-agreements-tbody');
+  if(agrTbody){
+    const docs=[
+      { name:'Offer Letter',         type:'offer',  date:u.offerDate, desc:'Employment offer and rate agreement' },
+      { name:'NDA',                   type:'nda',    date:u.ndaBegin,  desc:'Confidentiality, Non-Disclosure, and Restricted Use Agreement' },
+      { name:'IC Agreement',          type:'ica',    date:u.ndaBegin,  desc:'Independent Contractor Agreement' },
+      { name:'NDA Cover Letter',      type:'cover',  date:u.ndaBegin,  desc:'Plain-language companion to the NDA' },
+    ];
+    agrTbody.innerHTML=docs.map(d=>{
+      const hasDates=!!d.date;
+      const statusBadge=hasDates?`<span class="badge badge-green">On file</span>`:`<span class="badge badge-amber">Pending</span>`;
+      return `<tr>
+        <td>
+          <div class="td-name">${escHtml(d.name)}</div>
+          <div style="font-size:11.5px;color:var(--slate)">${escHtml(d.desc)}</div>
+        </td>
+        <td>${statusBadge}</td>
+        <td style="font-size:12px;color:var(--slate)">${fmtDate(d.date)||'—'}</td>
+        <td>
+          <div style="display:flex;gap:6px">
+            <button class="btn btn-secondary btn-xs" onclick="switchUpTabTo('${d.type}')">View</button>
+            <button class="btn btn-secondary btn-xs" onclick="downloadAgreementPdf('${d.type}')">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              PDF
+            </button>
+          </div>
+        </td>
+      </tr>`;
+    }).join('');
+  }
+
+  // Award Letters table
+  const awardsTbody=$('up-docs-awards-tbody');
+  if(awardsTbody){
+    const userAwards=AWARDS.filter(a=>a.userId===u.id);
+    if(!userAwards.length){
+      awardsTbody.innerHTML=`<tr><td colspan="5" style="text-align:center;padding:24px;color:var(--slate-2)">No award letters recorded yet.</td></tr>`;
+    } else {
+      awardsTbody.innerHTML=userAwards.map(a=>{
+        const fund=FUNDS.find(f=>f.id===a.fundId);
+        const t=awardTotals(a);
+        const sc=a.status==='reversed'?'badge-red':a.status==='draft'?'badge-amber':'badge-green';
+        return `<tr>
+          <td><div class="td-name">${escHtml(a.periodLabel)}</div><div style="font-size:11.5px;color:var(--slate)">${fmtDate(a.awardDate)}</div></td>
+          <td style="font-size:12.5px">${escHtml(fund?.name||'—')}</td>
+          <td class="mono fw-700" style="color:${t.net<0?'var(--ruby)':'var(--emerald)'}">${t.net<0?'−':''}$${fmt$(Math.abs(t.net))}</td>
+          <td><span class="badge ${sc}">${a.status==='reversed'?'Reversed':a.status==='draft'?'Unvested':'Vested'}</span></td>
+          <td>
+            <div style="display:flex;gap:6px">
+              <button class="btn btn-secondary btn-xs" onclick="CUR.prev='screen-user-profile';openAwardDetail('${a.id}')">View</button>
+              <button class="btn btn-secondary btn-xs" onclick="CUR.activeAwardId='${a.id}';downloadAwardPdf()">
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                PDF
+              </button>
+            </div>
+          </td>
+        </tr>`;
+      }).join('');
+    }
+  }
+
+  // Uploads (placeholder list)
+  const uploadsEl=$('up-docs-uploads');
+  if(uploadsEl){
+    const uploads=u.signedFiles||[];
+    uploadsEl.innerHTML=uploads.length?uploads.map(f=>`<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--border)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg><span style="flex:1;font-size:13px">${escHtml(f.name)}</span><span style="font-size:11.5px;color:var(--slate)">${fmtDate(f.date)}</span></div>`).join(''):'';
+  }
+}
+
+function switchUpTabTo(type){
+  const tabMap={offer:'up-tab-offer',nda:'up-tab-nda',ica:'up-tab-ica',cover:'up-tab-cover'};
+  const tabId=tabMap[type]; if(!tabId)return;
+  const el=document.querySelector('#screen-user-profile [data-tab="'+tabId+'"]');
+  if(el)switchUpTab(el);
 }
 function renderAgreementDoc(type){
   const u=USERS.find(x=>x.id===CUR.activeUserId); if(!u) return;
@@ -2612,9 +3213,171 @@ function downloadAgreementPdf(type){
   } else { window.print(); }
 }
 
+
+/* ══ SIGN UP FLOW ══════════════════════════════════════════════════ */
+let SU_INV = null; // active invitation during signup
+
+function openSignup(){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  $('screen-signup').classList.add('active');
+  $('su-email').value='';
+  $('su-step-1').style.display='';
+  $('su-step-2').style.display='none';
+  $('su-step1-err').style.display='none';
+  SU_INV=null;
+}
+
+function goToLogin(){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  $('screen-login').classList.add('active');
+}
+
+function suLookup(){
+  const email=$('su-email').value.trim().toLowerCase();
+  if(!email){ suStep1Err('Please enter your email address.'); return; }
+  // Already an active registered user — send them to login
+  const active=USERS.find(u=>u.email.toLowerCase()===email&&u.status==='active');
+  if(active){
+    suStep1Err('This email already has an active account. Please sign in from the login page instead.');
+    return;
+  }
+  // Find a pending invitation for this email
+  const inv=INVITATIONS.find(i=>i.email.toLowerCase()===email&&i.status==='pending');
+  if(!inv){ suStep1Err('No pending invitation found for this email. Check your invite email or contact your Fund Manager.'); return; }
+  SU_INV=inv;
+  suShowStep2();
+}
+
+function setLoginDemo(email){
+  $('l-email').value=email;
+  $('l-pw').value='password123';
+  $('login-err').style.display='none';
+}
+
+function suStep1Err(msg){
+  $('su-step1-err-msg').textContent=msg;
+  $('su-step1-err').style.display='flex';
+}
+
+function suShowStep2(){
+  if(!SU_INV) return;
+  $('su-step1-err').style.display='none';
+  $('su-step-1').style.display='none';
+  $('su-step-2').style.display='';
+  const fund=FUNDS.find(f=>f.id===SU_INV.fundId);
+  const role=SU_INV.fundRole;
+
+  // Fill readonly fields
+  $('su-email-display').value=SU_INV.email;
+  $('su-fund-display').value=fund?.name||'—';
+  $('su-role-display').value=roleName(role);
+
+  // Pre-fill name from USERS if a pending stub exists
+  const stub=USERS.find(u=>u.email.toLowerCase()===SU_INV.email.toLowerCase());
+  if(stub&&stub.name){
+    const parts=stub.name.trim().split(' ');
+    $('su-first').value=parts[0]||'';
+    $('su-last').value=parts.slice(1).join(' ')||'';
+  } else {
+    $('su-first').value=''; $('su-last').value='';
+  }
+  $('su-pw').value=''; $('su-pw2').value='';
+
+  // Role explanation card
+  const roleCards={
+    fund_manager:{
+      icon:'🏛️',
+      title:'Fund Manager',
+      desc:'You have full administrative access to the platform. You can create and manage funds, assign members and roles, oversee all awards, and appoint Fund Secretaries.',
+      perms:['Create Funds','Manage Members','Record Awards','View All Ledgers','Assign Secretary'],
+      bg:'var(--sapphire-light)', border:'var(--sapphire-mid)', tagBg:'var(--sapphire)', tagColor:'#fff'
+    },
+    fund_secretary:{
+      icon:'📋',
+      title:'Fund Secretary',
+      desc:'You manage day-to-day fund operations. You can invite members, record contributions and penalties, send onboarding invites, and edit fund details.',
+      perms:['Invite Members','Record Awards','Edit Fund Details','Manage Membership','Resend Invites'],
+      bg:'var(--emerald-light)', border:'var(--emerald-mid)', tagBg:'var(--emerald)', tagColor:'#fff'
+    },
+    fund_owner:{
+      icon:'📊',
+      title:'Fund Owner',
+      desc:'You can view your personal equity holdings, ownership percentage, award letters, and your contribution history across all funds you participate in.',
+      perms:['View My Holdings','View Ownership %','View Award Letters','View Contribution History'],
+      bg:'#EDE9FE', border:'#C4B5FD', tagBg:'#7C3AED', tagColor:'#fff'
+    }
+  };
+  const rc=roleCards[role]||roleCards.fund_owner;
+  $('su-role-card').style.background=rc.bg;
+  $('su-role-card').style.borderColor=rc.border;
+  $('su-role-card').innerHTML=`
+    <div class="role-explain-icon">${rc.icon}</div>
+    <div>
+      <div class="role-explain-title">${rc.title}</div>
+      <div class="role-explain-desc">${rc.desc}</div>
+      <div class="role-explain-perms">
+        ${rc.perms.map(p=>`<span class="role-perm-tag" style="background:${rc.tagBg};color:${rc.tagColor}">${p}</span>`).join('')}
+      </div>
+    </div>`;
+}
+
+function suBack(){
+  $('su-step-2').style.display='none';
+  $('su-step-1').style.display='';
+  SU_INV=null;
+}
+
+function suComplete(){
+  const first=$('su-first').value.trim();
+  const last=$('su-last').value.trim();
+  const pw=$('su-pw').value;
+  const pw2=$('su-pw2').value;
+  if(!first||!last){ suStep2Err('Please enter your first and last name.'); return; }
+  if(!pw||pw.length<6){ suStep2Err('Password must be at least 6 characters.'); return; }
+  if(pw!==pw2){ suStep2Err('Passwords do not match.'); return; }
+  if(!SU_INV){ suStep2Err('Session expired. Please start over.'); return; }
+
+  const fullName=`${first} ${last}`.trim();
+  // Find or update the user stub created during invite
+  let user=USERS.find(u=>u.email.toLowerCase()===SU_INV.email.toLowerCase());
+  if(user){
+    user.name=fullName;
+    user.status='active';
+    user.systemRole=SU_INV.fundRole;
+    user.joinedAt=todayISO();
+  } else {
+    user={id:uid(),name:fullName,email:SU_INV.email,email2:'',title:'',address:'',
+      location:'',rate:0,service:'',payment:'Bill Pay',
+      systemRole:SU_INV.fundRole,status:'active',
+      offerDate:'',ndaBegin:'',ndaEnd:'',joinedAt:todayISO()};
+    USERS.push(user);
+  }
+  // Activate the membership
+  const mem=MEMBERSHIPS.find(m=>m.userId===user.id&&m.fundId===SU_INV.fundId);
+  if(mem){ mem.status='contributing'; mem.joinedAt=todayISO(); }
+  else {
+    MEMBERSHIPS.push({id:uid(),userId:user.id,fundId:SU_INV.fundId,
+      fundRole:SU_INV.fundRole,status:'contributing',joinedAt:todayISO()});
+  }
+  // Mark invitation as accepted
+  SU_INV.status='accepted';
+  SU_INV=null;
+
+  // Auto sign in
+  CUR.user=user;
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  toast(`Welcome to Founders Fund, ${first}! 🎉`,'green');
+  goTo('screen-my-funds');
+}
+
+function suStep2Err(msg){
+  $('su-step2-err-msg').textContent=msg;
+  $('su-step2-err').style.display='flex';
+}
+
 /* ══ INIT ════════════════════════════════════════════════ */
 document.addEventListener('DOMContentLoaded',()=>{
-  
+  // pre-select demo user
 });
 </script>
 </body>
