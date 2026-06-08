@@ -362,6 +362,13 @@ select.form-control { appearance: none; background-image: url("data:image/svg+xm
 .pie-slice { transition: opacity .12s; cursor: pointer; }
 .pie-slice:hover { opacity: .82; }
 
+/* ── participant/owner toggle ── */
+.po-toggle{display:inline-flex;margin-top:5px;border:1px solid var(--border-2);border-radius:99px;overflow:hidden;font-size:9.5px;font-weight:700;cursor:pointer;user-select:none;width:max-content}
+.po-toggle .po-opt{padding:2px 9px;color:var(--slate);transition:all .12s}
+.po-toggle .po-p{background:var(--sapphire);color:#fff}
+.po-toggle.is-owner .po-p{background:transparent;color:var(--slate)}
+.po-toggle.is-owner .po-o{background:var(--violet);color:#fff}
+
 /* ══ STEP INDICATOR (invite flow) ══════════════════════ */
 .step-indicator { display: flex; align-items: center; gap: 0; margin-bottom: 28px; }
 .step { display: flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 600; color: var(--slate-2); }
@@ -421,6 +428,20 @@ select.form-control { appearance: none; background-image: url("data:image/svg+xm
   .sidebar { width: 220px; }
   .main { margin-left: 220px; }
 }
+
+/* ══ GOD MODE (admin) ══ */
+.god-hero{background:linear-gradient(135deg,#3b1d6e 0%,#1B3A5C 100%);border-radius:var(--r-lg);padding:20px 24px;color:#fff;margin-bottom:20px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;border:1px solid rgba(255,255,255,.10)}
+.god-badge{background:linear-gradient(135deg,#7C3AED,#2563EB);color:#fff;font-size:10px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;padding:4px 10px;border-radius:99px}
+.god-hero-title{font-size:18px;font-weight:800;letter-spacing:-.4px}
+.god-hero-sub{font-size:12px;color:rgba(255,255,255,.55);margin-top:3px}
+.audit-item{display:flex;gap:12px;align-items:flex-start;padding:11px 16px;border-bottom:1px solid var(--border);font-size:12.5px}
+.audit-item:last-child{border-bottom:none}
+.audit-dot{width:8px;height:8px;border-radius:50%;background:var(--violet);margin-top:5px;flex-shrink:0}
+.audit-ts{font-family:var(--mono);font-size:11px;color:var(--slate-2);white-space:nowrap}
+#imp-banner{position:fixed;top:0;left:0;right:0;z-index:300;background:var(--amber);color:#fff;font-size:12.5px;font-weight:600;padding:7px 16px;display:none;align-items:center;justify-content:center;gap:14px;box-shadow:0 2px 10px rgba(0,0,0,.25)}
+#imp-banner.show{display:flex}
+#imp-banner button{background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.55);color:#fff;border-radius:6px;padding:3px 11px;font-size:11.5px;font-weight:700;cursor:pointer;font-family:var(--font)}
+#imp-banner button:hover{background:rgba(255,255,255,.35)}
 </style>
 </head>
 <body>
@@ -728,11 +749,10 @@ select.form-control { appearance: none; background-image: url("data:image/svg+xm
   </div>
   <div class="page">
     <!-- Stats row -->
-    <div class="four-col" style="margin-bottom:20px">
+    <div class="three-col" style="margin-bottom:20px">
       <div class="stat-card"><div class="stat-label">Total Users</div><div class="stat-val" id="dir-stat-total">0</div><div class="stat-sub">in system</div></div>
       <div class="stat-card"><div class="stat-label">Active</div><div class="stat-val text-green" id="dir-stat-active">0</div><div class="stat-sub">with fund memberships</div></div>
       <div class="stat-card"><div class="stat-label">Pending Invites</div><div class="stat-val text-amber" id="dir-stat-pending">0</div><div class="stat-sub">awaiting acceptance</div></div>
-      <div class="stat-card"><div class="stat-label">Funds</div><div class="stat-val text-blue" id="dir-stat-funds">0</div><div class="stat-sub">total fund entities</div></div>
     </div>
 
     <!-- Filter tabs -->
@@ -750,8 +770,6 @@ select.form-control { appearance: none; background-image: url("data:image/svg+xm
           <thead>
             <tr>
               <th>User</th>
-              <th>Title</th>
-              <th>System Role</th>
               <th>Fund Memberships</th>
               <th>Status</th>
               <th>Joined</th>
@@ -813,7 +831,7 @@ select.form-control { appearance: none; background-image: url("data:image/svg+xm
     <div><div class="tb-title" id="fd-title">Fund Details</div><div class="tb-bread" id="fd-bread">Edit fund settings and manage members</div></div>
     <div class="tb-actions">
       <button class="btn btn-secondary" onclick="goTo('screen-funds')">← All Funds</button>
-      <button class="btn btn-secondary perm-manager-or-secretary" onclick="openModal('modal-invite')">+ Invite Member</button>
+      <button class="btn btn-secondary perm-manager-or-secretary" onclick="openModal('modal-invite')">+ Invite Participant</button>
       <button class="btn btn-primary perm-manager-or-secretary" onclick="saveFundDetails()">Save Changes</button>
     </div>
   </div>
@@ -824,10 +842,36 @@ select.form-control { appearance: none; background-image: url("data:image/svg+xm
     </div>
     <div id="fd-default-banner" class="notice notice-info" style="display:none"><span class="notice-icon">⭐</span><span><strong>Default Fund.</strong> This fund drives the consolidated dashboard view.</span></div>
 
+    <div class="grid2" style="margin-bottom:20px;align-items:start" id="fd-ownership-top">
+      <div class="card">
+        <div class="card-header"><div class="card-title">Ownership Share</div><span class="badge badge-blue badge-no-dot">by total inputs</span></div>
+        <div class="card-body">
+          <div class="ownership-breakdown">
+            <div class="pie-wrap" style="width:190px;height:190px">
+              <svg id="fd-pie-equity" width="190" height="190" viewBox="0 0 190 190"></svg>
+              <div class="pie-center"><div class="pie-center-val">100%</div><div class="pie-center-sub">Share</div></div>
+            </div>
+            <div class="pie-legend" id="fd-legend-equity"></div>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header"><div class="card-title">Voting Share</div><span class="badge badge-violet badge-no-dot">excl. bonus</span></div>
+        <div class="card-body">
+          <div class="ownership-breakdown">
+            <div class="pie-wrap" style="width:190px;height:190px">
+              <svg id="fd-pie-voting" width="190" height="190" viewBox="0 0 190 190"></svg>
+              <div class="pie-center"><div class="pie-center-val">100%</div><div class="pie-center-sub">Voting</div></div>
+            </div>
+            <div class="pie-legend" id="fd-legend-voting"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div class="tabs-bar">
       <div class="tab active" data-tab="fd-settings" onclick="switchFdTab(this)">Settings</div>
-      <div class="tab" data-tab="fd-members" onclick="switchFdTab(this)">Members &amp; Roles</div>
-      <div class="tab" data-tab="fd-rules" onclick="switchFdTab(this)">Fund Rules</div>
+      <div class="tab" data-tab="fd-members" onclick="switchFdTab(this)">Participants &amp; Roles</div>
     </div>
 
     <!-- SETTINGS TAB -->
@@ -842,7 +886,7 @@ select.form-control { appearance: none; background-image: url("data:image/svg+xm
             </div>
             <div class="grid3">
               <div class="form-group"><label>Status</label>
-                <select class="form-control" id="fd-status"><option value="active">Active</option><option value="initiated">Initiated</option><option value="terminated">Terminated</option><option value="archive">Archive</option></select>
+                <select class="form-control" id="fd-status"><option value="nominated">Nominated</option><option value="active">Active</option><option value="terminated">Terminated</option><option value="archived">Archived</option></select>
               </div>
               <div class="form-group"><label>Effective Date</label><input class="form-control" type="date" id="fd-date"></div>
               <div class="form-group"><label>Initiation Period</label>
@@ -850,9 +894,31 @@ select.form-control { appearance: none; background-image: url("data:image/svg+xm
               </div>
             </div>
             <div class="form-group">
-              <label>Client Services Description</label>
+              <label>Fund Description</label>
               <textarea class="form-control" id="fd-clientservices" rows="2" placeholder="e.g. artificial intelligence accounting, strategy, and alignment software…"></textarea>
               <div class="form-hint">Used verbatim in ICA agreements for this fund.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header"><div class="card-title">Fund Rules</div><span class="card-subtitle">Overtime, bonus, vesting, buyout, and cash-flow rules for this fund</span></div>
+        <div class="card-body">
+          <div class="fg">
+            <div class="grid3">
+              <div class="form-group"><label>OT Threshold (hrs/wk)</label><input class="form-control" type="number" id="fd-otthresh" value="40"></div>
+              <div class="form-group"><label>OT Coefficient</label><input class="form-control" type="number" id="fd-otcoef" value="1.5" step="0.05"></div>
+              <div class="form-group"><label>Bonus Percentage (%)</label><input class="form-control" type="number" id="fd-bonus" value="10"></div>
+            </div>
+            <div class="grid3">
+              <div class="form-group"><label>Vesting Period (days)</label><input class="form-control" type="number" id="fd-vesting" value="365"></div>
+              <div class="form-group"><label>Buyout Coefficient</label><input class="form-control" type="number" id="fd-buyout" value="2" step="0.1"></div>
+              <div class="form-group"><label>Time Tracking Limitation (days)</label><input class="form-control" type="number" id="fd-tracklimit" value="14"></div>
+            </div>
+            <div class="grid3">
+              <div class="form-group"><label>Investment Split Trigger ($)</label><div class="prefix-wrap"><span class="prefix">$</span><input class="form-control" type="number" id="fd-splittrigger" value="1" step="0.01"></div></div>
+              <div class="form-group"><label>Cash-Flow-Positive Quarter Amount ($)</label><div class="prefix-wrap"><span class="prefix">$</span><input class="form-control" type="number" id="fd-cfqamount" value="150000"></div></div>
+              <div class="form-group"><label>Consecutive CF-Positive Quarters Required</label><input class="form-control" type="number" id="fd-cfqconsec" value="2"></div>
             </div>
           </div>
         </div>
@@ -863,23 +929,23 @@ select.form-control { appearance: none; background-image: url("data:image/svg+xm
     <div class="tab-content" id="fd-members">
       <div id="fd-no-sec-notice" class="notice notice-warn" style="display:none;margin-bottom:14px">
         <span class="notice-icon">⚠</span>
-        <span><strong>No Fund Secretary assigned.</strong> As Fund Manager, you must explicitly appoint a Secretary for this fund. Use the <strong>"Set as Secretary"</strong> action on any Fund Owner in the table below, or invite a new member with the Fund Secretary role.</span>
+        <span><strong>No Fund Secretary assigned.</strong> As Fund Manager, you must explicitly appoint a Secretary for this fund. Use the <strong>"Set as Secretary"</strong> action on any Fund Owner in the table below, or invite a new participant with the Fund Secretary role.</span>
       </div>
       <div class="card">
         <div class="card-header">
           <div>
-            <div class="card-title">Fund Members</div>
+            <div class="card-title">Fund Participants</div>
             <div class="card-subtitle">Role assignments for this fund · Use "Set as Secretary" to appoint a Fund Secretary (Manager only)</div>
           </div>
           <div style="display:flex;gap:8px;align-items:center">
-            <button class="btn btn-secondary btn-sm perm-manager-or-secretary" onclick="openInviteForFund()">+ Add Member</button>
+            <button class="btn btn-secondary btn-sm perm-manager-or-secretary" onclick="openInviteForFund()">+ Add Participant</button>
           </div>
         </div>
         <div class="tbl-wrap">
           <table>
             <thead>
               <tr>
-                <th>Member</th>
+                <th>Participant</th>
                 <th>System Role</th>
                 <th>Fund Role</th>
                 <th>Status</th>
@@ -890,20 +956,6 @@ select.form-control { appearance: none; background-image: url("data:image/svg+xm
             </thead>
             <tbody id="fd-members-tbody"></tbody>
           </table>
-        </div>
-      </div>
-    </div>
-
-    <!-- RULES TAB -->
-    <div class="tab-content" id="fd-rules">
-      <div class="card">
-        <div class="card-header"><div class="card-title">Fund Rules — Overtime &amp; Bonus</div></div>
-        <div class="card-body">
-          <div class="grid3">
-            <div class="form-group"><label>OT Threshold (hrs/wk)</label><input class="form-control" type="number" id="fd-otthresh" value="40"></div>
-            <div class="form-group"><label>OT Coefficient</label><input class="form-control" type="number" id="fd-otcoef" value="1.5" step="0.05"></div>
-            <div class="form-group"><label>Bonus Percentage (%)</label><input class="form-control" type="number" id="fd-bonus" value="10"></div>
-          </div>
         </div>
       </div>
     </div>
@@ -919,7 +971,7 @@ select.form-control { appearance: none; background-image: url("data:image/svg+xm
 <div id="screen-holdings" class="screen">
 <div class="main">
   <div class="topbar">
-    <div><div class="tb-title" id="hold-title">Fund Holdings</div><div class="tb-bread" id="hold-bread">Ownership distribution and equity breakdown</div></div>
+    <div><div class="tb-title" id="hold-title">Fund Holdings</div><div class="tb-bread" id="hold-bread">Ownership distribution and inputs breakdown</div></div>
     <div class="tb-actions">
       <button class="btn btn-secondary" onclick="goBack()">← Back to Fund</button>
       <button class="btn btn-secondary perm-manager-or-secretary" onclick="goToFundDetails()">Edit Fund Details</button>
@@ -933,34 +985,6 @@ select.form-control { appearance: none; background-image: url("data:image/svg+xm
       <div><div class="access-guard-title">View-only access</div><div class="access-guard-sub">Fund Owners can view holdings but cannot edit fund settings.</div></div>
     </div>
 
-    <!-- Ownership charts + table -->
-    <div class="grid2" style="margin-bottom:20px;align-items:start">
-      <div class="card">
-        <div class="card-header"><div class="card-title">Equity Ownership</div><span class="badge badge-blue badge-no-dot">by total inputs</span></div>
-        <div class="card-body">
-          <div class="ownership-breakdown">
-            <div class="pie-wrap" style="width:190px;height:190px">
-              <svg id="pie-equity" width="190" height="190" viewBox="0 0 190 190"></svg>
-              <div class="pie-center"><div class="pie-center-val">100%</div><div class="pie-center-sub">Equity</div></div>
-            </div>
-            <div class="pie-legend" id="legend-equity"></div>
-          </div>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-header"><div class="card-title">Voting Share</div><span class="badge badge-violet badge-no-dot">excl. bonus</span></div>
-        <div class="card-body">
-          <div class="ownership-breakdown">
-            <div class="pie-wrap" style="width:190px;height:190px">
-              <svg id="pie-voting" width="190" height="190" viewBox="0 0 190 190"></svg>
-              <div class="pie-center"><div class="pie-center-val">100%</div><div class="pie-center-sub">Voting</div></div>
-            </div>
-            <div class="pie-legend" id="legend-voting"></div>
-          </div>
-        </div>
-      </div>
-    </div>
-
     <!-- Participants table -->
     <div class="card">
       <div class="card-header">
@@ -971,14 +995,13 @@ select.form-control { appearance: none; background-image: url("data:image/svg+xm
           <thead>
             <tr>
               <th>Participant</th>
-              <th>Fund Role</th>
-              <th>Status</th>
+              <th style="text-align:center">Owner</th>
+              <th style="text-align:center">Manager</th>
+              <th style="text-align:center">Secretary</th>
               <th>Non-Cash Inputs</th>
               <th>Cash Inputs</th>
               <th>Penalties</th>
               <th>Total Inputs</th>
-              <th>Equity %</th>
-              <th>Voting %</th>
             </tr>
           </thead>
           <tbody id="hold-participants-tbody"></tbody>
@@ -1506,6 +1529,83 @@ select.form-control { appearance: none; background-image: url("data:image/svg+xm
 </div>
 </div>
 
+<!-- IMPERSONATION BANNER (God Mode) -->
+<div id="imp-banner">
+  <span>👁 Viewing the app as <strong id="imp-name">—</strong> (God Mode impersonation)</span>
+  <button onclick="adminStopImpersonate()">Exit & return to my account</button>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     GOD MODE — ADMIN CONSOLE (Managers & Secretaries)
+══════════════════════════════════════════════════════ -->
+<div id="screen-admin" class="screen">
+<div class="main">
+  <div class="topbar">
+    <div><div class="tb-title">God Mode · Admin Console</div><div class="tb-bread">System-wide oversight for Fund Managers &amp; Secretaries</div></div>
+    <div class="tb-actions">
+      <button class="btn btn-secondary" onclick="adminBroadcast()">Broadcast Notice</button>
+      <button class="btn btn-secondary" onclick="renderAdmin()">↻ Refresh</button>
+    </div>
+  </div>
+  <div class="page">
+    <div id="admin-guard"></div>
+    <div id="admin-body" style="display:none">
+      <div class="god-hero">
+        <div class="avatar avatar-lg" style="background:linear-gradient(135deg,#7C3AED,#2563EB)"></div>
+        <div>
+          <div class="god-hero-title">God Mode <span class="god-badge">Elevated</span></div>
+          <div class="god-hero-sub" id="god-hero-sub">Oversee every fund, participant, and award across the platform.</div>
+        </div>
+      </div>
+      <div class="four-col" style="margin-bottom:20px" id="admin-stats"></div>
+      <div class="tabs-bar">
+        <div class="tab active" data-atab="adm-funds"  onclick="switchAdmTab(this)">Fund Oversight</div>
+        <div class="tab"        data-atab="adm-users"  onclick="switchAdmTab(this)">User Oversight</div>
+        <div class="tab"        data-atab="adm-awards" onclick="switchAdmTab(this)">Award Oversight</div>
+        <div class="tab"        data-atab="adm-audit"  onclick="switchAdmTab(this)">Audit Log</div>
+      </div>
+
+      <div class="tab-content active" id="adm-funds">
+        <div class="card">
+          <div class="card-header"><div class="card-title">All Funds</div><div class="card-subtitle">Force status, set the default fund, or jump into holdings &amp; ledgers</div></div>
+          <div class="tbl-wrap"><table>
+            <thead><tr><th>Fund</th><th>Status</th><th>Default</th><th>Participants</th><th style="width:220px">Actions</th></tr></thead>
+            <tbody id="adm-funds-tbody"></tbody>
+          </table></div>
+        </div>
+      </div>
+
+      <div class="tab-content" id="adm-users">
+        <div class="card">
+          <div class="card-header"><div class="card-title">All Users</div><div class="card-subtitle">Change system access or impersonate any user (&quot;View as&quot;)</div></div>
+          <div class="tbl-wrap"><table>
+            <thead><tr><th>User</th><th>System Access</th><th>Memberships</th><th style="width:220px">Actions</th></tr></thead>
+            <tbody id="adm-users-tbody"></tbody>
+          </table></div>
+        </div>
+      </div>
+
+      <div class="tab-content" id="adm-awards">
+        <div class="card">
+          <div class="card-header"><div class="card-title">All Awards</div><div class="card-subtitle">Reverse any award system-wide · records are preserved for audit</div></div>
+          <div class="tbl-wrap"><table>
+            <thead><tr><th>Participant</th><th>Fund</th><th>Period</th><th style="text-align:right">Net</th><th>Status</th><th style="width:120px">Actions</th></tr></thead>
+            <tbody id="adm-awards-tbody"></tbody>
+          </table></div>
+        </div>
+      </div>
+
+      <div class="tab-content" id="adm-audit">
+        <div class="card">
+          <div class="card-header"><div class="card-title">Audit Log</div><div class="card-subtitle">Newest first · every God Mode action is recorded</div></div>
+          <div id="adm-audit-list"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
 <script>
 /* ══════════════════════════════════════════════════════════
    DATA MODEL
@@ -1523,8 +1623,8 @@ const USERS = [
 // FUNDS — independent entities
 const FUNDS = [
   { id:'f1', name:"021 Founder's Fund Agreement", company:'021', isDefault:true, status:'active', effectiveDate:'2026-01-01', initPeriod:90, otThreshold:40, otCoef:1.5, bonusPct:10, clientServices:'artificial intelligence accounting, strategy, and alignment software and educational products' },
-  { id:'f2', name:"Seed Round Fund Agreement", company:'021', isDefault:false, status:'archive', effectiveDate:'2025-07-15', initPeriod:90, otThreshold:40, otCoef:1.25, bonusPct:5, clientServices:'artificial intelligence accounting, strategy, and alignment software and educational products' },
-  { id:'f3', name:"Beta Fund Agreement", company:'021', isDefault:false, status:'initiated', effectiveDate:'2025-10-01', initPeriod:60, otThreshold:40, otCoef:1.5, bonusPct:8, clientServices:'artificial intelligence accounting, strategy, and alignment software and educational products' },
+  { id:'f2', name:"Seed Round Fund Agreement", company:'021', isDefault:false, status:'archived', effectiveDate:'2025-07-15', initPeriod:90, otThreshold:40, otCoef:1.25, bonusPct:5, clientServices:'artificial intelligence accounting, strategy, and alignment software and educational products' },
+  { id:'f3', name:"Beta Fund Agreement", company:'021', isDefault:false, status:'nominated', effectiveDate:'2025-10-01', initPeriod:60, otThreshold:40, otCoef:1.5, bonusPct:8, clientServices:'artificial intelligence accounting, strategy, and alignment software and educational products' },
 ];
 
 // MEMBERSHIPS — junction: userId × fundId × fundRole
@@ -1661,7 +1761,7 @@ function applyPermissions() {
 }
 
 /* ══ NAVIGATION ══════════════════════════════════════════ */
-const SIDEBAR_SCREENS = ['screen-my-funds','screen-users','screen-funds','screen-fund-details','screen-holdings','screen-ledger','screen-record-award','screen-award-detail','screen-user-profile'];
+const SIDEBAR_SCREENS = ['screen-my-funds','screen-users','screen-funds','screen-fund-details','screen-holdings','screen-ledger','screen-record-award','screen-award-detail','screen-user-profile','screen-admin'];
 
 function buildSidebar(activeId) {
   const u=CUR.user;
@@ -1672,6 +1772,7 @@ function buildSidebar(activeId) {
     home:`<path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"/>`,
     users:`<path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z"/>`,
     funds:`<path fill-rule="evenodd" d="M4 4a2 2 0 012-2h8a2 2 0 012 2v12a1 1 0 110 2h-3a1 1 0 01-1-1v-2a1 1 0 00-1-1H9a1 1 0 00-1 1v2a1 1 0 01-1 1H4a1 1 0 110-2V4zm3 1h2v2H7V5zm2 4H7v2h2V9zm2-4h2v2h-2V5zm2 4h-2v2h2V9z" clip-rule="evenodd"/>`,
+    shield:`<path fill-rule="evenodd" d="M9.6 1.8a1 1 0 01.8 0l6 2.5A1 1 0 0117 5.2V10c0 4.4-2.9 7.6-6.6 8.9a1 1 0 01-.8 0C5.9 17.6 3 14.4 3 10V5.2a1 1 0 01.6-.9l6-2.5zM10 6a1 1 0 00-1 1v3a1 1 0 002 0V7a1 1 0 00-1-1zm0 7.5a1 1 0 100 2 1 1 0 000-2z" clip-rule="evenodd"/>`,
   };
   const lnk=(id,icon,label,badge='')=>{
     const on=activeId===id||(id==='screen-funds'&&activeId==='screen-fund-details')||(id==='screen-ledger'&&activeId==='screen-award-detail');
@@ -1687,7 +1788,8 @@ function buildSidebar(activeId) {
     ${lnk('screen-my-funds',icons.home,'My Funds')}
     ${lnk('screen-users',icons.users,'User Directory',pendingInvites>0?String(pendingInvites):'')}
     <div class="sb-section">Administration</div>
-    ${lnk('screen-funds',icons.funds,'Funds')}`;
+    ${lnk('screen-funds',icons.funds,'Funds')}
+    ${lnk('screen-admin',icons.shield,'God Mode')}`;
   // Owner nav: stripped — just their own holdings + profile
   const ownerNav=`
     <div class="sb-section">My Portfolio</div>
@@ -1750,6 +1852,7 @@ function goTo(id) {
   if(id==='screen-user-profile') renderUserProfileScreen();
   if(id==='screen-record-award') initRecordAward();
   if(id==='screen-award-detail') renderAwardDetail();
+  if(id==='screen-admin') renderAdmin();
 }
 function goBack() { goTo(CUR.prev||'screen-my-funds'); }
 function goToFundDetails() { goTo('screen-fund-details'); }
@@ -1787,7 +1890,7 @@ function renderMyFunds() {
   if(titleEl) titleEl.textContent=isOp?'My Funds':'My Holdings';
   if(breadEl)  breadEl.textContent=isOp
     ?'Operational dashboard · Manage funds, members, and awards'
-    :'Your personal equity holdings across all funds you participate in';
+    :'Your personal inputs holdings across all funds you participate in';
   if(sectionEl) sectionEl.textContent=isOp?'Funds you manage or administer':'Your fund memberships';
 
   const myMemberships=membershipsForUser(CUR.user?.id);
@@ -1809,7 +1912,7 @@ function renderMyFunds() {
         <div style="font-size:12px;color:rgba(255,255,255,.5);margin-top:3px">${roleName(CUR.user?.systemRole||'')} · ${escHtml(CUR.user?.email||'')}</div>
       </div>
       <div class="hero-stats">
-        <div><div class="hero-stat-lbl">${isOp?'Total Net Holdings':'My Net Holdings'}</div><div class="hero-stat-val">$${fmt$(totalNet)}</div></div>
+        <div><div class="hero-stat-lbl">${isOp?'Total Owner Share':'My Owner Share'}</div><div class="hero-stat-val">$${fmt$(totalNet)}</div></div>
         <div><div class="hero-stat-lbl">Contributions</div><div class="hero-stat-val" style="color:#6EE7B7">$${fmt$(totalContrib)}</div></div>
         <div><div class="hero-stat-lbl">Penalties</div><div class="hero-stat-val" style="color:${totalPenalty?'#FCA5A5':'rgba(255,255,255,.35)'}">−$${fmt$(totalPenalty)}</div></div>
         <div><div class="hero-stat-lbl">Funds</div><div class="hero-stat-val">${myMemberships.length}</div></div>
@@ -1828,7 +1931,7 @@ function renderMyFunds() {
     if(!fund)return'';
     const inputs=computeUserInputsInFund(m.userId,m.fundId);
     const equity=computeEquityPct(m.userId,m.fundId);
-    const statusBadge=fund.status==='active'?'<span class="badge badge-green">Active</span>':fund.status==='archive'?'<span class="badge badge-slate">Archive</span>':fund.status==='terminated'?'<span class="badge badge-red">Terminated</span>':'<span class="badge badge-amber">Initiated</span>';
+    const statusBadge=fund.status==='active'?'<span class="badge badge-green">Active</span>':fund.status==='archived'?'<span class="badge badge-slate">Archived</span>':fund.status==='terminated'?'<span class="badge badge-red">Terminated</span>':'<span class="badge badge-amber">Nominated</span>';
     return `<div class="fund-card${fund.isDefault?' is-default':''}" onclick="viewFundHoldings('${fund.id}')">
       <div class="fund-card-header">
         <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px">
@@ -1841,8 +1944,8 @@ function renderMyFunds() {
         <div style="margin-top:8px">${rolePill(m.fundRole)}</div>
       </div>
       <div class="fund-card-stats">
-        <div class="fund-stat-cell"><div class="fund-stat-label">Net Holdings</div><div class="fund-stat-val">$${fmt$(inputs.net)}</div></div>
-        <div class="fund-stat-cell"><div class="fund-stat-label">Equity %</div><div class="fund-stat-val" style="color:var(--sapphire)">${equity.toFixed(1)}%</div></div>
+        <div class="fund-stat-cell"><div class="fund-stat-label">Owner Share</div><div class="fund-stat-val">$${fmt$(inputs.net)}</div></div>
+        <div class="fund-stat-cell"><div class="fund-stat-label">Inputs %</div><div class="fund-stat-val" style="color:var(--sapphire)">${equity.toFixed(1)}%</div></div>
         <div class="fund-stat-cell"><div class="fund-stat-label">Member Status</div><div class="fund-stat-val" style="font-size:12px;margin-top:5px"><span class="badge ${m.status==='contributing'?'badge-green':m.status==='suspended'?'badge-amber':m.status==='terminated'?'badge-red':'badge-slate'}">${m.status}</span></div></div>
       </div>
       <div class="fund-card-footer">
@@ -1875,7 +1978,6 @@ function renderUserDirectory(){
   $('dir-stat-total').textContent=USERS.length;
   $('dir-stat-active').textContent=activeCount;
   $('dir-stat-pending').textContent=pendingCount;
-  $('dir-stat-funds').textContent=FUNDS.length;
   const q=CUR.userSearch.toLowerCase();
   let users=[...USERS];
   if(q) users=users.filter(u=>u.name.toLowerCase().includes(q)||u.email.toLowerCase().includes(q));
@@ -1886,7 +1988,7 @@ function renderUserDirectory(){
   const tbody=$('users-tbody');
   if(!tbody)return;
   if(users.length===0){
-    tbody.innerHTML=`<tr><td colspan="7" style="text-align:center;padding:40px;color:var(--slate-2)"><div style="font-weight:600;margin-bottom:4px">No users found</div><div style="font-size:11.5px">Try a different search or filter</div></td></tr>`;
+    tbody.innerHTML=`<tr><td colspan="5" style="text-align:center;padding:40px;color:var(--slate-2)"><div style="font-weight:600;margin-bottom:4px">No users found</div><div style="font-size:11.5px">Try a different search or filter</div></td></tr>`;
     return;
   }
   tbody.innerHTML=users.map((u,i)=>{
@@ -1915,8 +2017,6 @@ function renderUserDirectory(){
           </div>
         </div>
       </td>
-      <td style="font-size:12.5px">${escHtml(u.title||'—')}</td>
-      <td>${rolePill(u.systemRole)}</td>
       <td>${fundsHtml}</td>
       <td>${statusHtml}</td>
       <td style="font-size:12px;color:var(--slate)">${fmtDate(u.joinedAt)}</td>
@@ -1955,7 +2055,6 @@ function renderUserDirectory(){
             </div>
           </div>
         </td>
-        <td>—</td><td>—</td>
         <td><span class="tag">${escHtml(FUNDS.find(f=>f.id===inv.fundId)?.company||'')}</span></td>
         <td><span class="invite-status" style="color:${iconColor}">${statusText}</span></td>
         <td style="font-size:12px;color:var(--slate)">${fmtDate(inv.sentAt)}</td>
@@ -1983,7 +2082,7 @@ function renderFundsTable(filter=''){
   if(funds.length===0){tbody.innerHTML=`<tr><td colspan="8" style="text-align:center;padding:40px;color:var(--slate-2)">No funds found</td></tr>`;return;}
   tbody.innerHTML=funds.map(f=>{
     const memberCount=membershipsForFund(f.id).length;
-    const statusBadge=f.status==='active'?'<span class="badge badge-green">Active</span>':f.status==='archive'?'<span class="badge badge-slate">Archive</span>':f.status==='terminated'?'<span class="badge badge-red">Terminated</span>':'<span class="badge badge-amber">Initiated</span>';
+    const statusBadge=f.status==='active'?'<span class="badge badge-green">Active</span>':f.status==='archived'?'<span class="badge badge-slate">Archived</span>':f.status==='terminated'?'<span class="badge badge-red">Terminated</span>':'<span class="badge badge-amber">Nominated</span>';
     const canEdit=isSecretaryOrManager(f.id)||CUR.user?.systemRole==='fund_manager';
     return `<tr>
       <td>
@@ -2012,7 +2111,7 @@ function renderFundsTable(filter=''){
 }
 function filterFundsTable(v){ renderFundsTable(v); }
 function createNewFund(){
-  const newF={id:'f'+Date.now(),name:"New Fund Agreement",company:'',isDefault:false,status:'initiated',effectiveDate:todayISO(),initPeriod:90,otThreshold:40,otCoef:1.5,bonusPct:10,clientServices:''};
+  const newF={id:'f'+Date.now(),name:"New Fund Agreement",company:'',isDefault:false,status:'nominated',effectiveDate:todayISO(),initPeriod:90,otThreshold:40,otCoef:1.5,bonusPct:10,clientServices:''};
   FUNDS.push(newF); CUR.activeFundId=newF.id; openFundDetails(newF.id);
 }
 
@@ -2028,18 +2127,31 @@ function renderFundDetails(){
   $('fd-default-banner').style.display=f.isDefault?'':'none';
   $('fd-company').value=f.company||'';
   $('fd-name').value=f.name||'';
-  $('fd-status').value=f.status||'initiated';
+  $('fd-status').value=f.status||'nominated';
   $('fd-date').value=f.effectiveDate||'';
   $('fd-initperiod').value=f.initPeriod||90;
   $('fd-otthresh').value=f.otThreshold||40;
   $('fd-otcoef').value=f.otCoef||1.5;
   $('fd-bonus').value=f.bonusPct||10;
   $('fd-clientservices').value=f.clientServices||'';
+  $('fd-vesting').value=f.vesting!=null?f.vesting:365;
+  $('fd-buyout').value=f.buyout!=null?f.buyout:2;
+  $('fd-tracklimit').value=f.trackLimit!=null?f.trackLimit:14;
+  $('fd-splittrigger').value=f.splitTrigger!=null?f.splitTrigger:1;
+  $('fd-cfqamount').value=f.cfqAmount!=null?f.cfqAmount:150000;
+  $('fd-cfqconsec').value=f.cfqConsec!=null?f.cfqConsec:2;
   const canEdit=isSecretaryOrManager(f.id);
   $('fd-access-guard').style.display=canEdit?'none':'flex';
-  ['fd-company','fd-status','fd-date','fd-initperiod','fd-otthresh','fd-otcoef','fd-bonus','fd-clientservices'].forEach(id=>{
+  ['fd-company','fd-status','fd-date','fd-initperiod','fd-otthresh','fd-otcoef','fd-bonus','fd-clientservices','fd-vesting','fd-buyout','fd-tracklimit','fd-splittrigger','fd-cfqamount','fd-cfqconsec'].forEach(id=>{
     const el=$(id); if(el){ el.disabled=!canEdit; }
   });
+  // Share + voting percentages at the top of the fund details page
+  const _mems=membershipsForFund(f.id);
+  const _active=_mems.filter(m=>computeEquityPct(m.userId,f.id)>0);
+  const _eqData=_active.map((m,i)=>{const u=USERS.find(x=>x.id===m.userId);return{label:u?.name||'?',value:computeEquityPct(m.userId,f.id),color:COLORS[i%COLORS.length]};});
+  const _vtData=_active.map((m,i)=>{const u=USERS.find(x=>x.id===m.userId);return{label:u?.name||'?',value:computeVotingPct(m.userId,f.id),color:COLORS[i%COLORS.length]};});
+  drawPie('fd-pie-equity',_eqData,'fd-legend-equity');
+  drawPie('fd-pie-voting',_vtData,'fd-legend-voting');
   renderFdMembersTable();
 }
 function updateFundNameAuto(){ const c=$('fd-company').value.trim(); $('fd-name').value=c?c+" Founder's Fund Agreement":''; }
@@ -2054,6 +2166,12 @@ function saveFundDetails(){
   f.otCoef=parseFloat($('fd-otcoef').value)||1.5;
   f.bonusPct=parseFloat($('fd-bonus').value)||10;
   f.clientServices=$('fd-clientservices').value.trim();
+  f.vesting=parseInt($('fd-vesting').value)||0;
+  f.buyout=parseFloat($('fd-buyout').value)||0;
+  f.trackLimit=parseInt($('fd-tracklimit').value)||0;
+  f.splitTrigger=parseFloat($('fd-splittrigger').value)||0;
+  f.cfqAmount=parseFloat($('fd-cfqamount').value)||0;
+  f.cfqConsec=parseInt($('fd-cfqconsec').value)||0;
   if(!f.company){toast('Company name is required','red');return;}
   toast('Fund saved','green');
 }
@@ -2063,7 +2181,7 @@ function renderFdMembersTable(){
   const mems=membershipsForFund(CUR.activeFundId);
   if(mems.length===0){
     const noSec=!membershipsForFund(CUR.activeFundId).some(m=>m.fundRole==='fund_secretary');
-    tbody.innerHTML=`<tr><td colspan="7"><div class="card-empty"><div class="card-empty-icon">👥</div><div class="card-empty-title">No members yet</div><div class="card-empty-desc">Use "Invite Member" to add users to this fund.</div></div></td></tr>`;
+    tbody.innerHTML=`<tr><td colspan="7"><div class="card-empty"><div class="card-empty-icon">👥</div><div class="card-empty-title">No participants yet</div><div class="card-empty-desc">Use "Invite Participant" to add users to this fund.</div></div></td></tr>`;
     if(noSec&&(isManager(CUR.activeFundId)||CUR.user?.systemRole==='fund_manager')){
       const notice=$('fd-no-sec-notice');
       if(notice) notice.style.display='flex';
@@ -2163,20 +2281,15 @@ function renderHoldings(){
   const canEdit=isSecretaryOrManager(fund.id);
   $('hold-access-guard').style.display=canEdit?'none':'flex';
   const mems=membershipsForFund(fund.id);
-  // Pies
-  const activeM=mems.filter(m=>computeEquityPct(m.userId,fund.id)>0);
-  const equityData=activeM.map((m,i)=>{const u=USERS.find(x=>x.id===m.userId);return{label:u?.name||'?',value:computeEquityPct(m.userId,fund.id),color:COLORS[i%COLORS.length]};});
-  const votingData=activeM.map((m,i)=>{const u=USERS.find(x=>x.id===m.userId);return{label:u?.name||'?',value:computeVotingPct(m.userId,fund.id),color:COLORS[i%COLORS.length]};});
-  drawPie('pie-equity',equityData,'legend-equity');
-  drawPie('pie-voting',votingData,'legend-voting');
   // Table
   const tbody=$('hold-participants-tbody'); if(!tbody)return;
   tbody.innerHTML=mems.map((m,i)=>{
     const u=USERS.find(x=>x.id===m.userId); if(!u)return'';
     const inp=computeUserInputsInFund(m.userId,fund.id);
-    const eq=computeEquityPct(m.userId,fund.id);
-    const vt=computeVotingPct(m.userId,fund.id);
     const color=COLORS[i%COLORS.length];
+    const ptype=m.participantType||'participant';
+    const chk=`<span style="color:var(--emerald);font-weight:700">✓</span>`;
+    const dash=`<span style="color:var(--slate-2)">—</span>`;
     return`<tr>
       <td>
         <div style="display:flex;align-items:center;gap:10px">
@@ -2184,19 +2297,27 @@ function renderHoldings(){
           <div>
             <div class="td-name">${escHtml(u.name)}</div>
             <div style="font-size:11px;color:var(--slate)">${escHtml(u.email)}</div>
+            <div class="po-toggle ${ptype==='owner'?'is-owner':''}" onclick="toggleParticipantType('${m.id}')" title="Toggle participant / owner">
+              <span class="po-opt po-p">Participant</span><span class="po-opt po-o">Owner</span>
+            </div>
           </div>
         </div>
       </td>
-      <td>${rolePill(m.fundRole)}</td>
-      <td><span class="badge ${m.status==='contributing'?'badge-green':m.status==='terminated'?'badge-red':'badge-slate'}">${m.status}</span></td>
+      <td style="text-align:center">${m.fundRole==='fund_owner'?chk:dash}</td>
+      <td style="text-align:center">${m.fundRole==='fund_manager'?chk:dash}</td>
+      <td style="text-align:center">${m.fundRole==='fund_secretary'?chk:dash}</td>
       <td class="mono">${(inp.base+inp.ot+inp.bonus)?'$'+fmt$(inp.base+inp.ot+inp.bonus):'—'}</td>
       <td class="mono" style="color:var(--emerald)">${inp.cash?'$'+fmt$(inp.cash):'—'}</td>
       <td class="mono" style="color:${inp.penalty?'var(--ruby)':'var(--slate-2)'}">${inp.penalty?'−$'+fmt$(inp.penalty):'—'}</td>
       <td class="mono fw-700">$${fmt$(inp.net)}</td>
-      <td class="mono fw-700" style="color:var(--sapphire)">${eq.toFixed(1)}%</td>
-      <td class="mono">${vt.toFixed(1)}%</td>
     </tr>`;
   }).join('');
+}
+
+function toggleParticipantType(memId){
+  const m=MEMBERSHIPS.find(x=>x.id===memId); if(!m)return;
+  m.participantType=(m.participantType==='owner')?'participant':'owner';
+  renderHoldings();
 }
 
 /* ══ LEDGER ══════════════════════════════════════════════ */
@@ -3302,7 +3423,7 @@ function suShowStep2(){
     fund_owner:{
       icon:'📊',
       title:'Fund Owner',
-      desc:'You can view your personal equity holdings, ownership percentage, award letters, and your contribution history across all funds you participate in.',
+      desc:'You can view your personal inputs holdings, ownership percentage, award letters, and your contribution history across all funds you participate in.',
       perms:['View My Holdings','View Ownership %','View Award Letters','View Contribution History'],
       bg:'#EDE9FE', border:'#C4B5FD', tagBg:'#7C3AED', tagColor:'#fff'
     }
@@ -3373,6 +3494,179 @@ function suComplete(){
 function suStep2Err(msg){
   $('su-step2-err-msg').textContent=msg;
   $('su-step2-err').style.display='flex';
+}
+
+/* ══════════════════════════════════════════════════════════
+   GOD MODE — ADMIN OVERSIGHT
+══════════════════════════════════════════════════════════ */
+let ADMIN_LOG = [
+  { ts:'2026-06-08 09:14', actor:'System', action:'God Mode console initialized' },
+];
+const FUND_STATUSES = [['nominated','Nominated'],['active','Active'],['terminated','Terminated'],['archived','Archived']];
+
+function adminLog(action){
+  const d=new Date();
+  const ts=`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')} ${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`;
+  ADMIN_LOG.unshift({ ts, actor:(CUR.realUser||CUR.user)?.name||'Admin', action });
+}
+function isEffectiveOperator(){
+  const r=CUR.user?.systemRole;
+  return r==='fund_manager'||r==='fund_secretary';
+}
+function isEffectiveManager(){ return CUR.user?.systemRole==='fund_manager'; }
+
+function renderAdmin(){
+  const guard=$('admin-guard'), body=$('admin-body');
+  if(!guard||!body) return;
+  if(!isEffectiveOperator()){
+    body.style.display='none';
+    guard.innerHTML=`<div class="access-guard"><span class="access-guard-icon">🔒</span><div><div class="access-guard-title">Restricted</div><div class="access-guard-sub">God Mode is available to Fund Managers and Secretaries only.</div></div></div>`;
+    return;
+  }
+  guard.innerHTML='';
+  body.style.display='';
+  $('god-hero-sub').textContent=isEffectiveManager()
+    ? 'Full elevated control — funds, participants, awards, and impersonation.'
+    : 'Secretary oversight — funds, awards, and impersonation. Role changes need a Manager.';
+
+  // Stats
+  let totalEquityVal=0;
+  MEMBERSHIPS.forEach(m=>{ totalEquityVal+=Math.max(0,computeUserInputsInFund(m.userId,m.fundId).net); });
+  const pendingInv=INVITATIONS.filter(i=>i.status==='pending').length;
+  const reversed=AWARDS.filter(a=>a.status==='reversed').length;
+  $('admin-stats').innerHTML=`
+    <div class="stat-card"><div class="stat-label">Funds</div><div class="stat-val text-blue">${FUNDS.length}</div><div class="stat-sub">${FUNDS.filter(f=>f.status==='active').length} active</div></div>
+    <div class="stat-card"><div class="stat-label">Users</div><div class="stat-val">${USERS.length}</div><div class="stat-sub">${pendingInv} pending invites</div></div>
+    <div class="stat-card"><div class="stat-label">Awards</div><div class="stat-val text-green">${AWARDS.length}</div><div class="stat-sub">${reversed} reversed</div></div>
+    <div class="stat-card"><div class="stat-label">Total Owner Share</div><div class="stat-val" style="font-size:19px">$${fmt$(totalEquityVal)}</div><div class="stat-sub">across all funds</div></div>`;
+
+  // Funds table
+  const ft=$('adm-funds-tbody');
+  ft.innerHTML=FUNDS.map(f=>{
+    const opts=FUND_STATUSES.map(([v,l])=>`<option value="${v}"${f.status===v?' selected':''}>${l}</option>`).join('');
+    return `<tr>
+      <td><div class="td-name">${escHtml(f.name)}</div><div style="font-size:11px;color:var(--slate)">${escHtml(f.company)}</div></td>
+      <td><select class="form-control" style="padding:5px 26px 5px 10px;font-size:12px" onchange="adminSetFundStatus('${f.id}',this.value)">${opts}</select></td>
+      <td>${f.isDefault?'<span class="badge badge-blue badge-no-dot">Default</span>':`<button class="btn btn-secondary btn-xs" onclick="adminToggleDefault('${f.id}')">Make Default</button>`}</td>
+      <td class="mono">${membershipsForFund(f.id).length}</td>
+      <td><div class="god-action-row">
+        <button class="btn btn-secondary btn-xs" onclick="viewFundHoldings('${f.id}')">Holdings</button>
+        <button class="btn btn-secondary btn-xs" onclick="CUR.activeFundId='${f.id}';CUR.prev='screen-admin';goTo('screen-ledger')">Ledger</button>
+        <button class="btn btn-secondary btn-xs" onclick="openFundDetails('${f.id}')">Edit</button>
+      </div></td>
+    </tr>`;
+  }).join('');
+
+  // Users table
+  const ut=$('adm-users-tbody');
+  const canRole=isEffectiveManager();
+  ut.innerHTML=USERS.map((u,i)=>{
+    const color=COLORS[i%COLORS.length];
+    const mems=membershipsForUser(u.id);
+    const memTags=mems.length?`<div class="user-funds-tags">${mems.map(m=>{const f=FUNDS.find(fn=>fn.id===m.fundId);return f?`<span class="tag">${escHtml(f.company)}</span>`:'';}).join('')}</div>`:'<span style="color:var(--slate-2);font-size:12px">None</span>';
+    const access=canRole
+      ? `<select class="form-control" style="padding:5px 26px 5px 10px;font-size:12px" onchange="adminSetSystemRole('${u.id}',this.value)">
+           <option value="fund_manager"${u.systemRole==='fund_manager'?' selected':''}>Manager (admin)</option>
+           <option value="fund_secretary"${u.systemRole==='fund_secretary'?' selected':''}>Secretary (admin)</option>
+           <option value="fund_owner"${u.systemRole==='fund_owner'?' selected':''}>Owner (regular)</option>
+         </select>`
+      : rolePill(u.systemRole);
+    const isSelf=u.id===(CUR.realUser||CUR.user)?.id;
+    return `<tr>
+      <td><div class="user-row-avatar-col"><div class="avatar avatar-md" style="background:${color}">${initials(u.name)}</div>
+        <div><div class="td-name">${escHtml(u.name)}</div><div style="font-size:11.5px;color:var(--slate)">${escHtml(u.email)}</div></div></div></td>
+      <td>${access}</td>
+      <td>${memTags}</td>
+      <td><div class="god-action-row">
+        <button class="btn btn-secondary btn-xs" onclick="CUR.prev='screen-admin';openUserProfile('${u.id}')">Profile</button>
+        ${isSelf||u.status!=='active'?'':`<button class="btn btn-amber btn-xs" onclick="adminImpersonate('${u.id}')">View as</button>`}
+      </div></td>
+    </tr>`;
+  }).join('');
+
+  // Awards table
+  const at=$('adm-awards-tbody');
+  if(!AWARDS.length){
+    at.innerHTML=`<tr><td colspan="6" style="text-align:center;padding:30px;color:var(--slate-2)">No awards recorded</td></tr>`;
+  } else {
+    at.innerHTML=AWARDS.map(a=>{
+      const u=USERS.find(x=>x.id===a.userId);
+      const f=FUNDS.find(x=>x.id===a.fundId);
+      const t=awardTotals(a);
+      const sb=a.status==='reversed'?'<span class="badge badge-red">Reversed</span>':'<span class="badge badge-green">Vested</span>';
+      return `<tr>
+        <td class="td-name">${escHtml(u?.name||'—')}</td>
+        <td style="font-size:12px">${escHtml(f?.name||'—')}</td>
+        <td style="font-size:12px">${escHtml(a.periodLabel)}</td>
+        <td class="mono fw-700" style="text-align:right">${t.net<0?'−$':'$'}${fmt$(Math.abs(t.net))}</td>
+        <td>${sb}</td>
+        <td>${a.status==='reversed'?'<span class="dd-item disabled" style="padding:0">—</span>':`<button class="btn btn-danger btn-xs" onclick="adminReverseAwardGlobal('${a.id}')">Reverse</button>`}</td>
+      </tr>`;
+    }).join('');
+  }
+
+  // Audit log
+  const al=$('adm-audit-list');
+  al.innerHTML=ADMIN_LOG.map(e=>`<div class="audit-item"><div class="audit-dot"></div><div style="flex:1"><div>${escHtml(e.action)}</div><div style="font-size:11px;color:var(--slate)">by ${escHtml(e.actor)}</div></div><div class="audit-ts">${escHtml(e.ts)}</div></div>`).join('');
+}
+
+function switchAdmTab(el){
+  document.querySelectorAll('#screen-admin [data-atab]').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+  document.querySelectorAll('#screen-admin .tab-content').forEach(t=>t.classList.remove('active'));
+  const tc=$(el.dataset.atab); if(tc)tc.classList.add('active');
+}
+
+function adminSetFundStatus(fundId,status){
+  const f=FUNDS.find(x=>x.id===fundId); if(!f)return;
+  const label=(FUND_STATUSES.find(s=>s[0]===status)||['',status])[1];
+  f.status=status; adminLog(`Set fund "${f.name}" status to ${label}`);
+  toast(`Fund status → ${label}`,'green'); renderAdmin();
+}
+function adminToggleDefault(fundId){
+  const f=FUNDS.find(x=>x.id===fundId); if(!f)return;
+  FUNDS.forEach(x=>x.isDefault=false); f.isDefault=true;
+  adminLog(`Set "${f.name}" as the default fund`);
+  toast('Default fund updated','green'); renderAdmin();
+}
+function adminSetSystemRole(userId,role){
+  if(!isEffectiveManager()){ toast('Only a Manager can change system access','red'); renderAdmin(); return; }
+  const u=USERS.find(x=>x.id===userId); if(!u)return;
+  u.systemRole=role; adminLog(`Changed ${u.name}'s system access to ${roleName(role)}`);
+  toast(`${u.name} → ${roleName(role)}`,'green'); renderAdmin();
+}
+function adminReverseAwardGlobal(awardId){
+  const a=AWARDS.find(x=>x.id===awardId); if(!a||a.status==='reversed')return;
+  if(!confirm('Reverse this award system-wide? The record is preserved for audit.'))return;
+  a.status='reversed'; a.reversedAt=todayISO(); a.reversedBy=(CUR.realUser||CUR.user)?.name||'Admin';
+  const u=USERS.find(x=>x.id===a.userId);
+  adminLog(`Reversed award (${a.periodLabel}) for ${u?.name||'user'}`);
+  toast('Award reversed','amber'); renderAdmin();
+}
+function adminImpersonate(userId){
+  const u=USERS.find(x=>x.id===userId); if(!u)return;
+  if(!CUR.realUser) CUR.realUser=CUR.user;
+  CUR.user=u; adminLog(`Started impersonating ${u.name}`);
+  $('imp-name').textContent=u.name;
+  $('imp-banner').classList.add('show');
+  toast(`Now viewing as ${u.name.split(' ')[0]}`,'amber');
+  goTo('screen-my-funds');
+}
+function adminStopImpersonate(){
+  if(!CUR.realUser)return;
+  const back=CUR.realUser;
+  adminLog(`Stopped impersonating ${CUR.user?.name||''}`);
+  CUR.user=back; CUR.realUser=null;
+  $('imp-banner').classList.remove('show');
+  toast('Returned to your account','green');
+  goTo('screen-admin');
+}
+function adminBroadcast(){
+  const msg=prompt('Broadcast a system notice to yourself (demo):','System maintenance scheduled tonight.');
+  if(!msg)return;
+  adminLog(`Broadcast notice: "${msg}"`);
+  toast('📢 '+msg,'');
+  if($('admin-body')&&$('admin-body').style.display!=='none') renderAdmin();
 }
 
 /* ══ INIT ════════════════════════════════════════════════ */
