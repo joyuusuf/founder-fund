@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Founders Fund- v6</title>
+<title>Founders Fund — v6</title>
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=DM+Serif+Display:ital@0;1&family=Caveat:wght@500;600&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 <style>
@@ -492,9 +492,9 @@ select.form-control { appearance: none; background-image: url("data:image/svg+xm
         </div>
         <div class="form-group"><label>Fund Role <span class="req">*</span></label>
           <select class="form-control" id="inv-fund-role">
-            <option value="fund_owner">Fund Owner- View holdings &amp; ledger</option>
-            <option value="fund_secretary">Fund Secretary- Manage membership &amp; edit fund</option>
-            <option value="fund_manager">Fund Manager- Full administrative access</option>
+            <option value="fund_owner">Fund Owner — View holdings &amp; ledger</option>
+            <option value="fund_secretary">Fund Secretary — Manage membership &amp; edit fund</option>
+            <option value="fund_manager">Fund Manager — Full administrative access</option>
           </select>
         </div>
       </div>
@@ -658,7 +658,7 @@ select.form-control { appearance: none; background-image: url("data:image/svg+xm
 
     <!-- STEP 2: Complete profile & set password -->
     <div id="su-step-2" style="display:none">
-      <!-- Role explanation card- filled dynamically -->
+      <!-- Role explanation card — filled dynamically -->
       <div id="su-role-card" class="role-explain-card"></div>
 
       <div class="notice notice-info" style="margin-bottom:18px">
@@ -963,7 +963,7 @@ select.form-control { appearance: none; background-image: url("data:image/svg+xm
 
 
 <!-- ══════════════════════════════════════════════════════
-     FUND HOLDINGS (Ownership)- accessible via Fund → View Holdings
+     FUND HOLDINGS (Ownership) — accessible via Fund → View Holdings
 ══════════════════════════════════════════════════════ -->
 <div id="screen-holdings" class="screen">
 <div class="main">
@@ -1008,7 +1008,7 @@ select.form-control { appearance: none; background-image: url("data:image/svg+xm
 
 
 <!-- ══════════════════════════════════════════════════════
-     AWARD LEDGER- accessible via Holdings → View Ledger
+     AWARD LEDGER — accessible via Holdings → View Ledger
 ══════════════════════════════════════════════════════ -->
 <div id="screen-ledger" class="screen">
 <div class="main">
@@ -1022,7 +1022,7 @@ select.form-control { appearance: none; background-image: url("data:image/svg+xm
   </div>
   <div class="page">
     <div class="breadcrumb" id="ldg-breadcrumb"></div>
-    <div class="notice notice-info"><span class="notice-icon">ℹ</span><span><strong>Award = one receipt</strong> bundling contributions &amp; penalties for one member over one period. Reversals are non-destructive- records are always preserved for audit.</span></div>
+    <div class="notice notice-info"><span class="notice-icon">ℹ</span><span><strong>Award = one receipt</strong> bundling contributions &amp; penalties for one member over one period. Reversals are non-destructive — records are always preserved for audit.</span></div>
     <div class="card">
       <div class="tbl-wrap">
         <table>
@@ -1358,7 +1358,7 @@ select.form-control { appearance: none; background-image: url("data:image/svg+xm
     <div class="two-col">
       <div>
         <div class="card" style="margin-bottom:16px">
-          <div class="card-header"><div class="card-title">Personal Information</div><span class="badge badge-blue badge-no-dot">Global- applies across all funds</span></div>
+          <div class="card-header"><div class="card-title">Personal Information</div><span class="badge badge-blue badge-no-dot">Global — applies across all funds</span></div>
           <div class="card-body">
             <div class="fg">
               <div class="grid2">
@@ -1524,7 +1524,7 @@ select.form-control { appearance: none; background-image: url("data:image/svg+xm
 </div>
 
 <!-- ══════════════════════════════════════════════════════
-     GOD MODE- ADMIN CONSOLE (Managers & Secretaries)
+     GOD MODE — ADMIN CONSOLE (Managers & Secretaries)
 ══════════════════════════════════════════════════════ -->
 <div id="screen-admin" class="screen">
 <div class="main">
@@ -1599,7 +1599,7 @@ select.form-control { appearance: none; background-image: url("data:image/svg+xm
    DATA MODEL
 ══════════════════════════════════════════════════════════ */
 
-// USERS- global, not duplicated per fund
+// USERS — global, not duplicated per fund
 const USERS = [
   { id:'u1', name:'David Boctor', email:'david@021.ceo', email2:'dboctor@gmail.com', title:'Founder & CEO', address:'3317 Shadybrook Lane, Chico, CA 95928', location:'Chico, CA', rate:120, service:'Strategy, platform architecture, product leadership', payment:'Bill Pay', systemRole:'fund_manager', status:'active', offerDate:'2026-01-01', ndaBegin:'2026-01-01', ndaEnd:'2029-01-01', joinedAt:'2026-01-01' },
   { id:'u2', name:'Ryker Rinehart', email:'ryker@021.ceo', email2:'ryker@me.com', title:'Fund Secretary', address:'1234 Market St, Miami, FL 33101', location:'Miami, FL', rate:95, service:'Fund administration, ledger management, contribution tracking', payment:'Zelle', systemRole:'fund_secretary', status:'active', offerDate:'2026-01-15', ndaBegin:'2026-01-15', ndaEnd:'2029-01-15', joinedAt:'2026-01-15' },
@@ -1608,14 +1608,14 @@ const USERS = [
   { id:'u5', name:'Jordan Lee', email:'jordan@gmail.com', email2:'', title:'Data Analyst', address:'', location:'', rate:75, service:'', payment:'Upwork', systemRole:'fund_owner', status:'pending', offerDate:'', ndaBegin:'', ndaEnd:'', joinedAt:'' },
 ];
 
-// FUNDS- independent entities
+// FUNDS — independent entities
 const FUNDS = [
   { id:'f1', name:"021 Founder's Fund Agreement", company:'021', isDefault:true, status:'active', effectiveDate:'2026-01-01', initPeriod:90, otThreshold:40, otCoef:1.5, bonusPct:10, clientServices:'artificial intelligence accounting, strategy, and alignment software and educational products' },
   { id:'f2', name:"Seed Round Fund Agreement", company:'021', isDefault:false, status:'archived', effectiveDate:'2025-07-15', initPeriod:90, otThreshold:40, otCoef:1.25, bonusPct:5, clientServices:'artificial intelligence accounting, strategy, and alignment software and educational products' },
   { id:'f3', name:"Beta Fund Agreement", company:'021', isDefault:false, status:'nominated', effectiveDate:'2025-10-01', initPeriod:60, otThreshold:40, otCoef:1.5, bonusPct:8, clientServices:'artificial intelligence accounting, strategy, and alignment software and educational products' },
 ];
 
-// MEMBERSHIPS- junction: userId × fundId × fundRole
+// MEMBERSHIPS — junction: userId × fundId × fundRole
 // fundRole: 'fund_manager' | 'fund_secretary' | 'fund_owner'
 let MEMBERSHIPS = [
   { id:'m1', userId:'u1', fundId:'f1', fundRole:'fund_manager',   status:'contributing', joinedAt:'2026-01-01' },
@@ -1649,7 +1649,7 @@ let AWARDS = [
     { id:'li5', kind:'contribution', inputType:'hourly', label:'Hourly Inputs (×1)', quantity:40, rate:110, earned:4400 },
     { id:'li6', kind:'penalty', inputType:'penalty', label:'Penalty: Poor Time Tracking (minor)', quantity:1, rate:-100, earned:-100, severity:'minor', category:'Poor Time Tracking', notes:'Failed to submit hours within 14-day window.' },
   ]},
-  { id:'aw4', fundId:'f1', userId:'u1', periodLabel:'Jan 2026- Cash', awardDate:'2026-01-31', status:'approved', approvedBy:'u2', lineItems:[
+  { id:'aw4', fundId:'f1', userId:'u1', periodLabel:'Jan 2026 — Cash', awardDate:'2026-01-31', status:'approved', approvedBy:'u2', lineItems:[
     { id:'li7', kind:'contribution', inputType:'cash', label:'Cash Inputs (×1)', quantity:1, rate:10000, earned:10000 },
   ]},
   { id:'aw5', fundId:'f2', userId:'u1', periodLabel:'Q3 2025', awardDate:'2025-09-30', status:'approved', approvedBy:'u2', lineItems:[
@@ -1778,7 +1778,7 @@ function buildSidebar(activeId) {
     <div class="sb-section">Administration</div>
     ${lnk('screen-funds',icons.funds,'Funds')}
     ${lnk('screen-admin',icons.shield,'God Mode')}`;
-  // Owner nav: stripped- just their own holdings + profile
+  // Owner nav: stripped — just their own holdings + profile
   const ownerNav=`
     <div class="sb-section">My Portfolio</div>
     ${lnk('screen-my-funds',icons.home,'My Holdings')}`;
@@ -1888,7 +1888,7 @@ function renderMyFunds() {
     totalNet+=i.net; totalContrib+=i.base+i.ot+i.bonus+i.cash; totalPenalty+=i.penalty;
   });
 
-  // Hero- consistent navy for all roles, same as original
+  // Hero — consistent navy for all roles, same as original
   const heroBg='linear-gradient(135deg,var(--ink) 0%,#1e4976 100%)';
   const avatarColor=COLORS[0];
 
@@ -1929,7 +1929,10 @@ function renderMyFunds() {
           </div>
           ${fund.isDefault?`<span style="background:linear-gradient(135deg,#2563EB,#1B3A5C);color:#fff;font-size:9.5px;font-weight:700;padding:3px 9px;border-radius:99px;letter-spacing:.04em;text-transform:uppercase;flex-shrink:0">Default</span>`:''}
         </div>
-        <div style="margin-top:8px">${rolePill(m.fundRole)}</div>
+        <div style="margin-top:8px;display:flex;align-items:center;gap:6px;flex-wrap:wrap">
+          <span style="font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--slate-2)">Role</span>
+          ${rolePill('fund_owner')}${m.fundRole==='fund_manager'?rolePill('fund_manager'):''}${m.fundRole==='fund_secretary'?rolePill('fund_secretary'):''}
+        </div>
       </div>
       <div class="fund-card-stats">
         <div class="fund-stat-cell"><div class="fund-stat-label">Owner Share</div><div class="fund-stat-val">$${fmt$(inputs.net)}</div></div>
@@ -2037,7 +2040,6 @@ function renderUserDirectory(){
             </div>
           </div>
         </td>
-        <td><span class="tag">${escHtml(FUNDS.find(f=>f.id===inv.fundId)?.company||'')}</span></td>
         <td><span class="invite-status" style="color:${iconColor}">${statusText}</span></td>
         <td style="font-size:12px;color:var(--slate)">${fmtDate(inv.sentAt)}</td>
         <td>${!isAccepted?`<button class="btn btn-secondary btn-xs" onclick="resendInvite('${inv.id}')">Resend</button>`:'—'}</td>
@@ -2410,7 +2412,7 @@ function inviteNext(){
     $('invite-step-2').style.display='';
     $('inv-back-btn').style.display='';
     $('inv-next-btn').textContent='Review →';
-    // Populate fund dropdown NOW- when the select is visible, not while hidden
+    // Populate fund dropdown NOW — when the select is visible, not while hidden
     const fundSel=$('inv-fund');
     fundSel.innerHTML=FUNDS.map(f=>`<option value="${f.id}">${escHtml(f.name)}</option>`).join('');
     if(CUR.activeFundId){
@@ -2443,11 +2445,11 @@ function refreshRoleOptions(){
   Array.from(roleSel.options).forEach(o=>{
     if(o.value==='fund_manager'){
       o.disabled=hasManager;
-      o.text='Fund Manager- Full administrative access'+(hasManager?' (already assigned)':'');
+      o.text='Fund Manager — Full administrative access'+(hasManager?' (already assigned)':'');
     }
     if(o.value==='fund_secretary'){
       o.disabled=hasSecretary;
-      o.text='Fund Secretary- Manage membership & edit fund'+(hasSecretary?' (already assigned)':'');
+      o.text='Fund Secretary — Manage membership & edit fund'+(hasSecretary?' (already assigned)':'');
     }
   });
   // If current selection is disabled, switch to fund_owner
@@ -2567,7 +2569,7 @@ function initRecordAward(){
   const mems=membershipsForFund(CUR.activeFundId).filter(m=>m.status!=='terminated');
   sel.innerHTML=mems.map(m=>{
     const u=USERS.find(x=>x.id===m.userId);
-    return`<option value="${m.userId}">${escHtml(u?.name||'Unknown')}- ${roleName(m.fundRole)}</option>`;
+    return`<option value="${m.userId}">${escHtml(u?.name||'Unknown')} — ${roleName(m.fundRole)}</option>`;
   }).join('');
   raParticipantChange();
 }
@@ -2777,7 +2779,7 @@ function renderAwardLetter(a, u){
         </tr>
       </thead>
       <tbody>
-        ${contribRows||'<tr><td colspan="4" style="text-align:center;color:#94a3b8;padding:14px">— no contribution line items-</td></tr>'}
+        ${contribRows||'<tr><td colspan="4" style="text-align:center;color:#94a3b8;padding:14px">— no contribution line items —</td></tr>'}
         <tr class="al-total">
           <td>Total Contributions</td>
           <td>${contribQty.toFixed(2)}</td>
@@ -2850,7 +2852,7 @@ function confirmAddPenalty(){
     category:cat,severity:sev,quantity:1,rate:val,earned:val,
     notes:desc,reversedAt:null,reversedBy:null});
   closeModal('modal-add-penalty');
-  toast('Penalty recorded- '+sev+' ('+fmt$(Math.abs(val))+')','amber');
+  toast('Penalty recorded — '+sev+' ('+fmt$(Math.abs(val))+')','amber');
   renderAwardDetail();
 }
 
@@ -2911,7 +2913,7 @@ function downloadAwardPdf(){
         <th style="${cell}background:#fff;text-align:center">Earned</th>
       </tr></thead>
       <tbody>
-        ${contribRows||`<tr><td colspan="4" style="${cell}text-align:center;color:#94a3b8">— no contribution line items-</td></tr>`}
+        ${contribRows||`<tr><td colspan="4" style="${cell}text-align:center;color:#94a3b8">— no contribution line items —</td></tr>`}
         <tr style="background:#f8fafc">
           <td style="${cell}font-weight:700">Total Contributions</td>
           <td style="${cell}text-align:center;font-weight:700">${contribQty.toFixed(2)}</td>
@@ -3083,7 +3085,7 @@ function renderAgreementDoc(type){
       ${UL([
         'You are responsible for tracking your time and submitting invoices weekly.',
         'Payments will be processed via ' + B(u.payment||'[Payment Method]') + ' within 14 days of invoice approval.',
-        'To be eligible for payment: (a) submit all hours worked within one week of completing them, (b) provide a detailed timesheet with task descriptions, dates, start and end times, and (c) only bill for actual hours worked- no rounding.'
+        'To be eligible for payment: (a) submit all hours worked within one week of completing them, (b) provide a detailed timesheet with task descriptions, dates, start and end times, and (c) only bill for actual hours worked — no rounding.'
       ])}
       ${H('Key Responsibilities')}
       ${UL([
@@ -3220,7 +3222,7 @@ function renderAgreementDoc(type){
       ${P('This Agreement shall commence on ' + B(fmtDate(u.ndaBegin)||'[Begin]') + ' and shall remain in effect until ' + B(fmtDate(u.ndaEnd)||'[End]') + ' or earlier termination under Paragraph 5.2. This is a <strong>3-year term</strong>.')}
       ${H3('5.2 Notice')}
       ${P('Either Party may terminate this Agreement at any time with written email notice to:')}
-      ${UL(['David Boctor- dave@021.ceo', escHtml(u.name) + '- ' + escHtml(u.email||u.email2||'[email]')])}
+      ${UL(['David Boctor — dave@021.ceo', escHtml(u.name) + ' — ' + escHtml(u.email||u.email2||'[email]')])}
       ${H3('5.3 Survival After Termination')}
       ${P('Sections 3 and 4 shall remain in force for five (5) years after termination; trade secrets indefinitely.')}
       ${H('6. Indemnification and Limitation of Liability')}
@@ -3256,7 +3258,7 @@ function renderAgreementDoc(type){
       ${P('We are sharing this because 021 is at a sensitive stage of development. Our real edge is our intellectual property. Most of what makes 021 valuable is not obvious from the outside. It consists of ideas, structures, methods, software, modeling approaches, algorithms, and strategic materials that we have developed over time.')}
       ${P('The NDA covers <strong>nineteen types of trade secrets organized into six categories</strong>: (I) Foundational Theory and Conceptual Frameworks; (II) Modeling of Economic Systems and Networks; (III) Platform Implementation &amp; Architecture; (IV) Algorithms and Modeling Techniques; (V) Security and Information Control; and (VI) Business, Strategy, and Residual Protection.')}
       ${H('A Practical Rule of Thumb')}
-      ${P('<em>When speaking to people outside the company, you should generally describe what the platform does, why it matters, and what category of problem it solves- without explaining the internal methods, structures, logic, or materials that make those capabilities possible.</em>')}
+      ${P('<em>When speaking to people outside the company, you should generally describe what the platform does, why it matters, and what category of problem it solves — without explaining the internal methods, structures, logic, or materials that make those capabilities possible.</em>')}
       ${H('Examples of What You Generally May Not Disclose')}
       ${UL([
         'Internal frameworks, methods, logic, technical architecture, proprietary algorithms, non-public product strategy, unpublished patent materials, security methods, or internal design documentation.',
@@ -3309,7 +3311,7 @@ function goToLogin(){
 function suLookup(){
   const email=$('su-email').value.trim().toLowerCase();
   if(!email){ suStep1Err('Please enter your email address.'); return; }
-  // Already an active registered user- send them to login
+  // Already an active registered user — send them to login
   const active=USERS.find(u=>u.email.toLowerCase()===email&&u.status==='active');
   if(active){
     suStep1Err('This email already has an active account. Please sign in from the login page instead.');
@@ -3450,7 +3452,7 @@ function suStep2Err(msg){
 }
 
 /* ══════════════════════════════════════════════════════════
-   GOD MODE- ADMIN OVERSIGHT
+   GOD MODE — ADMIN OVERSIGHT
 ══════════════════════════════════════════════════════════ */
 let ADMIN_LOG = [
   { ts:'2026-06-08 09:14', actor:'System', action:'God Mode console initialized' },
@@ -3479,8 +3481,8 @@ function renderAdmin(){
   guard.innerHTML='';
   body.style.display='';
   $('god-hero-sub').textContent=isEffectiveManager()
-    ? 'Full elevated control- funds, participants, awards, and impersonation.'
-    : 'Secretary oversight- funds, awards, and impersonation. Role changes need a Manager.';
+    ? 'Full elevated control — funds, participants, awards, and impersonation.'
+    : 'Secretary oversight — funds, awards, and impersonation. Role changes need a Manager.';
 
   // Stats
   let totalEquityVal=0;

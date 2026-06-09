@@ -454,7 +454,7 @@ select.form-control { appearance: none; background-image: url("data:image/svg+xm
 <!-- INVITE USER MODAL -->
 <div class="modal-backdrop" id="modal-invite">
   <div class="modal-box" style="width:520px">
-    <button class="modal-close" onclick="closeModal('modal-invite')">✕</button>
+    <button class="modal-close" onclick="closeModal('modal-invite')"><svg width="14" height="14" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 5l10 10M15 5L5 15"/></svg></button>
     <div class="modal-title">Invite User</div>
     <div class="modal-sub">Send an onboarding email. The user will appear as Pending until they accept.</div>
     <div id="invite-step-1">
@@ -476,7 +476,7 @@ select.form-control { appearance: none; background-image: url("data:image/svg+xm
     </div>
     <div id="invite-step-2" style="display:none">
       <div class="step-indicator">
-        <div class="step done" id="istep-1b"><div class="step-num">✓</div><span>Email</span></div>
+        <div class="step done" id="istep-1b"><div class="step-num"><svg width="12" height="12" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10l4 4 8-9"/></svg></div><span>Email</span></div>
         <div class="step-connector done"></div>
         <div class="step active" id="istep-2b"><div class="step-num">2</div><span>Fund &amp; Role</span></div>
         <div class="step-connector" id="isconn-2b"></div>
@@ -501,9 +501,9 @@ select.form-control { appearance: none; background-image: url("data:image/svg+xm
     </div>
     <div id="invite-step-3" style="display:none">
       <div class="step-indicator">
-        <div class="step done"><div class="step-num">✓</div><span>Email</span></div>
+        <div class="step done"><div class="step-num"><svg width="12" height="12" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10l4 4 8-9"/></svg></div><span>Email</span></div>
         <div class="step-connector done"></div>
-        <div class="step done"><div class="step-num">✓</div><span>Fund &amp; Role</span></div>
+        <div class="step done"><div class="step-num"><svg width="12" height="12" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10l4 4 8-9"/></svg></div><span>Fund &amp; Role</span></div>
         <div class="step-connector done"></div>
         <div class="step active"><div class="step-num">3</div><span>Send</span></div>
       </div>
@@ -512,7 +512,7 @@ select.form-control { appearance: none; background-image: url("data:image/svg+xm
         <div id="inv-summary" style="font-size:12.5px;color:var(--emerald);line-height:1.65"></div>
       </div>
       <div class="notice notice-warn" style="margin-bottom:0">
-        <span class="notice-icon">⚠</span>
+        <span class="notice-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.3 3.3a2 2 0 013.4 0l8 14A2 2 0 0120 20H4a2 2 0 01-1.7-2.7z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg></span>
         <span>The invitation email will be sent immediately. The user will have 7 days to accept before it expires.</span>
       </div>
     </div>
@@ -527,10 +527,10 @@ select.form-control { appearance: none; background-image: url("data:image/svg+xm
 <!-- MAKE SECRETARY MODAL -->
 <div class="modal-backdrop" id="modal-set-secretary">
   <div class="modal-box" style="width:420px">
-    <button class="modal-close" onclick="closeModal('modal-set-secretary')">✕</button>
+    <button class="modal-close" onclick="closeModal('modal-set-secretary')"><svg width="14" height="14" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 5l10 10M15 5L5 15"/></svg></button>
     <div class="modal-title" style="color:var(--sapphire)">Appoint Fund Secretary</div>
     <div class="modal-sub" id="sec-modal-sub">Only one Fund Secretary is allowed per fund. The current secretary will be changed to Fund Owner.</div>
-    <div class="notice notice-warn"><span class="notice-icon">⚠</span><span>Only Fund Managers can perform this action.</span></div>
+    <div class="notice notice-warn"><span class="notice-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.3 3.3a2 2 0 013.4 0l8 14A2 2 0 0120 20H4a2 2 0 01-1.7-2.7z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg></span><span>Only Fund Managers can perform this action.</span></div>
     <div class="modal-actions">
       <button class="btn btn-secondary" onclick="closeModal('modal-set-secretary')">Cancel</button>
       <button class="btn btn-primary" onclick="confirmSetSecretary()">Appoint Secretary</button>
@@ -541,7 +541,7 @@ select.form-control { appearance: none; background-image: url("data:image/svg+xm
 <!-- ADD TO FUND MODAL (from User Directory) -->
 <div class="modal-backdrop" id="modal-add-to-fund">
   <div class="modal-box" style="width:400px">
-    <button class="modal-close" onclick="closeModal('modal-add-to-fund')">✕</button>
+    <button class="modal-close" onclick="closeModal('modal-add-to-fund')"><svg width="14" height="14" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 5l10 10M15 5L5 15"/></svg></button>
     <div class="modal-title">Add to Fund</div>
     <div class="modal-sub" id="atf-sub">Assign a role in a fund for this user.</div>
     <div class="fg">
@@ -564,7 +564,7 @@ select.form-control { appearance: none; background-image: url("data:image/svg+xm
 <!-- CONFIRM REMOVE MEMBER MODAL -->
 <div class="modal-backdrop" id="modal-remove-member">
   <div class="modal-box" style="width:400px">
-    <button class="modal-close" onclick="closeModal('modal-remove-member')">✕</button>
+    <button class="modal-close" onclick="closeModal('modal-remove-member')"><svg width="14" height="14" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 5l10 10M15 5L5 15"/></svg></button>
     <div class="modal-title" style="color:var(--ruby)">Remove from Fund</div>
     <div class="modal-sub" id="rm-modal-sub">This will remove the member from this fund. Their global user account and contributions are preserved.</div>
     <div class="modal-actions">
@@ -586,7 +586,7 @@ select.form-control { appearance: none; background-image: url("data:image/svg+xm
       <div class="login-sub">SAF-Model Equity System · v6</div>
     </div>
     <div style="font-weight:700;font-size:14px;color:var(--ink);margin-bottom:14px">Sign in to your account</div>
-    <div id="login-err" class="notice notice-red" style="display:none;margin-bottom:12px"><span class="notice-icon">✕</span><span>Invalid credentials. Check your email and password.</span></div>
+    <div id="login-err" class="notice notice-red" style="display:none;margin-bottom:12px"><span class="notice-icon"><svg width="14" height="14" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 5l10 10M15 5L5 15"/></svg></span><span>Invalid credentials. Check your email and password.</span></div>
     <div class="fg" style="gap:12px">
       <div class="form-group"><label>Email address</label><input class="form-control" type="email" id="l-email" placeholder="name@021.ceo" onkeydown="if(event.key==='Enter')doLogin()"></div>
       <div class="form-group"><label>Password</label><input class="form-control" type="password" id="l-pw" placeholder="Password" onkeydown="if(event.key==='Enter')doLogin()"></div>
@@ -645,7 +645,7 @@ select.form-control { appearance: none; background-image: url("data:image/svg+xm
     <!-- STEP 1: Find invitation by email -->
     <div id="su-step-1">
       <p style="font-size:13px;color:var(--slate);margin-bottom:18px;text-align:center;line-height:1.6">Enter the email address where you received your invitation. We'll look up your details automatically.</p>
-      <div id="su-step1-err" class="notice notice-red" style="display:none;margin-bottom:12px"><span class="notice-icon">✕</span><span id="su-step1-err-msg">No invitation found for this email.</span></div>
+      <div id="su-step1-err" class="notice notice-red" style="display:none;margin-bottom:12px"><span class="notice-icon"><svg width="14" height="14" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 5l10 10M15 5L5 15"/></svg></span><span id="su-step1-err-msg">No invitation found for this email.</span></div>
       <div class="form-group" style="margin-bottom:16px">
         <label>Invitation Email <span class="req">*</span></label>
         <input class="form-control" type="email" id="su-email" placeholder="name@021.ceo" onkeydown="if(event.key==='Enter')suLookup()">
@@ -666,7 +666,7 @@ select.form-control { appearance: none; background-image: url("data:image/svg+xm
         <span>Your email and role are set by your invitation and cannot be changed. Contact your Fund Manager if something looks wrong.</span>
       </div>
 
-      <div id="su-step2-err" class="notice notice-red" style="display:none;margin-bottom:12px"><span class="notice-icon">✕</span><span id="su-step2-err-msg">Please complete all required fields.</span></div>
+      <div id="su-step2-err" class="notice notice-red" style="display:none;margin-bottom:12px"><span class="notice-icon"><svg width="14" height="14" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 5l10 10M15 5L5 15"/></svg></span><span id="su-step2-err-msg">Please complete all required fields.</span></div>
 
       <div class="fg" style="gap:14px;margin-bottom:18px">
         <div class="grid2">
@@ -740,7 +740,7 @@ select.form-control { appearance: none; background-image: url("data:image/svg+xm
     <div><div class="tb-title">User Directory</div><div class="tb-bread">All users across all funds · No duplicates</div></div>
     <div class="tb-actions">
       <div class="search-wrap">
-        <span class="search-icon">🔍</span>
+        <span class="search-icon"><svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="9" r="6"/><path d="M14 14l4 4" stroke-linecap="round"/></svg></span>
         <input class="form-control" style="width:240px" placeholder="Search by name or email…" oninput="filterUsers(this.value)">
       </div>
       <button class="btn btn-primary perm-manager-or-secretary" onclick="openInviteModal()">+ Invite User</button>
@@ -759,7 +759,6 @@ select.form-control { appearance: none; background-image: url("data:image/svg+xm
       <div class="tab active" data-filter="all" onclick="filterUserTab(this)">All Users</div>
       <div class="tab" data-filter="active" onclick="filterUserTab(this)">Active</div>
       <div class="tab" data-filter="pending" onclick="filterUserTab(this)">Pending Invites</div>
-      <div class="tab" data-filter="accepted" onclick="filterUserTab(this)">Accepted</div>
     </div>
 
     <div class="card">
@@ -834,10 +833,10 @@ select.form-control { appearance: none; background-image: url("data:image/svg+xm
   </div>
   <div class="page">
     <div id="fd-access-guard" class="access-guard" style="display:none">
-      <span class="access-guard-icon">🔒</span>
+      <span class="access-guard-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 018 0v3"/></svg></span>
       <div><div class="access-guard-title">Read-only access</div><div class="access-guard-sub">Fund Owners cannot edit fund settings. Contact a Fund Manager or Secretary.</div></div>
     </div>
-    <div id="fd-default-banner" class="notice notice-info" style="display:none"><span class="notice-icon">⭐</span><span><strong>Default Fund.</strong> This fund drives the consolidated dashboard view.</span></div>
+    <div id="fd-default-banner" class="notice notice-info" style="display:none"><span class="notice-icon"><svg width="15" height="15" viewBox="0 0 20 20" fill="currentColor"><path d="M10 1.6l2.47 5.01 5.53.8-4 3.9.94 5.5L10 14.2l-4.95 2.6.94-5.5-4-3.9 5.53-.8z"/></svg></span><span><strong>Default Fund.</strong> This fund drives the consolidated dashboard view.</span></div>
 
     <div class="grid2" style="margin-bottom:20px;align-items:start" id="fd-ownership-top">
       <div class="card">
@@ -913,8 +912,8 @@ select.form-control { appearance: none; background-image: url("data:image/svg+xm
               <div class="form-group"><label>Time Tracking Limitation (days)</label><input class="form-control" type="number" id="fd-tracklimit" value="14"></div>
             </div>
             <div class="grid3">
-              <div class="form-group"><label>Investment Split Trigger ($)</label><div class="prefix-wrap"><span class="prefix">$</span><input class="form-control" type="number" id="fd-splittrigger" value="1" step="0.01"></div></div>
-              <div class="form-group"><label>Cash-Flow-Positive Quarter Amount ($)</label><div class="prefix-wrap"><span class="prefix">$</span><input class="form-control" type="number" id="fd-cfqamount" value="150000"></div></div>
+              <div class="form-group"><label>Investment Split Trigger</label><div class="prefix-wrap"><span class="prefix"></span><input class="form-control" type="number" id="fd-splittrigger" value="1" step="0.01"></div></div>
+              <div class="form-group"><label>Cash-Flow-Positive Quarter Amount</label><div class="prefix-wrap"><span class="prefix"></span><input class="form-control" type="number" id="fd-cfqamount" value="150000"></div></div>
               <div class="form-group"><label>Consecutive CF-Positive Quarters Required</label><input class="form-control" type="number" id="fd-cfqconsec" value="2"></div>
             </div>
           </div>
@@ -925,7 +924,7 @@ select.form-control { appearance: none; background-image: url("data:image/svg+xm
     <!-- MEMBERS TAB -->
     <div class="tab-content" id="fd-members">
       <div id="fd-no-sec-notice" class="notice notice-warn" style="display:none;margin-bottom:14px">
-        <span class="notice-icon">⚠</span>
+        <span class="notice-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.3 3.3a2 2 0 013.4 0l8 14A2 2 0 0120 20H4a2 2 0 01-1.7-2.7z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg></span>
         <span><strong>No Fund Secretary assigned.</strong> As Fund Manager, you must explicitly appoint a Secretary for this fund. Use the <strong>"Set as Secretary"</strong> action on any Fund Owner in the table below, or invite a new participant with the Fund Secretary role.</span>
       </div>
       <div class="card">
@@ -968,7 +967,7 @@ select.form-control { appearance: none; background-image: url("data:image/svg+xm
 <div id="screen-holdings" class="screen">
 <div class="main">
   <div class="topbar">
-    <div><div class="tb-title" id="hold-title">Fund Holdings</div><div class="tb-bread" id="hold-bread">Ownership distribution and inputs breakdown</div></div>
+    <div><div class="tb-title" id="hold-title">Fund Holdings</div><div class="tb-bread" id="hold-bread">Ownership distribution and contributions breakdown</div></div>
     <div class="tb-actions">
       <button class="btn btn-secondary" onclick="goBack()">← Back to Fund</button>
       <button class="btn btn-secondary perm-manager-or-secretary" onclick="goToFundDetails()">Edit Fund Details</button>
@@ -978,8 +977,19 @@ select.form-control { appearance: none; background-image: url("data:image/svg+xm
   <div class="page">
     <div class="breadcrumb" id="hold-breadcrumb"></div>
     <div id="hold-access-guard" class="access-guard" style="display:none">
-      <span class="access-guard-icon">🔒</span>
+      <span class="access-guard-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 018 0v3"/></svg></span>
       <div><div class="access-guard-title">View-only access</div><div class="access-guard-sub">Fund Owners can view holdings but cannot edit fund settings.</div></div>
+    </div>
+
+    <div class="grid2" style="align-items:start;margin-bottom:20px">
+      <div class="card">
+        <div class="card-header"><div class="card-title">Total Fund Value</div><span class="badge badge-blue badge-no-dot" id="hold-total-badge">—</span></div>
+        <div class="card-body"><div id="hold-graph-value"></div></div>
+      </div>
+      <div class="card">
+        <div class="card-header"><div class="card-title">Ownership</div><span class="card-subtitle">by total awards</span></div>
+        <div class="card-body"><div id="hold-graph-ownership"></div></div>
+      </div>
     </div>
 
     <!-- Participants table -->
@@ -992,10 +1002,10 @@ select.form-control { appearance: none; background-image: url("data:image/svg+xm
           <thead>
             <tr>
               <th>Participant</th>
-              <th>Non-Cash Inputs</th>
-              <th>Cash Inputs</th>
+              <th>Non-Cash Contributions</th>
+              <th>Cash Contributions</th>
               <th>Penalties</th>
-              <th>Total Inputs</th>
+              <th>Total Awards</th>
             </tr>
           </thead>
           <tbody id="hold-participants-tbody"></tbody>
@@ -1027,7 +1037,7 @@ select.form-control { appearance: none; background-image: url("data:image/svg+xm
       <div class="tbl-wrap">
         <table>
           <thead>
-            <tr><th>Participant</th><th>Period</th><th>Contributions</th><th>Penalties</th><th>Net Award</th><th>Status</th><th style="width:80px;text-align:center">Actions</th></tr>
+            <tr><th>Award ID</th><th>Award Period</th><th>Participant</th><th>Contributions</th><th>Penalties</th><th>Award</th><th>Balance</th><th>Status</th><th>Vested</th><th style="width:80px;text-align:center">Actions</th></tr>
           </thead>
           <tbody id="ledger-tbody"></tbody>
         </table>
@@ -1131,13 +1141,6 @@ select.form-control { appearance: none; background-image: url("data:image/svg+xm
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
         Download PDF
       </button>
-      <div class="dd-wrap">
-        <button class="btn btn-secondary btn-sm" style="padding:6px 10px;font-size:17px;letter-spacing:1px" onclick="toggleMenu(this)">⋯</button>
-        <div class="dd-menu">
-          <div class="dd-item" id="ad-reverse-item" onclick="closeMenus();confirmReverseAward()">Reverse Award</div>
-          <div class="dd-item" onclick="closeMenus();openAddPenaltyModal()">+ Add Penalty</div>
-        </div>
-      </div>
     </div>
   </div>
   <div class="page">
@@ -1147,86 +1150,75 @@ select.form-control { appearance: none; background-image: url("data:image/svg+xm
         <div style="font-size:16px;font-weight:700" id="ad-name">—</div>
         <div style="font-size:12px;color:rgba(255,255,255,.55);margin-top:2px" id="ad-meta">—</div>
       </div>
-      <div style="display:flex;gap:24px;margin-left:auto;flex-wrap:wrap">
-        <div><div style="font-size:10px;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:.05em">Net Award</div><div class="mono" style="font-size:20px;font-weight:700;margin-top:3px" id="ad-hero-net">$0.00</div></div>
-        <div><div style="font-size:10px;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:.05em">Period</div><div style="font-size:14px;font-weight:600;margin-top:5px" id="ad-hero-period">—</div></div>
-        <div><div style="font-size:10px;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:.05em">Status</div><div style="margin-top:5px" id="ad-hero-status">—</div></div>
+      <div style="display:flex;gap:22px;margin-left:auto;flex-wrap:wrap">
+        <div><div style="font-size:10px;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:.05em">Award ID</div><div class="mono" style="font-size:15px;font-weight:700;margin-top:5px" id="ad-hero-id">—</div></div>
+        <div><div style="font-size:10px;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:.05em">Award</div><div class="mono" style="font-size:20px;font-weight:700;margin-top:3px" id="ad-hero-net">0.00</div></div>
+        <div><div style="font-size:10px;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:.05em">Period</div><div style="font-size:13px;font-weight:600;margin-top:5px" id="ad-hero-period">—</div></div>
+        <div><div style="font-size:10px;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:.05em">Award Status</div><div style="margin-top:5px" id="ad-hero-status">—</div></div>
+        <div><div style="font-size:10px;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:.05em">Vesting Status</div><div style="margin-top:5px" id="ad-hero-vesting">—</div></div>
       </div>
     </div>
 
     <!-- Award Detail Tabs -->
     <div class="tabs-bar" style="margin-bottom:18px">
-      <div class="tab active" data-tab="ad-tab-summary"   onclick="switchAdTab(this)">Summary</div>
-      <div class="tab"        data-tab="ad-tab-letter"    onclick="switchAdTab(this)">Award Letter</div>
-      <div class="tab"        data-tab="ad-tab-penalties" onclick="switchAdTab(this)">Penalties <span class="tab-badge" id="ad-pen-badge" style="display:none">0</span></div>
+      <div class="tab active" data-tab="ad-tab-summary" onclick="switchAdTab(this)">Summary</div>
+      <div class="tab"        data-tab="ad-tab-letter"  onclick="switchAdTab(this)">Award Letter</div>
+      <div class="tab"        data-tab="ad-tab-audit"   onclick="switchAdTab(this)">Audit Log</div>
     </div>
 
     <!-- SUMMARY TAB -->
     <div class="tab-content active" id="ad-tab-summary">
-    <div class="two-col" style="align-items:start">
-      <div style="display:flex;flex-direction:column;gap:14px">
-        <!-- Summary -->
-        <div class="card">
-          <div class="card-header"><div class="card-title">Award Summary</div></div>
-          <div class="card-body">
-            <div class="grid3" style="margin-bottom:14px">
-              <div style="background:var(--emerald-light);border:1px solid var(--emerald-mid);border-radius:var(--r);padding:14px 16px">
-                <div class="stat-label" style="color:var(--emerald)">Contributions</div>
-                <div class="stat-val" style="color:var(--emerald)" id="ad-sum-contrib">$0.00</div>
-                <div class="stat-sub" id="ad-sum-contrib-c">0 items</div>
+      <div id="ad-locked-notice"></div>
+      <div class="two-col" style="align-items:start">
+        <div style="display:flex;flex-direction:column;gap:14px">
+          <div class="card">
+            <div class="card-header"><div class="card-title">Award Summary</div></div>
+            <div class="card-body">
+              <div class="grid3" style="margin-bottom:14px">
+                <div style="background:var(--emerald-light);border:1px solid var(--emerald-mid);border-radius:var(--r);padding:14px 16px">
+                  <div class="stat-label" style="color:var(--emerald)">Contributions</div>
+                  <div class="stat-val" style="color:var(--emerald)" id="ad-sum-contrib">0.00</div>
+                  <div class="stat-sub" id="ad-sum-contrib-c">0 items</div>
+                </div>
+                <div style="background:var(--ruby-light);border:1px solid var(--ruby-mid);border-radius:var(--r);padding:14px 16px">
+                  <div class="stat-label" style="color:var(--ruby)">Penalties</div>
+                  <div class="stat-val" style="color:var(--ruby)" id="ad-sum-pen">0.00</div>
+                  <div class="stat-sub" id="ad-sum-pen-c">0 items</div>
+                </div>
+                <div style="background:var(--sapphire-light);border:1px solid var(--sapphire-mid);border-radius:var(--r);padding:14px 16px">
+                  <div class="stat-label" style="color:var(--sapphire)">Award</div>
+                  <div class="stat-val" style="color:var(--sapphire)" id="ad-sum-net">0.00</div>
+                  <div class="stat-sub">Contributions − Penalties</div>
+                </div>
               </div>
-              <div style="background:var(--ruby-light);border:1px solid var(--ruby-mid);border-radius:var(--r);padding:14px 16px">
-                <div class="stat-label" style="color:var(--ruby)">Penalties</div>
-                <div class="stat-val" style="color:var(--ruby)" id="ad-sum-pen">$0.00</div>
-                <div class="stat-sub" id="ad-sum-pen-c">0 items</div>
-              </div>
-              <div style="background:var(--sapphire-light);border:1px solid var(--sapphire-mid);border-radius:var(--r);padding:14px 16px">
-                <div class="stat-label" style="color:var(--sapphire)">Net Award</div>
-                <div class="stat-val" style="color:var(--sapphire)" id="ad-sum-net">$0.00</div>
-                <div class="stat-sub">Contributions − Penalties</div>
+              <div style="display:flex;gap:20px;flex-wrap:wrap;font-size:12px;padding-top:12px;border-top:1px solid var(--border)">
+                <div><strong>Award ID:</strong> <span id="ad-info-id">—</span></div>
+                <div><strong>Period:</strong> <span id="ad-info-period">—</span></div>
+                <div><strong>Date:</strong> <span id="ad-info-date">—</span></div>
               </div>
             </div>
-            <div style="display:flex;gap:20px;flex-wrap:wrap;font-size:12px;padding-top:12px;border-top:1px solid var(--border)">
-              <div><strong>Period:</strong> <span id="ad-info-period">—</span></div>
-              <div><strong>Date:</strong> <span id="ad-info-date">—</span></div>
-              <div><strong>Approved By:</strong> <span id="ad-info-approver">—</span></div>
+          </div>
+          <div class="card">
+            <div class="card-header"><div class="card-title">Line Items</div><button class="btn btn-secondary btn-sm" id="ad-add-li-btn" onclick="openAddLineItem()">+ Add Line Item</button></div>
+            <div class="card-body" id="ad-lineitems"></div>
+          </div>
+        </div>
+        <div style="position:sticky;top:72px;display:flex;flex-direction:column;gap:14px">
+          <div class="card">
+            <div class="card-header"><div class="card-title">Signatures &amp; Status</div></div>
+            <div class="card-body" id="ad-sig-panel"></div>
+          </div>
+          <div class="card">
+            <div class="card-header"><div class="card-title">Quick Actions</div></div>
+            <div class="card-body" style="display:flex;flex-direction:column;gap:8px">
+              <button class="btn btn-secondary" style="width:100%;justify-content:flex-start" onclick="switchAdTabById('ad-tab-letter')">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                View Award Letter
+              </button>
             </div>
-          </div>
-        </div>
-
-        <!-- Contribution line items -->
-        <div class="card">
-          <div class="card-header"><div class="card-title">Contribution Line Items</div></div>
-          <div class="tbl-wrap">
-            <table>
-              <thead><tr><th>Input Type</th><th style="text-align:right">Quantity</th><th style="text-align:right">Rate</th><th style="text-align:right">Earned</th><th style="width:80px"></th></tr></thead>
-              <tbody id="ad-contrib-tbody"></tbody>
-            </table>
-          </div>
-        </div>
-
-      </div>
-      <!-- right col: mini summary -->
-      <div style="position:sticky;top:72px">
-        <div class="card">
-          <div class="card-header"><div class="card-title">Quick Actions</div></div>
-          <div class="card-body" style="display:flex;flex-direction:column;gap:8px">
-            <button class="btn btn-secondary" style="width:100%;justify-content:flex-start" onclick="switchAdTabById('ad-tab-letter')">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-              View Award Letter
-            </button>
-            <button class="btn btn-secondary" style="width:100%;justify-content:flex-start;color:var(--ruby)" onclick="switchAdTabById('ad-tab-penalties')">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-              View Penalties
-            </button>
-            <button class="btn btn-primary" style="width:100%;justify-content:flex-start" onclick="downloadAwardPdf()">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-              Download PDF
-            </button>
           </div>
         </div>
       </div>
-    </div>
     </div><!-- /ad-tab-summary -->
 
     <!-- AWARD LETTER TAB -->
@@ -1255,38 +1247,19 @@ select.form-control { appearance: none; background-image: url("data:image/svg+xm
                 <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
                 Download PDF
               </button>
-              <button class="btn btn-secondary" style="width:100%;justify-content:flex-start;color:var(--ruby)" onclick="openAddPenaltyModal()">
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-                + Add Penalty
-              </button>
-              <button class="btn btn-secondary" style="width:100%;justify-content:flex-start;color:var(--ruby)" id="ad-reverse-btn2" onclick="confirmReverseAward()">
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7v6h6"/><path d="M21 17a9 9 0 00-15-6.7L3 13"/></svg>
-                Reverse Award
-              </button>
-            </div>
+              </div>
           </div>
         </div>
       </div>
     </div><!-- /ad-tab-letter -->
 
-    <!-- PENALTIES TAB -->
-    <div class="tab-content" id="ad-tab-penalties">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
-        <div>
-          <div style="font-size:14px;font-weight:700">Penalty Line Items</div>
-          <div style="font-size:12px;color:var(--slate)">Penalties reduce the Net Award</div>
-        </div>
-        <button class="btn btn-danger btn-sm" onclick="openAddPenaltyModal()">+ Add Penalty</button>
+    <!-- AUDIT LOG TAB -->
+    <div class="tab-content" id="ad-tab-audit">
+      <div class="card">
+        <div class="card-header"><div class="card-title">Audit Log</div><div class="card-subtitle">Award Status &amp; Vesting Status progression</div></div>
+        <div id="ad-audit-list"></div>
       </div>
-      <div class="card" id="ad-penalty-card">
-        <div class="tbl-wrap">
-          <table>
-            <thead><tr><th>Category</th><th>Severity</th><th>Description</th><th style="text-align:right">Value</th><th style="width:80px"></th></tr></thead>
-            <tbody id="ad-penalty-tbody"></tbody>
-          </table>
-        </div>
-      </div>
-    </div><!-- /ad-tab-penalties -->
+    </div><!-- /ad-tab-audit -->
 
   </div>
 </div>
@@ -1295,7 +1268,7 @@ select.form-control { appearance: none; background-image: url("data:image/svg+xm
 <!-- ADD PENALTY MODAL -->
 <div class="modal-backdrop" id="modal-add-penalty">
   <div class="modal-box" style="max-width:480px">
-    <button class="modal-close" onclick="closeModal('modal-add-penalty')">✕</button>
+    <button class="modal-close" onclick="closeModal('modal-add-penalty')"><svg width="14" height="14" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 5l10 10M15 5L5 15"/></svg></button>
     <div class="modal-title" style="color:var(--ruby)">Record Penalty</div>
     <div class="modal-sub">Penalties reduce the Net Award. This record is immutable once saved.</div>
     <div class="fg" style="margin-top:16px">
@@ -1327,6 +1300,29 @@ select.form-control { appearance: none; background-image: url("data:image/svg+xm
     <div class="modal-footer">
       <button class="btn btn-secondary" onclick="closeModal('modal-add-penalty')">Cancel</button>
       <button class="btn btn-danger" onclick="confirmAddPenalty()">Apply Penalty</button>
+    </div>
+  </div>
+</div>
+
+<!-- ADD LINE ITEM MODAL -->
+<div class="modal-backdrop" id="modal-add-li">
+  <div class="modal-box" style="max-width:460px">
+    <button class="modal-close" onclick="closeModal('modal-add-li')"><svg width="14" height="14" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 5l10 10M15 5L5 15"/></svg></button>
+    <div class="modal-title">Add Line Item</div>
+    <div class="modal-sub">Add a cash contribution or a penalty to this award.</div>
+    <div class="fg" style="margin-top:16px">
+      <div class="form-group"><label>Type</label>
+        <select class="form-control" id="ali-kind">
+          <option value="cash">Cash Contribution (positive)</option>
+          <option value="penalty">Penalty (negative)</option>
+        </select>
+      </div>
+      <div class="form-group"><label>Label</label><input class="form-control" id="ali-label" placeholder="e.g. Cash Investment / Late Filing"></div>
+      <div class="form-group"><label>Amount</label><div class="prefix-wrap"><span class="prefix"></span><input class="form-control mono" id="ali-amount" type="number" step="0.01" min="0" placeholder="0.00"></div></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="closeModal('modal-add-li')">Cancel</button>
+      <button class="btn btn-primary" onclick="confirmAddLineItem()">Add Line Item</button>
     </div>
   </div>
 </div>
@@ -1372,8 +1368,8 @@ select.form-control { appearance: none; background-image: url("data:image/svg+xm
               </div>
               <div class="grid2">
                 <div class="form-group"><label>Location</label><input class="form-control" id="up-location" placeholder="City, State"></div>
-                <div class="form-group"><label>Hourly Rate ($)</label>
-                  <div class="prefix-wrap"><span class="prefix">$</span><input class="form-control" type="number" id="up-rate" placeholder="0"></div>
+                <div class="form-group"><label>Hourly Rate</label>
+                  <div class="prefix-wrap"><span class="prefix"></span><input class="form-control" type="number" id="up-rate" placeholder="0"></div>
                 </div>
               </div>
               <div class="form-group"><label>Service Definition</label><textarea class="form-control" id="up-service" rows="2" placeholder="Describe the services you provide…"></textarea></div>
@@ -1458,7 +1454,7 @@ select.form-control { appearance: none; background-image: url("data:image/svg+xm
           <div class="card-body">
             <div id="up-docs-uploads"></div>
             <div style="margin-top:12px;padding:16px;border:2px dashed var(--border-2);border-radius:var(--r);text-align:center;color:var(--slate-2)">
-              <div style="font-size:22px;margin-bottom:6px">📎</div>
+              <div style="margin-bottom:6px;color:var(--slate-2)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5l-8.5 8.5a5 5 0 01-7-7l8.5-8.5a3.3 3.3 0 014.7 4.7l-8.5 8.5a1.7 1.7 0 01-2.4-2.4l7.8-7.8"/></svg></div>
               <div style="font-weight:600;font-size:13px;color:var(--slate);margin-bottom:4px">Upload signed documents</div>
               <div style="font-size:12px">Drop signed PDFs, images, or any document files here</div>
               <button class="btn btn-secondary btn-sm" style="margin-top:10px" onclick="toast('File upload requires backend integration','amber')">Choose Files</button>
@@ -1519,7 +1515,7 @@ select.form-control { appearance: none; background-image: url("data:image/svg+xm
 
 <!-- IMPERSONATION BANNER (God Mode) -->
 <div id="imp-banner">
-  <span>👁 Viewing the app as <strong id="imp-name">—</strong> (God Mode impersonation)</span>
+  <span><svg width="14" height="14" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:-2px"><path d="M1 10s3-6 9-6 9 6 9 6-3 6-9 6-9-6-9-6z"/><circle cx="10" cy="10" r="2.5"/></svg> Viewing the app as <strong id="imp-name">—</strong> (God Mode impersonation)</span>
   <button onclick="adminStopImpersonate()">Exit & return to my account</button>
 </div>
 
@@ -1529,71 +1525,37 @@ select.form-control { appearance: none; background-image: url("data:image/svg+xm
 <div id="screen-admin" class="screen">
 <div class="main">
   <div class="topbar">
-    <div><div class="tb-title">God Mode · Admin Console</div><div class="tb-bread">System-wide oversight for Fund Managers &amp; Secretaries</div></div>
+    <div><div class="tb-title">All Funds</div><div class="tb-bread">Administrator console · read-only · aggregated across every fund</div></div>
     <div class="tb-actions">
-      <button class="btn btn-secondary" onclick="adminBroadcast()">Broadcast Notice</button>
-      <button class="btn btn-secondary" onclick="renderAdmin()">↻ Refresh</button>
+      <button class="btn btn-secondary" onclick="renderAdmin()"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px"><polyline points="21 4 21 10 15 10"/><path d="M20 14a8 8 0 11-2.3-6.7L21 10"/></svg> Refresh</button>
     </div>
   </div>
   <div class="page">
     <div id="admin-guard"></div>
     <div id="admin-body" style="display:none">
       <div class="god-hero">
-        <div class="avatar avatar-lg" style="background:linear-gradient(135deg,#7C3AED,#2563EB)"></div>
+        <div class="avatar avatar-lg" style="background:linear-gradient(135deg,#7C3AED,#2563EB)"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M10 20V4M16 20v-6M22 20H2"/></svg></div>
         <div>
-          <div class="god-hero-title">God Mode <span class="god-badge">Elevated</span></div>
-          <div class="god-hero-sub" id="god-hero-sub">Oversee every fund, participant, and award across the platform.</div>
+          <div class="god-hero-title">All Funds <span class="god-badge">Read-only</span></div>
+          <div class="god-hero-sub" id="god-hero-sub">A consolidated, system-wide view of every fund. All edits happen inside each fund's own view.</div>
         </div>
       </div>
       <div class="four-col" style="margin-bottom:20px" id="admin-stats"></div>
-      <div class="tabs-bar">
-        <div class="tab active" data-atab="adm-funds"  onclick="switchAdmTab(this)">Fund Oversight</div>
-        <div class="tab"        data-atab="adm-users"  onclick="switchAdmTab(this)">User Oversight</div>
-        <div class="tab"        data-atab="adm-awards" onclick="switchAdmTab(this)">Award Oversight</div>
-        <div class="tab"        data-atab="adm-audit"  onclick="switchAdmTab(this)">Audit Log</div>
+      <div class="card" style="margin-bottom:20px">
+        <div class="card-header"><div class="card-title">Total Awards by Fund</div><div class="card-subtitle">Aggregated across all funds in the system</div></div>
+        <div class="card-body"><div id="admin-bars"></div></div>
       </div>
-
-      <div class="tab-content active" id="adm-funds">
-        <div class="card">
-          <div class="card-header"><div class="card-title">All Funds</div><div class="card-subtitle">Force status, set the default fund, or jump into holdings &amp; ledgers</div></div>
-          <div class="tbl-wrap"><table>
-            <thead><tr><th>Fund</th><th>Status</th><th>Default</th><th>Participants</th><th style="width:220px">Actions</th></tr></thead>
-            <tbody id="adm-funds-tbody"></tbody>
-          </table></div>
-        </div>
-      </div>
-
-      <div class="tab-content" id="adm-users">
-        <div class="card">
-          <div class="card-header"><div class="card-title">All Users</div><div class="card-subtitle">Change system access or impersonate any user (&quot;View as&quot;)</div></div>
-          <div class="tbl-wrap"><table>
-            <thead><tr><th>User</th><th>System Access</th><th>Memberships</th><th style="width:220px">Actions</th></tr></thead>
-            <tbody id="adm-users-tbody"></tbody>
-          </table></div>
-        </div>
-      </div>
-
-      <div class="tab-content" id="adm-awards">
-        <div class="card">
-          <div class="card-header"><div class="card-title">All Awards</div><div class="card-subtitle">Reverse any award system-wide · records are preserved for audit</div></div>
-          <div class="tbl-wrap"><table>
-            <thead><tr><th>Participant</th><th>Fund</th><th>Period</th><th style="text-align:right">Net</th><th>Status</th><th style="width:120px">Actions</th></tr></thead>
-            <tbody id="adm-awards-tbody"></tbody>
-          </table></div>
-        </div>
-      </div>
-
-      <div class="tab-content" id="adm-audit">
-        <div class="card">
-          <div class="card-header"><div class="card-title">Audit Log</div><div class="card-subtitle">Newest first · every God Mode action is recorded</div></div>
-          <div id="adm-audit-list"></div>
-        </div>
+      <div class="card">
+        <div class="card-header"><div class="card-title">Funds</div><div class="card-subtitle">All funds — including those you do not participate in</div></div>
+        <div class="tbl-wrap"><table>
+          <thead><tr><th>Fund</th><th style="text-align:right">Total Awards</th><th style="text-align:right">Admin Awards</th><th style="text-align:right">Admin Share</th></tr></thead>
+          <tbody id="adm-funds-tbody"></tbody>
+        </table></div>
       </div>
     </div>
   </div>
 </div>
 </div>
-
 <script>
 /* ══════════════════════════════════════════════════════════
    DATA MODEL
@@ -1637,25 +1599,44 @@ let INVITATIONS = [
 
 // AWARDS (simplified for this demo)
 let AWARDS = [
-  { id:'aw1', fundId:'f1', userId:'u1', periodLabel:'Week of Apr 13 – Apr 19, 2026', awardDate:'2026-04-19', status:'approved', approvedBy:'u2', lineItems:[
+  { id:'aw1', fundId:'f1', userId:'u1', code:'AW-0001', periodLabel:'Week of Apr 13 – Apr 19, 2026', awardDate:'2026-04-19', status:'recorded', vesting:'vested', audit:[{ts:'2026-04-19 10:00',actor:'Ryker Rinehart',kind:'Award Status',from:'Secretary Signature Requested',to:'Recorded'}], approvedBy:'u2', lineItems:[
     { id:'li1', kind:'contribution', inputType:'hourly', label:'Hourly Inputs (×1)', quantity:40, rate:120, earned:4800 },
     { id:'li2', kind:'contribution', inputType:'bonus', label:'Bonus Inputs (×0.1)', quantity:40, rate:12, earned:480 },
   ]},
-  { id:'aw2', fundId:'f1', userId:'u2', periodLabel:'Week of Apr 13 – Apr 19, 2026', awardDate:'2026-04-19', status:'approved', approvedBy:'u1', lineItems:[
+  { id:'aw2', fundId:'f1', userId:'u2', code:'AW-0002', periodLabel:'Week of Apr 13 – Apr 19, 2026', awardDate:'2026-04-19', status:'signed_by_manager', vesting:'vesting', audit:[{ts:'2026-04-18 09:30',actor:'David Boctor',kind:'Award Status',from:'Manager Signature Requested',to:'Signed by Manager'}], approvedBy:'u1', lineItems:[
     { id:'li3', kind:'contribution', inputType:'hourly', label:'Hourly Inputs (×1)', quantity:38, rate:95, earned:3610 },
     { id:'li4', kind:'contribution', inputType:'bonus', label:'Bonus Inputs (×0.1)', quantity:38, rate:9.5, earned:361 },
   ]},
-  { id:'aw3', fundId:'f1', userId:'u4', periodLabel:'Feb 10 – Feb 17, 2026', awardDate:'2026-02-17', status:'approved', approvedBy:'u2', lineItems:[
+  { id:'aw3', fundId:'f1', userId:'u4', code:'AW-0003', periodLabel:'Feb 10 – Feb 17, 2026', awardDate:'2026-02-17', status:'recorded', vesting:'vested', audit:[{ts:'2026-02-17 14:00',actor:'Ryker Rinehart',kind:'Award Status',from:'Secretary Signature Requested',to:'Recorded'}], approvedBy:'u2', lineItems:[
     { id:'li5', kind:'contribution', inputType:'hourly', label:'Hourly Inputs (×1)', quantity:40, rate:110, earned:4400 },
     { id:'li6', kind:'penalty', inputType:'penalty', label:'Penalty: Poor Time Tracking (minor)', quantity:1, rate:-100, earned:-100, severity:'minor', category:'Poor Time Tracking', notes:'Failed to submit hours within 14-day window.' },
   ]},
-  { id:'aw4', fundId:'f1', userId:'u1', periodLabel:'Jan 2026 — Cash', awardDate:'2026-01-31', status:'approved', approvedBy:'u2', lineItems:[
+  { id:'aw4', fundId:'f1', userId:'u1', code:'AW-0004', periodLabel:'Jan 2026 — Cash', awardDate:'2026-01-31', status:'drafted', vesting:'unvested', audit:[{ts:'2026-01-31 11:00',actor:'David Boctor',kind:'Award Status',from:'—',to:'Drafted'}], approvedBy:'u2', lineItems:[
     { id:'li7', kind:'contribution', inputType:'cash', label:'Cash Inputs (×1)', quantity:1, rate:10000, earned:10000 },
   ]},
-  { id:'aw5', fundId:'f2', userId:'u1', periodLabel:'Q3 2025', awardDate:'2025-09-30', status:'approved', approvedBy:'u2', lineItems:[
+  { id:'aw5', fundId:'f2', userId:'u1', code:'AW-0005', periodLabel:'Q3 2025', awardDate:'2025-09-30', status:'recorded', vesting:'vested', audit:[{ts:'2025-09-30 16:00',actor:'Ryker Rinehart',kind:'Award Status',from:'Secretary Signature Requested',to:'Recorded'}], approvedBy:'u2', lineItems:[
     { id:'li8', kind:'contribution', inputType:'hourly', label:'Hourly Inputs (×1)', quantity:80, rate:120, earned:9600 },
   ]},
 ];
+
+/* ══ AWARD STATUS + VESTING WORKFLOW ═════════════════════ */
+const AWARD_FLOW=['drafted','owner_sig_requested','signed_by_owner','manager_sig_requested','signed_by_manager','secretary_sig_requested','recorded'];
+const AWARD_LABEL={drafted:'Drafted',owner_sig_requested:'Owner Signature Requested',signed_by_owner:'Signed by Owner',manager_sig_requested:'Manager Signature Requested',signed_by_manager:'Signed by Manager',secretary_sig_requested:'Secretary Signature Requested',recorded:'Recorded'};
+const AWARD_NEXT={drafted:'Request Owner Signature',owner_sig_requested:'Sign as Owner',signed_by_owner:'Request Manager Signature',manager_sig_requested:'Sign as Manager',signed_by_manager:'Request Secretary Signature',secretary_sig_requested:'Sign & Record (Secretary)'};
+const VESTING_FLOW=['unvested','vesting','vested'];
+const VESTING_LABEL={unvested:'Unvested',vesting:'Vesting',vested:'Vested'};
+function awardStatusLabel(s){return AWARD_LABEL[s]||'Drafted';}
+function vestingStatusLabel(s){return VESTING_LABEL[s]||'Unvested';}
+function awardStatusBadge(s){const cls=s==='recorded'?'badge-green':s==='drafted'?'badge-slate':(s||'').includes('requested')?'badge-amber':'badge-blue';return `<span class="badge ${cls}">${awardStatusLabel(s)}</span>`;}
+function vestingStatusBadge(s){const cls=s==='vested'?'badge-green':s==='vesting'?'badge-amber':'badge-slate';return `<span class="badge ${cls}">${vestingStatusLabel(s)}</span>`;}
+function isAwardRecorded(a){return (a?.status||'drafted')==='recorded';}
+function isReversalEntry(a){return !!a?.reversalOf;}
+function isReversed(awardId){return AWARDS.some(x=>x.reversalOf===awardId);}
+function awardCode(a){return a?.code||(a?.id||'').toUpperCase();}
+function nextAwardCode(){let mx=0;AWARDS.forEach(a=>{const m=/AW-(\d+)/.exec(a.code||'');if(m)mx=Math.max(mx,+m[1]);});return 'AW-'+String(mx+1).padStart(4,'0');}
+function awardAudit(a,kind,from,to){a.audit=a.audit||[];const d=new Date();const ts=`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')} ${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`;a.audit.unshift({ts,actor:CUR.user?.name||'System',kind,from,to});}
+function advanceAwardStatus(awardId){const a=AWARDS.find(x=>x.id===awardId);if(!a)return;const cur=a.status||'drafted';const i=AWARD_FLOW.indexOf(cur);if(i<0||i>=AWARD_FLOW.length-1){toast('Award already recorded','');return;}const nx=AWARD_FLOW[i+1];a.status=nx;if(nx==='recorded')a.recordedAt=todayISO();awardAudit(a,'Award Status',AWARD_LABEL[cur],AWARD_LABEL[nx]);toast('Award status → '+AWARD_LABEL[nx],'green');renderAwardDetail();}
+function advanceVesting(awardId){const a=AWARDS.find(x=>x.id===awardId);if(!a)return;const cur=a.vesting||'unvested';const i=VESTING_FLOW.indexOf(cur);if(i<0||i>=VESTING_FLOW.length-1){toast('Already fully vested','');return;}const nx=VESTING_FLOW[i+1];a.vesting=nx;awardAudit(a,'Vesting Status',VESTING_LABEL[cur],VESTING_LABEL[nx]);toast('Vesting status → '+VESTING_LABEL[nx],'green');renderAwardDetail();}
 
 /* ══ STATE ═══════════════════════════════════════════════ */
 let CUR = {
@@ -1774,10 +1755,12 @@ function buildSidebar(activeId) {
   const opNav=`
     <div class="sb-section">Overview</div>
     ${lnk('screen-my-funds',icons.home,'My Funds')}
-    ${lnk('screen-users',icons.users,'User Directory',pendingInvites>0?String(pendingInvites):'')}
+    ${lnk('screen-admin',icons.shield,'All Funds')}
     <div class="sb-section">Administration</div>
-    ${lnk('screen-funds',icons.funds,'Funds')}
-    ${lnk('screen-admin',icons.shield,'God Mode')}`;
+    ${lnk('screen-users',icons.users,'User Directory',pendingInvites>0?String(pendingInvites):'')}
+    ${lnk('screen-admin',icons.shield,'All Funds')}
+    <div class="sb-section">Management</div>
+    ${lnk('screen-funds',icons.funds,'Funds')}`;
   // Owner nav: stripped — just their own holdings + profile
   const ownerNav=`
     <div class="sb-section">My Portfolio</div>
@@ -1786,7 +1769,7 @@ function buildSidebar(activeId) {
     <div class="sb-brand">
       <div class="sb-brand-row">
         <div class="sb-logo">FF</div>
-        <div><div class="sb-name">Founders Fund</div><div class="sb-version">SAF-Model v6.0</div></div>
+        <div><div class="sb-name">Founders Fund</div><div class="sb-version">SAF-Model</div></div>
       </div>
     </div>
     <nav class="sb-nav">${isOp?opNav:ownerNav}</nav>
@@ -1900,9 +1883,9 @@ function renderMyFunds() {
         <div style="font-size:12px;color:rgba(255,255,255,.5);margin-top:3px">${roleName(CUR.user?.systemRole||'')} · ${escHtml(CUR.user?.email||'')}</div>
       </div>
       <div class="hero-stats">
-        <div><div class="hero-stat-lbl">${isOp?'Total Owner Share':'My Owner Share'}</div><div class="hero-stat-val">$${fmt$(totalNet)}</div></div>
-        <div><div class="hero-stat-lbl">Contributions</div><div class="hero-stat-val" style="color:#6EE7B7">$${fmt$(totalContrib)}</div></div>
-        <div><div class="hero-stat-lbl">Penalties</div><div class="hero-stat-val" style="color:${totalPenalty?'#FCA5A5':'rgba(255,255,255,.35)'}">−$${fmt$(totalPenalty)}</div></div>
+        <div><div class="hero-stat-lbl">${isOp?'Combined Awards':'My Combined Awards'}</div><div class="hero-stat-val">${fmt$(totalNet)}</div></div>
+        <div><div class="hero-stat-lbl">Contributions</div><div class="hero-stat-val" style="color:#6EE7B7">${fmt$(totalContrib)}</div></div>
+        <div><div class="hero-stat-lbl">Penalties</div><div class="hero-stat-val" style="color:${totalPenalty?'#FCA5A5':'rgba(255,255,255,.35)'}">−${fmt$(totalPenalty)}</div></div>
         <div><div class="hero-stat-lbl">Funds</div><div class="hero-stat-val">${myMemberships.length}</div></div>
       </div>
     </div>`;
@@ -1911,7 +1894,7 @@ function renderMyFunds() {
     const emptyMsg=isOp
       ?'No fund memberships yet. Use <strong>+ New Fund</strong> to create your first fund.'
       :'You haven\'t been added to any funds yet. Contact a Fund Manager to get started.';
-    $('my-funds-grid').innerHTML = `<div class="card" style="grid-column:1/-1"><div class="card-empty"><div class="card-empty-icon">${isOp?'🏛️':'📂'}</div><div class="card-empty-title">No fund memberships</div><div class="card-empty-desc">${emptyMsg}</div></div></div>`;
+    $('my-funds-grid').innerHTML = `<div class="card" style="grid-column:1/-1"><div class="card-empty"><div class="card-empty-icon">${isOp?'<svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-5 9 5"/><path d="M5 9v10M19 9v10M9 9v10M15 9v10"/><path d="M3 21h18"/></svg>':'<svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7a2 2 0 012-2h4l2 2h8a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>'}</div><div class="card-empty-title">No fund memberships</div><div class="card-empty-desc">${emptyMsg}</div></div></div>`;
     return;
   }
   $('my-funds-grid').innerHTML = myMemberships.map(m=>{
@@ -1935,8 +1918,8 @@ function renderMyFunds() {
         </div>
       </div>
       <div class="fund-card-stats">
-        <div class="fund-stat-cell"><div class="fund-stat-label">Owner Share</div><div class="fund-stat-val">$${fmt$(inputs.net)}</div></div>
-        <div class="fund-stat-cell"><div class="fund-stat-label">Inputs %</div><div class="fund-stat-val" style="color:var(--sapphire)">${equity.toFixed(1)}%</div></div>
+        <div class="fund-stat-cell"><div class="fund-stat-label">My Awards</div><div class="fund-stat-val">${fmt$(inputs.net)}</div></div>
+        <div class="fund-stat-cell"><div class="fund-stat-label">Ownership</div><div class="fund-stat-val" style="color:var(--sapphire)">${equity.toFixed(1)}%</div></div>
       </div>
       <div class="fund-card-footer">
         <span style="font-size:11.5px;color:var(--slate)">Joined ${fmtDate(m.joinedAt)}</span>
@@ -1973,7 +1956,6 @@ function renderUserDirectory(){
   if(q) users=users.filter(u=>u.name.toLowerCase().includes(q)||u.email.toLowerCase().includes(q));
   if(CUR.userFilter==='active')   users=users.filter(u=>u.status==='active'&&membershipsForUser(u.id).length>0);
   if(CUR.userFilter==='pending')  users=users.filter(u=>u.status==='pending'||INVITATIONS.some(i=>i.userId===u.id&&i.status==='pending'));
-  if(CUR.userFilter==='accepted') users=users.filter(u=>INVITATIONS.some(i=>i.userId===u.id&&i.status==='accepted'));
   const tbody=$('users-tbody');
   if(!tbody)return;
   if(users.length===0){
@@ -1983,14 +1965,11 @@ function renderUserDirectory(){
   tbody.innerHTML=users.map((u,i)=>{
     const mems=membershipsForUser(u.id);
     const inv=INVITATIONS.find(inv=>inv.userId===u.id&&inv.status==='pending');
-    const accInv=INVITATIONS.find(inv=>inv.userId===u.id&&inv.status==='accepted');
     const statusHtml=u.status==='pending'
-      ?`<span class="invite-status" style="color:var(--amber)">Pending invite</span>`
-      :accInv
-        ?`<span class="invite-status" style="color:var(--sapphire)">Accepted</span>`
-        :u.status==='active'
-          ?`<span class="invite-status" style="color:var(--emerald)">Active</span>`
-          :`<span class="invite-status" style="color:var(--ruby)">Inactive</span>`;
+      ?`<span class="invite-status" style="color:var(--amber)">Invited</span>`
+      :u.status==='active'
+        ?`<span class="invite-status" style="color:var(--emerald)">Active</span>`
+        :`<span class="invite-status" style="color:var(--ruby)">Inactive</span>`;
     const color=COLORS[i%COLORS.length];
     const canManage=isSecretaryOrManager(CUR.activeFundId)||CUR.user?.systemRole==='fund_manager';
     return `<tr>
@@ -2020,16 +1999,16 @@ function renderUserDirectory(){
   }).join('');
   // Also show pending/accepted/expired invites for non-user emails
   const noUserInvites=INVITATIONS.filter(i=>!i.userId);
-  if(noUserInvites.length>0&&(CUR.userFilter==='all'||CUR.userFilter==='pending'||CUR.userFilter==='accepted')){
+  if(noUserInvites.length>0&&(CUR.userFilter==='all'||CUR.userFilter==='pending')){
     tbody.innerHTML+=noUserInvites.map(inv=>{
       const isAccepted=inv.status==='accepted';
       const isExpired=inv.status==='expired';
       const rowBg=isAccepted?'var(--sapphire-light)':isExpired?'var(--ruby-light)':'var(--amber-light)';
       const iconColor=isAccepted?'var(--sapphire)':isExpired?'var(--ruby)':'var(--amber)';
       const borderColor=isAccepted?'var(--sapphire-mid)':isExpired?'var(--ruby-mid)':'var(--amber-mid)';
-      const statusLabel=isAccepted?'Accepted':isExpired?'Invite expired':'Pending invite · Not yet registered';
-      const icon=isAccepted?'✓':isExpired?'✕':'✉';
-      const statusText=isAccepted?'Accepted':isExpired?'Expired':'Pending invite';
+      const statusLabel=isExpired?'Invite expired':'Invited · Not yet registered';
+      const icon=isAccepted?'<svg width="12" height="12" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10l4 4 8-9"/></svg>':isExpired?'<svg width="14" height="14" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 5l10 10M15 5L5 15"/></svg>':'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>';
+      const statusText=isExpired?'Expired':'Invited';
       return `<tr style="background:${rowBg}">
         <td>
           <div class="user-row-avatar-col">
@@ -2165,7 +2144,7 @@ function renderFdMembersTable(){
   const mems=membershipsForFund(CUR.activeFundId);
   if(mems.length===0){
     const noSec=!membershipsForFund(CUR.activeFundId).some(m=>m.fundRole==='fund_secretary');
-    tbody.innerHTML=`<tr><td colspan="7"><div class="card-empty"><div class="card-empty-icon">👥</div><div class="card-empty-title">No participants yet</div><div class="card-empty-desc">Use "Invite Participant" to add users to this fund.</div></div></td></tr>`;
+    tbody.innerHTML=`<tr><td colspan="7"><div class="card-empty"><div class="card-empty-icon"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><path d="M3 20a6 6 0 0112 0"/><path d="M16 5.5a3 3 0 010 5.8M21 20a6 6 0 00-5-5.9"/></svg></div><div class="card-empty-title">No participants yet</div><div class="card-empty-desc">Use "Invite Participant" to add users to this fund.</div></div></td></tr>`;
     if(noSec&&(isManager(CUR.activeFundId)||CUR.user?.systemRole==='fund_manager')){
       const notice=$('fd-no-sec-notice');
       if(notice) notice.style.display='flex';
@@ -2201,7 +2180,7 @@ function renderFdMembersTable(){
       </td>
       <td><span class="badge ${m.status==='contributing'?'badge-green':m.status==='suspended'?'badge-amber':m.status==='terminated'?'badge-red':'badge-slate'}">${m.status}</span></td>
       <td style="font-size:12px">${fmtDate(m.joinedAt)}</td>
-      <td class="mono" style="font-weight:700">$${fmt$(inputs.net)}</td>
+      <td class="mono" style="font-weight:700">${fmt$(inputs.net)}</td>
       <td>
         <div class="dd-wrap">
           <button class="btn btn-ghost btn-sm" style="font-size:18px;letter-spacing:1px;padding:2px 8px" onclick="toggleMenu(this)">⋯</button>
@@ -2258,13 +2237,15 @@ function confirmRemoveMember(){
 /* ══ HOLDINGS ════════════════════════════════════════════ */
 function renderHoldings(){
   const fund=FUNDS.find(f=>f.id===CUR.activeFundId); if(!fund)return;
-  $('hold-title').textContent=fund.name;
-  $('hold-bread').textContent='Fund Holdings & Ownership Distribution';
+  $('hold-title').textContent='Fund Details';
+  $('hold-bread').textContent=fund.name;
   $('hold-fund-name').textContent=fund.name;
-  $('hold-breadcrumb').innerHTML=`<a onclick="goTo('screen-my-funds')">My Funds</a><span class="breadcrumb-sep">›</span><span>${escHtml(fund.name)}</span><span class="breadcrumb-sep">›</span><span>Holdings</span>`;
+  $('hold-breadcrumb').innerHTML=`<a onclick="goTo('screen-my-funds')">My Funds</a><span class="breadcrumb-sep">›</span><span>${escHtml(fund.name)}</span>`;
   const canEdit=isSecretaryOrManager(fund.id);
   $('hold-access-guard').style.display=canEdit?'none':'flex';
   const mems=membershipsForFund(fund.id);
+  renderFundValueGraph(fund,mems);
+  renderOwnershipGraph(fund,mems);
   // Table
   const tbody=$('hold-participants-tbody'); if(!tbody)return;
   tbody.innerHTML=mems.map((m,i)=>{
@@ -2285,12 +2266,45 @@ function renderHoldings(){
           </div>
         </div>
       </td>
-      <td class="mono">${(inp.base+inp.ot+inp.bonus)?'$'+fmt$(inp.base+inp.ot+inp.bonus):'—'}</td>
-      <td class="mono" style="color:var(--emerald)">${inp.cash?'$'+fmt$(inp.cash):'—'}</td>
-      <td class="mono" style="color:${inp.penalty?'var(--ruby)':'var(--slate-2)'}">${inp.penalty?'−$'+fmt$(inp.penalty):'—'}</td>
-      <td class="mono fw-700">$${fmt$(inp.net)}</td>
+      <td class="mono">${(inp.base+inp.ot+inp.bonus)?fmt$(inp.base+inp.ot+inp.bonus):'—'}</td>
+      <td class="mono" style="color:var(--emerald)">${inp.cash?fmt$(inp.cash):'—'}</td>
+      <td class="mono" style="color:${inp.penalty?'var(--ruby)':'var(--slate-2)'}">${inp.penalty?'−'+fmt$(inp.penalty):'—'}</td>
+      <td class="mono fw-700">${fmt$(inp.net)}</td>
     </tr>`;
   }).join('');
+}
+
+function legendRow(c,label,val){return `<div style="display:flex;align-items:center;gap:8px"><span style="width:11px;height:11px;border-radius:3px;background:${c};flex-shrink:0"></span><span style="flex:1;color:var(--slate)">${label}</span><span class="mono fw-700">${val}</span></div>`;}
+function renderFundValueGraph(fund,mems){
+  let cash=0,nonCash=0,penalty=0;
+  mems.forEach(m=>{const i=computeUserInputsInFund(m.userId,fund.id);cash+=i.cash;nonCash+=i.base+i.ot+i.bonus;penalty+=i.penalty;});
+  const total=cash+nonCash-penalty;
+  const gross=(cash+nonCash+penalty)||1;
+  const seg=(v,c)=>`<div style="height:100%;width:${Math.max(0,v)/gross*100}%;background:${c}"></div>`;
+  const el=$('hold-graph-value'); if(!el)return;
+  const tb=$('hold-total-badge'); if(tb)tb.textContent=fmt$(total);
+  el.innerHTML=`
+    <div style="font-size:24px;font-weight:800;letter-spacing:-.5px;margin-bottom:4px">${fmt$(total)}</div>
+    <div style="font-size:11.5px;color:var(--slate);margin-bottom:14px">Total fund value (cash + non-cash − penalties)</div>
+    <div style="display:flex;height:26px;border-radius:7px;overflow:hidden;background:#E8EDF3;margin-bottom:14px">${seg(cash,'#0D9488')}${seg(nonCash,'#2563EB')}${seg(penalty,'#DC2626')}</div>
+    <div style="display:flex;flex-direction:column;gap:8px;font-size:12.5px">
+      ${legendRow('#0D9488','Cash Inputs',fmt$(cash))}
+      ${legendRow('#2563EB','Non-Cash Inputs',fmt$(nonCash))}
+      ${legendRow('#DC2626','Penalties','−'+fmt$(penalty))}
+    </div>`;
+}
+function renderOwnershipGraph(fund,mems){
+  const el=$('hold-graph-ownership'); if(!el)return;
+  const rows=mems.map((m,i)=>{const u=USERS.find(x=>x.id===m.userId);return{name:u?.name||'?',net:computeUserInputsInFund(m.userId,fund.id).net,pct:computeEquityPct(m.userId,fund.id),color:COLORS[i%COLORS.length]};}).sort((a,b)=>b.pct-a.pct);
+  if(!rows.length){el.innerHTML='<div style="color:var(--slate-2);font-size:12.5px;padding:10px 0">No participants yet</div>';return;}
+  el.innerHTML=rows.map(r=>`
+    <div style="margin-bottom:12px">
+      <div style="display:flex;justify-content:space-between;font-size:12.5px;margin-bottom:4px">
+        <span style="font-weight:600">${escHtml(r.name)}</span>
+        <span><span class="mono" style="color:var(--slate)">${fmt$(r.net)}</span> · <span class="mono fw-700">${r.pct.toFixed(1)}%</span></span>
+      </div>
+      <div style="height:9px;border-radius:5px;background:#E8EDF3;overflow:hidden"><div style="width:${Math.max(0,r.pct)}%;height:100%;background:${r.color};border-radius:5px"></div></div>
+    </div>`).join('');
 }
 
 /* ══ LEDGER ══════════════════════════════════════════════ */
@@ -2298,44 +2312,70 @@ function renderLedger(){
   const fund=FUNDS.find(f=>f.id===CUR.activeFundId);
   $('ldg-bread').textContent=fund?.name||'—';
   $('ldg-breadcrumb').innerHTML=`<a onclick="goTo('screen-my-funds')">My Funds</a><span class="breadcrumb-sep">›</span><a onclick="goTo('screen-holdings')">${escHtml(fund?.name||'Fund')}</a><span class="breadcrumb-sep">›</span><span>Award Ledger</span>`;
-  const list=awardsForFund(CUR.activeFundId);
+  const list=awardsForFund(CUR.activeFundId).slice().sort((a,b)=>(a.awardDate||'').localeCompare(b.awardDate||'')||(a.code||'').localeCompare(b.code||''));
   const tbody=$('ledger-tbody'); if(!tbody)return;
   if(list.length===0){
-    tbody.innerHTML=`<tr><td colspan="7"><div class="card-empty"><div class="card-empty-icon">📋</div><div class="card-empty-title">No awards recorded</div><div class="card-empty-desc">Awards bundle contributions and penalties for a member over a period. Click "+ Add Award" to create one.</div></div></td></tr>`;
+    tbody.innerHTML=`<tr><td colspan="10"><div class="card-empty"><div class="card-empty-icon"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="4" width="12" height="17" rx="2"/><path d="M9 4V3a1 1 0 011-1h4a1 1 0 011 1v1"/><path d="M9 10h6M9 14h6"/></svg></div><div class="card-empty-title">No awards recorded</div><div class="card-empty-desc">Awards bundle contributions and penalties for a participant over a period. Click "+ Add Award" to create one.</div></div></td></tr>`;
     return;
   }
-  tbody.innerHTML=list.map((a,i)=>{
+  let balance=0;
+  tbody.innerHTML=list.map((a)=>{
     const u=USERS.find(x=>x.id===a.userId);
     const t=awardTotals(a);
+    balance+=t.net;
     const initA=initials(u?.name||'');
     const color=COLORS[USERS.indexOf(u)%COLORS.length];
-    const statusBadge=a.status==='reversed'?'<span class="badge badge-red">Reversed</span>':a.status==='draft'?'<span class="badge badge-amber">Unvested</span>':'<span class="badge badge-green">Vested</span>';
-    return`<tr style="cursor:pointer${a.status==='reversed'?';opacity:.55':''}" onclick="openAwardDetail('${a.id}')">
+    const reversedFlag=isReversed(a.id);
+    const isRev=isReversalEntry(a);
+    const recorded=isAwardRecorded(a);
+    const canReverse=recorded && !isRev && !reversedFlag && isSecretaryOrManager(a.fundId);
+    const tags=(isRev?'<span class="badge badge-red badge-no-dot" style="margin-left:6px">Reversal</span>':'')+(reversedFlag?'<span class="badge badge-slate badge-no-dot" style="margin-left:6px">Reversed</span>':'');
+    return`<tr style="cursor:pointer${reversedFlag?';opacity:.6':''}" onclick="openAwardDetail('${a.id}')">
+      <td class="mono fw-700" style="font-size:12px;white-space:nowrap">${awardCode(a)}${tags}</td>
+      <td style="font-size:12.5px">${escHtml(a.periodLabel)}</td>
       <td>
         <div style="display:flex;align-items:center;gap:10px">
           <div class="avatar avatar-sm" style="background:${color}">${initA}</div>
-          <div>
-            <div class="td-name">${escHtml(u?.name||'Unknown')}</div>
-            <div style="font-size:11px;color:var(--slate)">${escHtml(u?.email||'')}</div>
-          </div>
+          <div><div class="td-name">${escHtml(u?.name||'Unknown')}</div><div style="font-size:11px;color:var(--slate)">${escHtml(u?.email||'')}</div></div>
         </div>
       </td>
-      <td style="font-size:12.5px">${escHtml(a.periodLabel)}</td>
-      <td class="mono fw-600" style="color:var(--emerald)">${t.contributions?'$'+fmt$(t.contributions):'—'}</td>
-      <td class="mono fw-600" style="color:var(--ruby)">${t.penalties?'−$'+fmt$(t.penalties):'—'}</td>
-      <td class="mono fw-700">${t.net<0?'−$':'$'}${fmt$(Math.abs(t.net))}</td>
-      <td>${statusBadge}</td>
+      <td class="mono fw-600" style="color:var(--emerald)">${t.contributions?(t.contributions<0?'−':'')+fmt$(Math.abs(t.contributions)):'—'}</td>
+      <td class="mono fw-600" style="color:var(--ruby)">${t.penalties?'−'+fmt$(t.penalties):'—'}</td>
+      <td class="mono fw-700">${t.net<0?'−':''}${fmt$(Math.abs(t.net))}</td>
+      <td class="mono fw-700" style="color:var(--slate)">${balance<0?'−':''}${fmt$(Math.abs(balance))}</td>
+      <td>${awardStatusBadge(a.status)}</td>
+      <td>${vestingStatusBadge(a.vesting)}</td>
       <td style="text-align:center" onclick="event.stopPropagation()">
         <div class="dd-wrap">
           <button class="btn btn-ghost btn-sm" style="font-size:18px;letter-spacing:1px;padding:2px 8px" onclick="toggleMenu(this)">⋯</button>
           <div class="dd-menu">
             <div class="dd-item" onclick="closeMenus();openAwardDetail('${a.id}')">Open Award Detail</div>
-            ${a.status!=='reversed'?`<div class="dd-item danger" onclick="closeMenus();if(confirm('Reverse this award?')){a.status='reversed';renderLedger();toast('Award reversed','amber');}">Reverse Award</div>`:'<div class="dd-item disabled">Award Reversed</div>'}
+            ${canReverse?`<div class="dd-item danger" onclick="closeMenus();reverseAward('${a.id}')">Reverse Award</div>`:`<div class="dd-item disabled">${reversedFlag?'Already Reversed':isRev?'Reversal Entry':recorded?'Reverse Award':'Reversal needs Recorded'}</div>`}
           </div>
         </div>
       </td>
     </tr>`;
   }).join('');
+}
+function reverseAward(awardId){
+  const a=AWARDS.find(x=>x.id===awardId); if(!a)return;
+  if(!isAwardRecorded(a)){toast('Only Recorded awards can be reversed','red');return;}
+  if(isReversed(awardId)){toast('This award has already been reversed','');return;}
+  if(!confirm('Record a reversal? This creates an equal and opposite award; the original is preserved.'))return;
+  const negLines=(a.lineItems||[]).map(li=>{
+    if(li.kind==='penalty'){
+      return {id:uid(),kind:'contribution',inputType:'cash',label:'Credit — reversal of '+(li.label||'penalty'),quantity:1,rate:Math.abs(li.earned||0),earned:Math.abs(li.earned||0),reversedAt:null};
+    }
+    return {...li,id:uid(),earned:-(li.earned||0),reversedAt:null};
+  });
+  const rev={id:uid(),code:nextAwardCode(),fundId:a.fundId,userId:a.userId,
+    periodLabel:'Reversal of '+awardCode(a),awardDate:todayISO(),
+    status:'recorded',vesting:a.vesting||'vested',reversalOf:a.id,
+    approvedBy:CUR.user?.name||'',audit:[],lineItems:negLines,reversedAt:null,reversedBy:null};
+  awardAudit(rev,'Award Status','—','Recorded (Reversal)');
+  AWARDS.push(rev);
+  toast('Reversal recorded — '+awardCode(rev),'amber');
+  renderLedger();
 }
 function newAward(){ CUR.activeAwardId=null; CUR.prev='screen-ledger'; goTo('screen-record-award'); }
 
@@ -2427,7 +2467,7 @@ function inviteNext(){
     $('invite-step-3').style.display='';
     const fund=FUNDS.find(f=>f.id===$('inv-fund').value);
     $('inv-summary').innerHTML=`Sending invite to <strong>${escHtml($('inv-first').value+' '+$('inv-last').value)}</strong> (${escHtml($('inv-email').value)})<br>Fund: <strong>${escHtml(fund?.name||'')}</strong><br>Role: <strong>${roleName($('inv-fund-role').value)}</strong>`;
-    $('inv-next-btn').textContent='Send Invite ✓';
+    $('inv-next-btn').textContent='Send Invite';
   } else {
     sendInvite();
   }
@@ -2593,7 +2633,7 @@ function raParticipantChange(){
     tr.dataset.type=type; tr.dataset.label=label;
     tr.innerHTML=`<td style="font-weight:600">${escHtml(label)}</td>
       <td><input class="form-control mono" type="number" step="0.01" min="0" data-c="q" value="${qty}" style="text-align:right" oninput="raCalc()"></td>
-      <td><div class="prefix-wrap"><span class="prefix">$</span><input class="form-control mono" type="number" step="0.01" min="0" data-c="r" value="${r}" style="text-align:right;padding-left:22px" oninput="raCalc()"></div></td>
+      <td><div class="prefix-wrap"><span class="prefix"></span><input class="form-control mono" type="number" step="0.01" min="0" data-c="r" value="${r}" style="text-align:right;padding-left:22px" oninput="raCalc()"></div></td>
       <td class="mono fw-700" data-c="e" style="text-align:right">$0.00</td>`;
     tbody.appendChild(tr);
   });
@@ -2606,16 +2646,16 @@ function raCalc(){
     const r=parseFloat(tr.querySelector('[data-c="r"]')?.value)||0;
     const e=q*r; total+=e; if(q>0) count++;
     const ec=tr.querySelector('[data-c="e"]');
-    if(ec) ec.textContent='$'+fmt$(e);
+    if(ec) ec.textContent=fmt$(e);
   });
-  document.getElementById('ra-foot-total').textContent='$'+fmt$(total);
+  document.getElementById('ra-foot-total').textContent=fmt$(total);
   document.getElementById('ra-prev-count').textContent=String(count);
-  document.getElementById('ra-prev-contrib').textContent='$'+fmt$(total);
-  document.getElementById('ra-prev-net').textContent='$'+fmt$(total);
+  document.getElementById('ra-prev-contrib').textContent=fmt$(total);
+  document.getElementById('ra-prev-net').textContent=fmt$(total);
 }
 function saveAward(){
-  const uid=document.getElementById('ra-participant').value;
-  if(!uid){toast('Select a participant','red');return;}
+  const partId=document.getElementById('ra-participant').value;
+  if(!partId){toast('Select a participant','red');return;}
   const periodVal=document.getElementById('ra-period').value.split('|');
   const periodLabel=document.querySelector('#ra-period option:checked').textContent;
   const awardDate=document.getElementById('ra-date').value||todayISO();
@@ -2628,11 +2668,12 @@ function saveAward(){
       quantity:q,rate:r,earned:Math.round(q*r*100)/100});
   });
   if(!lines.length){toast('Enter at least one line item with Qty > 0','red');return;}
-  const award={id:uid(),fundId:CUR.activeFundId,userId:uid,
+  const award={id:uid(),code:nextAwardCode(),fundId:CUR.activeFundId,userId:partId,
     periodLabel,periodStart:periodVal[1]||'',periodEnd:periodVal[2]||'',
-    awardDate,status:'approved',approvedBy:CUR.user?.name||'',
+    awardDate,status:'drafted',vesting:'unvested',audit:[],approvedBy:CUR.user?.name||'',
     notes:document.getElementById('ra-notes').value||'',
     lineItems:lines,reversedAt:null,reversedBy:null};
+  awardAudit(award,'Award Status','—','Drafted');
   AWARDS.push(award);
   CUR.activeAwardId=award.id;
   toast('Award created','green');
@@ -2647,60 +2688,152 @@ function openAwardDetail(awardId){
 }
 function renderAwardDetail(){
   const a=AWARDS.find(x=>x.id===CUR.activeAwardId); if(!a) return;
-  // Reset to Summary tab each time award detail opens
   document.querySelectorAll('#screen-award-detail [data-tab]').forEach(t=>t.classList.remove('active'));
   document.querySelectorAll('#screen-award-detail .tab-content').forEach(t=>t.classList.remove('active'));
-  const sumTab=document.querySelector('#screen-award-detail [data-tab="ad-tab-summary"]');
-  if(sumTab)sumTab.classList.add('active');
+  const sumTab=document.querySelector('#screen-award-detail [data-tab="ad-tab-summary"]'); if(sumTab)sumTab.classList.add('active');
   const sumContent=$('ad-tab-summary'); if(sumContent)sumContent.classList.add('active');
   const u=USERS.find(x=>x.id===a.userId);
+  const fund=FUNDS.find(f=>f.id===a.fundId);
   const color=COLORS[USERS.indexOf(u)%COLORS.length];
   const t=awardTotals(a);
-  document.getElementById('ad-title').textContent='Award · '+a.periodLabel;
-  document.getElementById('ad-bread').textContent=(u?.name||'')+'  ·  '+a.awardDate;
-  const av=document.getElementById('ad-avatar');
-  av.textContent=initials(u?.name||''); av.style.background=color;
-  document.getElementById('ad-name').textContent=u?.name||'—';
-  document.getElementById('ad-meta').textContent=(u?.email||'')+(u?.rate?' · $'+u.rate+'/hr':'');
-  document.getElementById('ad-hero-net').textContent=(t.net<0?'−$':'$')+fmt$(Math.abs(t.net));
-  document.getElementById('ad-hero-period').textContent=a.periodLabel;
-  const statusBadge=a.status==='reversed'?'<span class="badge badge-red">Reversed</span>':a.status==='draft'?'<span class="badge badge-amber">Unvested</span>':'<span class="badge badge-green">Vested</span>';
-  document.getElementById('ad-hero-status').innerHTML=statusBadge;
+  const recorded=isAwardRecorded(a);
+  const editable=!recorded && isSecretaryOrManager(a.fundId);
+  $('ad-title').textContent='Award · '+awardCode(a);
+  $('ad-bread').textContent=(u?.name||'')+'  ·  '+a.awardDate;
+  const av=$('ad-avatar'); av.textContent=initials(u?.name||''); av.style.background=color;
+  $('ad-name').textContent=u?.name||'—';
+  $('ad-meta').textContent=(u?.email||'')+(u?.rate?' · '+u.rate+'/hr':'');
+  $('ad-hero-id').textContent=awardCode(a);
+  $('ad-hero-net').textContent=(t.net<0?'−':'')+fmt$(Math.abs(t.net));
+  $('ad-hero-period').textContent=a.periodLabel;
+  $('ad-hero-status').innerHTML=awardStatusBadge(a.status);
+  $('ad-hero-vesting').innerHTML=vestingStatusBadge(a.vesting);
   const liveC=(a.lineItems||[]).filter(li=>!li.reversedAt&&li.kind==='contribution');
   const liveP=(a.lineItems||[]).filter(li=>!li.reversedAt&&li.kind==='penalty');
-  document.getElementById('ad-sum-contrib').textContent='$'+fmt$(t.contributions);
-  document.getElementById('ad-sum-contrib-c').textContent=liveC.length+' item'+(liveC.length!==1?'s':'');
-  document.getElementById('ad-sum-pen').textContent=t.penalties?'−$'+fmt$(t.penalties):'$0.00';
-  document.getElementById('ad-sum-pen-c').textContent=liveP.length+' item'+(liveP.length!==1?'s':'');
-  document.getElementById('ad-sum-net').textContent=(t.net<0?'−$':'$')+fmt$(Math.abs(t.net));
-  document.getElementById('ad-info-period').textContent=a.periodLabel;
-  document.getElementById('ad-info-date').textContent=fmtDate(a.awardDate);
-  document.getElementById('ad-info-approver').textContent=a.approvedBy||'—';
-  const ri=document.getElementById('ad-reverse-item');
-  if(a.status==='reversed'){ri.classList.add('disabled');ri.textContent='Already Reversed';ri.onclick=null;}
-  else{ri.classList.remove('disabled');ri.textContent='Reverse Award';ri.onclick=()=>{closeMenus();confirmReverseAward();};}
-  // Contributions table
-  const ctb=document.getElementById('ad-contrib-tbody');
-  if(!liveC.length){
-    ctb.innerHTML=`<tr><td colspan="5"><div class="card-empty" style="padding:24px"><div class="card-empty-title">No contribution line items</div></div></td></tr>`;
-  } else {
-    ctb.innerHTML=liveC.map(li=>`<tr><td style="font-weight:600">${escHtml(li.label)}</td><td class="mono" style="text-align:right">${Number(li.quantity).toFixed(2)}</td><td class="mono" style="text-align:right">$${fmt$(li.rate)}</td><td class="mono fw-700" style="text-align:right">$${fmt$(li.earned)}</td><td></td></tr>`).join('')
-    +`<tr style="background:var(--surface)"><td colspan="3" style="text-align:right;font-weight:700">Total</td><td class="mono fw-700" style="text-align:right;color:var(--emerald)">$${fmt$(t.contributions)}</td><td></td></tr>`;
-  }
-  // Penalties
-  const pc=document.getElementById('ad-penalty-card');
-  const ptb=document.getElementById('ad-penalty-tbody');
-  // Update penalty tab badge
-  const penBadge=$('ad-pen-badge');
-  if(penBadge){ penBadge.textContent=String(liveP.length); penBadge.style.display=liveP.length?'':'none'; }
-  if(!liveP.length){
-    pc.style.display='none';
-  } else {
-    pc.style.display='';
-    ptb.innerHTML=liveP.map(li=>`<tr><td style="font-weight:600">${escHtml(li.label||li.category||'Penalty')}</td><td><span class="badge ${(li.severity||'minor')==='major'?'badge-red':'badge-amber'}">${li.severity||'minor'}</span></td><td style="font-size:12px;color:var(--slate);max-width:200px">${escHtml(li.notes||li.description||'')}</td><td class="mono fw-700" style="text-align:right;color:var(--ruby)">−$${fmt$(Math.abs(li.earned||li.rate||0))}</td><td></td></tr>`).join('');
-  }
-  // Award Letter
-  renderAwardLetter(a, u);
+  $('ad-sum-contrib').textContent=(t.contributions<0?'−':'')+fmt$(Math.abs(t.contributions));
+  $('ad-sum-contrib-c').textContent=liveC.length+' item'+(liveC.length!==1?'s':'');
+  $('ad-sum-pen').textContent=t.penalties?'−'+fmt$(t.penalties):fmt$(0);
+  $('ad-sum-pen-c').textContent=liveP.length+' item'+(liveP.length!==1?'s':'');
+  $('ad-sum-net').textContent=(t.net<0?'−':'')+fmt$(Math.abs(t.net));
+  $('ad-info-id').textContent=awardCode(a);
+  $('ad-info-period').textContent=a.periodLabel;
+  $('ad-info-date').textContent=fmtDate(a.awardDate);
+  $('ad-locked-notice').innerHTML = recorded
+    ? `<div class="notice notice-info" style="margin-bottom:14px"><span class="notice-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 018 0v3"/></svg></span><span><strong>Recorded &amp; finalized.</strong> This award is locked and cannot be edited. Changes require a reversal from the ledger.</span></div>`
+    : '';
+  const addBtn=$('ad-add-li-btn'); if(addBtn) addBtn.style.display=editable?'':'none';
+  $('ad-lineitems').innerHTML=buildLineItemsHtml(a,u,fund,editable);
+  $('ad-sig-panel').innerHTML=buildSigPanel(a,editable,recorded);
+  const audit=(a.audit||[]);
+  $('ad-audit-list').innerHTML = audit.length
+    ? audit.map(e=>`<div class="audit-item"><div class="audit-dot" style="background:${e.kind==='Vesting Status'?'var(--amber)':'var(--violet)'}"></div><div style="flex:1"><div style="font-size:12.5px"><strong>${escHtml(e.kind)}:</strong> ${escHtml(e.from)} → ${escHtml(e.to)}</div><div style="font-size:11px;color:var(--slate)">by ${escHtml(e.actor)}</div></div><div class="audit-ts">${escHtml(e.ts)}</div></div>`).join('')
+    : '<div style="padding:18px;color:var(--slate-2);font-size:12.5px">No history yet.</div>';
+  renderAwardLetter(a,u);
+}
+function nonCashRate(type,u,fund){
+  const r=u?.rate||0;
+  if(type==='overtime')return Math.round(r*(fund?.otCoef||1.5)*100)/100;
+  if(type==='bonus')return Math.round(r*(fund?.bonusPct||10)/100*100)/100;
+  return r;
+}
+function buildLineItemsHtml(a,u,fund,editable){
+  const dis=editable?'':'disabled';
+  const items=(a.lineItems||[]).filter(li=>!li.reversedAt);
+  const ncTypes=[['hourly','Hourly Inputs'],['overtime','Overtime Inputs'],['bonus','Bonus Inputs']];
+  const ncRows=ncTypes.map(([type,label])=>{
+    const li=items.find(l=>l.kind==='contribution'&&l.inputType===type);
+    const qty=li?li.quantity:0;
+    const rate=li?li.rate:nonCashRate(type,u,fund);
+    const earned=li?li.earned:0;
+    return `<tr>
+      <td style="font-weight:600">${label}<div style="font-size:10.5px;color:var(--slate-2);font-weight:400">type fixed</div></td>
+      <td style="text-align:right"><input class="form-control mono" type="number" step="0.01" min="0" value="${qty}" ${dis} style="text-align:right;width:96px;display:inline-block" onchange="editNonCashHours('${a.id}','${type}',this.value)"></td>
+      <td class="mono" style="text-align:right;color:var(--slate)">${fmt$(rate)}</td>
+      <td class="mono fw-700" style="text-align:right">${fmt$(earned)}</td>
+    </tr>`;
+  }).join('');
+  const cashLis=items.filter(l=>l.kind==='contribution'&&l.inputType==='cash');
+  const cashRows=cashLis.length?cashLis.map(li=>`<tr>
+      <td style="font-weight:600">${escHtml(li.label||'Cash Inputs')}</td>
+      <td style="text-align:right"><input class="form-control mono" type="number" step="0.01" value="${li.earned}" ${dis} style="text-align:right;width:120px;display:inline-block" onchange="editAmount('${a.id}','${li.id}',this.value)"></td>
+      <td class="mono fw-700" style="text-align:right;color:var(--emerald)">${fmt$(li.earned)}</td>
+      <td style="text-align:right">${editable?`<button class="btn btn-ghost btn-sm" style="color:var(--ruby)" onclick="deleteLineItem('${a.id}','${li.id}')">Remove</button>`:''}</td>
+    </tr>`).join(''):`<tr><td colspan="4" style="color:var(--slate-2);font-size:12px;padding:10px 4px">No cash contributions</td></tr>`;
+  const penLis=items.filter(l=>l.kind==='penalty');
+  const penRows=penLis.length?penLis.map(li=>`<tr>
+      <td style="font-weight:600">${escHtml(li.label||li.category||'Penalty')}${li.notes?`<div style="font-size:10.5px;color:var(--slate-2);font-weight:400">${escHtml(li.notes)}</div>`:''}</td>
+      <td style="text-align:right"><input class="form-control mono" type="number" step="0.01" value="${Math.abs(li.earned||0)}" ${dis} style="text-align:right;width:120px;display:inline-block" onchange="editPenalty('${a.id}','${li.id}',this.value)"></td>
+      <td class="mono fw-700" style="text-align:right;color:var(--ruby)">−${fmt$(Math.abs(li.earned||0))}</td>
+      <td style="text-align:right">${editable?`<button class="btn btn-ghost btn-sm" style="color:var(--ruby)" onclick="deleteLineItem('${a.id}','${li.id}')">Remove</button>`:''}</td>
+    </tr>`).join(''):`<tr><td colspan="4" style="color:var(--slate-2);font-size:12px;padding:10px 4px">No penalties</td></tr>`;
+  const SH='font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--slate-2);margin:2px 0 8px';
+  return `
+    <div style="${SH}">Non-Cash Contributions</div>
+    <div class="tbl-wrap" style="margin-bottom:18px"><table><thead><tr><th>Type</th><th style="text-align:right">Hours / Qty</th><th style="text-align:right">Rate</th><th style="text-align:right">Earned</th></tr></thead><tbody>${ncRows}</tbody></table></div>
+    <div style="${SH}">Cash Contributions</div>
+    <div class="tbl-wrap" style="margin-bottom:18px"><table><thead><tr><th>Item</th><th style="text-align:right">Amount</th><th style="text-align:right">Earned</th><th style="width:80px"></th></tr></thead><tbody>${cashRows}</tbody></table></div>
+    <div style="${SH}">Penalties</div>
+    <div class="tbl-wrap"><table><thead><tr><th>Item</th><th style="text-align:right">Value</th><th style="text-align:right">Impact</th><th style="width:80px"></th></tr></thead><tbody>${penRows}</tbody></table></div>`;
+}
+function buildSigPanel(a,editable,recorded){
+  const cur=a.status||'drafted'; const ci=AWARD_FLOW.indexOf(cur);
+  const steps=AWARD_FLOW.map((s,idx)=>{
+    const done=idx<=ci;
+    return `<div style="display:flex;align-items:center;gap:8px;padding:3px 0;font-size:12px;${done?'':'opacity:.42'}">
+      <span style="width:16px;height:16px;border-radius:50%;flex-shrink:0;display:inline-flex;align-items:center;justify-content:center;background:${done?'var(--emerald)':'var(--surface-2)'}">${done?'<svg width="9" height="9" viewBox="0 0 20 20" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10l4 4 8-9"/></svg>':''}</span>
+      <span style="${idx===ci?'font-weight:700':''}">${AWARD_LABEL[s]}</span>
+    </div>`;
+  }).join('');
+  const next=AWARD_NEXT[cur];
+  const sigBtn = recorded
+    ? `<div class="notice notice-info" style="margin-top:12px"><span>Award is <strong>Recorded</strong> and finalized.</span></div>`
+    : (editable && next ? `<button class="btn btn-primary" style="width:100%;margin-top:12px" onclick="advanceAwardStatus('${a.id}')">${next}</button>` : (next?`<div style="margin-top:12px;font-size:11.5px;color:var(--slate-2)">Only the fund manager or secretary can advance signatures.</div>`:''));
+  const vIdx=VESTING_FLOW.indexOf(a.vesting||'unvested');
+  const vBtn = (editable && vIdx<VESTING_FLOW.length-1) ? `<button class="btn btn-secondary btn-sm" style="width:100%;margin-top:8px" onclick="advanceVesting('${a.id}')">Advance Vesting → ${VESTING_LABEL[VESTING_FLOW[vIdx+1]]}</button>` : '';
+  return `
+    <div style="margin-bottom:6px;font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:var(--slate-2);font-weight:700">Award Status (Signatures)</div>
+    ${steps}
+    ${sigBtn}
+    <div style="margin:14px 0 6px;font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:var(--slate-2);font-weight:700">Vesting Status</div>
+    <div>${vestingStatusBadge(a.vesting)}</div>
+    ${vBtn}`;
+}
+function editNonCashHours(awardId,type,val){
+  const a=AWARDS.find(x=>x.id===awardId); if(!a||isAwardRecorded(a))return;
+  const u=USERS.find(x=>x.id===a.userId); const fund=FUNDS.find(f=>f.id===a.fundId);
+  const qty=Math.max(0,parseFloat(val)||0);
+  a.lineItems=a.lineItems||[];
+  let li=a.lineItems.find(l=>l.kind==='contribution'&&l.inputType===type&&!l.reversedAt);
+  if(!li){ if(qty<=0){renderAwardDetail();return;} li={id:uid(),kind:'contribution',inputType:type,label:({hourly:'Hourly Inputs',overtime:'Overtime Inputs',bonus:'Bonus Inputs'})[type]||type,quantity:0,rate:nonCashRate(type,u,fund),earned:0,reversedAt:null}; a.lineItems.push(li); }
+  li.quantity=qty; li.earned=Math.round(qty*li.rate*100)/100;
+  renderAwardDetail();
+}
+function editAmount(awardId,liId,val){
+  const a=AWARDS.find(x=>x.id===awardId); if(!a||isAwardRecorded(a))return;
+  const li=(a.lineItems||[]).find(l=>l.id===liId); if(!li)return;
+  const v=parseFloat(val)||0; li.earned=v; li.rate=v; li.quantity=1; renderAwardDetail();
+}
+function editPenalty(awardId,liId,val){
+  const a=AWARDS.find(x=>x.id===awardId); if(!a||isAwardRecorded(a))return;
+  const li=(a.lineItems||[]).find(l=>l.id===liId); if(!li)return;
+  const v=Math.abs(parseFloat(val)||0); li.earned=-v; li.rate=-v; li.quantity=1; renderAwardDetail();
+}
+function deleteLineItem(awardId,liId){
+  const a=AWARDS.find(x=>x.id===awardId); if(!a||isAwardRecorded(a))return;
+  a.lineItems=(a.lineItems||[]).filter(l=>l.id!==liId); renderAwardDetail();
+}
+function openAddLineItem(){
+  const a=AWARDS.find(x=>x.id===CUR.activeAwardId); if(!a||isAwardRecorded(a)){toast('Recorded awards cannot be edited','red');return;}
+  $('ali-kind').value='cash'; $('ali-label').value=''; $('ali-amount').value=''; openModal('modal-add-li');
+}
+function confirmAddLineItem(){
+  const a=AWARDS.find(x=>x.id===CUR.activeAwardId); if(!a)return;
+  const kind=$('ali-kind').value; const label=$('ali-label').value.trim(); const amt=Math.abs(parseFloat($('ali-amount').value)||0);
+  if(!amt){toast('Enter an amount greater than zero','red');return;}
+  a.lineItems=a.lineItems||[];
+  if(kind==='penalty') a.lineItems.push({id:uid(),kind:'penalty',inputType:'penalty',label:label||'Penalty',quantity:1,rate:-amt,earned:-amt,notes:'',reversedAt:null});
+  else a.lineItems.push({id:uid(),kind:'contribution',inputType:'cash',label:label||'Cash Inputs',quantity:1,rate:amt,earned:amt,reversedAt:null});
+  closeModal('modal-add-li'); toast('Line item added','green'); renderAwardDetail();
 }
 function switchAdTab(el){
   document.querySelectorAll('#screen-award-detail [data-tab]').forEach(t=>t.classList.remove('active'));
@@ -2744,16 +2877,16 @@ function renderAwardLetter(a, u){
     <tr>
       <td>${escHtml(li.label)}</td>
       <td>${Number(li.quantity||0).toFixed(2)}</td>
-      <td>$${fmt$(li.rate||0)}</td>
-      <td>$${fmt$(li.earned||0)}</td>
+      <td>${fmt$(li.rate||0)}</td>
+      <td>${fmt$(li.earned||0)}</td>
     </tr>`).join('');
 
   const penRows=liveP.map(li=>`
     <tr>
       <td>${escHtml(li.label||li.category||'Penalty')}</td>
       <td>${Number(li.quantity||1).toFixed(2)}</td>
-      <td>−$${fmt$(Math.abs(li.rate||0))}</td>
-      <td style="color:#dc2626">−$${fmt$(Math.abs(li.earned||0))}</td>
+      <td>−${fmt$(Math.abs(li.rate||0))}</td>
+      <td style="color:#dc2626">−${fmt$(Math.abs(li.earned||0))}</td>
     </tr>`).join('');
 
   el.innerHTML=`<div class="award-letter">
@@ -2784,15 +2917,15 @@ function renderAwardLetter(a, u){
           <td>Total Contributions</td>
           <td>${contribQty.toFixed(2)}</td>
           <td>N/A</td>
-          <td>$${fmt$(t.contributions)}</td>
+          <td>${fmt$(t.contributions)}</td>
         </tr>
         ${penRows}
-        ${liveP.length?`<tr class="al-total"><td>Total Penalties</td><td>${penaltyQty.toFixed(2)}</td><td>N/A</td><td style="color:#dc2626">−$${fmt$(t.penalties)}</td></tr>`:''}
+        ${liveP.length?`<tr class="al-total"><td>Total Penalties</td><td>${penaltyQty.toFixed(2)}</td><td>N/A</td><td style="color:#dc2626">−${fmt$(t.penalties)}</td></tr>`:''}
         <tr class="al-net">
           <td>Net Award</td>
           <td>—</td>
           <td>N/A</td>
-          <td>${t.net<0?'−':''}$${fmt$(Math.abs(t.net))}</td>
+          <td>${t.net<0?'−':''}${fmt$(Math.abs(t.net))}</td>
         </tr>
       </tbody>
     </table>
@@ -2882,15 +3015,15 @@ function downloadAwardPdf(){
   const contribRows=liveC.map(li=>`<tr>
     <td style="${cell}font-weight:600">${escHtml(li.label)}</td>
     <td style="${cell}text-align:center">${Number(li.quantity||0).toFixed(2)}</td>
-    <td style="${cell}text-align:center">$${fmt$(li.rate||0)}</td>
-    <td style="${cell}text-align:right;font-weight:700">$${fmt$(li.earned||0)}</td>
+    <td style="${cell}text-align:center">${fmt$(li.rate||0)}</td>
+    <td style="${cell}text-align:right;font-weight:700">${fmt$(li.earned||0)}</td>
   </tr>`).join('');
 
   const penRows=liveP.map(li=>`<tr>
     <td style="${cell}font-weight:600">${escHtml(li.label||li.category||'Penalty')}</td>
     <td style="${cell}text-align:center">${Number(li.quantity||1).toFixed(2)}</td>
-    <td style="${cell}text-align:center">−$${fmt$(Math.abs(li.rate||0))}</td>
-    <td style="${cell}text-align:right;font-weight:700;color:#b91c1c">−$${fmt$(Math.abs(li.earned||0))}</td>
+    <td style="${cell}text-align:center">−${fmt$(Math.abs(li.rate||0))}</td>
+    <td style="${cell}text-align:right;font-weight:700;color:#b91c1c">−${fmt$(Math.abs(li.earned||0))}</td>
   </tr>`).join('');
 
   const wrap=document.createElement('div');
@@ -2918,20 +3051,20 @@ function downloadAwardPdf(){
           <td style="${cell}font-weight:700">Total Contributions</td>
           <td style="${cell}text-align:center;font-weight:700">${contribQty.toFixed(2)}</td>
           <td style="${cell}text-align:center;font-weight:700">N/A</td>
-          <td style="${cell}text-align:right;font-weight:700">$${fmt$(t.contributions)}</td>
+          <td style="${cell}text-align:right;font-weight:700">${fmt$(t.contributions)}</td>
         </tr>
         ${penRows}
         ${liveP.length?`<tr style="background:#f8fafc">
           <td style="${cell}font-weight:700">Total Penalties</td>
           <td style="${cell}text-align:center;font-weight:700">${penaltyQty.toFixed(2)}</td>
           <td style="${cell}text-align:center;font-weight:700">N/A</td>
-          <td style="${cell}text-align:right;font-weight:700;color:#b91c1c">−$${fmt$(t.penalties)}</td>
+          <td style="${cell}text-align:right;font-weight:700;color:#b91c1c">−${fmt$(t.penalties)}</td>
         </tr>`:''}
         <tr style="background:#dbeafe">
           <td style="${cell}font-weight:700">Net Award</td>
           <td style="${cell}text-align:center;font-weight:700">—</td>
           <td style="${cell}text-align:center;font-weight:700">N/A</td>
-          <td style="${cell}text-align:right;font-weight:700">${t.net<0?'−':''}$${fmt$(Math.abs(t.net))}</td>
+          <td style="${cell}text-align:right;font-weight:700">${t.net<0?'−':''}${fmt$(Math.abs(t.net))}</td>
         </tr>
       </tbody>
     </table>
@@ -3028,7 +3161,7 @@ function renderDocsTab(){
         return `<tr>
           <td><div class="td-name">${escHtml(a.periodLabel)}</div><div style="font-size:11.5px;color:var(--slate)">${fmtDate(a.awardDate)}</div></td>
           <td style="font-size:12.5px">${escHtml(fund?.name||'—')}</td>
-          <td class="mono fw-700" style="color:${t.net<0?'var(--ruby)':'var(--emerald)'}">${t.net<0?'−':''}$${fmt$(Math.abs(t.net))}</td>
+          <td class="mono fw-700" style="color:${t.net<0?'var(--ruby)':'var(--emerald)'}">${t.net<0?'−':''}${fmt$(Math.abs(t.net))}</td>
           <td><span class="badge ${sc}">${a.status==='reversed'?'Reversed':a.status==='draft'?'Unvested':'Vested'}</span></td>
           <td>
             <div style="display:flex;gap:6px">
@@ -3077,7 +3210,7 @@ function renderAgreementDoc(type){
       ${P('I am pleased to offer you the position of ' + B(u.title||'[Title]') + ' with 021.CEO as an independent contractor. Below are the terms of your engagement:')}
       ${H('Compensation & Employment Status')}
       ${UL([
-        'Your base compensation will be ' + B('$'+(u.rate||0)+'/hr') + ', payable based on hours worked.',
+        'Your base compensation will be ' + B((u.rate||0)+'/hr') + ', payable based on hours worked.',
         'Your engagement is as an independent contractor, not an employee. You are responsible for your own taxes, insurance, and any other obligations related to self-employment.',
         'This role does not provide benefits such as health insurance, paid leave, or retirement contributions.'
       ])}
@@ -3197,7 +3330,7 @@ function renderAgreementDoc(type){
       ${P('The Parties intend this Agreement to act as a "master" agreement and that the terms hereof shall govern all work assigned by Client to Consultant.')}
       ${H('2. Compensation')}
       ${H3('2.1 Compensation')}
-      ${P('Consultant shall be compensated by Client at a rate of ' + B('$'+(u.rate||0)+'/hr') + '.')}
+      ${P('Consultant shall be compensated by Client at a rate of ' + B((u.rate||0)+'/hr') + '.')}
       ${H3('2.2 Invoicing')}
       ${P(u.payment==='Upwork'
         ? 'The Parties\' engagement originated through Upwork; all invoicing and payments shall be processed through Upwork in accordance with its applicable terms and conditions.'
@@ -3362,21 +3495,21 @@ function suShowStep2(){
   // Role explanation card
   const roleCards={
     fund_manager:{
-      icon:'🏛️',
+      icon:'<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-5 9 5"/><path d="M5 9v10M19 9v10M9 9v10M15 9v10"/><path d="M3 21h18"/></svg>',
       title:'Fund Manager',
       desc:'You have full administrative access to the platform. You can create and manage funds, assign members and roles, oversee all awards, and appoint Fund Secretaries.',
       perms:['Create Funds','Manage Members','Record Awards','View All Ledgers','Assign Secretary'],
       bg:'var(--sapphire-light)', border:'var(--sapphire-mid)', tagBg:'var(--sapphire)', tagColor:'#fff'
     },
     fund_secretary:{
-      icon:'📋',
+      icon:'<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="4" width="12" height="17" rx="2"/><path d="M9 4V3a1 1 0 011-1h4a1 1 0 011 1v1"/><path d="M9 10h6M9 14h6"/></svg>',
       title:'Fund Secretary',
       desc:'You manage day-to-day fund operations. You can invite members, record contributions and penalties, send onboarding invites, and edit fund details.',
       perms:['Invite Members','Record Awards','Edit Fund Details','Manage Membership','Resend Invites'],
       bg:'var(--emerald-light)', border:'var(--emerald-mid)', tagBg:'var(--emerald)', tagColor:'#fff'
     },
     fund_owner:{
-      icon:'📊',
+      icon:'<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M10 20V4M16 20v-6M22 20H2"/></svg>',
       title:'Fund Owner',
       desc:'You can view your personal inputs holdings, ownership percentage, award letters, and your contribution history across all funds you participate in.',
       perms:['View My Holdings','View Ownership %','View Award Letters','View Contribution History'],
@@ -3442,7 +3575,7 @@ function suComplete(){
   // Auto sign in
   CUR.user=user;
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
-  toast(`Welcome to Founders Fund, ${first}! 🎉`,'green');
+  toast(`Welcome to Founders Fund, ${first}!`,'green');
   goTo('screen-my-funds');
 }
 
@@ -3470,99 +3603,55 @@ function isEffectiveOperator(){
 }
 function isEffectiveManager(){ return CUR.user?.systemRole==='fund_manager'; }
 
+function fundTotalAwards(fundId){
+  return membershipsForFund(fundId).reduce((s,m)=>s+computeUserInputsInFund(m.userId,fundId).net,0);
+}
+function fundContribPenalty(fundId){
+  let c=0,p=0;
+  membershipsForFund(fundId).forEach(m=>{const i=computeUserInputsInFund(m.userId,fundId);c+=i.base+i.ot+i.bonus+i.cash;p+=i.penalty;});
+  return {c,p};
+}
 function renderAdmin(){
   const guard=$('admin-guard'), body=$('admin-body');
   if(!guard||!body) return;
   if(!isEffectiveOperator()){
     body.style.display='none';
-    guard.innerHTML=`<div class="access-guard"><span class="access-guard-icon">🔒</span><div><div class="access-guard-title">Restricted</div><div class="access-guard-sub">God Mode is available to Fund Managers and Secretaries only.</div></div></div>`;
+    guard.innerHTML=`<div class="access-guard"><span class="access-guard-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 018 0v3"/></svg></span><div><div class="access-guard-title">Restricted</div><div class="access-guard-sub">The All Funds console is available to fund administrators only.</div></div></div>`;
     return;
   }
-  guard.innerHTML='';
-  body.style.display='';
-  $('god-hero-sub').textContent=isEffectiveManager()
-    ? 'Full elevated control — funds, participants, awards, and impersonation.'
-    : 'Secretary oversight — funds, awards, and impersonation. Role changes need a Manager.';
-
-  // Stats
-  let totalEquityVal=0;
-  MEMBERSHIPS.forEach(m=>{ totalEquityVal+=Math.max(0,computeUserInputsInFund(m.userId,m.fundId).net); });
-  const pendingInv=INVITATIONS.filter(i=>i.status==='pending').length;
-  const reversed=AWARDS.filter(a=>a.status==='reversed').length;
+  guard.innerHTML=''; body.style.display='';
+  const adminId=CUR.user.id;
+  let aggAwards=0,aggC=0,aggP=0;
+  FUNDS.forEach(f=>{aggAwards+=fundTotalAwards(f.id);const cp=fundContribPenalty(f.id);aggC+=cp.c;aggP+=cp.p;});
   $('admin-stats').innerHTML=`
-    <div class="stat-card"><div class="stat-label">Funds</div><div class="stat-val text-blue">${FUNDS.length}</div><div class="stat-sub">${FUNDS.filter(f=>f.status==='active').length} active</div></div>
-    <div class="stat-card"><div class="stat-label">Users</div><div class="stat-val">${USERS.length}</div><div class="stat-sub">${pendingInv} pending invites</div></div>
-    <div class="stat-card"><div class="stat-label">Awards</div><div class="stat-val text-green">${AWARDS.length}</div><div class="stat-sub">${reversed} reversed</div></div>
-    <div class="stat-card"><div class="stat-label">Total Owner Share</div><div class="stat-val" style="font-size:19px">$${fmt$(totalEquityVal)}</div><div class="stat-sub">across all funds</div></div>`;
-
-  // Funds table
-  const ft=$('adm-funds-tbody');
-  ft.innerHTML=FUNDS.map(f=>{
-    const opts=FUND_STATUSES.map(([v,l])=>`<option value="${v}"${f.status===v?' selected':''}>${l}</option>`).join('');
-    return `<tr>
-      <td><div class="td-name">${escHtml(f.name)}</div><div style="font-size:11px;color:var(--slate)">${escHtml(f.company)}</div></td>
-      <td><select class="form-control" style="padding:5px 26px 5px 10px;font-size:12px" onchange="adminSetFundStatus('${f.id}',this.value)">${opts}</select></td>
-      <td>${f.isDefault?'<span class="badge badge-blue badge-no-dot">Default</span>':`<button class="btn btn-secondary btn-xs" onclick="adminToggleDefault('${f.id}')">Make Default</button>`}</td>
-      <td class="mono">${membershipsForFund(f.id).length}</td>
-      <td><div class="god-action-row">
-        <button class="btn btn-secondary btn-xs" onclick="viewFundHoldings('${f.id}')">Holdings</button>
-        <button class="btn btn-secondary btn-xs" onclick="CUR.activeFundId='${f.id}';CUR.prev='screen-admin';goTo('screen-ledger')">Ledger</button>
-        <button class="btn btn-secondary btn-xs" onclick="openFundDetails('${f.id}')">Edit</button>
-      </div></td>
+    <div class="stat-card"><div class="stat-label">Funds</div><div class="stat-val" style="color:var(--sapphire)">${FUNDS.length}</div><div class="stat-sub">in the system</div></div>
+    <div class="stat-card"><div class="stat-label">Aggregate Awards</div><div class="stat-val" style="font-size:19px">${fmt$(aggAwards)}</div><div class="stat-sub">across all funds</div></div>
+    <div class="stat-card"><div class="stat-label">Total Contributions</div><div class="stat-val" style="font-size:19px;color:var(--emerald)">${fmt$(aggC)}</div><div class="stat-sub">all funds combined</div></div>
+    <div class="stat-card"><div class="stat-label">Total Penalties</div><div class="stat-val" style="font-size:19px;color:var(--ruby)">${fmt$(aggP)}</div><div class="stat-sub">all funds combined</div></div>`;
+  const maxV=Math.max(1,...FUNDS.map(f=>Math.abs(fundTotalAwards(f.id))));
+  $('admin-bars').innerHTML=FUNDS.map((f,i)=>{
+    const v=fundTotalAwards(f.id);const w=Math.round(Math.abs(v)/maxV*100);const color=COLORS[i%COLORS.length];
+    return `<div style="display:flex;align-items:center;gap:12px;margin-bottom:10px">
+      <div style="width:210px;font-size:12.5px;font-weight:600;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${escHtml(f.name)}</div>
+      <div style="flex:1;background:#E8EDF3;border-radius:6px;height:22px;overflow:hidden">
+        <div style="width:${w}%;background:${color};height:100%;border-radius:6px;min-width:2px"></div>
+      </div>
+      <div class="mono fw-700" style="width:130px;text-align:right;font-size:12.5px">${fmt$(v)}</div>
+    </div>`;
+  }).join('');
+  $('adm-funds-tbody').innerHTML=FUNDS.map(f=>{
+    const isMember=!!membershipFor(adminId,f.id);
+    const total=fundTotalAwards(f.id);
+    const adminAwards=isMember?computeUserInputsInFund(adminId,f.id).net:0;
+    const adminShare=isMember?computeEquityPct(adminId,f.id):0;
+    const sl=(FUND_STATUSES.find(s=>s[0]===f.status)||['',f.status])[1];
+    return `<tr style="cursor:pointer" onclick="openFundDetails('${f.id}')">
+      <td><div class="td-name">${escHtml(f.name)}</div><div style="font-size:11px;color:var(--slate)">${escHtml(f.company)} \u00B7 ${sl}</div></td>
+      <td class="mono fw-700" style="text-align:right">${fmt$(total)}</td>
+      <td class="mono" style="text-align:right">${fmt$(adminAwards)}</td>
+      <td class="mono" style="text-align:right">${adminShare.toFixed(1)}%</td>
     </tr>`;
   }).join('');
-
-  // Users table
-  const ut=$('adm-users-tbody');
-  const canRole=isEffectiveManager();
-  ut.innerHTML=USERS.map((u,i)=>{
-    const color=COLORS[i%COLORS.length];
-    const mems=membershipsForUser(u.id);
-    const memTags=mems.length?`<div class="user-funds-tags">${mems.map(m=>{const f=FUNDS.find(fn=>fn.id===m.fundId);return f?`<span class="tag">${escHtml(f.company)}</span>`:'';}).join('')}</div>`:'<span style="color:var(--slate-2);font-size:12px">None</span>';
-    const access=canRole
-      ? `<select class="form-control" style="padding:5px 26px 5px 10px;font-size:12px" onchange="adminSetSystemRole('${u.id}',this.value)">
-           <option value="fund_manager"${u.systemRole==='fund_manager'?' selected':''}>Manager (admin)</option>
-           <option value="fund_secretary"${u.systemRole==='fund_secretary'?' selected':''}>Secretary (admin)</option>
-           <option value="fund_owner"${u.systemRole==='fund_owner'?' selected':''}>Owner (regular)</option>
-         </select>`
-      : rolePill(u.systemRole);
-    const isSelf=u.id===(CUR.realUser||CUR.user)?.id;
-    return `<tr>
-      <td><div class="user-row-avatar-col"><div class="avatar avatar-md" style="background:${color}">${initials(u.name)}</div>
-        <div><div class="td-name">${escHtml(u.name)}</div><div style="font-size:11.5px;color:var(--slate)">${escHtml(u.email)}</div></div></div></td>
-      <td>${access}</td>
-      <td>${memTags}</td>
-      <td><div class="god-action-row">
-        <button class="btn btn-secondary btn-xs" onclick="CUR.prev='screen-admin';openUserProfile('${u.id}')">Profile</button>
-        ${isSelf||u.status!=='active'?'':`<button class="btn btn-amber btn-xs" onclick="adminImpersonate('${u.id}')">View as</button>`}
-      </div></td>
-    </tr>`;
-  }).join('');
-
-  // Awards table
-  const at=$('adm-awards-tbody');
-  if(!AWARDS.length){
-    at.innerHTML=`<tr><td colspan="6" style="text-align:center;padding:30px;color:var(--slate-2)">No awards recorded</td></tr>`;
-  } else {
-    at.innerHTML=AWARDS.map(a=>{
-      const u=USERS.find(x=>x.id===a.userId);
-      const f=FUNDS.find(x=>x.id===a.fundId);
-      const t=awardTotals(a);
-      const sb=a.status==='reversed'?'<span class="badge badge-red">Reversed</span>':'<span class="badge badge-green">Vested</span>';
-      return `<tr>
-        <td class="td-name">${escHtml(u?.name||'—')}</td>
-        <td style="font-size:12px">${escHtml(f?.name||'—')}</td>
-        <td style="font-size:12px">${escHtml(a.periodLabel)}</td>
-        <td class="mono fw-700" style="text-align:right">${t.net<0?'−$':'$'}${fmt$(Math.abs(t.net))}</td>
-        <td>${sb}</td>
-        <td>${a.status==='reversed'?'<span class="dd-item disabled" style="padding:0">—</span>':`<button class="btn btn-danger btn-xs" onclick="adminReverseAwardGlobal('${a.id}')">Reverse</button>`}</td>
-      </tr>`;
-    }).join('');
-  }
-
-  // Audit log
-  const al=$('adm-audit-list');
-  al.innerHTML=ADMIN_LOG.map(e=>`<div class="audit-item"><div class="audit-dot"></div><div style="flex:1"><div>${escHtml(e.action)}</div><div style="font-size:11px;color:var(--slate)">by ${escHtml(e.actor)}</div></div><div class="audit-ts">${escHtml(e.ts)}</div></div>`).join('');
 }
 
 function switchAdmTab(el){
@@ -3620,7 +3709,7 @@ function adminBroadcast(){
   const msg=prompt('Broadcast a system notice to yourself (demo):','System maintenance scheduled tonight.');
   if(!msg)return;
   adminLog(`Broadcast notice: "${msg}"`);
-  toast('📢 '+msg,'');
+  toast(msg,'');
   if($('admin-body')&&$('admin-body').style.display!=='none') renderAdmin();
 }
 
