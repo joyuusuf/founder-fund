@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Founders Fund — v6</title>
+<title>Founders Fund</title>
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=DM+Serif+Display:ital@0;1&family=Caveat:wght@500;600&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 <style>
@@ -583,7 +583,7 @@ select.form-control { appearance: none; background-image: url("data:image/svg+xm
     <div class="login-header">
       <div class="login-icon">FF</div>
       <div class="login-title">Founders Fund</div>
-      <div class="login-sub">SAF-Model Equity System · v6</div>
+      <div class="login-sub">SAF-Model Equity System ·</div>
     </div>
     <div style="font-weight:700;font-size:14px;color:var(--ink);margin-bottom:14px">Sign in to your account</div>
     <div id="login-err" class="notice notice-red" style="display:none;margin-bottom:12px"><span class="notice-icon"><svg width="14" height="14" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 5l10 10M15 5L5 15"/></svg></span><span>Invalid credentials. Check your email and password.</span></div>
@@ -826,7 +826,7 @@ select.form-control { appearance: none; background-image: url("data:image/svg+xm
   <div class="topbar">
     <div><div class="tb-title" id="fd-title">Fund Details</div><div class="tb-bread" id="fd-bread">Edit fund settings and manage members</div></div>
     <div class="tb-actions">
-      <button class="btn btn-secondary" onclick="goTo('screen-funds')">← All Funds</button>
+      <button class="btn btn-secondary" onclick="goTo('screen-funds')">← Manage Funds</button>
       <button class="btn btn-secondary perm-manager-or-secretary" onclick="openModal('modal-invite')">+ Invite Participant</button>
       <button class="btn btn-primary perm-manager-or-secretary" onclick="saveFundDetails()">Save Changes</button>
     </div>
@@ -1755,12 +1755,11 @@ function buildSidebar(activeId) {
   const opNav=`
     <div class="sb-section">Overview</div>
     ${lnk('screen-my-funds',icons.home,'My Funds')}
-    ${lnk('screen-admin',icons.shield,'All Funds')}
     <div class="sb-section">Administration</div>
     ${lnk('screen-users',icons.users,'User Directory',pendingInvites>0?String(pendingInvites):'')}
+    <div class="sb-section">Funds</div>
     ${lnk('screen-admin',icons.shield,'All Funds')}
-    <div class="sb-section">Management</div>
-    ${lnk('screen-funds',icons.funds,'Funds')}`;
+    ${lnk('screen-funds',icons.funds,'Manage Funds')}`;
   // Owner nav: stripped — just their own holdings + profile
   const ownerNav=`
     <div class="sb-section">My Portfolio</div>
@@ -1769,7 +1768,7 @@ function buildSidebar(activeId) {
     <div class="sb-brand">
       <div class="sb-brand-row">
         <div class="sb-logo">FF</div>
-        <div><div class="sb-name">Founders Fund</div><div class="sb-version">SAF-Model v6.0</div></div>
+        <div><div class="sb-name">Founders Fund</div><div class="sb-version">SAF-Model </div></div>
       </div>
     </div>
     <nav class="sb-nav">${isOp?opNav:ownerNav}</nav>
