@@ -192,7 +192,6 @@ thead th { background: var(--surface); padding: 9px 14px; text-align: left; font
 tbody tr { border-bottom: 1px solid var(--border); transition: background .1s; }
 tbody tr:last-child { border-bottom: none; }
 tbody tr:hover { background: var(--surface); }
-#ledger-tbody tr:hover { background: var(--sapphire-light); box-shadow: inset 3px 0 0 var(--sapphire); }
 tbody td { padding: 11px 14px; color: var(--ink-3); vertical-align: middle; }
 .td-name { font-weight: 600; color: var(--ink); }
 tfoot td { padding: 10px 14px; font-weight: 700; color: var(--ink); background: var(--surface); border-top: 2px solid var(--border); }
@@ -539,6 +538,29 @@ select.form-control { appearance: none; background-image: url("data:image/svg+xm
   </div>
 </div>
 
+<!-- ADD TO FUND MODAL (from User Directory) -->
+<div class="modal-backdrop" id="modal-add-to-fund">
+  <div class="modal-box" style="width:400px">
+    <button class="modal-close" onclick="closeModal('modal-add-to-fund')"><svg width="14" height="14" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 5l10 10M15 5L5 15"/></svg></button>
+    <div class="modal-title">Add to Fund</div>
+    <div class="modal-sub" id="atf-sub">Assign a role in a fund for this user.</div>
+    <div class="fg">
+      <div class="form-group"><label>Fund <span class="req">*</span></label><select class="form-control" id="atf-fund"></select></div>
+      <div class="form-group"><label>Role <span class="req">*</span></label>
+        <select class="form-control" id="atf-role">
+          <option value="fund_owner">Fund Owner</option>
+          <option value="fund_secretary">Fund Secretary</option>
+          <option value="fund_manager">Fund Manager</option>
+        </select>
+      </div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-secondary" onclick="closeModal('modal-add-to-fund')">Cancel</button>
+      <button class="btn btn-primary" onclick="confirmAddToFund()">Add to Fund</button>
+    </div>
+  </div>
+</div>
+
 <!-- CONFIRM REMOVE MEMBER MODAL -->
 <div class="modal-backdrop" id="modal-remove-member">
   <div class="modal-box" style="width:400px">
@@ -739,21 +761,12 @@ select.form-control { appearance: none; background-image: url("data:image/svg+xm
       <div class="tab" data-filter="pending" onclick="filterUserTab(this)">Pending Invites</div>
     </div>
 
-    <div id="dir-bulk-bar" style="display:none;align-items:center;gap:12px;margin:0 0 12px;padding:10px 14px;background:var(--sapphire-light);border:1px solid var(--sapphire-mid);border-radius:var(--r)">
-      <span id="dir-bulk-count" style="font-weight:600;font-size:13px">0 selected</span>
-      <span style="flex:1"></span>
-      <button class="btn btn-secondary btn-sm" onclick="bulkSuspend()">Suspend</button>
-      <button class="btn btn-danger btn-sm" onclick="bulkTerminate()">Terminate</button>
-    </div>
-
     <div class="card">
       <div class="tbl-wrap">
         <table>
           <thead>
             <tr>
-              <th style="width:36px"><input type="checkbox" onclick="toggleAllUsers(this)" title="Select all"></th>
               <th>User</th>
-              <th>Email</th>
               <th>Status</th>
               <th>Joined</th>
               <th style="width:60px"></th>
@@ -827,6 +840,18 @@ select.form-control { appearance: none; background-image: url("data:image/svg+xm
 
     <div class="grid2" style="margin-bottom:20px;align-items:start" id="fd-ownership-top">
       <div class="card">
+        <div class="card-header"><div class="card-title">Ownership Share</div><span class="badge badge-blue badge-no-dot">by total inputs</span></div>
+        <div class="card-body">
+          <div class="ownership-breakdown">
+            <div class="pie-wrap" style="width:190px;height:190px">
+              <svg id="fd-pie-equity" width="190" height="190" viewBox="0 0 190 190"></svg>
+              <div class="pie-center"><div class="pie-center-val">100%</div><div class="pie-center-sub">Share</div></div>
+            </div>
+            <div class="pie-legend" id="fd-legend-equity"></div>
+          </div>
+        </div>
+      </div>
+      <div class="card">
         <div class="card-header"><div class="card-title">Voting Share</div><span class="badge badge-violet badge-no-dot">excl. bonus</span></div>
         <div class="card-body">
           <div class="ownership-breakdown">
@@ -894,14 +919,6 @@ select.form-control { appearance: none; background-image: url("data:image/svg+xm
           </div>
         </div>
       </div>
-
-      <div class="card">
-        <div class="card-header"><div class="card-title">Penalty Settings</div><span class="card-subtitle">Penalty types &amp; values — auto-populate when applying a penalty</span></div>
-        <div class="card-body">
-          <div class="tbl-wrap"><table><thead><tr><th>Penalty Type</th><th style="width:170px">Value</th><th style="width:56px"></th></tr></thead><tbody id="fd-penalty-tbody"></tbody></table></div>
-          <button class="btn btn-secondary btn-sm perm-manager-or-secretary" style="margin-top:10px" onclick="addPenaltyType()">+ Add Penalty Type</button>
-        </div>
-      </div>
     </div>
 
     <!-- MEMBERS TAB -->
@@ -966,11 +983,11 @@ select.form-control { appearance: none; background-image: url("data:image/svg+xm
 
     <div class="grid2" style="align-items:start;margin-bottom:20px">
       <div class="card">
-        <div class="card-header"><div class="card-title">Total Awards</div><span class="badge badge-blue badge-no-dot" id="hold-total-badge">—</span></div>
+        <div class="card-header"><div class="card-title">Total Fund Value</div><span class="badge badge-blue badge-no-dot" id="hold-total-badge">—</span></div>
         <div class="card-body"><div id="hold-graph-value"></div></div>
       </div>
       <div class="card">
-        <div class="card-header"><div class="card-title">Owner Share</div><span class="card-subtitle">by total awards</span></div>
+        <div class="card-header"><div class="card-title">Ownership</div><span class="card-subtitle">by total awards</span></div>
         <div class="card-body"><div id="hold-graph-ownership"></div></div>
       </div>
     </div>
@@ -1085,7 +1102,7 @@ select.form-control { appearance: none; background-image: url("data:image/svg+xm
           </div>
           <div class="tbl-wrap">
             <table>
-              <thead><tr><th>Input Type</th><th style="width:120px;text-align:right">Quantity</th><th style="width:140px;text-align:right">Rate (per HR)</th><th style="width:130px;text-align:right">Earned</th></tr></thead>
+              <thead><tr><th>Input Type</th><th style="width:120px;text-align:right">Quantity</th><th style="width:140px;text-align:right">Rate ($/hr)</th><th style="width:130px;text-align:right">Earned</th></tr></thead>
               <tbody id="ra-lines-tbody"></tbody>
               <tfoot><tr><td colspan="3" style="text-align:right;font-weight:700">Total Contributions</td><td class="mono fw-700" style="text-align:right;color:var(--emerald)" id="ra-foot-total">$0.00</td></tr></tfoot>
             </table>
@@ -1100,7 +1117,7 @@ select.form-control { appearance: none; background-image: url("data:image/svg+xm
             <div style="display:flex;justify-content:space-between;font-size:12.5px;padding:5px 0;border-bottom:1px solid var(--border)"><span style="color:var(--slate)">Participant</span><span class="fw-600" id="ra-prev-name">—</span></div>
             <div style="display:flex;justify-content:space-between;font-size:12.5px;padding:5px 0;border-bottom:1px solid var(--border)"><span style="color:var(--slate)">Line items</span><span class="mono fw-600" id="ra-prev-count">0</span></div>
             <div style="display:flex;justify-content:space-between;font-size:12.5px;padding:5px 0;border-bottom:1px solid var(--border)"><span style="color:var(--slate)">Contributions</span><span class="mono fw-600" style="color:var(--emerald)" id="ra-prev-contrib">$0.00</span></div>
-            <div style="display:flex;justify-content:space-between;font-size:14px;padding:8px 0 0;font-weight:700"><span>Award</span><span class="mono" style="color:var(--sapphire)" id="ra-prev-net">0</span></div>
+            <div style="display:flex;justify-content:space-between;font-size:14px;padding:8px 0 0;font-weight:700"><span>Net Award</span><span class="mono" style="color:var(--sapphire)" id="ra-prev-net">$0.00</span></div>
           </div>
         </div>
         <div class="notice notice-info"><span class="notice-icon">ℹ</span><span>Rate auto-fills from the participant's hourly rate. Override any row as needed. Rows with Qty = 0 are excluded from the letter.</span></div>
@@ -1182,13 +1199,13 @@ select.form-control { appearance: none; background-image: url("data:image/svg+xm
             </div>
           </div>
           <div class="card">
-            <div class="card-header"><div class="card-title">Line Items</div><div style="display:flex;gap:6px"><button class="btn btn-secondary btn-sm" id="ad-add-contrib-btn" onclick="openAddContribution()">+ Add Contribution</button><button class="btn btn-secondary btn-sm" id="ad-add-penalty-btn" style="color:var(--ruby)" onclick="openAddPenalty()">+ Add Penalty</button></div></div>
+            <div class="card-header"><div class="card-title">Line Items</div><button class="btn btn-secondary btn-sm" id="ad-add-li-btn" onclick="openAddLineItem()">+ Add Line Item</button></div>
             <div class="card-body" id="ad-lineitems"></div>
           </div>
         </div>
         <div style="position:sticky;top:72px;display:flex;flex-direction:column;gap:14px">
           <div class="card">
-            <div class="card-header"><div class="card-title">Approvals &amp; Status</div></div>
+            <div class="card-header"><div class="card-title">Signatures &amp; Status</div></div>
             <div class="card-body" id="ad-sig-panel"></div>
           </div>
           <div class="card">
@@ -1253,7 +1270,7 @@ select.form-control { appearance: none; background-image: url("data:image/svg+xm
   <div class="modal-box" style="max-width:480px">
     <button class="modal-close" onclick="closeModal('modal-add-penalty')"><svg width="14" height="14" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 5l10 10M15 5L5 15"/></svg></button>
     <div class="modal-title" style="color:var(--ruby)">Record Penalty</div>
-    <div class="modal-sub">Penalties reduce the Award. This record is immutable once saved.</div>
+    <div class="modal-sub">Penalties reduce the Net Award. This record is immutable once saved.</div>
     <div class="fg" style="margin-top:16px">
       <div class="form-group"><label>Severity</label>
         <div style="display:flex;gap:8px">
@@ -1287,71 +1304,25 @@ select.form-control { appearance: none; background-image: url("data:image/svg+xm
   </div>
 </div>
 
-<!-- RELATIONSHIP ENTRY MODAL -->
-<div class="modal-backdrop" id="modal-rel-entry">
-  <div class="modal-box" style="max-width:540px">
-    <button class="modal-close" onclick="closeModal('modal-rel-entry')"><svg width="14" height="14" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 5l10 10M15 5L5 15"/></svg></button>
-    <div class="modal-title" id="modal-rel-title">Add Relationship Entry</div>
-    <div class="modal-sub">Role-specific details that may change over time.</div>
+<!-- ADD LINE ITEM MODAL -->
+<div class="modal-backdrop" id="modal-add-li">
+  <div class="modal-box" style="max-width:460px">
+    <button class="modal-close" onclick="closeModal('modal-add-li')"><svg width="14" height="14" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 5l10 10M15 5L5 15"/></svg></button>
+    <div class="modal-title">Add Line Item</div>
+    <div class="modal-sub">Add a cash contribution or a penalty to this award.</div>
     <div class="fg" style="margin-top:16px">
-      <div class="grid2">
-        <div class="form-group"><label>Title</label><input class="form-control" id="rel-title" placeholder="e.g. Frontend Developer"></div>
-        <div class="form-group"><label>Hourly Rate (per HR)</label><input class="form-control" type="number" id="rel-rate" placeholder="0"></div>
-      </div>
-      <div class="form-group"><label>Service Description</label><textarea class="form-control" id="rel-service" rows="2" placeholder="Describe the services provided…"></textarea></div>
-      <div class="grid3">
-        <div class="form-group"><label>Begin Date</label><input class="form-control" type="date" id="rel-begin"></div>
-        <div class="form-group"><label>End Date</label><input class="form-control" type="date" id="rel-end"></div>
-        <div class="form-group"><label>Annual Increase (%)</label><input class="form-control" type="number" id="rel-increase" placeholder="0"></div>
-      </div>
-      <div class="form-group"><label>Status</label>
-        <select class="form-control" id="rel-status">
-          <option value="Offered">Offered</option>
-          <option value="Active">Active</option>
-          <option value="Terminated">Terminated</option>
+      <div class="form-group"><label>Type</label>
+        <select class="form-control" id="ali-kind">
+          <option value="cash">Cash Contribution (positive)</option>
+          <option value="penalty">Penalty (negative)</option>
         </select>
       </div>
+      <div class="form-group"><label>Label</label><input class="form-control" id="ali-label" placeholder="e.g. Cash Investment / Late Filing"></div>
+      <div class="form-group"><label>Amount</label><div class="prefix-wrap"><span class="prefix"></span><input class="form-control mono" id="ali-amount" type="number" step="0.01" min="0" placeholder="0.00"></div></div>
     </div>
     <div class="modal-footer">
-      <button class="btn btn-secondary" onclick="closeModal('modal-rel-entry')">Cancel</button>
-      <button class="btn btn-primary" onclick="saveRelEntry()">Save Entry</button>
-    </div>
-  </div>
-</div>
-
-<!-- ADD CONTRIBUTION MODAL -->
-<div class="modal-backdrop" id="modal-add-contribution">
-  <div class="modal-box" style="max-width:460px">
-    <button class="modal-close" onclick="closeModal('modal-add-contribution')"><svg width="14" height="14" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 5l10 10M15 5L5 15"/></svg></button>
-    <div class="modal-title">Add Contribution</div>
-    <div class="modal-sub">Add a cash contribution to this award.</div>
-    <div class="fg" style="margin-top:16px">
-      <div class="form-group"><label>Label</label><input class="form-control" id="contrib-label" placeholder="e.g. Cash Investment"></div>
-      <div class="form-group"><label>Amount</label><div class="prefix-wrap"><span class="prefix"></span><input class="form-control mono" id="contrib-amount" type="number" min="0" placeholder="0"></div></div>
-      <div class="form-group"><label>Evidence (optional)</label><input class="form-control" type="file" id="contrib-evidence"></div>
-    </div>
-    <div class="modal-footer">
-      <button class="btn btn-secondary" onclick="closeModal('modal-add-contribution')">Cancel</button>
-      <button class="btn btn-primary" onclick="confirmAddContribution()">Add Contribution</button>
-    </div>
-  </div>
-</div>
-
-<!-- ADD PENALTY MODAL -->
-<div class="modal-backdrop" id="modal-add-penalty2">
-  <div class="modal-box" style="max-width:460px">
-    <button class="modal-close" onclick="closeModal('modal-add-penalty2')"><svg width="14" height="14" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 5l10 10M15 5L5 15"/></svg></button>
-    <div class="modal-title">Add Penalty</div>
-    <div class="modal-sub">Pick a penalty type — the value auto-populates from Fund Settings.</div>
-    <div class="fg" style="margin-top:16px">
-      <div class="form-group"><label>Penalty Type</label><select class="form-control" id="pen-type" onchange="penTypeAutoFill()"></select></div>
-      <div class="form-group"><label>Value</label><div class="prefix-wrap"><span class="prefix"></span><input class="form-control mono" id="pen-amount" type="number" min="0" placeholder="0"></div></div>
-      <div class="form-group"><label>Notes (optional)</label><input class="form-control" id="pen-notes" placeholder="Reason / detail"></div>
-      <div class="form-group"><label>Evidence (optional)</label><input class="form-control" type="file" id="pen-evidence"></div>
-    </div>
-    <div class="modal-footer">
-      <button class="btn btn-secondary" onclick="closeModal('modal-add-penalty2')">Cancel</button>
-      <button class="btn btn-danger" onclick="confirmAddPenaltyForm()">Add Penalty</button>
+      <button class="btn btn-secondary" onclick="closeModal('modal-add-li')">Cancel</button>
+      <button class="btn btn-primary" onclick="confirmAddLineItem()">Add Line Item</button>
     </div>
   </div>
 </div>
@@ -1370,8 +1341,7 @@ select.form-control { appearance: none; background-image: url("data:image/svg+xm
   </div>
   <div class="page">
     <div class="tabs-bar" style="margin-bottom:18px">
-      <div class="tab active" data-tab="up-tab-profile" onclick="switchUpTab(this)">Personal Information</div>
-      <div class="tab" data-tab="up-tab-relationship" onclick="switchUpTab(this)">Relationship</div>
+      <div class="tab active" data-tab="up-tab-profile" onclick="switchUpTab(this)">Profile</div>
       <div class="tab" data-tab="up-tab-docs" onclick="switchUpTab(this)">Documents &amp; Letters</div>
       <div class="tab" data-tab="up-tab-offer" onclick="switchUpTab(this)">Offer Letter</div>
       <div class="tab" data-tab="up-tab-nda" onclick="switchUpTab(this)">NDA</div>
@@ -1389,7 +1359,7 @@ select.form-control { appearance: none; background-image: url("data:image/svg+xm
             <div class="fg">
               <div class="grid2">
                 <div class="form-group"><label>Full Name <span class="req">*</span></label><input class="form-control" id="up-name" placeholder="Full name"></div>
-                
+                <div class="form-group"><label>Title</label><input class="form-control" id="up-title-field" placeholder="e.g. Frontend Developer"></div>
               </div>
               <div class="form-group"><label>Address</label><input class="form-control" id="up-address" placeholder="Street, City, State, ZIP"></div>
               <div class="grid2">
@@ -1398,15 +1368,32 @@ select.form-control { appearance: none; background-image: url("data:image/svg+xm
               </div>
               <div class="grid2">
                 <div class="form-group"><label>Location</label><input class="form-control" id="up-location" placeholder="City, State"></div>
-                
+                <div class="form-group"><label>Hourly Rate</label>
+                  <div class="prefix-wrap"><span class="prefix"></span><input class="form-control" type="number" id="up-rate" placeholder="0"></div>
+                </div>
               </div>
-              
-              
+              <div class="form-group"><label>Service Definition</label><textarea class="form-control" id="up-service" rows="2" placeholder="Describe the services you provide…"></textarea></div>
+              <div class="form-group"><label>Payment Method</label>
+                <select class="form-control" id="up-payment">
+                  <option value="Upwork">Upwork</option>
+                  <option value="Bill Pay">Bill Pay (Wells Fargo)</option>
+                  <option value="Zelle">Zelle</option>
+                </select>
+              </div>
             </div>
           </div>
         </div>
 
-        
+        <div class="card" style="margin-bottom:16px">
+          <div class="card-header"><div class="card-title">Agreement Dates</div></div>
+          <div class="card-body">
+            <div class="grid3">
+              <div class="form-group"><label>Offer Letter Date</label><input class="form-control" type="date" id="up-offer-date"></div>
+              <div class="form-group"><label>NDA Begin</label><input class="form-control" type="date" id="up-nda-begin" oninput="autoNdaEnd()"></div>
+              <div class="form-group"><label>NDA End (auto +3yr)</label><input class="form-control" type="date" id="up-nda-end" readonly></div>
+            </div>
+          </div>
+        </div>
       </div>
 
       <!-- Right panel: fund memberships summary -->
@@ -1426,21 +1413,56 @@ select.form-control { appearance: none; background-image: url("data:image/svg+xm
     </div>
     </div><!-- /up-tab-profile -->
 
-    <!-- RELATIONSHIP TAB -->
-    <div class="tab-content" id="up-tab-relationship">
-      <div class="card">
-        <div class="card-header"><div class="card-title">Relationship History</div><button class="btn btn-secondary btn-sm" id="up-rel-add-btn" onclick="openRelEntry()">+ Add Entry</button></div>
-        <div class="card-body" style="padding:0">
-          <table style="width:100%"><thead><tr><th style="width:36px">#</th><th>Title</th><th>Hourly Rate</th><th>Service Description</th><th>Begin</th><th>End</th><th>Annual Increase</th><th>Status</th><th style="width:120px">Actions</th></tr></thead>
-          <tbody id="up-rel-tbody"></tbody></table>
-        </div>
-      </div>
-    </div><!-- /up-tab-relationship -->
-
     <!-- DOCUMENTS & LETTERS TAB -->
     <div class="tab-content" id="up-tab-docs">
-      <input type="file" id="up-signed-file-input" style="display:none">
-      <div id="up-doc-ledgers" style="display:flex;flex-direction:column;gap:16px"></div>
+      <div style="display:flex;flex-direction:column;gap:16px">
+
+        <!-- Agreements section -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">Agreements &amp; Onboarding Documents</div>
+            <span class="badge badge-blue badge-no-dot">Tied to this user globally</span>
+          </div>
+          <div class="card-body" style="padding:0">
+            <table style="width:100%">
+              <thead><tr><th>Document</th><th>Status</th><th>Date</th><th style="width:180px">Actions</th></tr></thead>
+              <tbody id="up-docs-agreements-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Award Letters section -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">Award Letters</div>
+            <span class="badge badge-slate badge-no-dot">All awards across all funds</span>
+          </div>
+          <div class="card-body" style="padding:0">
+            <table style="width:100%">
+              <thead><tr><th>Period</th><th>Fund</th><th>Net Award</th><th>Status</th><th style="width:160px">Actions</th></tr></thead>
+              <tbody id="up-docs-awards-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Uploaded Signed Files section -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">Signed Files &amp; Uploads</div>
+            <span class="badge badge-slate badge-no-dot">Signed copies, receipts, certificates</span>
+          </div>
+          <div class="card-body">
+            <div id="up-docs-uploads"></div>
+            <div style="margin-top:12px;padding:16px;border:2px dashed var(--border-2);border-radius:var(--r);text-align:center;color:var(--slate-2)">
+              <div style="margin-bottom:6px;color:var(--slate-2)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5l-8.5 8.5a5 5 0 01-7-7l8.5-8.5a3.3 3.3 0 014.7 4.7l-8.5 8.5a1.7 1.7 0 01-2.4-2.4l7.8-7.8"/></svg></div>
+              <div style="font-weight:600;font-size:13px;color:var(--slate);margin-bottom:4px">Upload signed documents</div>
+              <div style="font-size:12px">Drop signed PDFs, images, or any document files here</div>
+              <button class="btn btn-secondary btn-sm" style="margin-top:10px" onclick="toast('File upload requires backend integration','amber')">Choose Files</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
     </div><!-- /up-tab-docs -->
 
     <!-- OFFER LETTER TAB -->
@@ -1491,9 +1513,9 @@ select.form-control { appearance: none; background-image: url("data:image/svg+xm
 </div>
 </div>
 
-<!-- IMPERSONATION BANNER -->
+<!-- IMPERSONATION BANNER (God Mode) -->
 <div id="imp-banner">
-  <span><svg width="14" height="14" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:-2px"><path d="M1 10s3-6 9-6 9 6 9 6-3 6-9 6-9-6-9-6z"/><circle cx="10" cy="10" r="2.5"/></svg> Viewing the app as <strong id="imp-name">—</strong> (admin preview)</span>
+  <span><svg width="14" height="14" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:-2px"><path d="M1 10s3-6 9-6 9 6 9 6-3 6-9 6-9-6-9-6z"/><circle cx="10" cy="10" r="2.5"/></svg> Viewing the app as <strong id="imp-name">—</strong> (God Mode impersonation)</span>
   <button onclick="adminStopImpersonate()">Exit & return to my account</button>
 </div>
 
@@ -1550,9 +1572,9 @@ const USERS = [
 
 // FUNDS — independent entities
 const FUNDS = [
-  { id:'f1', name:"021 Founder's Fund", company:'021', isDefault:true, status:'active', effectiveDate:'2026-01-01', initPeriod:90, otThreshold:40, otCoef:1.5, bonusPct:10, clientServices:'artificial intelligence accounting, strategy, and alignment software and educational products' },
-  { id:'f2', name:"Seed Round Fund", company:'021', isDefault:false, status:'archived', effectiveDate:'2025-07-15', initPeriod:90, otThreshold:40, otCoef:1.25, bonusPct:5, clientServices:'artificial intelligence accounting, strategy, and alignment software and educational products' },
-  { id:'f3', name:"Beta Fund", company:'021', isDefault:false, status:'nominated', effectiveDate:'2025-10-01', initPeriod:60, otThreshold:40, otCoef:1.5, bonusPct:8, clientServices:'artificial intelligence accounting, strategy, and alignment software and educational products' },
+  { id:'f1', name:"021 Founder's Fund Agreement", company:'021', isDefault:true, status:'active', effectiveDate:'2026-01-01', initPeriod:90, otThreshold:40, otCoef:1.5, bonusPct:10, clientServices:'artificial intelligence accounting, strategy, and alignment software and educational products' },
+  { id:'f2', name:"Seed Round Fund Agreement", company:'021', isDefault:false, status:'archived', effectiveDate:'2025-07-15', initPeriod:90, otThreshold:40, otCoef:1.25, bonusPct:5, clientServices:'artificial intelligence accounting, strategy, and alignment software and educational products' },
+  { id:'f3', name:"Beta Fund Agreement", company:'021', isDefault:false, status:'nominated', effectiveDate:'2025-10-01', initPeriod:60, otThreshold:40, otCoef:1.5, bonusPct:8, clientServices:'artificial intelligence accounting, strategy, and alignment software and educational products' },
 ];
 
 // MEMBERSHIPS — junction: userId × fundId × fundRole
@@ -1577,30 +1599,30 @@ let INVITATIONS = [
 
 // AWARDS (simplified for this demo)
 let AWARDS = [
-  { id:'aw1', fundId:'f1', userId:'u1', code:'AW-0001', periodLabel:'Week of Apr 13 – Apr 19, 2026', awardDate:'2026-04-19', status:'recorded', vesting:'vested', audit:[{ts:'2026-04-19 10:00',actor:'Ryker Rinehart',kind:'Award Status',from:'Secretary Approval Requested',to:'Recorded'}], approvedBy:'u2', lineItems:[
+  { id:'aw1', fundId:'f1', userId:'u1', code:'AW-0001', periodLabel:'Week of Apr 13 – Apr 19, 2026', awardDate:'2026-04-19', status:'recorded', vesting:'vested', audit:[{ts:'2026-04-19 10:00',actor:'Ryker Rinehart',kind:'Award Status',from:'Secretary Signature Requested',to:'Recorded'}], approvedBy:'u2', lineItems:[
     { id:'li1', kind:'contribution', inputType:'hourly', label:'Hourly Inputs (×1)', quantity:40, rate:120, earned:4800 },
     { id:'li2', kind:'contribution', inputType:'bonus', label:'Bonus Inputs (×0.1)', quantity:40, rate:12, earned:480 },
   ]},
-  { id:'aw2', fundId:'f1', userId:'u2', code:'AW-0002', periodLabel:'Week of Apr 13 – Apr 19, 2026', awardDate:'2026-04-19', status:'signed_by_manager', vesting:'vesting', audit:[{ts:'2026-04-18 09:30',actor:'David Boctor',kind:'Award Status',from:'Manager Approval Requested',to:'Manager Approved'}], approvedBy:'u1', lineItems:[
+  { id:'aw2', fundId:'f1', userId:'u2', code:'AW-0002', periodLabel:'Week of Apr 13 – Apr 19, 2026', awardDate:'2026-04-19', status:'signed_by_manager', vesting:'vesting', audit:[{ts:'2026-04-18 09:30',actor:'David Boctor',kind:'Award Status',from:'Manager Signature Requested',to:'Signed by Manager'}], approvedBy:'u1', lineItems:[
     { id:'li3', kind:'contribution', inputType:'hourly', label:'Hourly Inputs (×1)', quantity:38, rate:95, earned:3610 },
     { id:'li4', kind:'contribution', inputType:'bonus', label:'Bonus Inputs (×0.1)', quantity:38, rate:9.5, earned:361 },
   ]},
-  { id:'aw3', fundId:'f1', userId:'u4', code:'AW-0003', periodLabel:'Feb 10 – Feb 17, 2026', awardDate:'2026-02-17', status:'recorded', vesting:'vested', audit:[{ts:'2026-02-17 14:00',actor:'Ryker Rinehart',kind:'Award Status',from:'Secretary Approval Requested',to:'Recorded'}], approvedBy:'u2', lineItems:[
+  { id:'aw3', fundId:'f1', userId:'u4', code:'AW-0003', periodLabel:'Feb 10 – Feb 17, 2026', awardDate:'2026-02-17', status:'recorded', vesting:'vested', audit:[{ts:'2026-02-17 14:00',actor:'Ryker Rinehart',kind:'Award Status',from:'Secretary Signature Requested',to:'Recorded'}], approvedBy:'u2', lineItems:[
     { id:'li5', kind:'contribution', inputType:'hourly', label:'Hourly Inputs (×1)', quantity:40, rate:110, earned:4400 },
     { id:'li6', kind:'penalty', inputType:'penalty', label:'Penalty: Poor Time Tracking (minor)', quantity:1, rate:-100, earned:-100, severity:'minor', category:'Poor Time Tracking', notes:'Failed to submit hours within 14-day window.' },
   ]},
   { id:'aw4', fundId:'f1', userId:'u1', code:'AW-0004', periodLabel:'Jan 2026 — Cash', awardDate:'2026-01-31', status:'drafted', vesting:'unvested', audit:[{ts:'2026-01-31 11:00',actor:'David Boctor',kind:'Award Status',from:'—',to:'Drafted'}], approvedBy:'u2', lineItems:[
     { id:'li7', kind:'contribution', inputType:'cash', label:'Cash Inputs (×1)', quantity:1, rate:10000, earned:10000 },
   ]},
-  { id:'aw5', fundId:'f2', userId:'u1', code:'AW-0005', periodLabel:'Q3 2025', awardDate:'2025-09-30', status:'recorded', vesting:'vested', audit:[{ts:'2025-09-30 16:00',actor:'Ryker Rinehart',kind:'Award Status',from:'Secretary Approval Requested',to:'Recorded'}], approvedBy:'u2', lineItems:[
+  { id:'aw5', fundId:'f2', userId:'u1', code:'AW-0005', periodLabel:'Q3 2025', awardDate:'2025-09-30', status:'recorded', vesting:'vested', audit:[{ts:'2025-09-30 16:00',actor:'Ryker Rinehart',kind:'Award Status',from:'Secretary Signature Requested',to:'Recorded'}], approvedBy:'u2', lineItems:[
     { id:'li8', kind:'contribution', inputType:'hourly', label:'Hourly Inputs (×1)', quantity:80, rate:120, earned:9600 },
   ]},
 ];
 
 /* ══ AWARD STATUS + VESTING WORKFLOW ═════════════════════ */
 const AWARD_FLOW=['drafted','owner_sig_requested','signed_by_owner','manager_sig_requested','signed_by_manager','secretary_sig_requested','recorded'];
-const AWARD_LABEL={drafted:'Drafted',owner_sig_requested:'Owner Approval Requested',signed_by_owner:'Owner Approved',manager_sig_requested:'Manager Approval Requested',signed_by_manager:'Manager Approved',secretary_sig_requested:'Secretary Approval Requested',recorded:'Recorded'};
-const AWARD_NEXT={drafted:'Request Owner Approval',owner_sig_requested:'Approve as Owner',signed_by_owner:'Request Manager Approval',manager_sig_requested:'Approve as Manager',signed_by_manager:'Request Secretary Approval',secretary_sig_requested:'Record (Secretary Approval)'};
+const AWARD_LABEL={drafted:'Drafted',owner_sig_requested:'Owner Signature Requested',signed_by_owner:'Signed by Owner',manager_sig_requested:'Manager Signature Requested',signed_by_manager:'Signed by Manager',secretary_sig_requested:'Secretary Signature Requested',recorded:'Recorded'};
+const AWARD_NEXT={drafted:'Request Owner Signature',owner_sig_requested:'Sign as Owner',signed_by_owner:'Request Manager Signature',manager_sig_requested:'Sign as Manager',signed_by_manager:'Request Secretary Signature',secretary_sig_requested:'Sign & Record (Secretary)'};
 const VESTING_FLOW=['unvested','vesting','vested'];
 const VESTING_LABEL={unvested:'Unvested',vesting:'Vesting',vested:'Vested'};
 function awardStatusLabel(s){return AWARD_LABEL[s]||'Drafted';}
@@ -1610,8 +1632,8 @@ function vestingStatusBadge(s){const cls=s==='vested'?'badge-green':s==='vesting
 function isAwardRecorded(a){return (a?.status||'drafted')==='recorded';}
 function isReversalEntry(a){return !!a?.reversalOf;}
 function isReversed(awardId){return AWARDS.some(x=>x.reversalOf===awardId);}
-function awardCode(a){if(!a)return '';const c=a.code||a.id||'';const m=/(\d+)/.exec(String(c));return m?String(parseInt(m[1],10)):String(c);}
-function nextAwardCode(){let mx=0;AWARDS.forEach(a=>{const m=/(\d+)/.exec(String(a.code||a.id||''));if(m)mx=Math.max(mx,parseInt(m[1],10));});return String(mx+1);}
+function awardCode(a){return a?.code||(a?.id||'').toUpperCase();}
+function nextAwardCode(){let mx=0;AWARDS.forEach(a=>{const m=/AW-(\d+)/.exec(a.code||'');if(m)mx=Math.max(mx,+m[1]);});return 'AW-'+String(mx+1).padStart(4,'0');}
 function awardAudit(a,kind,from,to){a.audit=a.audit||[];const d=new Date();const ts=`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')} ${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`;a.audit.unshift({ts,actor:CUR.user?.name||'System',kind,from,to});}
 function advanceAwardStatus(awardId){const a=AWARDS.find(x=>x.id===awardId);if(!a)return;const cur=a.status||'drafted';const i=AWARD_FLOW.indexOf(cur);if(i<0||i>=AWARD_FLOW.length-1){toast('Award already recorded','');return;}const nx=AWARD_FLOW[i+1];a.status=nx;if(nx==='recorded')a.recordedAt=todayISO();awardAudit(a,'Award Status',AWARD_LABEL[cur],AWARD_LABEL[nx]);toast('Award status → '+AWARD_LABEL[nx],'green');renderAwardDetail();}
 function advanceVesting(awardId){const a=AWARDS.find(x=>x.id===awardId);if(!a)return;const cur=a.vesting||'unvested';const i=VESTING_FLOW.indexOf(cur);if(i<0||i>=VESTING_FLOW.length-1){toast('Already fully vested','');return;}const nx=VESTING_FLOW[i+1];a.vesting=nx;awardAudit(a,'Vesting Status',VESTING_LABEL[cur],VESTING_LABEL[nx]);toast('Vesting status → '+VESTING_LABEL[nx],'green');renderAwardDetail();}
@@ -1634,10 +1656,8 @@ let CUR = {
 /* ══ HELPERS ═════════════════════════════════════════════ */
 const $ = id => document.getElementById(id);
 const escHtml = s => String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-const fmt$ = n => Number(n||0).toLocaleString('en-US',{maximumFractionDigits:0});
-const fmtDate = d => { if(!d)return '—'; try{const x=new Date(d+'T00:00:00');return String(x.getMonth()+1).padStart(2,'0')+'/'+String(x.getDate()).padStart(2,'0')+'/'+String(x.getFullYear()).slice(-2)}catch{return d}};
-function evidenceTag(li){return li&&li.evidence?`<div style="font-size:10.5px;color:var(--sapphire);display:flex;align-items:center;gap:4px;margin-top:2px"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5l-8.5 8.5a5 5 0 01-7-7l8.5-8.5a3.3 3.3 0 014.7 4.7l-8.5 8.5a1.7 1.7 0 01-2.4-2.4l7.8-7.8"/></svg>${escHtml(li.evidence.name)}</div>`:'';}
-const TRASH_SVG='<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/></svg>';
+const fmt$ = n => Number(n||0).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
+const fmtDate = d => { if(!d)return '—'; try{return new Date(d+'T00:00:00').toLocaleDateString('en-US',{year:'numeric',month:'short',day:'numeric'})}catch{return d}};
 const addYrs = (d,y) => { if(!d)return ''; const dt=new Date(d+'T00:00:00'); dt.setFullYear(dt.getFullYear()+y); return dt.toISOString().slice(0,10); };
 const todayISO = () => { const d=new Date(); return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`; };
 const uid = () => 'id-'+Date.now()+'-'+Math.floor(Math.random()*9999);
@@ -1757,7 +1777,7 @@ function buildSidebar(activeId) {
         <div class="sb-avatar" style="background:${roleColor}">${u?initials(u.name):'?'}</div>
         <div>
           <div class="sb-user-name">${escHtml(u?.name||'')}</div>
-          <div class="sb-user-role">${systemRoleLabel(u?.systemRole)}</div>
+          <div class="sb-user-role">${roleName(u?.systemRole||'')}</div>
         </div>
       </div>
       <button class="sb-logout" onclick="handleLogout()">
@@ -1771,10 +1791,9 @@ function buildSidebar(activeId) {
 function roleName(r) {
   return r==='fund_manager'?'Fund Manager':r==='fund_secretary'?'Fund Secretary':r==='fund_owner'?'Fund Owner':r||'—';
 }
-function systemRoleLabel(r){return r==='fund_manager'?'Administrator':'User';}
 function rolePill(r) {
-  const admin=r==='fund_manager';
-  return `<span class="role-pill ${admin?'role-manager':'role-owner'}">${admin?'Administrator':'User'}</span>`;
+  const cls=r==='fund_manager'?'role-manager':r==='fund_secretary'?'role-secretary':'role-owner';
+  return `<span class="role-pill ${cls}">${roleName(r)}</span>`;
 }
 
 function goTo(id) {
@@ -1860,10 +1879,10 @@ function renderMyFunds() {
       <div class="avatar avatar-lg" style="background:${avatarColor}">${initials(CUR.user?.name||'')}</div>
       <div>
         <div style="font-size:18px;font-weight:800;letter-spacing:-.4px">${escHtml(CUR.user?.name||'')}</div>
-        <div style="font-size:12px;color:rgba(255,255,255,.5);margin-top:3px">${systemRoleLabel(CUR.user?.systemRole)} · ${escHtml(CUR.user?.email||'')}</div>
+        <div style="font-size:12px;color:rgba(255,255,255,.5);margin-top:3px">${roleName(CUR.user?.systemRole||'')} · ${escHtml(CUR.user?.email||'')}</div>
       </div>
       <div class="hero-stats">
-        <div><div class="hero-stat-lbl">${isOp?'Cumulative Awards':'My Cumulative Awards'}</div><div class="hero-stat-val">${fmt$(totalNet)}</div></div>
+        <div><div class="hero-stat-lbl">${isOp?'Combined Awards':'My Combined Awards'}</div><div class="hero-stat-val">${fmt$(totalNet)}</div></div>
         <div><div class="hero-stat-lbl">Contributions</div><div class="hero-stat-val" style="color:#6EE7B7">${fmt$(totalContrib)}</div></div>
         <div><div class="hero-stat-lbl">Penalties</div><div class="hero-stat-val" style="color:${totalPenalty?'#FCA5A5':'rgba(255,255,255,.35)'}">−${fmt$(totalPenalty)}</div></div>
         <div><div class="hero-stat-lbl">Funds</div><div class="hero-stat-val">${myMemberships.length}</div></div>
@@ -1899,7 +1918,7 @@ function renderMyFunds() {
       </div>
       <div class="fund-card-stats">
         <div class="fund-stat-cell"><div class="fund-stat-label">My Awards</div><div class="fund-stat-val">${fmt$(inputs.net)}</div></div>
-        <div class="fund-stat-cell"><div class="fund-stat-label">Owner Share</div><div class="fund-stat-val" style="color:var(--sapphire)">${Math.round(equity)}%</div></div>
+        <div class="fund-stat-cell"><div class="fund-stat-label">Ownership</div><div class="fund-stat-val" style="color:var(--sapphire)">${equity.toFixed(1)}%</div></div>
       </div>
       <div class="fund-card-footer">
         <span style="font-size:11.5px;color:var(--slate)">Joined ${fmtDate(m.joinedAt)}</span>
@@ -1926,80 +1945,87 @@ function filterUserTab(el){
 
 function renderUserDirectory(){
   const pendingCount=INVITATIONS.filter(i=>i.status==='pending').length;
+  const acceptedCount=INVITATIONS.filter(i=>i.status==='accepted').length;
   const activeCount=USERS.filter(u=>u.status==='active').length;
   $('dir-stat-total').textContent=USERS.length;
   $('dir-stat-active').textContent=activeCount;
   $('dir-stat-pending').textContent=pendingCount;
-  const q=(CUR.userSearch||'').toLowerCase();
+  const q=CUR.userSearch.toLowerCase();
   let users=[...USERS];
   if(q) users=users.filter(u=>u.name.toLowerCase().includes(q)||u.email.toLowerCase().includes(q));
   if(CUR.userFilter==='active')   users=users.filter(u=>u.status==='active'&&membershipsForUser(u.id).length>0);
   if(CUR.userFilter==='pending')  users=users.filter(u=>u.status==='pending'||INVITATIONS.some(i=>i.userId===u.id&&i.status==='pending'));
-  const tbody=$('users-tbody'); if(!tbody)return;
-  const canManage=CUR.user?.systemRole==='fund_manager'||isSecretaryOrManager(CUR.activeFundId);
+  const tbody=$('users-tbody');
+  if(!tbody)return;
   if(users.length===0){
-    tbody.innerHTML=`<tr><td colspan="6" style="text-align:center;padding:40px;color:var(--slate-2)"><div style="font-weight:600;margin-bottom:4px">No users found</div><div style="font-size:11.5px">Try a different search or filter</div></td></tr>`;
-  } else {
-    tbody.innerHTML=users.map((u,i)=>{
-      const inv=INVITATIONS.find(x=>x.userId===u.id&&x.status==='pending');
-      const st=u.status;
-      const statusHtml = st==='pending'?`<span class="invite-status" style="color:var(--amber)">Invited</span>`
-        : st==='active'?`<span class="invite-status" style="color:var(--emerald)">Active</span>`
-        : st==='suspended'?`<span class="invite-status" style="color:var(--amber)">Suspended</span>`
-        : st==='terminated'?`<span class="invite-status" style="color:var(--ruby)">Terminated</span>`
-        : `<span class="invite-status" style="color:var(--ruby)">Inactive</span>`;
-      const color=COLORS[i%COLORS.length];
-      return `<tr>
-        <td><input type="checkbox" class="dir-row-cb" data-uid="${u.id}" onclick="toggleUser()"></td>
-        <td>
-          <div class="user-row-avatar-col">
-            <div class="avatar avatar-md" style="background:${color}">${initials(u.name)}</div>
-            <div class="td-name" style="cursor:pointer;color:var(--sapphire)" onclick="openUserProfile('${u.id}')">${escHtml(u.name)}</div>
-          </div>
-        </td>
-        <td style="font-size:12.5px;color:var(--slate)">${escHtml(u.email)}</td>
-        <td>${statusHtml}</td>
-        <td style="font-size:12px;color:var(--slate)">${fmtDate(u.joinedAt)}</td>
-        <td>
-          <div class="dd-wrap">
-            <button class="btn btn-ghost btn-sm" style="font-size:18px;letter-spacing:1px;padding:2px 8px" onclick="toggleMenu(this)">⋯</button>
-            <div class="dd-menu">
-              <div class="dd-item" onclick="closeMenus();openUserProfile('${u.id}')">View Profile</div>
-              ${inv&&canManage?`<div class="dd-item" onclick="closeMenus();resendInvite('${inv.id}')">Resend Invite</div>`:''}
-              ${canManage?`<div class="dd-divider"></div><div class="dd-item" onclick="closeMenus();suspendUser('${u.id}')">Suspend</div><div class="dd-item danger" onclick="closeMenus();terminateUser('${u.id}')">Terminate</div>`:''}
-            </div>
-          </div>
-        </td>
-      </tr>`;
-    }).join('');
+    tbody.innerHTML=`<tr><td colspan="4" style="text-align:center;padding:40px;color:var(--slate-2)"><div style="font-weight:600;margin-bottom:4px">No users found</div><div style="font-size:11.5px">Try a different search or filter</div></td></tr>`;
+    return;
   }
+  tbody.innerHTML=users.map((u,i)=>{
+    const mems=membershipsForUser(u.id);
+    const inv=INVITATIONS.find(inv=>inv.userId===u.id&&inv.status==='pending');
+    const statusHtml=u.status==='pending'
+      ?`<span class="invite-status" style="color:var(--amber)">Invited</span>`
+      :u.status==='active'
+        ?`<span class="invite-status" style="color:var(--emerald)">Active</span>`
+        :`<span class="invite-status" style="color:var(--ruby)">Inactive</span>`;
+    const color=COLORS[i%COLORS.length];
+    const canManage=isSecretaryOrManager(CUR.activeFundId)||CUR.user?.systemRole==='fund_manager';
+    return `<tr>
+      <td>
+        <div class="user-row-avatar-col">
+          <div class="avatar avatar-md" style="background:${color}">${initials(u.name)}</div>
+          <div>
+            <div class="td-name" style="cursor:pointer;color:var(--sapphire)" onclick="openUserProfile('${u.id}')">${escHtml(u.name)}</div>
+            <div style="font-size:11.5px;color:var(--slate)">${escHtml(u.email)}</div>
+          </div>
+        </div>
+      </td>
+      <td>${statusHtml}</td>
+      <td style="font-size:12px;color:var(--slate)">${fmtDate(u.joinedAt)}</td>
+      <td>
+        <div class="dd-wrap">
+          <button class="btn btn-ghost btn-sm" style="font-size:18px;letter-spacing:1px;padding:2px 8px" onclick="toggleMenu(this)">⋯</button>
+          <div class="dd-menu">
+            <div class="dd-item" onclick="closeMenus();openUserProfile('${u.id}')">View Profile</div>
+            ${canManage?`<div class="dd-item" onclick="closeMenus();openAddToFundModal('${u.id}')">Add to Fund</div>`:''}
+            ${inv&&canManage?`<div class="dd-item" onclick="closeMenus();resendInvite('${inv.id}')">Resend Invite</div>`:''}
+            ${canManage&&u.id!==CUR.user?.id?`<div class="dd-divider"></div><div class="dd-item danger" onclick="closeMenus()">Remove from System</div>`:''}
+          </div>
+        </div>
+      </td>
+    </tr>`;
+  }).join('');
+  // Also show pending/accepted/expired invites for non-user emails
   const noUserInvites=INVITATIONS.filter(i=>!i.userId);
   if(noUserInvites.length>0&&(CUR.userFilter==='all'||CUR.userFilter==='pending')){
     tbody.innerHTML+=noUserInvites.map(inv=>{
+      const isAccepted=inv.status==='accepted';
       const isExpired=inv.status==='expired';
-      const rowBg=isExpired?'var(--ruby-light)':'var(--amber-light)';
-      const iconColor=isExpired?'var(--ruby)':'var(--amber)';
+      const rowBg=isAccepted?'var(--sapphire-light)':isExpired?'var(--ruby-light)':'var(--amber-light)';
+      const iconColor=isAccepted?'var(--sapphire)':isExpired?'var(--ruby)':'var(--amber)';
+      const borderColor=isAccepted?'var(--sapphire-mid)':isExpired?'var(--ruby-mid)':'var(--amber-mid)';
+      const statusLabel=isExpired?'Invite expired':'Invited · Not yet registered';
+      const icon=isAccepted?'<svg width="12" height="12" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10l4 4 8-9"/></svg>':isExpired?'<svg width="14" height="14" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 5l10 10M15 5L5 15"/></svg>':'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>';
       const statusText=isExpired?'Expired':'Invited';
       return `<tr style="background:${rowBg}">
-        <td></td>
-        <td><div class="td-name" style="color:${iconColor}">${escHtml(inv.email)}</div><div style="font-size:11px;color:${iconColor};opacity:.75">Not yet registered</div></td>
-        <td style="font-size:12.5px;color:${iconColor}">${escHtml(inv.email)}</td>
+        <td>
+          <div class="user-row-avatar-col">
+            <div class="avatar avatar-md" style="background:${rowBg};border:2px dashed ${borderColor}"><span style="color:${iconColor};font-size:14px">${icon}</span></div>
+            <div>
+              <div class="td-name" style="color:${iconColor}">${escHtml(inv.email)}</div>
+              <div style="font-size:11.5px;color:${iconColor};opacity:.75">${statusLabel}</div>
+            </div>
+          </div>
+        </td>
         <td><span class="invite-status" style="color:${iconColor}">${statusText}</span></td>
         <td style="font-size:12px;color:var(--slate)">${fmtDate(inv.sentAt)}</td>
-        <td>${!isExpired?`<button class="btn btn-secondary btn-xs" onclick="resendInvite('${inv.id}')">Resend</button>`:'—'}</td>
+        <td>${!isAccepted?`<button class="btn btn-secondary btn-xs" onclick="resendInvite('${inv.id}')">Resend</button>`:'—'}</td>
       </tr>`;
     }).join('');
   }
-  updateBulkBar();
 }
-function selectedUserIds(){ return [...document.querySelectorAll('.dir-row-cb:checked')].map(x=>x.dataset.uid); }
-function toggleAllUsers(cb){ document.querySelectorAll('.dir-row-cb').forEach(x=>x.checked=cb.checked); updateBulkBar(); }
-function toggleUser(){ updateBulkBar(); }
-function updateBulkBar(){ const bar=$('dir-bulk-bar'); if(!bar)return; const n=selectedUserIds().length; bar.style.display=n?'flex':'none'; const c=$('dir-bulk-count'); if(c)c.textContent=n+' selected'; }
-function bulkSuspend(){ const ids=selectedUserIds(); if(!ids.length)return; if(!confirm('Suspend '+ids.length+' participant(s)? This pauses their contributions during investigation.'))return; ids.forEach(id=>{const u=USERS.find(x=>x.id===id); if(u)u.status='suspended';}); toast(ids.length+' participant(s) suspended','amber'); renderUserDirectory(); }
-function bulkTerminate(){ const ids=selectedUserIds(); if(!ids.length)return; if(!confirm('Terminate '+ids.length+' participant(s)? This is a final removal.'))return; ids.forEach(id=>{const u=USERS.find(x=>x.id===id); if(u)u.status='terminated';}); toast(ids.length+' participant(s) terminated','red'); renderUserDirectory(); }
-function suspendUser(id){ const u=USERS.find(x=>x.id===id); if(!u)return; u.status='suspended'; toast(u.name+' suspended — contributions paused','amber'); renderUserDirectory(); }
-function terminateUser(id){ const u=USERS.find(x=>x.id===id); if(!u)return; if(!confirm('Terminate '+u.name+'? This is a final removal from the fund.'))return; u.status='terminated'; toast(u.name+' terminated','red'); renderUserDirectory(); }
+
 function resendInvite(invId){
   const inv=INVITATIONS.find(i=>i.id===invId);
   if(!inv)return;
@@ -2088,10 +2114,9 @@ function renderFundDetails(){
   const _vtData=_active.map((m,i)=>{const u=USERS.find(x=>x.id===m.userId);return{label:u?.name||'?',value:computeVotingPct(m.userId,f.id),color:COLORS[i%COLORS.length]};});
   drawPie('fd-pie-equity',_eqData,'fd-legend-equity');
   drawPie('fd-pie-voting',_vtData,'fd-legend-voting');
-  renderPenaltyTypes(f);
   renderFdMembersTable();
 }
-function updateFundNameAuto(){ const c=$('fd-company').value.trim(); $('fd-name').value=c?c+" Founder's Fund":''; }
+function updateFundNameAuto(){ const c=$('fd-company').value.trim(); $('fd-name').value=c?c+" Founder's Fund Agreement":''; }
 function saveFundDetails(){
   const f=FUNDS.find(x=>x.id===CUR.activeFundId); if(!f)return;
   f.company=$('fd-company').value.trim();
@@ -2253,37 +2278,33 @@ function renderFundValueGraph(fund,mems){
   let cash=0,nonCash=0,penalty=0;
   mems.forEach(m=>{const i=computeUserInputsInFund(m.userId,fund.id);cash+=i.cash;nonCash+=i.base+i.ot+i.bonus;penalty+=i.penalty;});
   const total=cash+nonCash-penalty;
+  const gross=(cash+nonCash+penalty)||1;
+  const seg=(v,c)=>`<div style="height:100%;width:${Math.max(0,v)/gross*100}%;background:${c}"></div>`;
   const el=$('hold-graph-value'); if(!el)return;
   const tb=$('hold-total-badge'); if(tb)tb.textContent=fmt$(total);
-  const segs=[{value:Math.max(0,cash),color:'#0D9488'},{value:Math.max(0,nonCash),color:'#2563EB'},{value:Math.max(0,penalty),color:'#DC2626'}];
   el.innerHTML=`
-    <div style="display:flex;align-items:center;gap:18px;flex-wrap:wrap">
-      ${donutSvg(segs, fmt$(total), 'Total Awards')}
-      <div style="flex:1;min-width:170px;display:flex;flex-direction:column;gap:9px;font-size:12.5px">
-        ${legendRow('#0D9488','Cash Inputs',fmt$(cash))}
-        ${legendRow('#2563EB','Non-Cash Inputs',fmt$(nonCash))}
-        ${legendRow('#DC2626','Penalties','−'+fmt$(penalty))}
-      </div>
+    <div style="font-size:24px;font-weight:800;letter-spacing:-.5px;margin-bottom:4px">${fmt$(total)}</div>
+    <div style="font-size:11.5px;color:var(--slate);margin-bottom:14px">Total fund value (cash + non-cash − penalties)</div>
+    <div style="display:flex;height:26px;border-radius:7px;overflow:hidden;background:#E8EDF3;margin-bottom:14px">${seg(cash,'#0D9488')}${seg(nonCash,'#2563EB')}${seg(penalty,'#DC2626')}</div>
+    <div style="display:flex;flex-direction:column;gap:8px;font-size:12.5px">
+      ${legendRow('#0D9488','Cash Inputs',fmt$(cash))}
+      ${legendRow('#2563EB','Non-Cash Inputs',fmt$(nonCash))}
+      ${legendRow('#DC2626','Penalties','−'+fmt$(penalty))}
     </div>`;
 }
 function renderOwnershipGraph(fund,mems){
   const el=$('hold-graph-ownership'); if(!el)return;
   const rows=mems.map((m,i)=>{const u=USERS.find(x=>x.id===m.userId);return{name:u?.name||'?',net:computeUserInputsInFund(m.userId,fund.id).net,pct:computeEquityPct(m.userId,fund.id),color:COLORS[i%COLORS.length]};}).sort((a,b)=>b.pct-a.pct);
   if(!rows.length){el.innerHTML='<div style="color:var(--slate-2);font-size:12.5px;padding:10px 0">No participants yet</div>';return;}
-  el.innerHTML=`
-    <div style="display:flex;align-items:center;gap:18px;flex-wrap:wrap">
-      ${pieSvg(rows.map(r=>({value:Math.max(0,r.pct),color:r.color})))}
-      <div style="flex:1;min-width:170px;display:flex;flex-direction:column;gap:10px;font-size:12.5px">
-        ${rows.map(r=>`<div style="display:flex;align-items:center;gap:8px">
-          <span style="width:11px;height:11px;border-radius:3px;background:${r.color};flex-shrink:0"></span>
-          <span style="flex:1;font-weight:600">${escHtml(r.name)}</span>
-          <span class="mono" style="color:var(--slate)">${fmt$(r.net)}</span>
-          <span class="mono fw-700" style="min-width:40px;text-align:right">${Math.round(r.pct)}%</span>
-        </div>`).join('')}
+  el.innerHTML=rows.map(r=>`
+    <div style="margin-bottom:12px">
+      <div style="display:flex;justify-content:space-between;font-size:12.5px;margin-bottom:4px">
+        <span style="font-weight:600">${escHtml(r.name)}</span>
+        <span><span class="mono" style="color:var(--slate)">${fmt$(r.net)}</span> · <span class="mono fw-700">${r.pct.toFixed(1)}%</span></span>
       </div>
-    </div>`;
+      <div style="height:9px;border-radius:5px;background:#E8EDF3;overflow:hidden"><div style="width:${Math.max(0,r.pct)}%;height:100%;background:${r.color};border-radius:5px"></div></div>
+    </div>`).join('');
 }
-
 
 /* ══ LEDGER ══════════════════════════════════════════════ */
 function renderLedger(){
@@ -2339,7 +2360,7 @@ function reverseAward(awardId){
   const a=AWARDS.find(x=>x.id===awardId); if(!a)return;
   if(!isAwardRecorded(a)){toast('Only Recorded awards can be reversed','red');return;}
   if(isReversed(awardId)){toast('This award has already been reversed','');return;}
-  if(!confirm('The following reversal will be entered. Are you sure you want to continue?'))return;
+  if(!confirm('Record a reversal? This creates an equal and opposite award; the original is preserved.'))return;
   const negLines=(a.lineItems||[]).map(li=>{
     if(li.kind==='penalty'){
       return {id:uid(),kind:'contribution',inputType:'cash',label:'Credit — reversal of '+(li.label||'penalty'),quantity:1,rate:Math.abs(li.earned||0),earned:Math.abs(li.earned||0),reversedAt:null};
@@ -2365,84 +2386,45 @@ function renderUserProfileScreen(){
   const u=USERS.find(x=>x.id===CUR.activeUserId); if(!u)return;
   $('up-title').textContent=u.name;
   $('up-name').value=u.name||'';
+  $('up-title-field').value=u.title||'';
   $('up-address').value=u.address||'';
   $('up-email').value=u.email||'';
   $('up-email2').value=u.email2||'';
   $('up-location').value=u.location||'';
+  $('up-rate').value=u.rate||'';
+  $('up-service').value=u.service||'';
+  $('up-payment').value=u.payment||'Bill Pay';
+  $('up-offer-date').value=u.offerDate||'';
+  $('up-nda-begin').value=u.ndaBegin||'';
+  $('up-nda-end').value=u.ndaEnd||'';
   $('up-uid').textContent=u.id;
   $('up-sysrole').innerHTML=rolePill(u.systemRole);
   $('up-since').textContent=fmtDate(u.joinedAt);
   const isSelf=u.id===CUR.user?.id;
   const canEditOther=CUR.user?.systemRole==='fund_manager';
   const editable=isSelf||canEditOther;
-  ['up-name','up-address','up-email2','up-location'].forEach(id=>{ const el=$(id); if(el)el.disabled=!editable; });
-  renderRelationshipTab();
+  ['up-name','up-title-field','up-address','up-email2','up-location','up-rate','up-service','up-payment','up-offer-date','up-nda-begin'].forEach(id=>{
+    const el=$(id); if(el)el.disabled=!editable;
+  });
 }
 function saveUserProfile(){
   const u=USERS.find(x=>x.id===CUR.activeUserId); if(!u)return;
   u.name=$('up-name').value.trim()||u.name;
+  u.title=$('up-title-field').value.trim();
   u.address=$('up-address').value.trim();
   u.email2=$('up-email2').value.trim();
   u.location=$('up-location').value.trim();
+  u.rate=parseFloat($('up-rate').value)||u.rate;
+  u.service=$('up-service').value.trim();
+  u.payment=$('up-payment').value;
+  u.offerDate=$('up-offer-date').value;
+  u.ndaBegin=$('up-nda-begin').value;
+  u.ndaEnd=addYrs(u.ndaBegin,3);
   if(u.id===CUR.user?.id)CUR.user=u;
   toast('Profile saved','green');
   goBack();
 }
-
-/* ══ RELATIONSHIP TAB ════════════════════════════════════ */
-function ensureRelationships(u){
-  if(!u.relationships){
-    u.relationships=[{id:1,title:u.title||'',rate:u.rate||0,service:u.service||'',begin:u.offerDate||u.joinedAt||'',end:'',annualIncrease:0,status:(u.status==='pending'?'Offered':'Active')}];
-  }
-  return u.relationships;
-}
-function renderRelationshipTab(){
-  const u=USERS.find(x=>x.id===CUR.activeUserId); if(!u)return;
-  const rels=ensureRelationships(u);
-  const editable=(u.id===CUR.user?.id)||CUR.user?.systemRole==='fund_manager';
-  const addBtn=$('up-rel-add-btn'); if(addBtn)addBtn.style.display=editable?'':'none';
-  const tb=$('up-rel-tbody'); if(!tb)return;
-  if(!rels.length){ tb.innerHTML=`<tr><td colspan="9" style="text-align:center;padding:24px;color:var(--slate-2)">No relationship entries yet.</td></tr>`; return; }
-  const sc=s=>s==='Active'?'badge-green':s==='Terminated'?'badge-red':'badge-amber';
-  tb.innerHTML=rels.map(r=>`<tr>
-    <td class="mono fw-700">${r.id}</td>
-    <td>${escHtml(r.title||'—')}</td>
-    <td class="mono">${r.rate?fmt$(r.rate)+' per HR':'—'}</td>
-    <td style="font-size:12px;color:var(--slate)">${escHtml(r.service||'—')}</td>
-    <td style="font-size:12px">${r.begin?fmtDate(r.begin):'—'}</td>
-    <td style="font-size:12px">${r.end?fmtDate(r.end):'—'}</td>
-    <td class="mono">${r.annualIncrease?Math.round(r.annualIncrease)+'%':'—'}</td>
-    <td><span class="badge ${sc(r.status)}">${escHtml(r.status)}</span></td>
-    <td>${editable?`<button class="btn btn-secondary btn-xs" onclick="openRelEntry(${r.id})">Edit</button> <button class="btn btn-ghost btn-xs" style="color:var(--ruby);padding:4px 6px" title="Delete" onclick="deleteRelEntry(${r.id})">${TRASH_SVG}</button>`:'—'}</td>
-  </tr>`).join('');
-}
-function openRelEntry(id){
-  const u=USERS.find(x=>x.id===CUR.activeUserId); if(!u)return;
-  const rels=ensureRelationships(u);
-  const r=id?rels.find(x=>x.id===id):null;
-  CUR.editRelId=id||null;
-  $('rel-title').value=r?.title||''; $('rel-rate').value=r?.rate||''; $('rel-service').value=r?.service||'';
-  $('rel-begin').value=r?.begin||''; $('rel-end').value=r?.end||''; $('rel-increase').value=r?.annualIncrease||''; $('rel-status').value=r?.status||'Offered';
-  $('modal-rel-title').textContent=id?'Edit Relationship Entry':'Add Relationship Entry';
-  openModal('modal-rel-entry');
-}
-function saveRelEntry(){
-  const u=USERS.find(x=>x.id===CUR.activeUserId); if(!u)return;
-  const rels=ensureRelationships(u);
-  const d={title:$('rel-title').value.trim(),rate:parseFloat($('rel-rate').value)||0,service:$('rel-service').value.trim(),begin:$('rel-begin').value,end:$('rel-end').value,annualIncrease:parseFloat($('rel-increase').value)||0,status:$('rel-status').value};
-  if(CUR.editRelId){ const r=rels.find(x=>x.id===CUR.editRelId); if(r)Object.assign(r,d); }
-  else { const nid=rels.reduce((m,x)=>Math.max(m,x.id),0)+1; rels.push({id:nid,...d}); }
-  const active=[...rels].reverse().find(x=>x.status==='Active')||rels[rels.length-1];
-  if(active){ u.title=active.title; u.rate=active.rate; u.service=active.service; }
-  closeModal('modal-rel-entry'); toast('Relationship entry saved','green'); renderRelationshipTab();
-}
-function deleteRelEntry(id){
-  const u=USERS.find(x=>x.id===CUR.activeUserId); if(!u)return;
-  if(!confirm('Delete this relationship entry?'))return;
-  u.relationships=(u.relationships||[]).filter(x=>x.id!==id);
-  renderRelationshipTab();
-}
-function autoNdaEnd(){ const e=$('up-nda-end'); if(e)e.value=addYrs($('up-nda-begin')?.value,3)||''; }
+function autoNdaEnd(){ $('up-nda-end').value=addYrs($('up-nda-begin').value,3)||''; }
 
 /* ══ INVITE MODAL ════════════════════════════════════════ */
 let inviteCurrentStep=1;
@@ -2578,20 +2560,6 @@ function arcPath(cx,cy,or,ir,sa,ea){
   const la=sweep>180?1:0;
   return`M${o1.x} ${o1.y}A${or} ${or} 0 ${la} 1 ${o2.x} ${o2.y}L${i1.x} ${i1.y}A${ir} ${ir} 0 ${la} 0 ${i2.x} ${i2.y}Z`;
 }
-function donutSvg(segments,centerVal,centerLbl){
-  const w=150,cx=75,cy=75,or=66,ir=42;
-  const total=segments.reduce((s,d)=>s+(d.value||0),0); let cur=0,arcs='';
-  if(total>0){ segments.forEach(seg=>{const sweep=(seg.value||0)/total*360; if(sweep<=0.3)return; arcs+=`<path d="${arcPath(cx,cy,or,ir,cur+0.6,cur+sweep-0.6)}" fill="${seg.color}"></path>`; cur+=sweep;}); }
-  else { arcs=`<circle cx="${cx}" cy="${cy}" r="${(or+ir)/2}" fill="none" stroke="#E8EDF3" stroke-width="${or-ir}"></circle>`; }
-  return `<svg width="${w}" height="${w}" viewBox="0 0 ${w} ${w}" style="flex-shrink:0">${arcs}<text x="${cx}" y="${cy-1}" text-anchor="middle" style="font-size:16px;font-weight:800;fill:var(--ink)">${centerVal}</text><text x="${cx}" y="${cy+15}" text-anchor="middle" style="font-size:8.5px;fill:var(--slate);text-transform:uppercase;letter-spacing:.06em">${centerLbl}</text></svg>`;
-}
-function pieSvg(segments){
-  const w=150,cx=75,cy=75,or=70;
-  const total=segments.reduce((s,d)=>s+(d.value||0),0); let cur=0,arcs='';
-  if(total>0){ segments.forEach(seg=>{const sweep=(seg.value||0)/total*360; if(sweep<=0.3)return; arcs+=`<path d="${arcPath(cx,cy,or,0,cur+0.4,cur+sweep-0.4)}" fill="${seg.color}"></path>`; cur+=sweep;}); }
-  else { arcs=`<circle cx="${cx}" cy="${cy}" r="${or}" fill="#E8EDF3"></circle>`; }
-  return `<svg width="${w}" height="${w}" viewBox="0 0 ${w} ${w}" style="flex-shrink:0">${arcs}</svg>`;
-}
 function drawPie(svgId,segments,legendId){
   const svg=$(svgId); if(!svg)return; svg.innerHTML='';
   const w=190,cx=95,cy=95,or=82,ir=52;
@@ -2606,7 +2574,7 @@ function drawPie(svgId,segments,legendId){
     svg.appendChild(p); cur+=sweep;
   });
   const leg=$(legendId); if(!leg)return;
-  leg.innerHTML=segments.map(s=>`<div class="pie-legend-item"><div class="pie-legend-dot" style="background:${s.color}"></div><span class="pie-legend-label">${escHtml(s.label)}</span><span class="pie-legend-pct">${Math.round(s.value/total*100)}%</span></div>`).join('');
+  leg.innerHTML=segments.map(s=>`<div class="pie-legend-item"><div class="pie-legend-dot" style="background:${s.color}"></div><span class="pie-legend-label">${escHtml(s.label)}</span><span class="pie-legend-pct">${(s.value/total*100).toFixed(1)}%</span></div>`).join('');
 }
 
 /* ══ TOAST ════════════════════════════════════════════════ */
@@ -2656,8 +2624,8 @@ function raParticipantChange(){
   tbody.innerHTML='';
   [
     ['hourly',   'Hourly Inputs (×1)',          0, rate],
-    ['overtime', `Overtime Inputs (×${otc})`,   0, Math.round(rate*otc)],
-    ['bonus',    `Bonus Inputs (×${bonusPct})`,  0, Math.round(rate*bonusPct)],
+    ['overtime', `Overtime Inputs (×${otc})`,   0, +(rate*otc).toFixed(2)],
+    ['bonus',    `Bonus Inputs (×${bonusPct})`,  0, +(rate*bonusPct).toFixed(2)],
     ['cash',     'Cash Inputs (×1)',             0, 0]
   ].forEach(([type,label,qty,r])=>{
     const tr=document.createElement('tr');
@@ -2733,7 +2701,7 @@ function renderAwardDetail(){
   $('ad-bread').textContent=(u?.name||'')+'  ·  '+a.awardDate;
   const av=$('ad-avatar'); av.textContent=initials(u?.name||''); av.style.background=color;
   $('ad-name').textContent=u?.name||'—';
-  $('ad-meta').textContent=(u?.email||'')+(u?.rate?' · '+u.rate+' per HR':'');
+  $('ad-meta').textContent=(u?.email||'')+(u?.rate?' · '+u.rate+'/hr':'');
   $('ad-hero-id').textContent=awardCode(a);
   $('ad-hero-net').textContent=(t.net<0?'−':'')+fmt$(Math.abs(t.net));
   $('ad-hero-period').textContent=a.periodLabel;
@@ -2752,7 +2720,7 @@ function renderAwardDetail(){
   $('ad-locked-notice').innerHTML = recorded
     ? `<div class="notice notice-info" style="margin-bottom:14px"><span class="notice-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 018 0v3"/></svg></span><span><strong>Recorded &amp; finalized.</strong> This award is locked and cannot be edited. Changes require a reversal from the ledger.</span></div>`
     : '';
-  ['ad-add-contrib-btn','ad-add-penalty-btn'].forEach(id=>{const b=$(id); if(b)b.style.display=editable?'':'none';});
+  const addBtn=$('ad-add-li-btn'); if(addBtn) addBtn.style.display=editable?'':'none';
   $('ad-lineitems').innerHTML=buildLineItemsHtml(a,u,fund,editable);
   $('ad-sig-panel').innerHTML=buildSigPanel(a,editable,recorded);
   const audit=(a.audit||[]);
@@ -2785,22 +2753,22 @@ function buildLineItemsHtml(a,u,fund,editable){
   }).join('');
   const cashLis=items.filter(l=>l.kind==='contribution'&&l.inputType==='cash');
   const cashRows=cashLis.length?cashLis.map(li=>`<tr>
-      <td style="font-weight:600">${escHtml(li.label||'Cash Inputs')}${evidenceTag(li)}</td>
+      <td style="font-weight:600">${escHtml(li.label||'Cash Inputs')}</td>
       <td style="text-align:right"><input class="form-control mono" type="number" step="0.01" value="${li.earned}" ${dis} style="text-align:right;width:120px;display:inline-block" onchange="editAmount('${a.id}','${li.id}',this.value)"></td>
       <td class="mono fw-700" style="text-align:right;color:var(--emerald)">${fmt$(li.earned)}</td>
-      <td style="text-align:right">${editable?`<button class="btn btn-ghost btn-sm" style="color:var(--ruby)" onclick="deleteLineItem('${a.id}','${li.id}')" title="Remove">${TRASH_SVG}</button>`:''}</td>
+      <td style="text-align:right">${editable?`<button class="btn btn-ghost btn-sm" style="color:var(--ruby)" onclick="deleteLineItem('${a.id}','${li.id}')">Remove</button>`:''}</td>
     </tr>`).join(''):`<tr><td colspan="4" style="color:var(--slate-2);font-size:12px;padding:10px 4px">No cash contributions</td></tr>`;
   const penLis=items.filter(l=>l.kind==='penalty');
   const penRows=penLis.length?penLis.map(li=>`<tr>
-      <td style="font-weight:600">${escHtml(li.label||li.category||'Penalty')}${li.notes?`<div style="font-size:10.5px;color:var(--slate-2);font-weight:400">${escHtml(li.notes)}</div>`:''}${evidenceTag(li)}</td>
+      <td style="font-weight:600">${escHtml(li.label||li.category||'Penalty')}${li.notes?`<div style="font-size:10.5px;color:var(--slate-2);font-weight:400">${escHtml(li.notes)}</div>`:''}</td>
       <td style="text-align:right"><input class="form-control mono" type="number" step="0.01" value="${Math.abs(li.earned||0)}" ${dis} style="text-align:right;width:120px;display:inline-block" onchange="editPenalty('${a.id}','${li.id}',this.value)"></td>
       <td class="mono fw-700" style="text-align:right;color:var(--ruby)">−${fmt$(Math.abs(li.earned||0))}</td>
-      <td style="text-align:right">${editable?`<button class="btn btn-ghost btn-sm" style="color:var(--ruby)" onclick="deleteLineItem('${a.id}','${li.id}')" title="Remove">${TRASH_SVG}</button>`:''}</td>
+      <td style="text-align:right">${editable?`<button class="btn btn-ghost btn-sm" style="color:var(--ruby)" onclick="deleteLineItem('${a.id}','${li.id}')">Remove</button>`:''}</td>
     </tr>`).join(''):`<tr><td colspan="4" style="color:var(--slate-2);font-size:12px;padding:10px 4px">No penalties</td></tr>`;
   const SH='font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--slate-2);margin:2px 0 8px';
   return `
     <div style="${SH}">Non-Cash Contributions</div>
-    <div class="tbl-wrap" style="margin-bottom:18px"><table><thead><tr><th>Type</th><th style="text-align:right">HR / Qty</th><th style="text-align:right">Rate</th><th style="text-align:right">Earned</th></tr></thead><tbody>${ncRows}</tbody></table></div>
+    <div class="tbl-wrap" style="margin-bottom:18px"><table><thead><tr><th>Type</th><th style="text-align:right">Hours / Qty</th><th style="text-align:right">Rate</th><th style="text-align:right">Earned</th></tr></thead><tbody>${ncRows}</tbody></table></div>
     <div style="${SH}">Cash Contributions</div>
     <div class="tbl-wrap" style="margin-bottom:18px"><table><thead><tr><th>Item</th><th style="text-align:right">Amount</th><th style="text-align:right">Earned</th><th style="width:80px"></th></tr></thead><tbody>${cashRows}</tbody></table></div>
     <div style="${SH}">Penalties</div>
@@ -2822,7 +2790,7 @@ function buildSigPanel(a,editable,recorded){
   const vIdx=VESTING_FLOW.indexOf(a.vesting||'unvested');
   const vBtn = (editable && vIdx<VESTING_FLOW.length-1) ? `<button class="btn btn-secondary btn-sm" style="width:100%;margin-top:8px" onclick="advanceVesting('${a.id}')">Advance Vesting → ${VESTING_LABEL[VESTING_FLOW[vIdx+1]]}</button>` : '';
   return `
-    <div style="margin-bottom:6px;font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:var(--slate-2);font-weight:700">Award Status (Approvals)</div>
+    <div style="margin-bottom:6px;font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:var(--slate-2);font-weight:700">Award Status (Signatures)</div>
     ${steps}
     ${sigBtn}
     <div style="margin:14px 0 6px;font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:var(--slate-2);font-weight:700">Vesting Status</div>
@@ -2853,58 +2821,18 @@ function deleteLineItem(awardId,liId){
   const a=AWARDS.find(x=>x.id===awardId); if(!a||isAwardRecorded(a))return;
   a.lineItems=(a.lineItems||[]).filter(l=>l.id!==liId); renderAwardDetail();
 }
-function ensureFundPenaltyTypes(f){ if(f&&!f.penaltyTypes){ f.penaltyTypes=[{label:'Poor Time Tracking',amount:100},{label:'Missed Deadline',amount:250},{label:'Quality Issue',amount:500},{label:'Late Filing',amount:150}]; } return f?f.penaltyTypes:[]; }
-function renderPenaltyTypes(f){
-  const tb=$('fd-penalty-tbody'); if(!tb)return;
-  const types=ensureFundPenaltyTypes(f); const canEdit=isSecretaryOrManager(f.id);
-  if(!types.length){ tb.innerHTML=`<tr><td colspan="3" style="color:var(--slate-2);font-size:12px;padding:10px">No penalty types defined.</td></tr>`; }
-  else tb.innerHTML=types.map((p,i)=>`<tr>
-    <td><input class="form-control" value="${escHtml(p.label)}" ${canEdit?'':'disabled'} onchange="updatePenaltyType(${i},'label',this.value)"></td>
-    <td><input class="form-control mono" type="number" min="0" value="${p.amount}" ${canEdit?'':'disabled'} onchange="updatePenaltyType(${i},'amount',this.value)"></td>
-    <td>${canEdit?`<button class="btn btn-ghost btn-xs" style="color:var(--ruby)" title="Remove" onclick="removePenaltyType(${i})">${TRASH_SVG}</button>`:''}</td>
-  </tr>`).join('');
-}
-function updatePenaltyType(i,field,val){ const f=FUNDS.find(x=>x.id===CUR.activeFundId); if(!f)return; const t=ensureFundPenaltyTypes(f); if(!t[i])return; t[i][field]=field==='amount'?Math.abs(parseFloat(val)||0):val; }
-function addPenaltyType(){ const f=FUNDS.find(x=>x.id===CUR.activeFundId); if(!f)return; ensureFundPenaltyTypes(f).push({label:'New Penalty',amount:0}); renderPenaltyTypes(f); }
-function removePenaltyType(i){ const f=FUNDS.find(x=>x.id===CUR.activeFundId); if(!f)return; (f.penaltyTypes||[]).splice(i,1); renderPenaltyTypes(f); }
-
-function openAddContribution(){
+function openAddLineItem(){
   const a=AWARDS.find(x=>x.id===CUR.activeAwardId); if(!a||isAwardRecorded(a)){toast('Recorded awards cannot be edited','red');return;}
-  $('contrib-label').value=''; $('contrib-amount').value=''; const ev=$('contrib-evidence'); if(ev)ev.value='';
-  openModal('modal-add-contribution');
+  $('ali-kind').value='cash'; $('ali-label').value=''; $('ali-amount').value=''; openModal('modal-add-li');
 }
-function confirmAddContribution(){
+function confirmAddLineItem(){
   const a=AWARDS.find(x=>x.id===CUR.activeAwardId); if(!a)return;
-  const label=$('contrib-label').value.trim(); const amt=Math.abs(parseFloat($('contrib-amount').value)||0);
+  const kind=$('ali-kind').value; const label=$('ali-label').value.trim(); const amt=Math.abs(parseFloat($('ali-amount').value)||0);
   if(!amt){toast('Enter an amount greater than zero','red');return;}
-  const ev=$('contrib-evidence')&&$('contrib-evidence').files&&$('contrib-evidence').files[0];
   a.lineItems=a.lineItems||[];
-  a.lineItems.push({id:uid(),kind:'contribution',inputType:'cash',label:label||'Cash Inputs',quantity:1,rate:amt,earned:amt,reversedAt:null,evidence:ev?{name:ev.name,url:URL.createObjectURL(ev)}:null});
-  closeModal('modal-add-contribution'); toast('Contribution added','green'); renderAwardDetail();
-}
-function openAddPenalty(){
-  const a=AWARDS.find(x=>x.id===CUR.activeAwardId); if(!a||isAwardRecorded(a)){toast('Recorded awards cannot be edited','red');return;}
-  const fund=FUNDS.find(f=>f.id===a.fundId); const types=ensureFundPenaltyTypes(fund);
-  $('pen-type').innerHTML=types.map((p,i)=>`<option value="${i}">${escHtml(p.label)} (${fmt$(p.amount)})</option>`).join('')+'<option value="custom">Custom…</option>';
-  $('pen-notes').value=''; const ev=$('pen-evidence'); if(ev)ev.value='';
-  penTypeAutoFill(); openModal('modal-add-penalty2');
-}
-function penTypeAutoFill(){
-  const a=AWARDS.find(x=>x.id===CUR.activeAwardId); if(!a)return;
-  const fund=FUNDS.find(f=>f.id===a.fundId); const types=ensureFundPenaltyTypes(fund);
-  const v=$('pen-type').value;
-  if(v==='custom'){ $('pen-amount').value=''; } else { const p=types[+v]; if(p)$('pen-amount').value=p.amount; }
-}
-function confirmAddPenaltyForm(){
-  const a=AWARDS.find(x=>x.id===CUR.activeAwardId); if(!a)return;
-  const fund=FUNDS.find(f=>f.id===a.fundId); const types=ensureFundPenaltyTypes(fund);
-  const v=$('pen-type').value; const label=v==='custom'?'Penalty':(types[+v]?.label||'Penalty');
-  const amt=Math.abs(parseFloat($('pen-amount').value)||0);
-  if(!amt){toast('Enter a penalty value greater than zero','red');return;}
-  const ev=$('pen-evidence')&&$('pen-evidence').files&&$('pen-evidence').files[0];
-  a.lineItems=a.lineItems||[];
-  a.lineItems.push({id:uid(),kind:'penalty',inputType:'penalty',label:label,category:label,quantity:1,rate:-amt,earned:-amt,notes:$('pen-notes').value.trim(),reversedAt:null,evidence:ev?{name:ev.name,url:URL.createObjectURL(ev)}:null});
-  closeModal('modal-add-penalty2'); toast('Penalty added','green'); renderAwardDetail();
+  if(kind==='penalty') a.lineItems.push({id:uid(),kind:'penalty',inputType:'penalty',label:label||'Penalty',quantity:1,rate:-amt,earned:-amt,notes:'',reversedAt:null});
+  else a.lineItems.push({id:uid(),kind:'contribution',inputType:'cash',label:label||'Cash Inputs',quantity:1,rate:amt,earned:amt,reversedAt:null});
+  closeModal('modal-add-li'); toast('Line item added','green'); renderAwardDetail();
 }
 function switchAdTab(el){
   document.querySelectorAll('#screen-award-detail [data-tab]').forEach(t=>t.classList.remove('active'));
@@ -2947,7 +2875,7 @@ function renderAwardLetter(a, u){
   const contribRows=liveC.map(li=>`
     <tr>
       <td>${escHtml(li.label)}</td>
-      <td>${Math.round(Number(li.quantity||0))}</td>
+      <td>${Number(li.quantity||0).toFixed(2)}</td>
       <td>${fmt$(li.rate||0)}</td>
       <td>${fmt$(li.earned||0)}</td>
     </tr>`).join('');
@@ -2955,7 +2883,7 @@ function renderAwardLetter(a, u){
   const penRows=liveP.map(li=>`
     <tr>
       <td>${escHtml(li.label||li.category||'Penalty')}</td>
-      <td>${Math.round(Number(li.quantity||1))}</td>
+      <td>${Number(li.quantity||1).toFixed(2)}</td>
       <td>−${fmt$(Math.abs(li.rate||0))}</td>
       <td style="color:#dc2626">−${fmt$(Math.abs(li.earned||0))}</td>
     </tr>`).join('');
@@ -2986,14 +2914,14 @@ function renderAwardLetter(a, u){
         ${contribRows||'<tr><td colspan="4" style="text-align:center;color:#94a3b8;padding:14px">— no contribution line items —</td></tr>'}
         <tr class="al-total">
           <td>Total Contributions</td>
-          <td>${Math.round(contribQty)}</td>
+          <td>${contribQty.toFixed(2)}</td>
           <td>N/A</td>
           <td>${fmt$(t.contributions)}</td>
         </tr>
         ${penRows}
-        ${liveP.length?`<tr class="al-total"><td>Total Penalties</td><td>${Math.round(penaltyQty)}</td><td>N/A</td><td style="color:#dc2626">−${fmt$(t.penalties)}</td></tr>`:''}
+        ${liveP.length?`<tr class="al-total"><td>Total Penalties</td><td>${penaltyQty.toFixed(2)}</td><td>N/A</td><td style="color:#dc2626">−${fmt$(t.penalties)}</td></tr>`:''}
         <tr class="al-net">
-          <td>Award</td>
+          <td>Net Award</td>
           <td>—</td>
           <td>N/A</td>
           <td>${t.net<0?'−':''}${fmt$(Math.abs(t.net))}</td>
@@ -3085,14 +3013,14 @@ function downloadAwardPdf(){
 
   const contribRows=liveC.map(li=>`<tr>
     <td style="${cell}font-weight:600">${escHtml(li.label)}</td>
-    <td style="${cell}text-align:center">${Math.round(Number(li.quantity||0))}</td>
+    <td style="${cell}text-align:center">${Number(li.quantity||0).toFixed(2)}</td>
     <td style="${cell}text-align:center">${fmt$(li.rate||0)}</td>
     <td style="${cell}text-align:right;font-weight:700">${fmt$(li.earned||0)}</td>
   </tr>`).join('');
 
   const penRows=liveP.map(li=>`<tr>
     <td style="${cell}font-weight:600">${escHtml(li.label||li.category||'Penalty')}</td>
-    <td style="${cell}text-align:center">${Math.round(Number(li.quantity||1))}</td>
+    <td style="${cell}text-align:center">${Number(li.quantity||1).toFixed(2)}</td>
     <td style="${cell}text-align:center">−${fmt$(Math.abs(li.rate||0))}</td>
     <td style="${cell}text-align:right;font-weight:700;color:#b91c1c">−${fmt$(Math.abs(li.earned||0))}</td>
   </tr>`).join('');
@@ -3120,19 +3048,19 @@ function downloadAwardPdf(){
         ${contribRows||`<tr><td colspan="4" style="${cell}text-align:center;color:#94a3b8">— no contribution line items —</td></tr>`}
         <tr style="background:#f8fafc">
           <td style="${cell}font-weight:700">Total Contributions</td>
-          <td style="${cell}text-align:center;font-weight:700">${Math.round(contribQty)}</td>
+          <td style="${cell}text-align:center;font-weight:700">${contribQty.toFixed(2)}</td>
           <td style="${cell}text-align:center;font-weight:700">N/A</td>
           <td style="${cell}text-align:right;font-weight:700">${fmt$(t.contributions)}</td>
         </tr>
         ${penRows}
         ${liveP.length?`<tr style="background:#f8fafc">
           <td style="${cell}font-weight:700">Total Penalties</td>
-          <td style="${cell}text-align:center;font-weight:700">${Math.round(penaltyQty)}</td>
+          <td style="${cell}text-align:center;font-weight:700">${penaltyQty.toFixed(2)}</td>
           <td style="${cell}text-align:center;font-weight:700">N/A</td>
           <td style="${cell}text-align:right;font-weight:700;color:#b91c1c">−${fmt$(t.penalties)}</td>
         </tr>`:''}
         <tr style="background:#dbeafe">
-          <td style="${cell}font-weight:700">Award</td>
+          <td style="${cell}font-weight:700">Net Award</td>
           <td style="${cell}text-align:center;font-weight:700">—</td>
           <td style="${cell}text-align:center;font-weight:700">N/A</td>
           <td style="${cell}text-align:right;font-weight:700">${t.net<0?'−':''}${fmt$(Math.abs(t.net))}</td>
@@ -3176,7 +3104,6 @@ function switchUpTab(el){
   document.querySelectorAll('#screen-user-profile .tab-content').forEach(t=>t.classList.remove('active'));
   const tc=document.getElementById(el.dataset.tab);
   if(tc) tc.classList.add('active');
-  if(el.dataset.tab==='up-tab-relationship') renderRelationshipTab();
   if(el.dataset.tab==='up-tab-docs')  renderDocsTab();
   if(el.dataset.tab==='up-tab-offer') renderAgreementDoc('offer');
   if(el.dataset.tab==='up-tab-nda')   renderAgreementDoc('nda');
@@ -3184,69 +3111,79 @@ function switchUpTab(el){
   if(el.dataset.tab==='up-tab-cover') renderAgreementDoc('cover');
 }
 
-const DOC_TYPES=[['offer','IC Offer Letter'],['ica','IC Agreement'],['cover','NDA Cover Letter'],['nda','NDA']];
-function ensureDocLedgers(u){
-  if(!u.docLedgers){
-    const base={offer:u.offerDate,ica:u.ndaBegin,cover:u.ndaBegin,nda:u.ndaBegin};
-    u.docLedgers={};
-    DOC_TYPES.forEach(([t])=>{ u.docLedgers[t]=[{id:1,label:'System-generated v1',date:base[t]||u.joinedAt||'',source:'system',fileName:'',current:true}]; });
-  }
-  return u.docLedgers;
-}
 function renderDocsTab(){
   const u=USERS.find(x=>x.id===CUR.activeUserId); if(!u) return;
-  const led=ensureDocLedgers(u);
-  const editable=(u.id===CUR.user?.id)||CUR.user?.systemRole==='fund_manager';
-  const wrap=$('up-doc-ledgers'); if(!wrap)return;
-  wrap.innerHTML=DOC_TYPES.map(([t,label])=>{
-    const versions=led[t]||[];
-    const hasSigned=versions.some(v=>v.source==='signed');
-    const rows=versions.map(v=>{
-      const statusBadge=v.current?'<span class="badge badge-green">Current / Enforced</span>':'<span class="badge badge-slate badge-no-dot">Superseded</span>';
-      const srcBadge=v.source==='signed'?'<span class="badge badge-blue badge-no-dot">Signed copy</span>':'<span class="badge badge-slate badge-no-dot">System</span>';
-      const viewBtn=v.source==='signed'
-        ? `<button class="btn btn-secondary btn-xs" onclick="viewSignedCopy('${t}',${v.id})">View</button>`
-        : `<button class="btn btn-secondary btn-xs" onclick="switchUpTabTo('${t}')">View</button>`;
-      return `<tr style="${v.current?'':'opacity:.6'}">
-        <td class="mono fw-700">${v.id}</td>
-        <td>${escHtml(v.label)}${v.fileName?`<div style="font-size:11px;color:var(--slate)">${escHtml(v.fileName)}</div>`:''}</td>
-        <td style="font-size:12px">${fmtDate(v.date)}</td>
-        <td>${srcBadge}</td>
+
+  // Agreements table
+  const agrTbody=$('up-docs-agreements-tbody');
+  if(agrTbody){
+    const docs=[
+      { name:'Offer Letter',         type:'offer',  date:u.offerDate, desc:'Employment offer and rate agreement' },
+      { name:'NDA',                   type:'nda',    date:u.ndaBegin,  desc:'Confidentiality, Non-Disclosure, and Restricted Use Agreement' },
+      { name:'IC Agreement',          type:'ica',    date:u.ndaBegin,  desc:'Independent Contractor Agreement' },
+      { name:'NDA Cover Letter',      type:'cover',  date:u.ndaBegin,  desc:'Plain-language companion to the NDA' },
+    ];
+    agrTbody.innerHTML=docs.map(d=>{
+      const hasDates=!!d.date;
+      const statusBadge=hasDates?`<span class="badge badge-green">On file</span>`:`<span class="badge badge-amber">Pending</span>`;
+      return `<tr>
+        <td>
+          <div class="td-name">${escHtml(d.name)}</div>
+          <div style="font-size:11.5px;color:var(--slate)">${escHtml(d.desc)}</div>
+        </td>
         <td>${statusBadge}</td>
-        <td>${viewBtn}</td>
+        <td style="font-size:12px;color:var(--slate)">${fmtDate(d.date)||'—'}</td>
+        <td>
+          <div style="display:flex;gap:6px">
+            <button class="btn btn-secondary btn-xs" onclick="switchUpTabTo('${d.type}')">View</button>
+            <button class="btn btn-secondary btn-xs" onclick="downloadAgreementPdf('${d.type}')">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              PDF
+            </button>
+          </div>
+        </td>
       </tr>`;
     }).join('');
-    return `<div class="card">
-      <div class="card-header"><div class="card-title">${label}</div>${editable?`<button class="btn btn-secondary btn-sm" onclick="uploadSignedCopy('${t}')">Upload Signed Copy</button>`:''}</div>
-      <div class="card-body" style="padding:0">
-        <table style="width:100%"><thead><tr><th style="width:36px">#</th><th>Version</th><th>Date</th><th>Source</th><th>Status</th><th style="width:90px">Actions</th></tr></thead>
-        <tbody>${rows}</tbody></table>
-      </div>
-      ${hasSigned?`<div class="card-body" style="border-top:1px solid var(--border);font-size:11.5px;color:var(--slate)">A signed external copy is on file and is the enforced version referenced for this document.</div>`:''}
-    </div>`;
-  }).join('');
+  }
+
+  // Award Letters table
+  const awardsTbody=$('up-docs-awards-tbody');
+  if(awardsTbody){
+    const userAwards=AWARDS.filter(a=>a.userId===u.id);
+    if(!userAwards.length){
+      awardsTbody.innerHTML=`<tr><td colspan="5" style="text-align:center;padding:24px;color:var(--slate-2)">No award letters recorded yet.</td></tr>`;
+    } else {
+      awardsTbody.innerHTML=userAwards.map(a=>{
+        const fund=FUNDS.find(f=>f.id===a.fundId);
+        const t=awardTotals(a);
+        const sc=a.status==='reversed'?'badge-red':a.status==='draft'?'badge-amber':'badge-green';
+        return `<tr>
+          <td><div class="td-name">${escHtml(a.periodLabel)}</div><div style="font-size:11.5px;color:var(--slate)">${fmtDate(a.awardDate)}</div></td>
+          <td style="font-size:12.5px">${escHtml(fund?.name||'—')}</td>
+          <td class="mono fw-700" style="color:${t.net<0?'var(--ruby)':'var(--emerald)'}">${t.net<0?'−':''}${fmt$(Math.abs(t.net))}</td>
+          <td><span class="badge ${sc}">${a.status==='reversed'?'Reversed':a.status==='draft'?'Unvested':'Vested'}</span></td>
+          <td>
+            <div style="display:flex;gap:6px">
+              <button class="btn btn-secondary btn-xs" onclick="CUR.prev='screen-user-profile';openAwardDetail('${a.id}')">View</button>
+              <button class="btn btn-secondary btn-xs" onclick="CUR.activeAwardId='${a.id}';downloadAwardPdf()">
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                PDF
+              </button>
+            </div>
+          </td>
+        </tr>`;
+      }).join('');
+    }
+  }
+
+  // Uploads (placeholder list)
+  const uploadsEl=$('up-docs-uploads');
+  if(uploadsEl){
+    const uploads=u.signedFiles||[];
+    uploadsEl.innerHTML=uploads.length?uploads.map(f=>`<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--border)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg><span style="flex:1;font-size:13px">${escHtml(f.name)}</span><span style="font-size:11.5px;color:var(--slate)">${fmtDate(f.date)}</span></div>`).join(''):'';
+  }
 }
-function uploadSignedCopy(type){
-  const inp=$('up-signed-file-input'); if(!inp)return;
-  inp.value='';
-  inp.onchange=()=>{
-    const f=inp.files&&inp.files[0]; if(!f)return;
-    const u=USERS.find(x=>x.id===CUR.activeUserId); if(!u)return;
-    const led=ensureDocLedgers(u); const arr=led[type];
-    arr.forEach(v=>v.current=false);
-    const nid=arr.reduce((m,v)=>Math.max(m,v.id),0)+1;
-    arr.push({id:nid,label:'Signed copy (uploaded)',date:todayISO(),source:'signed',fileName:f.name,current:true,_url:URL.createObjectURL(f)});
-    toast('Signed copy uploaded — now the enforced version','green');
-    renderDocsTab();
-  };
-  inp.click();
-}
-function viewSignedCopy(type,id){
-  const u=USERS.find(x=>x.id===CUR.activeUserId); if(!u)return;
-  const v=(u.docLedgers?.[type]||[]).find(x=>x.id===id);
-  if(v&&v._url){ window.open(v._url,'_blank'); }
-  else { toast('This signed file was uploaded in a previous session and is no longer in memory','amber'); }
-}
+
 function switchUpTabTo(type){
   const tabMap={offer:'up-tab-offer',nda:'up-tab-nda',ica:'up-tab-ica',cover:'up-tab-cover'};
   const tabId=tabMap[type]; if(!tabId)return;
@@ -3574,7 +3511,7 @@ function suShowStep2(){
       icon:'<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M10 20V4M16 20v-6M22 20H2"/></svg>',
       title:'Fund Owner',
       desc:'You can view your personal inputs holdings, ownership percentage, award letters, and your contribution history across all funds you participate in.',
-      perms:['View My Holdings','View Ownership %','View Awards','View Contribution History'],
+      perms:['View My Holdings','View Ownership %','View Award Letters','View Contribution History'],
       bg:'#EDE9FE', border:'#C4B5FD', tagBg:'#7C3AED', tagColor:'#fff'
     }
   };
@@ -3650,7 +3587,7 @@ function suStep2Err(msg){
    GOD MODE — ADMIN OVERSIGHT
 ══════════════════════════════════════════════════════════ */
 let ADMIN_LOG = [
-  { ts:'2026-06-08 09:14', actor:'System', action:'All Funds console initialized' },
+  { ts:'2026-06-08 09:14', actor:'System', action:'God Mode console initialized' },
 ];
 const FUND_STATUSES = [['nominated','Nominated'],['active','Active'],['terminated','Terminated'],['archived','Archived']];
 
@@ -3690,17 +3627,17 @@ function renderAdmin(){
     <div class="stat-card"><div class="stat-label">Aggregate Awards</div><div class="stat-val" style="font-size:19px">${fmt$(aggAwards)}</div><div class="stat-sub">across all funds</div></div>
     <div class="stat-card"><div class="stat-label">Total Contributions</div><div class="stat-val" style="font-size:19px;color:var(--emerald)">${fmt$(aggC)}</div><div class="stat-sub">all funds combined</div></div>
     <div class="stat-card"><div class="stat-label">Total Penalties</div><div class="stat-val" style="font-size:19px;color:var(--ruby)">${fmt$(aggP)}</div><div class="stat-sub">all funds combined</div></div>`;
-  const segs=FUNDS.map((f,i)=>({label:f.name,value:Math.abs(fundTotalAwards(f.id)),raw:fundTotalAwards(f.id),color:COLORS[i%COLORS.length]}));
-  $('admin-bars').innerHTML=`<div style="display:flex;align-items:center;gap:22px;flex-wrap:wrap">
-    ${donutSvg(segs.map(s=>({value:s.value,color:s.color})), fmt$(aggAwards), 'Aggregate')}
-    <div style="flex:1;min-width:220px;display:flex;flex-direction:column;gap:10px">
-      ${segs.map(s=>`<div style="display:flex;align-items:center;gap:10px;font-size:12.5px">
-        <span style="width:11px;height:11px;border-radius:3px;background:${s.color};flex-shrink:0"></span>
-        <span style="flex:1;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${escHtml(s.label)}</span>
-        <span class="mono fw-700">${fmt$(s.raw)}</span>
-      </div>`).join('')}
-    </div>
-  </div>`;
+  const maxV=Math.max(1,...FUNDS.map(f=>Math.abs(fundTotalAwards(f.id))));
+  $('admin-bars').innerHTML=FUNDS.map((f,i)=>{
+    const v=fundTotalAwards(f.id);const w=Math.round(Math.abs(v)/maxV*100);const color=COLORS[i%COLORS.length];
+    return `<div style="display:flex;align-items:center;gap:12px;margin-bottom:10px">
+      <div style="width:210px;font-size:12.5px;font-weight:600;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${escHtml(f.name)}</div>
+      <div style="flex:1;background:#E8EDF3;border-radius:6px;height:22px;overflow:hidden">
+        <div style="width:${w}%;background:${color};height:100%;border-radius:6px;min-width:2px"></div>
+      </div>
+      <div class="mono fw-700" style="width:130px;text-align:right;font-size:12.5px">${fmt$(v)}</div>
+    </div>`;
+  }).join('');
   $('adm-funds-tbody').innerHTML=FUNDS.map(f=>{
     const isMember=!!membershipFor(adminId,f.id);
     const total=fundTotalAwards(f.id);
@@ -3711,7 +3648,7 @@ function renderAdmin(){
       <td><div class="td-name">${escHtml(f.name)}</div><div style="font-size:11px;color:var(--slate)">${escHtml(f.company)} \u00B7 ${sl}</div></td>
       <td class="mono fw-700" style="text-align:right">${fmt$(total)}</td>
       <td class="mono" style="text-align:right">${fmt$(adminAwards)}</td>
-      <td class="mono" style="text-align:right">${Math.round(adminShare)}%</td>
+      <td class="mono" style="text-align:right">${adminShare.toFixed(1)}%</td>
     </tr>`;
   }).join('');
 }
