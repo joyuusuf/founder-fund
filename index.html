@@ -336,7 +336,7 @@ select.form-control { appearance: none; background-image: url("data:image/svg+xm
 .fund-card-header { padding: 16px 18px 10px; }
 .fund-card-title { font-weight: 700; font-size: 14px; color: var(--ink); letter-spacing: -.2px; }
 .fund-card-meta { font-size: 11.5px; color: var(--slate); margin-top: 3px; }
-.fund-card-stats { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid var(--border); }
+.fund-card-stats { display: grid; grid-template-columns: repeat(2, 1fr); border-top: 1px solid var(--border); }
 .fund-stat-cell { padding: 12px 16px; border-right: 1px solid var(--border); }
 .fund-stat-cell:last-child { border-right: none; }
 .fund-stat-label { font-size: 9.5px; font-weight: 700; color: var(--slate-2); text-transform: uppercase; letter-spacing: .07em; }
@@ -702,6 +702,7 @@ select.form-control { appearance: none; background-image: url("data:image/svg+xm
   </div>
   <div class="page">
     <div id="my-funds-hero"></div>
+    <div id="my-funds-graphs"></div>
     <div class="section-label" style="margin-bottom:12px" id="my-funds-section-label">Your fund memberships</div>
     <div id="my-funds-grid" class="three-col"></div>
   </div>
@@ -898,7 +899,7 @@ select.form-control { appearance: none; background-image: url("data:image/svg+xm
       <div class="card">
         <div class="card-header"><div class="card-title">Penalty Settings</div><span class="card-subtitle">Penalty types &amp; values — auto-populate when applying a penalty</span></div>
         <div class="card-body">
-          <div class="tbl-wrap"><table><thead><tr><th>Penalty Type</th><th style="width:170px">Value</th><th style="width:56px"></th></tr></thead><tbody id="fd-penalty-tbody"></tbody></table></div>
+          <div class="tbl-wrap"><table><thead><tr><th>Penalty Type</th><th style="width:110px">Severity</th><th style="width:170px">Value</th><th style="width:56px"></th></tr></thead><tbody id="fd-penalty-tbody"></tbody></table></div>
           <button class="btn btn-secondary btn-sm perm-manager-or-secretary" style="margin-top:10px" onclick="addPenaltyType()">+ Add Penalty Type</button>
         </div>
       </div>
@@ -1020,7 +1021,7 @@ select.form-control { appearance: none; background-image: url("data:image/svg+xm
       <div class="tbl-wrap">
         <table>
           <thead>
-            <tr><th>Award ID</th><th>Award Period</th><th>Participant</th><th>Contributions</th><th>Penalties</th><th>Award</th><th>Balance</th><th>Status</th><th>Vested</th><th style="width:80px;text-align:center">Actions</th></tr>
+            <tr><th>Award ID</th><th>Award Period</th><th>Participant</th><th>Penalties</th><th>Award</th><th>Balance</th><th>Status</th><th>Vested</th><th>Contributions</th><th style="width:80px;text-align:center">Actions</th></tr>
           </thead>
           <tbody id="ledger-tbody"></tbody>
         </table>
@@ -1137,8 +1138,6 @@ select.form-control { appearance: none; background-image: url("data:image/svg+xm
         <div><div style="font-size:10px;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:.05em">Award ID</div><div class="mono" style="font-size:15px;font-weight:700;margin-top:5px" id="ad-hero-id">—</div></div>
         <div><div style="font-size:10px;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:.05em">Award</div><div class="mono" style="font-size:20px;font-weight:700;margin-top:3px" id="ad-hero-net">0.00</div></div>
         <div><div style="font-size:10px;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:.05em">Period</div><div style="font-size:13px;font-weight:600;margin-top:5px" id="ad-hero-period">—</div></div>
-        <div><div style="font-size:10px;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:.05em">Award Status</div><div style="margin-top:5px" id="ad-hero-status">—</div></div>
-        <div><div style="font-size:10px;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:.05em">Vesting Status</div><div style="margin-top:5px" id="ad-hero-vesting">—</div></div>
       </div>
     </div>
 
@@ -1158,17 +1157,17 @@ select.form-control { appearance: none; background-image: url("data:image/svg+xm
             <div class="card-header"><div class="card-title">Award Summary</div></div>
             <div class="card-body">
               <div class="grid3" style="margin-bottom:14px">
-                <div style="background:var(--emerald-light);border:1px solid var(--emerald-mid);border-radius:var(--r);padding:14px 16px">
+                <div onclick="document.getElementById('ad-lineitems').scrollIntoView({behavior:'smooth',block:'start'})" title="Jump to line items" style="background:var(--emerald-light);border:1px solid var(--emerald-mid);border-radius:var(--r);padding:14px 16px;cursor:pointer">
                   <div class="stat-label" style="color:var(--emerald)">Contributions</div>
                   <div class="stat-val" style="color:var(--emerald)" id="ad-sum-contrib">0.00</div>
                   <div class="stat-sub" id="ad-sum-contrib-c">0 items</div>
                 </div>
-                <div style="background:var(--ruby-light);border:1px solid var(--ruby-mid);border-radius:var(--r);padding:14px 16px">
+                <div onclick="document.getElementById('ad-lineitems').scrollIntoView({behavior:'smooth',block:'start'})" title="Jump to line items" style="background:var(--ruby-light);border:1px solid var(--ruby-mid);border-radius:var(--r);padding:14px 16px;cursor:pointer">
                   <div class="stat-label" style="color:var(--ruby)">Penalties</div>
                   <div class="stat-val" style="color:var(--ruby)" id="ad-sum-pen">0.00</div>
                   <div class="stat-sub" id="ad-sum-pen-c">0 items</div>
                 </div>
-                <div style="background:var(--sapphire-light);border:1px solid var(--sapphire-mid);border-radius:var(--r);padding:14px 16px">
+                <div onclick="document.getElementById('ad-lineitems').scrollIntoView({behavior:'smooth',block:'start'})" title="Jump to line items" style="background:var(--sapphire-light);border:1px solid var(--sapphire-mid);border-radius:var(--r);padding:14px 16px;cursor:pointer">
                   <div class="stat-label" style="color:var(--sapphire)">Award</div>
                   <div class="stat-val" style="color:var(--sapphire)" id="ad-sum-net">0.00</div>
                   <div class="stat-sub">Contributions − Penalties</div>
@@ -1190,15 +1189,6 @@ select.form-control { appearance: none; background-image: url("data:image/svg+xm
           <div class="card">
             <div class="card-header"><div class="card-title">Approvals &amp; Status</div></div>
             <div class="card-body" id="ad-sig-panel"></div>
-          </div>
-          <div class="card">
-            <div class="card-header"><div class="card-title">Quick Actions</div></div>
-            <div class="card-body" style="display:flex;flex-direction:column;gap:8px">
-              <button class="btn btn-secondary" style="width:100%;justify-content:flex-start" onclick="switchAdTabById('ad-tab-letter')">
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-                View Award Letter
-              </button>
-            </div>
           </div>
         </div>
       </div>
@@ -1225,12 +1215,7 @@ select.form-control { appearance: none; background-image: url("data:image/svg+xm
         <div style="position:sticky;top:72px;display:flex;flex-direction:column;gap:12px">
           <div class="card">
             <div class="card-header"><div class="card-title">Letter Actions</div></div>
-            <div class="card-body" style="display:flex;flex-direction:column;gap:8px">
-              <button class="btn btn-secondary" style="width:100%;justify-content:flex-start" onclick="downloadAwardPdf()">
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-                Download PDF
-              </button>
-              </div>
+            <div class="card-body" id="ad-letter-actions" style="display:flex;flex-direction:column;gap:8px"></div>
           </div>
         </div>
       </div>
@@ -1870,6 +1855,35 @@ function renderMyFunds() {
       </div>
     </div>`;
 
+  // two graphs at the top of My Funds
+  (function(){
+    const gEl=$('my-funds-graphs'); if(!gEl)return;
+    if(!myMemberships.length){ gEl.innerHTML=''; return; }
+    let gCash=0,gNon=0,gPen=0; const byFund=[];
+    myMemberships.forEach((m,idx)=>{const i=computeUserInputsInFund(m.userId,m.fundId);gCash+=i.cash;gNon+=i.base+i.ot+i.bonus;gPen+=i.penalty;const f=FUNDS.find(x=>x.id===m.fundId);byFund.push({label:f?.name||'Fund',value:Math.max(0,i.net),color:COLORS[idx%COLORS.length]});});
+    const gTotal=gCash+gNon-gPen;
+    gEl.innerHTML=`<div class="grid2" style="align-items:start;margin-bottom:20px">
+      <div class="card"><div class="card-header"><div class="card-title">Total Awards</div><span class="badge badge-blue badge-no-dot">${fmt$(gTotal)}</span></div>
+        <div class="card-body"><div style="display:flex;align-items:center;gap:18px;flex-wrap:wrap">
+          ${donutSvg([{value:Math.max(0,gCash),color:'#0D9488'},{value:Math.max(0,gNon),color:'#2563EB'},{value:Math.max(0,gPen),color:'#DC2626'}], fmt$(gTotal),'Total Awards')}
+          <div style="flex:1;min-width:170px;display:flex;flex-direction:column;gap:9px;font-size:12.5px">
+            ${legendRow('#0D9488','Cash Inputs',fmt$(gCash))}
+            ${legendRow('#2563EB','Non-Cash Inputs',fmt$(gNon))}
+            ${legendRow('#DC2626','Penalties','−'+fmt$(gPen))}
+          </div>
+        </div></div>
+      </div>
+      <div class="card"><div class="card-header"><div class="card-title">Owner Share by Fund</div><span class="card-subtitle">your awards across funds</span></div>
+        <div class="card-body"><div style="display:flex;align-items:center;gap:18px;flex-wrap:wrap">
+          ${pieSvg(byFund)}
+          <div style="flex:1;min-width:170px;display:flex;flex-direction:column;gap:10px;font-size:12.5px">
+            ${byFund.map(r=>`<div style="display:flex;align-items:center;gap:8px"><span style="width:11px;height:11px;border-radius:3px;background:${r.color};flex-shrink:0"></span><span style="flex:1;font-weight:600">${escHtml(r.label)}</span><span class="mono fw-700">${fmt$(r.value)}</span></div>`).join('')}
+          </div>
+        </div></div>
+      </div>
+    </div>`;
+  })();
+
   if(myMemberships.length===0){
     const emptyMsg=isOp
       ?'No fund memberships yet. Use <strong>+ New Fund</strong> to create your first fund.'
@@ -1888,7 +1902,7 @@ function renderMyFunds() {
         <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px">
           <div>
             <div class="fund-card-title">${escHtml(fund.name)}</div>
-            <div class="fund-card-meta">${escHtml(fund.company)} ${statusBadge}</div>
+            <div class="fund-card-meta" style="display:flex;align-items:center;gap:8px"><span style="font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--slate-2)">Status</span>${statusBadge}</div>
           </div>
           ${fund.isDefault?`<span style="background:linear-gradient(135deg,#2563EB,#1B3A5C);color:#fff;font-size:9.5px;font-weight:700;padding:3px 9px;border-radius:99px;letter-spacing:.04em;text-transform:uppercase;flex-shrink:0">Default</span>`:''}
         </div>
@@ -1903,7 +1917,7 @@ function renderMyFunds() {
       </div>
       <div class="fund-card-footer">
         <span style="font-size:11.5px;color:var(--slate)">Joined ${fmtDate(m.joinedAt)}</span>
-        <span style="font-size:12px;font-weight:600;color:var(--sapphire)">View Holdings →</span>
+        <span style="font-size:12px;font-weight:600;color:var(--sapphire)">View Fund →</span>
       </div>
     </div>`;
   }).join('');
@@ -2235,7 +2249,6 @@ function renderHoldings(){
           <div class="avatar avatar-sm" style="background:${color}">${initials(u.name)}</div>
           <div>
             <div class="td-name">${escHtml(u.name)}</div>
-            <div style="font-size:11px;color:var(--slate)">${escHtml(u.email)}</div>
             <div>${roleTags}</div>
           </div>
         </div>
@@ -2314,21 +2327,20 @@ function renderLedger(){
       <td>
         <div style="display:flex;align-items:center;gap:10px">
           <div class="avatar avatar-sm" style="background:${color}">${initA}</div>
-          <div><div class="td-name">${escHtml(u?.name||'Unknown')}</div><div style="font-size:11px;color:var(--slate)">${escHtml(u?.email||'')}</div></div>
+          <div><div class="td-name">${escHtml(u?.name||'Unknown')}</div></div>
         </div>
       </td>
-      <td class="mono fw-600" style="color:var(--emerald)">${t.contributions?(t.contributions<0?'−':'')+fmt$(Math.abs(t.contributions)):'—'}</td>
       <td class="mono fw-600" style="color:var(--ruby)">${t.penalties?'−'+fmt$(t.penalties):'—'}</td>
       <td class="mono fw-700">${t.net<0?'−':''}${fmt$(Math.abs(t.net))}</td>
       <td class="mono fw-700" style="color:var(--slate)">${balance<0?'−':''}${fmt$(Math.abs(balance))}</td>
       <td>${awardStatusBadge(a.status)}</td>
       <td>${vestingStatusBadge(a.vesting)}</td>
+      <td class="mono fw-600" style="color:var(--emerald)">${t.contributions?(t.contributions<0?'−':'')+fmt$(Math.abs(t.contributions)):'—'}</td>
       <td style="text-align:center" onclick="event.stopPropagation()">
         <div class="dd-wrap">
           <button class="btn btn-ghost btn-sm" style="font-size:18px;letter-spacing:1px;padding:2px 8px" onclick="toggleMenu(this)">⋯</button>
           <div class="dd-menu">
             <div class="dd-item" onclick="closeMenus();openAwardDetail('${a.id}')">Open Award Detail</div>
-            ${canReverse?`<div class="dd-item danger" onclick="closeMenus();reverseAward('${a.id}')">Reverse Award</div>`:`<div class="dd-item disabled">${reversedFlag?'Already Reversed':isRev?'Reversal Entry':recorded?'Reverse Award':'Reversal needs Recorded'}</div>`}
           </div>
         </div>
       </td>
@@ -2737,8 +2749,6 @@ function renderAwardDetail(){
   $('ad-hero-id').textContent=awardCode(a);
   $('ad-hero-net').textContent=(t.net<0?'−':'')+fmt$(Math.abs(t.net));
   $('ad-hero-period').textContent=a.periodLabel;
-  $('ad-hero-status').innerHTML=awardStatusBadge(a.status);
-  $('ad-hero-vesting').innerHTML=vestingStatusBadge(a.vesting);
   const liveC=(a.lineItems||[]).filter(li=>!li.reversedAt&&li.kind==='contribution');
   const liveP=(a.lineItems||[]).filter(li=>!li.reversedAt&&li.kind==='penalty');
   $('ad-sum-contrib').textContent=(t.contributions<0?'−':'')+fmt$(Math.abs(t.contributions));
@@ -2788,14 +2798,14 @@ function buildLineItemsHtml(a,u,fund,editable){
       <td style="font-weight:600">${escHtml(li.label||'Cash Inputs')}${evidenceTag(li)}</td>
       <td style="text-align:right"><input class="form-control mono" type="number" step="0.01" value="${li.earned}" ${dis} style="text-align:right;width:120px;display:inline-block" onchange="editAmount('${a.id}','${li.id}',this.value)"></td>
       <td class="mono fw-700" style="text-align:right;color:var(--emerald)">${fmt$(li.earned)}</td>
-      <td style="text-align:right">${editable?`<button class="btn btn-ghost btn-sm" style="color:var(--ruby)" onclick="deleteLineItem('${a.id}','${li.id}')" title="Remove">${TRASH_SVG}</button>`:''}</td>
+      <td style="text-align:right"><button class="btn btn-ghost btn-sm" style="color:var(--ruby)" onclick="deleteLineItem('${a.id}','${li.id}')" title="Remove">${TRASH_SVG}</button></td>
     </tr>`).join(''):`<tr><td colspan="4" style="color:var(--slate-2);font-size:12px;padding:10px 4px">No cash contributions</td></tr>`;
   const penLis=items.filter(l=>l.kind==='penalty');
   const penRows=penLis.length?penLis.map(li=>`<tr>
       <td style="font-weight:600">${escHtml(li.label||li.category||'Penalty')}${li.notes?`<div style="font-size:10.5px;color:var(--slate-2);font-weight:400">${escHtml(li.notes)}</div>`:''}${evidenceTag(li)}</td>
       <td style="text-align:right"><input class="form-control mono" type="number" step="0.01" value="${Math.abs(li.earned||0)}" ${dis} style="text-align:right;width:120px;display:inline-block" onchange="editPenalty('${a.id}','${li.id}',this.value)"></td>
       <td class="mono fw-700" style="text-align:right;color:var(--ruby)">−${fmt$(Math.abs(li.earned||0))}</td>
-      <td style="text-align:right">${editable?`<button class="btn btn-ghost btn-sm" style="color:var(--ruby)" onclick="deleteLineItem('${a.id}','${li.id}')" title="Remove">${TRASH_SVG}</button>`:''}</td>
+      <td style="text-align:right"><button class="btn btn-ghost btn-sm" style="color:var(--ruby)" onclick="deleteLineItem('${a.id}','${li.id}')" title="Remove">${TRASH_SVG}</button></td>
     </tr>`).join(''):`<tr><td colspan="4" style="color:var(--slate-2);font-size:12px;padding:10px 4px">No penalties</td></tr>`;
   const SH='font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--slate-2);margin:2px 0 8px';
   return `
@@ -2853,19 +2863,39 @@ function deleteLineItem(awardId,liId){
   const a=AWARDS.find(x=>x.id===awardId); if(!a||isAwardRecorded(a))return;
   a.lineItems=(a.lineItems||[]).filter(l=>l.id!==liId); renderAwardDetail();
 }
-function ensureFundPenaltyTypes(f){ if(f&&!f.penaltyTypes){ f.penaltyTypes=[{label:'Poor Time Tracking',amount:100},{label:'Missed Deadline',amount:250},{label:'Quality Issue',amount:500},{label:'Late Filing',amount:150}]; } return f?f.penaltyTypes:[]; }
+function ensureFundPenaltyTypes(f){ if(f&&!f.penaltyTypes){ f.penaltyTypes=[
+    {label:'Unauthorized Work',severity:'minor',amount:100},
+    {label:'Time Stealing',severity:'minor',amount:100},
+    {label:'Poor Time Tracking',severity:'minor',amount:100},
+    {label:'Poor Record Keeping',severity:'minor',amount:100},
+    {label:'Failure to Maintain Confidentiality',severity:'major',amount:0},
+    {label:'Omission of Material Information',severity:'major',amount:0},
+    {label:'Misrepresentation',severity:'major',amount:0},
+    {label:'Self-Dealing',severity:'major',amount:0},
+    {label:'Breach of Confidentiality',severity:'major',amount:0},
+    {label:'Exploiting Fund Resources',severity:'major',amount:0},
+    {label:'Unfair Influence',severity:'major',amount:0},
+    {label:'Fabricating or Manipulating Records',severity:'major',amount:0},
+    {label:'Conflict of Interest',severity:'major',amount:0}
+  ]; } return f?f.penaltyTypes:[]; }
 function renderPenaltyTypes(f){
   const tb=$('fd-penalty-tbody'); if(!tb)return;
   const types=ensureFundPenaltyTypes(f); const canEdit=isSecretaryOrManager(f.id);
-  if(!types.length){ tb.innerHTML=`<tr><td colspan="3" style="color:var(--slate-2);font-size:12px;padding:10px">No penalty types defined.</td></tr>`; }
-  else tb.innerHTML=types.map((p,i)=>`<tr>
-    <td><input class="form-control" value="${escHtml(p.label)}" ${canEdit?'':'disabled'} onchange="updatePenaltyType(${i},'label',this.value)"></td>
-    <td><input class="form-control mono" type="number" min="0" value="${p.amount}" ${canEdit?'':'disabled'} onchange="updatePenaltyType(${i},'amount',this.value)"></td>
-    <td>${canEdit?`<button class="btn btn-ghost btn-xs" style="color:var(--ruby)" title="Remove" onclick="removePenaltyType(${i})">${TRASH_SVG}</button>`:''}</td>
-  </tr>`).join('');
+  if(!types.length){ tb.innerHTML=`<tr><td colspan="4" style="color:var(--slate-2);font-size:12px;padding:10px">No penalty types defined.</td></tr>`; return; }
+  tb.innerHTML=types.map((p,i)=>{
+    const major=p.severity==='major';
+    const sev=major?'<span class="badge badge-red badge-no-dot">Major</span>':'<span class="badge badge-amber badge-no-dot">Minor</span>';
+    const valCell=major?'<span style="font-size:12px;color:var(--ruby);font-weight:600">Eliminates all Inputs</span>':`<input class="form-control mono" type="number" min="0" value="${p.amount}" ${canEdit?'':'disabled'} onchange="updatePenaltyType(${i},'amount',this.value)">`;
+    return `<tr>
+      <td><input class="form-control" value="${escHtml(p.label)}" ${canEdit?'':'disabled'} onchange="updatePenaltyType(${i},'label',this.value)"></td>
+      <td>${sev}</td>
+      <td>${valCell}</td>
+      <td>${canEdit?`<button class="btn btn-ghost btn-xs" style="color:var(--ruby)" title="Remove" onclick="removePenaltyType(${i})">${TRASH_SVG}</button>`:''}</td>
+    </tr>`;
+  }).join('');
 }
 function updatePenaltyType(i,field,val){ const f=FUNDS.find(x=>x.id===CUR.activeFundId); if(!f)return; const t=ensureFundPenaltyTypes(f); if(!t[i])return; t[i][field]=field==='amount'?Math.abs(parseFloat(val)||0):val; }
-function addPenaltyType(){ const f=FUNDS.find(x=>x.id===CUR.activeFundId); if(!f)return; ensureFundPenaltyTypes(f).push({label:'New Penalty',amount:0}); renderPenaltyTypes(f); }
+function addPenaltyType(){ const f=FUNDS.find(x=>x.id===CUR.activeFundId); if(!f)return; ensureFundPenaltyTypes(f).push({label:'New Penalty',severity:'minor',amount:100}); renderPenaltyTypes(f); }
 function removePenaltyType(i){ const f=FUNDS.find(x=>x.id===CUR.activeFundId); if(!f)return; (f.penaltyTypes||[]).splice(i,1); renderPenaltyTypes(f); }
 
 function openAddContribution(){
@@ -2885,25 +2915,30 @@ function confirmAddContribution(){
 function openAddPenalty(){
   const a=AWARDS.find(x=>x.id===CUR.activeAwardId); if(!a||isAwardRecorded(a)){toast('Recorded awards cannot be edited','red');return;}
   const fund=FUNDS.find(f=>f.id===a.fundId); const types=ensureFundPenaltyTypes(fund);
-  $('pen-type').innerHTML=types.map((p,i)=>`<option value="${i}">${escHtml(p.label)} (${fmt$(p.amount)})</option>`).join('')+'<option value="custom">Custom…</option>';
+  const minors=types.map((p,i)=>({p,i})).filter(o=>o.p.severity!=='major');
+  const majors=types.map((p,i)=>({p,i})).filter(o=>o.p.severity==='major');
+  $('pen-type').innerHTML=
+    (minors.length?`<optgroup label="Minor Infractions (−100 Inputs)">`+minors.map(o=>`<option value="${o.i}">${escHtml(o.p.label)} (${fmt$(o.p.amount)})</option>`).join('')+`</optgroup>`:'')+
+    (majors.length?`<optgroup label="Major Infractions (eliminates all Inputs)">`+majors.map(o=>`<option value="${o.i}">${escHtml(o.p.label)} (Eliminate)</option>`).join('')+`</optgroup>`:'');
   $('pen-notes').value=''; const ev=$('pen-evidence'); if(ev)ev.value='';
   penTypeAutoFill(); openModal('modal-add-penalty2');
 }
 function penTypeAutoFill(){
   const a=AWARDS.find(x=>x.id===CUR.activeAwardId); if(!a)return;
   const fund=FUNDS.find(f=>f.id===a.fundId); const types=ensureFundPenaltyTypes(fund);
-  const v=$('pen-type').value;
-  if(v==='custom'){ $('pen-amount').value=''; } else { const p=types[+v]; if(p)$('pen-amount').value=p.amount; }
+  const p=types[+$('pen-type').value]; if(!p)return;
+  if(p.severity==='major'){ const net=computeUserInputsInFund(a.userId,a.fundId).net; $('pen-amount').value=Math.max(0,Math.round(net)); }
+  else { $('pen-amount').value=p.amount; }
 }
 function confirmAddPenaltyForm(){
   const a=AWARDS.find(x=>x.id===CUR.activeAwardId); if(!a)return;
   const fund=FUNDS.find(f=>f.id===a.fundId); const types=ensureFundPenaltyTypes(fund);
-  const v=$('pen-type').value; const label=v==='custom'?'Penalty':(types[+v]?.label||'Penalty');
+  const p=types[+$('pen-type').value]; const label=p?p.label:'Penalty'; const sev=p?p.severity:'minor';
   const amt=Math.abs(parseFloat($('pen-amount').value)||0);
   if(!amt){toast('Enter a penalty value greater than zero','red');return;}
   const ev=$('pen-evidence')&&$('pen-evidence').files&&$('pen-evidence').files[0];
   a.lineItems=a.lineItems||[];
-  a.lineItems.push({id:uid(),kind:'penalty',inputType:'penalty',label:label,category:label,quantity:1,rate:-amt,earned:-amt,notes:$('pen-notes').value.trim(),reversedAt:null,evidence:ev?{name:ev.name,url:URL.createObjectURL(ev)}:null});
+  a.lineItems.push({id:uid(),kind:'penalty',inputType:'penalty',label:label,category:label,severity:sev,quantity:1,rate:-amt,earned:-amt,notes:$('pen-notes').value.trim(),reversedAt:null,evidence:ev?{name:ev.name,url:URL.createObjectURL(ev)}:null});
   closeModal('modal-add-penalty2'); toast('Penalty added','green'); renderAwardDetail();
 }
 function switchAdTab(el){
@@ -2923,8 +2958,17 @@ function switchAdTabById(tabId){
   if(el)switchAdTab(el);
 }
 
+function reverseAwardFromDetail(awardId){ reverseAward(awardId); if(isReversed(awardId)){ goTo('screen-ledger'); } }
 function renderAwardLetter(a, u){
   const el=document.getElementById('ad-letter-body'); if(!el) return;
+  const la=document.getElementById('ad-letter-actions');
+  if(la){
+    const recorded=isAwardRecorded(a), isRev=isReversalEntry(a), already=isReversed(a.id);
+    const canRev=recorded&&!isRev&&!already&&isSecretaryOrManager(a.fundId);
+    la.innerHTML = canRev
+      ? `<button class="btn btn-danger" style="width:100%;justify-content:flex-start" onclick="reverseAwardFromDetail('${a.id}')"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:6px"><polyline points="1 4 1 10 7 10"/><path d="M3.5 15a9 9 0 102.1-9.4L1 10"/></svg>Reverse Award</button>`
+      : `<div style="font-size:11.5px;color:var(--slate-2)">${already?'This award has been reversed — see the ledger.':isRev?'This is a reversal entry.':recorded?'No actions available for this letter.':'Reversal becomes available once the award is Recorded.'}</div>`;
+  }
   const fund=FUNDS.find(f=>f.id===a.fundId);
   const t=awardTotals(a);
   // Find the Fund Manager (Co-Founder / CEO) and Fund Secretary for this fund
