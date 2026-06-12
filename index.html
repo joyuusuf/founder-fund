@@ -1021,7 +1021,7 @@ select.form-control { appearance: none; background-image: url("data:image/svg+xm
       <div class="tbl-wrap">
         <table>
           <thead>
-            <tr><th>Award ID</th><th>Award Period</th><th>Participant</th><th>Penalties</th><th>Award</th><th>Balance</th><th>Status</th><th>Vested</th><th>Contributions</th><th style="width:80px;text-align:center">Actions</th></tr>
+            <tr><th>Award ID</th><th>Award Period</th><th>Participant</th><th>Status</th><th>Penalties</th><th>Award</th><th>Balance</th><th>Vested</th><th>Contributions</th><th style="width:80px;text-align:center">Actions</th></tr>
           </thead>
           <tbody id="ledger-tbody"></tbody>
         </table>
@@ -2330,10 +2330,10 @@ function renderLedger(){
           <div><div class="td-name">${escHtml(u?.name||'Unknown')}</div></div>
         </div>
       </td>
+      <td>${awardStatusBadge(a.status)}</td>
       <td class="mono fw-600" style="color:var(--ruby)">${t.penalties?'−'+fmt$(t.penalties):'—'}</td>
       <td class="mono fw-700">${t.net<0?'−':''}${fmt$(Math.abs(t.net))}</td>
       <td class="mono fw-700" style="color:var(--slate)">${balance<0?'−':''}${fmt$(Math.abs(balance))}</td>
-      <td>${awardStatusBadge(a.status)}</td>
       <td>${vestingStatusBadge(a.vesting)}</td>
       <td class="mono fw-600" style="color:var(--emerald)">${t.contributions?(t.contributions<0?'−':'')+fmt$(Math.abs(t.contributions)):'—'}</td>
       <td style="text-align:center" onclick="event.stopPropagation()">
@@ -3233,7 +3233,7 @@ function ensureDocLedgers(u){
   if(!u.docLedgers){
     const base={offer:u.offerDate,ica:u.ndaBegin,cover:u.ndaBegin,nda:u.ndaBegin};
     u.docLedgers={};
-    DOC_TYPES.forEach(([t])=>{ u.docLedgers[t]=[{id:1,label:'System-generated',date:base[t]||u.joinedAt||'',source:'system',fileName:'',current:true}]; });
+    DOC_TYPES.forEach(([t])=>{ u.docLedgers[t]=[{id:1,label:'System-generated v1',date:base[t]||u.joinedAt||'',source:'system',fileName:'',current:true}]; });
   }
   return u.docLedgers;
 }
