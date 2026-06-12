@@ -1021,7 +1021,7 @@ select.form-control { appearance: none; background-image: url("data:image/svg+xm
       <div class="tbl-wrap">
         <table>
           <thead>
-            <tr><th>Award ID</th><th>Award Period</th><th>Participant</th><th>Status</th><th>Penalties</th><th>Award</th><th>Balance</th><th>Vested</th><th>Contributions</th><th style="width:80px;text-align:center">Actions</th></tr>
+            <tr><th>Award ID</th><th>Award Period</th><th>Participant</th><th style="min-width:150px">Status</th><th>Penalties</th><th>Award</th><th>Balance</th><th style="min-width:96px">Vested</th><th>Contributions</th><th style="width:80px;text-align:center">Actions</th></tr>
           </thead>
           <tbody id="ledger-tbody"></tbody>
         </table>
@@ -2330,11 +2330,11 @@ function renderLedger(){
           <div><div class="td-name">${escHtml(u?.name||'Unknown')}</div></div>
         </div>
       </td>
-      <td>${awardStatusBadge(a.status)}</td>
+      <td style="white-space:nowrap;vertical-align:middle">${awardStatusBadge(a.status)}</td>
       <td class="mono fw-600" style="color:var(--ruby)">${t.penalties?'−'+fmt$(t.penalties):'—'}</td>
       <td class="mono fw-700">${t.net<0?'−':''}${fmt$(Math.abs(t.net))}</td>
       <td class="mono fw-700" style="color:var(--slate)">${balance<0?'−':''}${fmt$(Math.abs(balance))}</td>
-      <td>${vestingStatusBadge(a.vesting)}</td>
+      <td style="white-space:nowrap;vertical-align:middle">${vestingStatusBadge(a.vesting)}</td>
       <td class="mono fw-600" style="color:var(--emerald)">${t.contributions?(t.contributions<0?'−':'')+fmt$(Math.abs(t.contributions)):'—'}</td>
       <td style="text-align:center" onclick="event.stopPropagation()">
         <div class="dd-wrap">
