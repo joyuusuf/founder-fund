@@ -2306,7 +2306,7 @@ function renderFundValueGraph(fund,mems){
   el.innerHTML=`
     <div>
       <div style="display:flex;align-items:center;gap:18px;flex-wrap:wrap">
-        ${donutSvg(segs, '', '')}
+        ${donutSvg(segs, '', '', 200)}
         <div style="flex:1;min-width:170px;display:flex;flex-direction:column;gap:9px;font-size:12.5px">
           <div title="Cash contributions: money contributed, accounts payable paid by the member, unpaid loans to the company, and unreimbursed expenses." style="display:flex;align-items:center;gap:8px;cursor:help"><span style="width:11px;height:11px;border-radius:3px;background:#0D9488;flex-shrink:0"></span><span style="flex:1;color:var(--slate)">Cash Inputs</span><span class="mono fw-700">${fmt$(cash)}</span></div>
           <div title="Non-cash contributions: labor, personal guarantees, supplies & equipment, facilities, intellectual property, relationships, and other resources." style="display:flex;align-items:center;gap:8px;cursor:help"><span style="width:11px;height:11px;border-radius:3px;background:#2563EB;flex-shrink:0"></span><span style="flex:1;color:var(--slate)">Non-Cash Inputs</span><span class="mono fw-700">${fmt$(nonCash)}</span></div>
@@ -2327,7 +2327,7 @@ function renderOwnershipGraph(fund,mems){
   const meName=USERS.find(u=>u.id===meId)?.name||'You';
   el.innerHTML=`
     <div style="display:flex;align-items:center;gap:18px;flex-wrap:wrap">
-      ${pieSvg([{value:mine,color:'#2563EB'},{value:rest,color:'#D7DCE6'}])}
+      ${pieSvg([{value:mine,color:'#2563EB'},{value:rest,color:'#D7DCE6'}],200)}
       <div style="flex:1;min-width:190px;display:flex;flex-direction:column;gap:12px;font-size:12.5px">
         <div style="display:flex;align-items:center;gap:8px"><span style="width:11px;height:11px;border-radius:3px;background:#2563EB;flex-shrink:0"></span><span style="flex:1;font-weight:600">${escHtml(meName)} (you)</span><span class="mono fw-700" style="min-width:64px;text-align:right">${mine.toFixed(2)}%</span></div>
         <div style="display:flex;align-items:center;gap:8px"><span style="width:11px;height:11px;border-radius:3px;background:#D7DCE6;flex-shrink:0"></span><span style="flex:1;font-weight:600">Other participants</span><span class="mono fw-700" style="min-width:64px;text-align:right">${rest.toFixed(2)}%</span></div>
@@ -2632,15 +2632,15 @@ function arcPath(cx,cy,or,ir,sa,ea){
   const la=sweep>180?1:0;
   return`M${o1.x} ${o1.y}A${or} ${or} 0 ${la} 1 ${o2.x} ${o2.y}L${i1.x} ${i1.y}A${ir} ${ir} 0 ${la} 0 ${i2.x} ${i2.y}Z`;
 }
-function donutSvg(segments,centerVal,centerLbl){
-  const w=150,cx=75,cy=75,or=66,ir=42;
+function donutSvg(segments,centerVal,centerLbl,size){
+  const w=size||150,cx=w/2,cy=w/2,or=w*0.44,ir=w*0.28;
   const total=segments.reduce((s,d)=>s+(d.value||0),0); let cur=0,arcs='';
   if(total>0){ segments.forEach(seg=>{const sweep=(seg.value||0)/total*360; if(sweep<=0.3)return; arcs+=`<path d="${arcPath(cx,cy,or,ir,cur+0.6,cur+sweep-0.6)}" fill="${seg.color}"></path>`; cur+=sweep;}); }
   else { arcs=`<circle cx="${cx}" cy="${cy}" r="${(or+ir)/2}" fill="none" stroke="#E8EDF3" stroke-width="${or-ir}"></circle>`; }
   return `<svg width="${w}" height="${w}" viewBox="0 0 ${w} ${w}" style="flex-shrink:0">${arcs}<text x="${cx}" y="${cy-1}" text-anchor="middle" style="font-size:16px;font-weight:800;fill:var(--ink)">${centerVal}</text><text x="${cx}" y="${cy+15}" text-anchor="middle" style="font-size:8.5px;fill:var(--slate);text-transform:uppercase;letter-spacing:.06em">${centerLbl}</text></svg>`;
 }
-function pieSvg(segments){
-  const w=150,cx=75,cy=75,or=70;
+function pieSvg(segments,size){
+  const w=size||150,cx=w/2,cy=w/2,or=w*0.467;
   const total=segments.reduce((s,d)=>s+(d.value||0),0); let cur=0,arcs='';
   if(total>0){ segments.forEach(seg=>{const sweep=(seg.value||0)/total*360; if(sweep<=0.3)return; arcs+=`<path d="${arcPath(cx,cy,or,0,cur+0.4,cur+sweep-0.4)}" fill="${seg.color}"></path>`; cur+=sweep;}); }
   else { arcs=`<circle cx="${cx}" cy="${cy}" r="${or}" fill="#E8EDF3"></circle>`; }
@@ -2858,11 +2858,18 @@ function buildLineItemsHtml(a,u,fund,editable){
 }
 function buildSigPanel(a,editable,recorded){
   const cur=a.status||'drafted'; const ci=AWARD_FLOW.indexOf(cur);
+  const _last=AWARD_FLOW.length-1;
   const steps=AWARD_FLOW.map((s,idx)=>{
-    const done=idx<=ci;
-    return `<div style="display:flex;align-items:center;gap:8px;padding:3px 0;font-size:12px;${done?'':'opacity:.42'}">
-      <span style="width:16px;height:16px;border-radius:50%;flex-shrink:0;display:inline-flex;align-items:center;justify-content:center;background:${done?'var(--emerald)':'var(--surface-2)'}">${done?'<svg width="9" height="9" viewBox="0 0 20 20" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10l4 4 8-9"/></svg>':''}</span>
-      <span style="${idx===ci?'font-weight:700':''}">${AWARD_LABEL[s]}</span>
+    const done=idx<=ci, isCur=idx===ci, lineOn=idx<ci, notLast=idx<_last;
+    const circle=done
+      ? `<span style="width:18px;height:18px;border-radius:50%;flex-shrink:0;display:inline-flex;align-items:center;justify-content:center;background:var(--emerald);${isCur?'box-shadow:0 0 0 3px var(--emerald-light)':''}"><svg width="10" height="10" viewBox="0 0 20 20" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10l4 4 8-9"/></svg></span>`
+      : `<span style="width:18px;height:18px;border-radius:50%;flex-shrink:0;box-sizing:border-box;border:2px solid var(--border-2);background:var(--white)"></span>`;
+    return `<div style="display:flex;gap:11px;align-items:stretch">
+      <div style="display:flex;flex-direction:column;align-items:center;flex-shrink:0">
+        ${circle}
+        ${notLast?`<span style="flex:1;width:2px;min-height:14px;margin:3px 0;border-radius:2px;background:${lineOn?'var(--emerald)':'var(--border)'}"></span>`:''}
+      </div>
+      <div style="padding-bottom:${notLast?'12px':'0'};font-size:12.5px;line-height:18px;${isCur?'font-weight:700;color:var(--ink)':done?'color:var(--ink-3)':'color:var(--slate-2)'}">${AWARD_LABEL[s]}</div>
     </div>`;
   }).join('');
   const next=AWARD_NEXT[cur];
