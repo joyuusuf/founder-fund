@@ -965,9 +965,9 @@ select.form-control { appearance: none; background-image: url("data:image/svg+xm
       <div><div class="access-guard-title">View-only access</div><div class="access-guard-sub">Fund Owners can view holdings but cannot edit fund settings.</div></div>
     </div>
 
-    <div class="grid2" style="align-items:start;margin-bottom:20px">
+    <div class="grid2" style="align-items:stretch;margin-bottom:20px">
       <div class="card">
-        <div class="card-header"><div class="card-title">Total Awards</div><span class="badge badge-blue badge-no-dot" id="hold-total-header">—</span></div>
+        <div class="card-header"><div><div class="card-title">Total Awards</div><div id="hold-total-header" class="mono" style="font-size:24px;font-weight:800;color:var(--ink);margin-top:4px">—</div></div></div>
         <div class="card-body"><div id="hold-graph-value"></div></div>
       </div>
       <div class="card">
@@ -1134,11 +1134,6 @@ select.form-control { appearance: none; background-image: url("data:image/svg+xm
       <div>
         <div style="font-size:16px;font-weight:700" id="ad-name">—</div>
         <div style="font-size:12px;color:rgba(255,255,255,.55);margin-top:2px" id="ad-meta">—</div>
-      </div>
-      <div style="display:flex;gap:22px;margin-left:auto;flex-wrap:wrap">
-        <div><div style="font-size:10px;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:.05em">Award ID</div><div class="mono" style="font-size:15px;font-weight:700;margin-top:5px" id="ad-hero-id">—</div></div>
-        <div><div style="font-size:10px;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:.05em">Award</div><div class="mono" style="font-size:20px;font-weight:700;margin-top:3px" id="ad-hero-net">0.00</div></div>
-        <div><div style="font-size:10px;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:.05em">Period</div><div style="font-size:13px;font-weight:600;margin-top:5px" id="ad-hero-period">—</div></div>
       </div>
     </div>
 
@@ -1587,22 +1582,22 @@ let INVITATIONS = [
 
 // AWARDS (simplified for this demo)
 let AWARDS = [
-  { id:'aw1', fundId:'f1', userId:'u1', code:'AW-0001', periodLabel:'Week of Apr 13 – Apr 19, 2026', awardDate:'2026-04-19', status:'recorded', vesting:'vested', audit:[{ts:'2026-04-19 10:00',actor:'Ryker Rinehart',kind:'Award Status',from:'Secretary Approval Requested',to:'Recorded'}], approvedBy:'u2', lineItems:[
+  { id:'aw1', fundId:'f1', userId:'u1', code:'AW-0001', periodLabel:'Week of Apr 13 – Apr 19, 2026', awardDate:'2026-04-19', status:'recorded', vesting:'vested', audit:[{ts:'2026-04-19 10:05',actor:'Ryker Rinehart',kind:'Vesting',from:'—',to:'Vesting date set: April 19, 2027'},{ts:'2026-04-19 10:04',actor:'Ryker Rinehart',kind:'Vesting Status',from:'Vesting',to:'Vested'},{ts:'2026-04-19 10:03',actor:'Ryker Rinehart',kind:'Vesting Status',from:'Unvested',to:'Vesting'},{ts:'2026-04-19 10:00',actor:'Ryker Rinehart',kind:'Award Status',from:'Secretary Approval Requested',to:'Recorded'},{ts:'2026-04-18 16:00',actor:'Ryker Rinehart',kind:'Award Status',from:'Manager Approved',to:'Secretary Approval Requested'},{ts:'2026-04-18 15:30',actor:'David Boctor',kind:'Award Status',from:'Manager Approval Requested',to:'Manager Approved'},{ts:'2026-04-18 11:00',actor:'Ryker Rinehart',kind:'Award Status',from:'Owner Approved',to:'Manager Approval Requested'},{ts:'2026-04-17 14:00',actor:'David Boctor',kind:'Award Status',from:'Owner Approval Requested',to:'Owner Approved'},{ts:'2026-04-17 09:30',actor:'Ryker Rinehart',kind:'Award Status',from:'Drafted',to:'Owner Approval Requested'},{ts:'2026-04-16 10:00',actor:'Ryker Rinehart',kind:'Award Status',from:'—',to:'Drafted'}], approvedBy:'u2', lineItems:[
     { id:'li1', kind:'contribution', inputType:'hourly', label:'Hourly Inputs (×1)', quantity:40, rate:120, earned:4800 },
     { id:'li2', kind:'contribution', inputType:'bonus', label:'Bonus Inputs (×0.1)', quantity:40, rate:12, earned:480 },
   ]},
-  { id:'aw2', fundId:'f1', userId:'u2', code:'AW-0002', periodLabel:'Week of Apr 13 – Apr 19, 2026', awardDate:'2026-04-19', status:'signed_by_manager', vesting:'vesting', audit:[{ts:'2026-04-18 09:30',actor:'David Boctor',kind:'Award Status',from:'Manager Approval Requested',to:'Manager Approved'}], approvedBy:'u1', lineItems:[
+  { id:'aw2', fundId:'f1', userId:'u2', code:'AW-0002', periodLabel:'Week of Apr 13 – Apr 19, 2026', awardDate:'2026-04-19', status:'signed_by_manager', vesting:'vesting', audit:[{ts:'2026-04-18 09:35',actor:'David Boctor',kind:'Vesting Status',from:'Unvested',to:'Vesting'},{ts:'2026-04-18 09:30',actor:'David Boctor',kind:'Award Status',from:'Manager Approval Requested',to:'Manager Approved'},{ts:'2026-04-18 09:00',actor:'Ryker Rinehart',kind:'Award Status',from:'Owner Approved',to:'Manager Approval Requested'},{ts:'2026-04-17 15:00',actor:'Ryker Rinehart',kind:'Award Status',from:'Owner Approval Requested',to:'Owner Approved'},{ts:'2026-04-17 10:00',actor:'Ryker Rinehart',kind:'Award Status',from:'Drafted',to:'Owner Approval Requested'},{ts:'2026-04-16 11:00',actor:'David Boctor',kind:'Award Status',from:'—',to:'Drafted'}], approvedBy:'u1', lineItems:[
     { id:'li3', kind:'contribution', inputType:'hourly', label:'Hourly Inputs (×1)', quantity:38, rate:95, earned:3610 },
     { id:'li4', kind:'contribution', inputType:'bonus', label:'Bonus Inputs (×0.1)', quantity:38, rate:9.5, earned:361 },
   ]},
-  { id:'aw3', fundId:'f1', userId:'u4', code:'AW-0003', periodLabel:'Feb 10 – Feb 17, 2026', awardDate:'2026-02-17', status:'recorded', vesting:'vested', audit:[{ts:'2026-02-17 14:00',actor:'Ryker Rinehart',kind:'Award Status',from:'Secretary Approval Requested',to:'Recorded'}], approvedBy:'u2', lineItems:[
+  { id:'aw3', fundId:'f1', userId:'u4', code:'AW-0003', periodLabel:'Feb 10 – Feb 17, 2026', awardDate:'2026-02-17', status:'recorded', vesting:'vested', audit:[{ts:'2026-02-17 14:10',actor:'Ryker Rinehart',kind:'Vesting',from:'—',to:'Vesting date set: February 17, 2027'},{ts:'2026-02-17 14:08',actor:'Ryker Rinehart',kind:'Vesting Status',from:'Vesting',to:'Vested'},{ts:'2026-02-17 14:06',actor:'Ryker Rinehart',kind:'Vesting Status',from:'Unvested',to:'Vesting'},{ts:'2026-02-17 14:00',actor:'Ryker Rinehart',kind:'Award Status',from:'Secretary Approval Requested',to:'Recorded'},{ts:'2026-02-16 16:00',actor:'David Boctor',kind:'Award Status',from:'Manager Approved',to:'Secretary Approval Requested'},{ts:'2026-02-16 15:00',actor:'David Boctor',kind:'Award Status',from:'Manager Approval Requested',to:'Manager Approved'},{ts:'2026-02-13 10:00',actor:'Ryker Rinehart',kind:'Penalty',from:'—',to:'Poor Time Tracking added'},{ts:'2026-02-12 09:00',actor:'Maria Santos',kind:'Award Status',from:'Owner Approval Requested',to:'Owner Approved'},{ts:'2026-02-11 14:00',actor:'Ryker Rinehart',kind:'Award Status',from:'Drafted',to:'Owner Approval Requested'},{ts:'2026-02-10 10:00',actor:'Ryker Rinehart',kind:'Award Status',from:'—',to:'Drafted'}], approvedBy:'u2', lineItems:[
     { id:'li5', kind:'contribution', inputType:'hourly', label:'Hourly Inputs (×1)', quantity:40, rate:110, earned:4400 },
     { id:'li6', kind:'penalty', inputType:'penalty', label:'Penalty: Poor Time Tracking (minor)', quantity:1, rate:-100, earned:-100, severity:'minor', category:'Poor Time Tracking', notes:'Failed to submit hours within 14-day window.' },
   ]},
-  { id:'aw4', fundId:'f1', userId:'u1', code:'AW-0004', periodLabel:'Jan 2026 — Cash', awardDate:'2026-01-31', status:'drafted', vesting:'unvested', audit:[{ts:'2026-01-31 11:00',actor:'David Boctor',kind:'Award Status',from:'—',to:'Drafted'}], approvedBy:'u2', lineItems:[
+  { id:'aw4', fundId:'f1', userId:'u1', code:'AW-0004', periodLabel:'Jan 2026 — Cash', awardDate:'2026-01-31', status:'drafted', vesting:'unvested', audit:[{ts:'2026-01-31 11:05',actor:'David Boctor',kind:'Contribution',from:'—',to:'Cash added'},{ts:'2026-01-31 11:00',actor:'David Boctor',kind:'Award Status',from:'—',to:'Drafted'}], approvedBy:'u2', lineItems:[
     { id:'li7', kind:'contribution', inputType:'cash', label:'Cash Inputs (×1)', quantity:1, rate:10000, earned:10000 },
   ]},
-  { id:'aw5', fundId:'f2', userId:'u1', code:'AW-0005', periodLabel:'Q3 2025', awardDate:'2025-09-30', status:'recorded', vesting:'vested', audit:[{ts:'2025-09-30 16:00',actor:'Ryker Rinehart',kind:'Award Status',from:'Secretary Approval Requested',to:'Recorded'}], approvedBy:'u2', lineItems:[
+  { id:'aw5', fundId:'f2', userId:'u1', code:'AW-0005', periodLabel:'Q3 2025', awardDate:'2025-09-30', status:'recorded', vesting:'vested', audit:[{ts:'2025-09-30 16:10',actor:'Ryker Rinehart',kind:'Vesting',from:'—',to:'Vesting date set: September 30, 2026'},{ts:'2025-09-30 16:08',actor:'Ryker Rinehart',kind:'Vesting Status',from:'Vesting',to:'Vested'},{ts:'2025-09-30 16:06',actor:'Ryker Rinehart',kind:'Vesting Status',from:'Unvested',to:'Vesting'},{ts:'2025-09-30 16:00',actor:'Ryker Rinehart',kind:'Award Status',from:'Secretary Approval Requested',to:'Recorded'},{ts:'2025-09-29 16:00',actor:'David Boctor',kind:'Award Status',from:'Manager Approved',to:'Secretary Approval Requested'},{ts:'2025-09-29 15:00',actor:'David Boctor',kind:'Award Status',from:'Manager Approval Requested',to:'Manager Approved'},{ts:'2025-09-28 12:00',actor:'David Boctor',kind:'Award Status',from:'Owner Approval Requested',to:'Owner Approved'},{ts:'2025-09-27 10:00',actor:'Ryker Rinehart',kind:'Award Status',from:'Drafted',to:'Owner Approval Requested'},{ts:'2025-09-26 09:00',actor:'Ryker Rinehart',kind:'Award Status',from:'—',to:'Drafted'}], approvedBy:'u2', lineItems:[
     { id:'li8', kind:'contribution', inputType:'hourly', label:'Hourly Inputs (×1)', quantity:80, rate:120, earned:9600 },
   ]},
 ];
@@ -2788,14 +2783,11 @@ function renderAwardDetail(){
   const t=awardTotals(a);
   const recorded=isAwardRecorded(a);
   const editable=!recorded && isSecretaryOrManager(a.fundId);
-  $('ad-title').textContent='Award · '+awardCode(a);
-  $('ad-bread').textContent=(u?.name||'')+'  ·  '+a.awardDate;
+  $('ad-title').textContent='Award';
+  $('ad-bread').textContent=(u?.name||'');
   const av=$('ad-avatar'); av.textContent=initials(u?.name||''); av.style.background=color;
   $('ad-name').textContent=u?.name||'—';
-  $('ad-meta').textContent=(u?.email||'')+(u?.rate?' · '+u.rate+' per HR':'');
-  $('ad-hero-id').textContent=awardCode(a);
-  $('ad-hero-net').textContent=(t.net<0?'−':'')+fmt$(Math.abs(t.net));
-  $('ad-hero-period').textContent=a.periodLabel;
+  $('ad-meta').textContent='';
   const liveC=(a.lineItems||[]).filter(li=>!li.reversedAt&&li.kind==='contribution');
   const liveP=(a.lineItems||[]).filter(li=>!li.reversedAt&&li.kind==='penalty');
   $('ad-sum-contrib').textContent=(t.contributions<0?'−':'')+fmt$(Math.abs(t.contributions));
@@ -2882,10 +2874,7 @@ function buildSigPanel(a,editable,recorded){
   return `
     <div style="margin-bottom:6px;font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:var(--slate-2);font-weight:700">Award Status</div>
     ${steps}
-    ${sigBtn}
-    <div style="margin:14px 0 6px;font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:var(--slate-2);font-weight:700">Vesting Status</div>
-    <div>${vestingStatusBadge(a.vesting)}</div>
-    ${vBtn}`;
+    ${sigBtn}`;
 }
 function editNonCashHours(awardId,type,val){
   const a=AWARDS.find(x=>x.id===awardId); if(!a||isAwardRecorded(a))return;
@@ -2909,7 +2898,7 @@ function editPenalty(awardId,liId,val){
 }
 function deleteLineItem(awardId,liId){
   const a=AWARDS.find(x=>x.id===awardId); if(!a||isAwardRecorded(a))return;
-  a.lineItems=(a.lineItems||[]).filter(l=>l.id!==liId); renderAwardDetail();
+  a.lineItems=(a.lineItems||[]).filter(l=>l.id!==liId); awardAudit(a,'Line Item','—','Line item removed'); renderAwardDetail();
 }
 function ensureFundPenaltyTypes(f){ if(f&&!f.penaltyTypes){ f.penaltyTypes=[
     {label:'Unauthorized Work',severity:'minor',amount:100},
@@ -2995,7 +2984,7 @@ function confirmAddContribution(){
   const value=Math.round(amt*(m.mult||1));
   a.lineItems=a.lineItems||[];
   a.lineItems.push({id:uid(),kind:'contribution',inputType:m.it,label:m.label,quantity:1,rate:value,earned:value,baseAmount:amt,notes:desc,reversedAt:null,evidence:{name:ev.name,url:URL.createObjectURL(ev)}});
-  closeModal('modal-add-contribution'); toast('Contribution added','green'); renderAwardDetail();
+  awardAudit(a,'Contribution','—',m.label+' added'); closeModal('modal-add-contribution'); toast('Contribution added','green'); renderAwardDetail();
 }
 function openAddPenalty(){
   const a=AWARDS.find(x=>x.id===CUR.activeAwardId); if(!a||isAwardRecorded(a)){toast('Recorded awards cannot be edited','red');return;}
@@ -3003,8 +2992,8 @@ function openAddPenalty(){
   const minors=types.map((p,i)=>({p,i})).filter(o=>o.p.severity!=='major');
   const majors=types.map((p,i)=>({p,i})).filter(o=>o.p.severity==='major');
   $('pen-type').innerHTML=
-    (minors.length?`<optgroup label="Minor Infractions (−100 Inputs)">`+minors.map(o=>`<option value="${o.i}">${escHtml(o.p.label)} (${fmt$(o.p.amount)})</option>`).join('')+`</optgroup>`:'')+
-    (majors.length?`<optgroup label="Major Infractions (eliminates all Inputs)">`+majors.map(o=>`<option value="${o.i}">${escHtml(o.p.label)} (Eliminate)</option>`).join('')+`</optgroup>`:'');
+    (minors.length?`<optgroup label="Minor Infractions">`+minors.map(o=>`<option value="${o.i}">${escHtml(o.p.label)}</option>`).join('')+`</optgroup>`:'')+
+    (majors.length?`<optgroup label="Major Infractions">`+majors.map(o=>`<option value="${o.i}">${escHtml(o.p.label)}</option>`).join('')+`</optgroup>`:'');
   $('pen-notes').value=''; const ev=$('pen-evidence'); if(ev)ev.value='';
   penTypeAutoFill(); openModal('modal-add-penalty2');
 }
@@ -3024,7 +3013,7 @@ function confirmAddPenaltyForm(){
   const ev=$('pen-evidence')&&$('pen-evidence').files&&$('pen-evidence').files[0];
   a.lineItems=a.lineItems||[];
   a.lineItems.push({id:uid(),kind:'penalty',inputType:'penalty',label:label,category:label,severity:sev,quantity:1,rate:-amt,earned:-amt,notes:$('pen-notes').value.trim(),reversedAt:null,evidence:ev?{name:ev.name,url:URL.createObjectURL(ev)}:null});
-  closeModal('modal-add-penalty2'); toast('Penalty added','green'); renderAwardDetail();
+  awardAudit(a,'Penalty','—',(label||'Penalty')+' added'); closeModal('modal-add-penalty2'); toast('Penalty added','green'); renderAwardDetail();
 }
 function switchAdTab(el){
   document.querySelectorAll('#screen-award-detail [data-tab]').forEach(t=>t.classList.remove('active'));
@@ -3312,7 +3301,7 @@ function ensureDocLedgers(u){
   if(!u.docLedgers){
     const base={offer:u.offerDate,ica:u.ndaBegin,cover:u.ndaBegin,nda:u.ndaBegin};
     u.docLedgers={};
-    DOC_TYPES.forEach(([t])=>{ u.docLedgers[t]=[{id:1,label:'System-generated v1',date:base[t]||u.joinedAt||'',source:'system',fileName:'',current:true}]; });
+    DOC_TYPES.forEach(([t])=>{ u.docLedgers[t]=[{id:1,label:'System-generated',date:base[t]||u.joinedAt||'',source:'system',fileName:'',current:true}]; });
   }
   return u.docLedgers;
 }
