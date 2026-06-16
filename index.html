@@ -967,11 +967,11 @@ select.form-control { appearance: none; background-image: url("data:image/svg+xm
 
     <div class="grid2" style="align-items:stretch;margin-bottom:20px">
       <div class="card">
-        <div class="card-header"><div><div class="card-title">Total Awards</div><div id="hold-total-header" class="mono" style="font-size:24px;font-weight:800;color:var(--ink);margin-top:4px">—</div></div></div>
+        <div class="card-header" style="min-height:84px"><div><div class="card-title">Total Awards</div><div id="hold-total-header" class="mono" style="font-size:24px;font-weight:800;color:var(--ink);margin-top:4px">—</div></div></div>
         <div class="card-body"><div id="hold-graph-value"></div></div>
       </div>
       <div class="card">
-        <div class="card-header"><div class="card-title">Owner Share</div><span class="card-subtitle">Ownership across funds you participate in</span></div>
+        <div class="card-header" style="min-height:84px"><div><div class="card-title">Owner Share</div><div class="card-subtitle">Ownership across funds you participate in</div></div></div>
         <div class="card-body"><div id="hold-graph-ownership"></div></div>
       </div>
     </div>
@@ -3301,7 +3301,7 @@ function ensureDocLedgers(u){
   if(!u.docLedgers){
     const base={offer:u.offerDate,ica:u.ndaBegin,cover:u.ndaBegin,nda:u.ndaBegin};
     u.docLedgers={};
-    DOC_TYPES.forEach(([t])=>{ u.docLedgers[t]=[{id:1,label:'System-generated',date:base[t]||u.joinedAt||'',source:'system',fileName:'',current:true}]; });
+    DOC_TYPES.forEach(([t])=>{ u.docLedgers[t]=[{id:1,label:'System-generated v1',date:base[t]||u.joinedAt||'',source:'system',fileName:'',current:true}]; });
   }
   return u.docLedgers;
 }
