@@ -1885,7 +1885,7 @@ function renderMyFunds() {
     const gTotal=gCash+gNon-gPen;
     const gShareTotal=byFund.reduce((s,r)=>s+r.value,0);
     gEl.innerHTML=`<div class="grid2" style="align-items:start;margin-bottom:20px">
-      <div class="card"><div class="card-header"><div class="card-title">Total Awards</div><div class="mono" style="font-size:24px;font-weight:800;color:var(--ink)">${fmt$(gTotal)}</div></div>
+      <div class="card"><div class="card-header"><div class="card-title">Total Awards</div></div>
         <div class="card-body"><div style="display:flex;align-items:center;gap:18px;flex-wrap:wrap">
           ${donutSvg([{value:Math.max(0,gCash),color:'#0D9488'},{value:Math.max(0,gNon),color:'#2563EB'},{value:Math.max(0,gPen),color:'#DC2626'}], '','')}
           <div style="flex:1;min-width:170px;display:flex;flex-direction:column;gap:9px;font-size:12.5px">
@@ -1895,7 +1895,7 @@ function renderMyFunds() {
           </div>
         </div></div>
       </div>
-      <div class="card"><div class="card-header"><div class="card-title">Owner Share by Fund</div><div class="mono" style="font-size:24px;font-weight:800;color:var(--ink)">${fmt$(gShareTotal)}</div></div>
+      <div class="card"><div class="card-header"><div class="card-title">Owner Share by Fund</div></div>
         <div class="card-body"><div style="display:flex;align-items:center;gap:18px;flex-wrap:wrap">
           ${pieSvg(byFund)}
           <div style="flex:1;min-width:170px;display:flex;flex-direction:column;gap:10px;font-size:12.5px">
