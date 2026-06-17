@@ -1883,8 +1883,9 @@ function renderMyFunds() {
     let gCash=0,gNon=0,gPen=0; const byFund=[];
     myMemberships.forEach((m,idx)=>{const i=computeUserInputsInFund(m.userId,m.fundId);gCash+=i.cash;gNon+=i.base+i.ot+i.bonus;gPen+=i.penalty;const f=FUNDS.find(x=>x.id===m.fundId);byFund.push({label:f?.name||'Fund',value:Math.max(0,i.net),color:COLORS[idx%COLORS.length]});});
     const gTotal=gCash+gNon-gPen;
+    const gShareTotal=byFund.reduce((s,r)=>s+r.value,0);
     gEl.innerHTML=`<div class="grid2" style="align-items:start;margin-bottom:20px">
-      <div class="card"><div class="card-header"><div class="card-title">Total Awards</div></div>
+      <div class="card"><div class="card-header"><div class="card-title">Total Awards</div><span class="badge badge-blue badge-no-dot">${fmt$(gTotal)}</span></div>
         <div class="card-body"><div style="display:flex;align-items:center;gap:18px;flex-wrap:wrap">
           ${donutSvg([{value:Math.max(0,gCash),color:'#0D9488'},{value:Math.max(0,gNon),color:'#2563EB'},{value:Math.max(0,gPen),color:'#DC2626'}], '','')}
           <div style="flex:1;min-width:170px;display:flex;flex-direction:column;gap:9px;font-size:12.5px">
@@ -1894,7 +1895,7 @@ function renderMyFunds() {
           </div>
         </div></div>
       </div>
-      <div class="card"><div class="card-header"><div class="card-title">Owner Share by Fund</div><span class="card-subtitle">your awards across funds</span></div>
+      <div class="card"><div class="card-header"><div class="card-title">Owner Share by Fund</div><span class="badge badge-blue badge-no-dot">${fmt$(gShareTotal)}</span></div>
         <div class="card-body"><div style="display:flex;align-items:center;gap:18px;flex-wrap:wrap">
           ${pieSvg(byFund)}
           <div style="flex:1;min-width:170px;display:flex;flex-direction:column;gap:10px;font-size:12.5px">
