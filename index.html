@@ -704,9 +704,9 @@ select.form-control { appearance: none; background-image: url("data:image/svg+xm
   </div>
   <div class="page">
     <div id="my-funds-hero"></div>
-    <div id="my-funds-graphs"></div>
     <div class="section-label" style="margin-bottom:12px" id="my-funds-section-label">Your fund memberships</div>
-    <div id="my-funds-grid" class="three-col"></div>
+    <div id="my-funds-grid" class="three-col" style="grid-template-columns:repeat(5,1fr)"></div>
+    <div id="my-funds-graphs"></div>
   </div>
 </div>
 </div>
@@ -788,7 +788,6 @@ select.form-control { appearance: none; background-image: url("data:image/svg+xm
           <thead>
             <tr>
               <th>Fund Name</th>
-              <th>Default</th>
               <th>Members</th>
               <th>OT Threshold</th>
               <th>Bonus</th>
@@ -824,22 +823,7 @@ select.form-control { appearance: none; background-image: url("data:image/svg+xm
       <span class="access-guard-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 018 0v3"/></svg></span>
       <div><div class="access-guard-title">Read-only access</div><div class="access-guard-sub">Fund Owners cannot edit fund settings. Contact a Fund Manager or Secretary.</div></div>
     </div>
-    <div id="fd-default-banner" class="notice notice-info" style="display:none"><span class="notice-icon"><svg width="15" height="15" viewBox="0 0 20 20" fill="currentColor"><path d="M10 1.6l2.47 5.01 5.53.8-4 3.9.94 5.5L10 14.2l-4.95 2.6.94-5.5-4-3.9 5.53-.8z"/></svg></span><span><strong>Default Fund.</strong> This fund drives the consolidated dashboard view.</span></div>
 
-    <div class="grid2" style="margin-bottom:20px;align-items:start" id="fd-ownership-top">
-      <div class="card">
-        <div class="card-header"><div class="card-title">Voting Share</div><span class="badge badge-violet badge-no-dot">excl. bonus</span></div>
-        <div class="card-body">
-          <div class="ownership-breakdown">
-            <div class="pie-wrap" style="width:190px;height:190px">
-              <svg id="fd-pie-voting" width="190" height="190" viewBox="0 0 190 190"></svg>
-              <div class="pie-center"><div class="pie-center-val">100%</div><div class="pie-center-sub">Voting</div></div>
-            </div>
-            <div class="pie-legend" id="fd-legend-voting"></div>
-          </div>
-        </div>
-      </div>
-    </div>
 
     <div class="tabs-bar">
       <div class="tab active" data-tab="fd-settings" onclick="switchFdTab(this)">Settings</div>
@@ -853,8 +837,8 @@ select.form-control { appearance: none; background-image: url("data:image/svg+xm
         <div class="card-body">
           <div class="fg">
             <div class="grid2">
-              <div class="form-group"><label>Company Legal Name <span class="req">*</span></label><input class="form-control" id="fd-company" oninput="updateFundNameAuto()"></div>
-              <div class="form-group"><label>Fund Name (auto-generated)</label><input class="form-control" id="fd-name" readonly></div>
+              <div class="form-group"><label>Company Legal Name <span class="req">*</span></label><input class="form-control" id="fd-company"></div>
+              <div class="form-group"><label>Fund Name</label><input class="form-control" id="fd-name"></div>
             </div>
             <div class="grid3">
               <div class="form-group"><label>Status</label>
@@ -915,7 +899,6 @@ select.form-control { appearance: none; background-image: url("data:image/svg+xm
         <div class="card-header">
           <div>
             <div class="card-title">Fund Participants</div>
-            <div class="card-subtitle">Role assignments for this fund · Use "Set as Secretary" to appoint a Fund Secretary (Manager only)</div>
           </div>
           <div style="display:flex;gap:8px;align-items:center">
             <button class="btn btn-secondary btn-sm perm-manager-or-secretary" onclick="openInviteForFund()">+ Add Participant</button>
@@ -928,9 +911,6 @@ select.form-control { appearance: none; background-image: url("data:image/svg+xm
                 <th>Participant</th>
                 <th>System Role</th>
                 <th>Fund Role</th>
-                <th>Status</th>
-                <th>Joined Fund</th>
-                <th>Holdings</th>
                 <th style="width:60px"></th>
               </tr>
             </thead>
@@ -1017,12 +997,11 @@ select.form-control { appearance: none; background-image: url("data:image/svg+xm
   </div>
   <div class="page">
     <div class="breadcrumb" id="ldg-breadcrumb"></div>
-    <div class="notice notice-info"><span class="notice-icon">ℹ</span><span><strong>Total Inputs</strong> — each award bundles contributions &amp; penalties for one member over one period. Reversals are non-destructive — records are always preserved for audit.</span></div>
     <div class="card">
       <div class="tbl-wrap">
         <table>
           <thead>
-            <tr><th>Award ID</th><th>Award Period</th><th>Participant</th><th style="min-width:150px">Status</th><th style="min-width:96px">Vested</th><th>Contributions</th><th>Penalties</th><th>Award</th><th>Balance</th><th style="width:80px;text-align:center">Actions</th></tr>
+            <tr><th>ID</th><th>Period</th><th>Participant</th><th style="min-width:150px">Status</th><th>Contributions</th><th>Penalties</th><th>Award</th><th>Balance</th><th style="width:80px;text-align:center">Actions</th></tr>
           </thead>
           <tbody id="ledger-tbody"></tbody>
         </table>
@@ -1135,6 +1114,11 @@ select.form-control { appearance: none; background-image: url("data:image/svg+xm
         <div style="font-size:16px;font-weight:700" id="ad-name">—</div>
         <div style="font-size:12px;color:rgba(255,255,255,.55);margin-top:2px" id="ad-meta">—</div>
       </div>
+      <div style="display:flex;gap:24px;margin-left:auto;flex-wrap:wrap">
+        <div><div style="font-size:10px;color:rgba(255,255,255,.45);text-transform:uppercase;letter-spacing:.06em">ID</div><div class="mono" style="font-size:15px;font-weight:700;margin-top:3px" id="ad-hero-id">—</div></div>
+        <div><div style="font-size:10px;color:rgba(255,255,255,.45);text-transform:uppercase;letter-spacing:.06em">Period</div><div style="font-size:13px;font-weight:600;margin-top:4px" id="ad-hero-period">—</div></div>
+        <div><div style="font-size:10px;color:rgba(255,255,255,.45);text-transform:uppercase;letter-spacing:.06em">Date</div><div style="font-size:13px;font-weight:600;margin-top:4px" id="ad-hero-date">—</div></div>
+      </div>
     </div>
 
     <!-- Award Detail Tabs -->
@@ -1178,7 +1162,7 @@ select.form-control { appearance: none; background-image: url("data:image/svg+xm
             </div>
           </div>
           <div class="card">
-            <div class="card-header"><div class="card-title">Line Items</div><div style="display:flex;gap:6px"><button class="btn btn-secondary btn-sm" id="ad-add-contrib-btn" onclick="openAddContribution()">+ Add Contribution</button><button class="btn btn-secondary btn-sm" id="ad-add-penalty-btn" style="color:var(--ruby)" onclick="openAddPenalty()">+ Add Penalty</button></div></div>
+            <div class="card-header"><div class="card-title">Line Items</div><div style="display:flex;gap:6px"><button class="btn btn-secondary btn-sm" onclick="openContribFor('labor')">+ Labor</button><button class="btn btn-secondary btn-sm" onclick="openContribFor('cash')">+ Cash</button><button class="btn btn-secondary btn-sm" onclick="openContribFor('noncash')">+ Non-Cash</button><button class="btn btn-secondary btn-sm" id="ad-add-penalty-btn" style="color:var(--ruby)" onclick="openAddPenalty()">+ Add Penalty</button></div></div>
             <div class="card-body" id="ad-lineitems"></div>
           </div>
         </div>
@@ -1273,7 +1257,7 @@ select.form-control { appearance: none; background-image: url("data:image/svg+xm
 <div class="modal-backdrop" id="modal-rel-entry">
   <div class="modal-box" style="max-width:540px">
     <button class="modal-close" onclick="closeModal('modal-rel-entry')"><svg width="14" height="14" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 5l10 10M15 5L5 15"/></svg></button>
-    <div class="modal-title" id="modal-rel-title">Add Relationship Entry</div>
+    <div class="modal-title" id="modal-rel-title">Add Relationship</div>
     <div class="modal-sub">Role-specific details that may change over time.</div>
     <div class="fg" style="margin-top:16px">
       <div class="grid2">
@@ -1284,7 +1268,6 @@ select.form-control { appearance: none; background-image: url("data:image/svg+xm
       <div class="grid3">
         <div class="form-group"><label>Begin Date</label><input class="form-control" type="date" id="rel-begin"></div>
         <div class="form-group"><label>End Date</label><input class="form-control" type="date" id="rel-end"></div>
-        <div class="form-group"><label>Annual Increase (%)</label><input class="form-control" type="number" id="rel-increase" placeholder="0"></div>
       </div>
       <div class="form-group"><label>Status</label>
         <select class="form-control" id="rel-status">
@@ -1305,28 +1288,11 @@ select.form-control { appearance: none; background-image: url("data:image/svg+xm
 <div class="modal-backdrop" id="modal-add-contribution">
   <div class="modal-box" style="max-width:460px">
     <button class="modal-close" onclick="closeModal('modal-add-contribution')"><svg width="14" height="14" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 5l10 10M15 5L5 15"/></svg></button>
-    <div class="modal-title">Add Contribution</div>
+    <div class="modal-title" id="contrib-modal-title">Add Contribution</div>
     <div class="modal-sub">Add a contribution to this award.</div>
     <div class="fg" style="margin-top:16px">
-      <div class="form-group"><label>Contribution Type</label>
-        <select class="form-control" id="contrib-type" onchange="contribTypeChange()">
-          <option value="labor">Labor</option>
-          <optgroup label="Cash">
-            <option value="cash:cash">Cash</option>
-            <option value="cash:ap">Accounts Payable Paid by Fund Member</option>
-            <option value="cash:loan">Unpaid Loan to Company by Fund Member</option>
-            <option value="cash:expenses">Unreimbursed Expenses</option>
-          </optgroup>
-          <optgroup label="Non-Cash">
-            <option value="noncash:guarantee">Personal Guarantee</option>
-            <option value="noncash:equip-under">Supplies and Equipment under 1 year</option>
-            <option value="noncash:equip-over">Supplies and Equipment over 1 year</option>
-            <option value="noncash:facilities">Facilities</option>
-            <option value="noncash:ip">Intellectual Property</option>
-            <option value="noncash:relationships">Relationships</option>
-            <option value="noncash:other">Other Resources</option>
-          </optgroup>
-        </select>
+      <div class="form-group" id="contrib-type-group"><label>Type</label>
+        <select class="form-control" id="contrib-type" onchange="contribTypeChange()"></select>
       </div>
       <div class="form-group"><label id="contrib-amount-label">Amount</label><div class="prefix-wrap"><span class="prefix"></span><input class="form-control mono" id="contrib-amount" type="number" min="0" placeholder="0" oninput="contribValPreview()"></div>
         <div id="contrib-hint" style="font-size:11px;color:var(--slate-2);margin-top:5px;line-height:1.45"></div>
@@ -1377,7 +1343,7 @@ select.form-control { appearance: none; background-image: url("data:image/svg+xm
     <div class="tabs-bar" style="margin-bottom:18px">
       <div class="tab active" data-tab="up-tab-profile" onclick="switchUpTab(this)">Personal Information</div>
       <div class="tab" data-tab="up-tab-relationship" onclick="switchUpTab(this)">Relationship</div>
-      <div class="tab" data-tab="up-tab-docs" onclick="switchUpTab(this)">Documents &amp; Letters</div>
+      <div class="tab" data-tab="up-tab-docs" onclick="switchUpTab(this)">Documents</div>
       <div class="tab" data-tab="up-tab-offer" onclick="switchUpTab(this)">Offer Letter</div>
       <div class="tab" data-tab="up-tab-nda" onclick="switchUpTab(this)">NDA</div>
       <div class="tab" data-tab="up-tab-ica" onclick="switchUpTab(this)">IC Agreement</div>
@@ -1396,15 +1362,13 @@ select.form-control { appearance: none; background-image: url("data:image/svg+xm
                 <div class="form-group"><label>Full Name <span class="req">*</span></label><input class="form-control" id="up-name" placeholder="Full name"></div>
                 
               </div>
-              <div class="form-group"><label>Address</label><input class="form-control" id="up-address" placeholder="Street, City, State, ZIP"></div>
+              <div class="form-group"><label>Street</label><input class="form-control" id="up-street" placeholder="Street address"></div>
               <div class="grid2">
-                <div class="form-group"><label>Primary Email</label><input class="form-control" id="up-email" placeholder="email@domain.com" readonly></div>
-                <div class="form-group"><label>Personal Email</label><input class="form-control" id="up-email2" placeholder="personal@email.com"></div>
+                <div class="form-group"><label>City</label><input class="form-control" id="up-city" placeholder="City"></div>
+                <div class="form-group"><label>State</label><input class="form-control" id="up-state" placeholder="State"></div>
               </div>
-              <div class="grid2">
-                <div class="form-group"><label>Location</label><input class="form-control" id="up-location" placeholder="City, State"></div>
-                
-              </div>
+              <div class="form-group"><label>Email</label><input class="form-control" id="up-email2" placeholder="personal@email.com"></div>
+
               
               
             </div>
@@ -1434,15 +1398,15 @@ select.form-control { appearance: none; background-image: url("data:image/svg+xm
     <!-- RELATIONSHIP TAB -->
     <div class="tab-content" id="up-tab-relationship">
       <div class="card">
-        <div class="card-header"><div class="card-title">Relationship History</div><button class="btn btn-secondary btn-sm" id="up-rel-add-btn" onclick="openRelEntry()">+ Add Entry</button></div>
+        <div class="card-header"><div class="card-title">Relationship History</div><button class="btn btn-secondary btn-sm" id="up-rel-add-btn" onclick="openRelEntry()">+ Add Relationship</button></div>
         <div class="card-body" style="padding:0">
-          <table style="width:100%"><thead><tr><th style="width:36px">#</th><th>Title</th><th>Hourly Rate</th><th>Service Description</th><th>Begin</th><th>End</th><th>Annual Increase</th><th>Status</th><th style="width:120px">Actions</th></tr></thead>
+          <table style="width:100%"><thead><tr><th style="width:36px">#</th><th>Title</th><th>Hourly Rate</th><th>Service Description</th><th>Begin</th><th>End</th><th>Status</th><th style="width:120px">Actions</th></tr></thead>
           <tbody id="up-rel-tbody"></tbody></table>
         </div>
       </div>
     </div><!-- /up-tab-relationship -->
 
-    <!-- DOCUMENTS & LETTERS TAB -->
+    <!-- DOCUMENTS TAB -->
     <div class="tab-content" id="up-tab-docs">
       <input type="file" id="up-signed-file-input" style="display:none">
       <div id="up-doc-ledgers" style="display:flex;flex-direction:column;gap:16px"></div>
@@ -1508,7 +1472,7 @@ select.form-control { appearance: none; background-image: url("data:image/svg+xm
 <div id="screen-admin" class="screen">
 <div class="main">
   <div class="topbar">
-    <div><div class="tb-title">All Funds</div><div class="tb-bread">Administrator console · read-only · aggregated across every fund</div></div>
+    <div><div class="tb-title">All Funds</div><div class="tb-bread">Administrator console · aggregated across every fund</div></div>
     <div class="tb-actions">
       <button class="btn btn-secondary" onclick="renderAdmin()"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px"><polyline points="21 4 21 10 15 10"/><path d="M20 14a8 8 0 11-2.3-6.7L21 10"/></svg> Refresh</button>
     </div>
@@ -1519,21 +1483,21 @@ select.form-control { appearance: none; background-image: url("data:image/svg+xm
       <div class="god-hero">
         <div class="avatar avatar-lg" style="background:linear-gradient(135deg,#7C3AED,#2563EB)"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M10 20V4M16 20v-6M22 20H2"/></svg></div>
         <div>
-          <div class="god-hero-title">All Funds <span class="god-badge">Read-only</span></div>
+          <div class="god-hero-title">All Funds</div>
           <div class="god-hero-sub" id="god-hero-sub">A consolidated, system-wide view of every fund. All edits happen inside each fund's own view.</div>
         </div>
       </div>
-      <div class="four-col" style="margin-bottom:20px" id="admin-stats"></div>
       <div class="card" style="margin-bottom:20px">
-        <div class="card-header"><div class="card-title">Total Awards by Fund</div><div class="card-subtitle">Aggregated across all funds in the system</div></div>
-        <div class="card-body"><div id="admin-bars"></div></div>
-      </div>
-      <div class="card">
         <div class="card-header"><div class="card-title">Funds</div><div class="card-subtitle">All funds — including those you do not participate in</div></div>
         <div class="tbl-wrap"><table>
           <thead><tr><th>Fund</th><th style="text-align:right">Total Awards</th><th style="text-align:right">Admin Awards</th><th style="text-align:right">Admin Share</th></tr></thead>
           <tbody id="adm-funds-tbody"></tbody>
         </table></div>
+      </div>
+      <div class="four-col" style="margin-bottom:20px" id="admin-stats"></div>
+      <div class="card" style="margin-bottom:20px">
+        <div class="card-header"><div class="card-title">Total Awards by Fund</div><div class="card-subtitle">Aggregated across all funds in the system</div></div>
+        <div class="card-body"><div id="admin-bars"></div></div>
       </div>
     </div>
   </div>
@@ -1558,6 +1522,8 @@ const FUNDS = [
   { id:'f1', name:"021 Founder's Fund", company:'021', isDefault:true, status:'active', effectiveDate:'2026-01-01', initPeriod:90, otThreshold:40, otCoef:1.5, bonusPct:10, clientServices:'artificial intelligence accounting, strategy, and alignment software and educational products' },
   { id:'f2', name:"Seed Round Fund", company:'021', isDefault:false, status:'archived', effectiveDate:'2025-07-15', initPeriod:90, otThreshold:40, otCoef:1.25, bonusPct:5, clientServices:'artificial intelligence accounting, strategy, and alignment software and educational products' },
   { id:'f3', name:"Beta Fund", company:'021', isDefault:false, status:'nominated', effectiveDate:'2025-10-01', initPeriod:60, otThreshold:40, otCoef:1.5, bonusPct:8, clientServices:'artificial intelligence accounting, strategy, and alignment software and educational products' },
+  { id:'f4', name:"David Fund", company:'021', isDefault:false, status:'active', effectiveDate:'2026-03-01', initPeriod:90, otThreshold:40, otCoef:1.5, bonusPct:10, clientServices:'artificial intelligence accounting, strategy, and alignment software and educational products' },
+  { id:'f5', name:"Rikers Fund", company:'021', isDefault:false, status:'active', effectiveDate:'2026-03-01', initPeriod:90, otThreshold:40, otCoef:1.5, bonusPct:10, clientServices:'artificial intelligence accounting, strategy, and alignment software and educational products' },
 ];
 
 // MEMBERSHIPS — junction: userId × fundId × fundRole
@@ -1571,6 +1537,8 @@ let MEMBERSHIPS = [
   { id:'m6', userId:'u2', fundId:'f2', fundRole:'fund_secretary',  status:'contributing', joinedAt:'2025-07-20' },
   { id:'m7', userId:'u1', fundId:'f3', fundRole:'fund_manager',    status:'contributing', joinedAt:'2025-10-01' },
   { id:'m8', userId:'u3', fundId:'f2', fundRole:'fund_owner',      status:'contributing', joinedAt:'2025-08-01' },
+  { id:'m9',  userId:'u1', fundId:'f4', fundRole:'fund_manager', status:'contributing', joinedAt:'2026-03-01' },
+  { id:'m10', userId:'u1', fundId:'f5', fundRole:'fund_manager', status:'contributing', joinedAt:'2026-03-01' },
 ];
 
 // INVITATIONS
@@ -1610,7 +1578,7 @@ const VESTING_FLOW=['unvested','vesting','vested'];
 const VESTING_LABEL={unvested:'Unvested',vesting:'Vesting',vested:'Vested'};
 function awardStatusLabel(s){return AWARD_LABEL[s]||'Drafted';}
 function vestingStatusLabel(s){return VESTING_LABEL[s]||'Unvested';}
-function awardStatusBadge(s){if(s&&s!=='recorded'&&s!=='drafted'){return `<span class="status-pending">${awardStatusLabel(s)}</span>`;}const cls=s==='recorded'?'badge-green':'badge-slate';return `<span class="badge ${cls}">${awardStatusLabel(s)}</span>`;}
+function awardStatusBadge(s){const cls=s==='recorded'?'badge-green':s==='drafted'?'badge-slate':'badge-amber';return `<span class="badge ${cls}">${awardStatusLabel(s)}</span>`;}
 function vestingStatusBadge(s){const cls=s==='vested'?'badge-green':s==='vesting'?'badge-amber':'badge-slate';return `<span class="badge ${cls}">${vestingStatusLabel(s)}</span>`;}
 function isAwardRecorded(a){return (a?.status||'drafted')==='recorded';}
 function isReversalEntry(a){return !!a?.reversalOf;}
@@ -1784,6 +1752,11 @@ function rolePill(r) {
   const admin=r==='fund_manager';
   return `<span class="role-pill ${admin?'role-manager':'role-owner'}">${admin?'Administrator':'User'}</span>`;
 }
+function fundRolePill(r){
+  const lbl=r==='fund_manager'?'Manager':r==='fund_secretary'?'Secretary':'Owner';
+  const cls=r==='fund_manager'?'role-manager':r==='fund_secretary'?'role-secretary':'role-owner';
+  return `<span class="role-pill ${cls}">${lbl}</span>`;
+}
 
 function goTo(id) {
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
@@ -1850,7 +1823,7 @@ function renderMyFunds() {
   if(breadEl)  breadEl.textContent=isOp
     ?'Operational dashboard · Manage funds, members, and awards'
     :'Your personal inputs holdings across all funds you participate in';
-  if(sectionEl) sectionEl.textContent='Total Inputs';
+  if(sectionEl) sectionEl.textContent='Your fund memberships';
 
   const myMemberships=membershipsForUser(CUR.user?.id);
   let totalNet=0, totalContrib=0, totalPenalty=0;
@@ -1871,7 +1844,6 @@ function renderMyFunds() {
         <div style="font-size:12px;color:rgba(255,255,255,.5);margin-top:3px">${systemRoleLabel(CUR.user?.systemRole)} · ${escHtml(CUR.user?.email||'')}</div>
       </div>
       <div class="hero-stats">
-        <div><div class="hero-stat-lbl">Cumulative Awards</div><div class="hero-stat-val">${fmt$(totalNet)}</div></div>
         <div><div class="hero-stat-lbl">My Funds</div><div class="hero-stat-val">${myMemberships.length}</div></div>
       </div>
     </div>`;
@@ -1885,13 +1857,12 @@ function renderMyFunds() {
     const gTotal=gCash+gNon-gPen;
     const gShareTotal=byFund.reduce((s,r)=>s+r.value,0);
     gEl.innerHTML=`<div class="grid2" style="align-items:start;margin-bottom:20px">
-      <div class="card"><div class="card-header"><div class="card-title">Total Awards</div></div>
+      <div class="card"><div class="card-header"><div class="card-title">Cumulative Awards</div></div>
         <div class="card-body"><div style="display:flex;align-items:center;gap:18px;flex-wrap:wrap">
-          ${donutSvg([{value:Math.max(0,gCash),color:'#0D9488'},{value:Math.max(0,gNon),color:'#2563EB'},{value:Math.max(0,gPen),color:'#DC2626'}], '','')}
+          ${donutSvg([{value:Math.max(0,gCash),color:'#0D9488'},{value:Math.max(0,gNon),color:'#2563EB'}], fmt$(gTotal),'Cumulative')}
           <div style="flex:1;min-width:170px;display:flex;flex-direction:column;gap:9px;font-size:12.5px">
             ${legendRow('#0D9488','Cash Inputs',fmt$(gCash))}
             ${legendRow('#2563EB','Non-Cash Inputs',fmt$(gNon))}
-            ${legendRow('#DC2626','Penalties','−'+fmt$(gPen))}
           </div>
         </div></div>
       </div>
@@ -1899,7 +1870,7 @@ function renderMyFunds() {
         <div class="card-body"><div style="display:flex;align-items:center;gap:18px;flex-wrap:wrap">
           ${pieSvg(byFund)}
           <div style="flex:1;min-width:170px;display:flex;flex-direction:column;gap:10px;font-size:12.5px">
-            ${byFund.map(r=>`<div style="display:flex;align-items:center;gap:8px"><span style="width:11px;height:11px;border-radius:3px;background:${r.color};flex-shrink:0"></span><span style="flex:1;font-weight:600">${escHtml(r.label)}</span><span class="mono fw-700">${fmt$(r.value)}</span></div>`).join('')}
+            ${byFund.map(r=>`<div style="display:flex;align-items:center;gap:8px"><span style="width:11px;height:11px;border-radius:3px;background:${r.color};flex-shrink:0"></span><span style="flex:1;font-weight:600">${escHtml(r.label)}</span><span class="mono fw-700">${gShareTotal?(r.value/gShareTotal*100).toFixed(2):'0.00'}%</span></div>`).join('')}
           </div>
         </div></div>
       </div>
@@ -1919,14 +1890,13 @@ function renderMyFunds() {
     const inputs=computeUserInputsInFund(m.userId,m.fundId);
     const equity=computeEquityPct(m.userId,m.fundId);
     const statusBadge=fund.status==='active'?'<span class="badge badge-green">Active</span>':fund.status==='archived'?'<span class="badge badge-slate">Archived</span>':fund.status==='terminated'?'<span class="badge badge-red">Terminated</span>':'<span class="badge badge-amber">Nominated</span>';
-    return `<div class="fund-card${fund.isDefault?' is-default':''}" onclick="viewFundHoldings('${fund.id}')">
+    return `<div class="fund-card" onclick="viewFundHoldings('${fund.id}')">
       <div class="fund-card-header">
         <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px">
           <div>
             <div class="fund-card-title">${escHtml(fund.name)}</div>
             <div class="fund-card-meta" style="display:flex;align-items:center;gap:8px"><span style="font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--slate-2)">Status</span>${statusBadge}</div>
           </div>
-          ${fund.isDefault?`<span style="background:linear-gradient(135deg,#2563EB,#1B3A5C);color:#fff;font-size:9.5px;font-weight:700;padding:3px 9px;border-radius:99px;letter-spacing:.04em;text-transform:uppercase;flex-shrink:0">Default</span>`:''}
         </div>
         <div style="margin-top:8px;display:flex;align-items:center;gap:6px;flex-wrap:wrap">
           <span style="font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--slate-2)">Role</span>
@@ -2061,7 +2031,6 @@ function renderFundsTable(filter=''){
         <div class="td-name" style="cursor:pointer;color:var(--sapphire)" onclick="openFundDetails('${f.id}')">${escHtml(f.name)}</div>
         <div style="font-size:11px;color:var(--slate)">${escHtml(f.company)}</div>
       </td>
-      <td>${f.isDefault?`<span style="background:linear-gradient(135deg,#2563EB,#1B3A5C);color:#fff;font-size:9.5px;font-weight:700;padding:2px 9px;border-radius:99px">Default</span>`:'—'}</td>
       <td class="mono">${memberCount}</td>
       <td class="mono">${f.otThreshold} hrs/wk</td>
       <td class="mono">${f.bonusPct}%</td>
@@ -2096,7 +2065,6 @@ function renderFundDetails(){
   if(!f)return;
   $('fd-title').textContent=f.name||'New Fund';
   $('fd-bread').textContent=f.company?' · '+f.company:'';
-  $('fd-default-banner').style.display=f.isDefault?'':'none';
   $('fd-company').value=f.company||'';
   $('fd-name').value=f.name||'';
   $('fd-status').value=f.status||'nominated';
@@ -2121,9 +2089,7 @@ function renderFundDetails(){
   const _mems=membershipsForFund(f.id);
   const _active=_mems.filter(m=>computeEquityPct(m.userId,f.id)>0);
   const _eqData=_active.map((m,i)=>{const u=USERS.find(x=>x.id===m.userId);return{label:u?.name||'?',value:computeEquityPct(m.userId,f.id),color:COLORS[i%COLORS.length]};});
-  const _vtData=_active.map((m,i)=>{const u=USERS.find(x=>x.id===m.userId);return{label:u?.name||'?',value:computeVotingPct(m.userId,f.id),color:COLORS[i%COLORS.length]};});
   drawPie('fd-pie-equity',_eqData,'fd-legend-equity');
-  drawPie('fd-pie-voting',_vtData,'fd-legend-voting');
   renderPenaltyTypes(f);
   renderFdMembersTable();
 }
@@ -2154,7 +2120,7 @@ function renderFdMembersTable(){
   const mems=membershipsForFund(CUR.activeFundId);
   if(mems.length===0){
     const noSec=!membershipsForFund(CUR.activeFundId).some(m=>m.fundRole==='fund_secretary');
-    tbody.innerHTML=`<tr><td colspan="7"><div class="card-empty"><div class="card-empty-icon"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><path d="M3 20a6 6 0 0112 0"/><path d="M16 5.5a3 3 0 010 5.8M21 20a6 6 0 00-5-5.9"/></svg></div><div class="card-empty-title">No participants yet</div><div class="card-empty-desc">Use "Invite Participant" to add users to this fund.</div></div></td></tr>`;
+    tbody.innerHTML=`<tr><td colspan="4"><div class="card-empty"><div class="card-empty-icon"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><path d="M3 20a6 6 0 0112 0"/><path d="M16 5.5a3 3 0 010 5.8M21 20a6 6 0 00-5-5.9"/></svg></div><div class="card-empty-title">No participants yet</div><div class="card-empty-desc">Use "Invite Participant" to add users to this fund.</div></div></td></tr>`;
     if(noSec&&(isManager(CUR.activeFundId)||CUR.user?.systemRole==='fund_manager')){
       const notice=$('fd-no-sec-notice');
       if(notice) notice.style.display='flex';
@@ -2179,18 +2145,14 @@ function renderFdMembersTable(){
           <div class="avatar avatar-sm" style="background:${color}">${initials(u.name)}</div>
           <div>
             <div class="td-name" style="cursor:pointer;color:var(--sapphire)" onclick="openUserProfile('${u.id}')">${escHtml(u.name)}${isCurrent?' <span style="font-size:10px;color:var(--sapphire)">(you)</span>':''}</div>
-            <div style="font-size:11px;color:var(--slate)">${escHtml(u.email)}</div>
           </div>
         </div>
       </td>
       <td>${rolePill(u.systemRole)}</td>
       <td>
-        ${rolePill(m.fundRole)}
+        ${fundRolePill(m.fundRole)}
         ${isSecretary?`<span style="font-size:9.5px;font-weight:700;color:#0369A1;margin-left:4px;background:#E0F2FE;padding:1px 7px;border-radius:99px">SECRETARY</span>`:''}
       </td>
-      <td><span class="badge ${m.status==='contributing'?'badge-green':m.status==='suspended'?'badge-amber':m.status==='terminated'?'badge-red':'badge-slate'}">${m.status}</span></td>
-      <td style="font-size:12px">${fmtDate(m.joinedAt)}</td>
-      <td class="mono" style="font-weight:700">${fmt$(inputs.net)}</td>
       <td>
         <div class="dd-wrap">
           <button class="btn btn-ghost btn-sm" style="font-size:18px;letter-spacing:1px;padding:2px 8px" onclick="toggleMenu(this)">⋯</button>
@@ -2301,7 +2263,7 @@ function renderFundValueGraph(fund,mems){
   const total=cash+nonCash-penalty;
   const el=$('hold-graph-value'); if(!el)return;
   const hdr=$('hold-total-header'); if(hdr)hdr.textContent=fmt$(total);
-  const segs=[{value:Math.max(0,cash),color:'#0D9488'},{value:Math.max(0,nonCash),color:'#2563EB'},{value:Math.max(0,penalty),color:'#DC2626'}];
+  const segs=[{value:Math.max(0,cash),color:'#0D9488'},{value:Math.max(0,nonCash),color:'#2563EB'}];
   const grossC=cash+nonCash;
   const penPct=grossC?Math.min(100,penalty/grossC*100):0;
   el.innerHTML=`
@@ -2311,12 +2273,7 @@ function renderFundValueGraph(fund,mems){
         <div style="flex:1;min-width:170px;display:flex;flex-direction:column;gap:9px;font-size:12.5px">
           <div title="Cash contributions: money contributed, accounts payable paid by the member, unpaid loans to the company, and unreimbursed expenses." style="display:flex;align-items:center;gap:8px;cursor:help"><span style="width:11px;height:11px;border-radius:3px;background:#0D9488;flex-shrink:0"></span><span style="flex:1;color:var(--slate)">Cash Inputs</span><span class="mono fw-700">${fmt$(cash)}</span></div>
           <div title="Non-cash contributions: labor, personal guarantees, supplies & equipment, facilities, intellectual property, relationships, and other resources." style="display:flex;align-items:center;gap:8px;cursor:help"><span style="width:11px;height:11px;border-radius:3px;background:#2563EB;flex-shrink:0"></span><span style="flex:1;color:var(--slate)">Non-Cash Inputs</span><span class="mono fw-700">${fmt$(nonCash)}</span></div>
-          <div title="Penalties are negative inputs that reduce the award." style="display:flex;align-items:center;gap:8px;cursor:help"><span style="width:11px;height:11px;border-radius:3px;background:#DC2626;flex-shrink:0"></span><span style="flex:1;color:var(--slate)">Penalties</span><span class="mono fw-700">−${fmt$(penalty)}</span></div>
         </div>
-      </div>
-      <div style="margin-top:16px" title="Red band = penalties as a share of total contributions.">
-        <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--slate);margin-bottom:5px"><span style="font-weight:600;color:var(--ruby)">Penalties</span><span class="mono">−${fmt$(penalty)} (${penPct.toFixed(0)}% of contributions)</span></div>
-        <div style="height:10px;border-radius:5px;background:var(--surface-2);overflow:hidden"><div style="height:100%;width:${penPct}%;background:var(--ruby);transition:width .3s"></div></div>
       </div>
     </div>`;
 }
@@ -2332,7 +2289,6 @@ function renderOwnershipGraph(fund,mems){
       <div style="flex:1;min-width:190px;display:flex;flex-direction:column;gap:12px;font-size:12.5px">
         <div style="display:flex;align-items:center;gap:8px"><span style="width:11px;height:11px;border-radius:3px;background:#2563EB;flex-shrink:0"></span><span style="flex:1;font-weight:600">${escHtml(meName)} (you)</span><span class="mono fw-700" style="min-width:64px;text-align:right">${mine.toFixed(2)}%</span></div>
         <div style="display:flex;align-items:center;gap:8px"><span style="width:11px;height:11px;border-radius:3px;background:#D7DCE6;flex-shrink:0"></span><span style="flex:1;font-weight:600">Other participants</span><span class="mono fw-700" style="min-width:64px;text-align:right">${rest.toFixed(2)}%</span></div>
-        <div style="font-size:11px;color:var(--slate-2);margin-top:2px;line-height:1.5">Reflects your ownership across the funds you participate in — your share versus all other participants.</div>
       </div>
     </div>`;
 }
@@ -2346,7 +2302,7 @@ function renderLedger(){
   const list=awardsForFund(CUR.activeFundId).slice().sort((a,b)=>(a.awardDate||'').localeCompare(b.awardDate||'')||(a.code||'').localeCompare(b.code||''));
   const tbody=$('ledger-tbody'); if(!tbody)return;
   if(list.length===0){
-    tbody.innerHTML=`<tr><td colspan="10"><div class="card-empty"><div class="card-empty-icon"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="4" width="12" height="17" rx="2"/><path d="M9 4V3a1 1 0 011-1h4a1 1 0 011 1v1"/><path d="M9 10h6M9 14h6"/></svg></div><div class="card-empty-title">No awards recorded</div><div class="card-empty-desc">Awards bundle contributions and penalties for a participant over a period. Click "+ Add Award" to create one.</div></div></td></tr>`;
+    tbody.innerHTML=`<tr><td colspan="9"><div class="card-empty"><div class="card-empty-icon"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="4" width="12" height="17" rx="2"/><path d="M9 4V3a1 1 0 011-1h4a1 1 0 011 1v1"/><path d="M9 10h6M9 14h6"/></svg></div><div class="card-empty-title">No awards recorded</div><div class="card-empty-desc">Awards bundle contributions and penalties for a participant over a period. Click "+ Add Award" to create one.</div></div></td></tr>`;
     return;
   }
   let balance=0;
@@ -2371,7 +2327,6 @@ function renderLedger(){
         </div>
       </td>
       <td style="white-space:nowrap;vertical-align:middle">${awardStatusBadge(a.status)}</td>
-      <td style="white-space:nowrap;vertical-align:middle">${vestingStatusBadge(a.vesting)}</td>
       <td class="mono fw-600" style="color:var(--emerald)">${t.contributions?(t.contributions<0?'−':'')+fmt$(Math.abs(t.contributions)):'—'}</td>
       <td class="mono fw-600" style="color:var(--ruby)">${t.penalties?'−'+fmt$(t.penalties):'—'}</td>
       <td class="mono fw-700">${t.net<0?'−':''}${fmt$(Math.abs(t.net))}</td>
@@ -2420,25 +2375,22 @@ function renderUserProfileScreen(){
   const u=USERS.find(x=>x.id===CUR.activeUserId); if(!u)return;
   $('up-title').textContent=u.name;
   $('up-name').value=u.name||'';
-  $('up-address').value=u.address||'';
-  $('up-email').value=u.email||'';
+  {const _ap=(u.address||'').split(',').map(s=>s.trim());$('up-street').value=_ap[0]||'';$('up-city').value=_ap[1]||'';$('up-state').value=_ap[2]||'';}
   $('up-email2').value=u.email2||'';
-  $('up-location').value=u.location||'';
   $('up-uid').textContent=u.id;
   $('up-sysrole').innerHTML=rolePill(u.systemRole);
   $('up-since').textContent=fmtDate(u.joinedAt);
   const isSelf=u.id===CUR.user?.id;
   const canEditOther=CUR.user?.systemRole==='fund_manager';
   const editable=isSelf||canEditOther;
-  ['up-name','up-address','up-email2','up-location'].forEach(id=>{ const el=$(id); if(el)el.disabled=!editable; });
+  ['up-name','up-street','up-city','up-state','up-email2'].forEach(id=>{ const el=$(id); if(el)el.disabled=!editable; });
   renderRelationshipTab();
 }
 function saveUserProfile(){
   const u=USERS.find(x=>x.id===CUR.activeUserId); if(!u)return;
   u.name=$('up-name').value.trim()||u.name;
-  u.address=$('up-address').value.trim();
+  u.address=[$('up-street').value.trim(),$('up-city').value.trim(),$('up-state').value.trim()].filter(Boolean).join(', ');
   u.email2=$('up-email2').value.trim();
-  u.location=$('up-location').value.trim();
   if(u.id===CUR.user?.id)CUR.user=u;
   toast('Profile saved','green');
   goBack();
@@ -2466,7 +2418,6 @@ function renderRelationshipTab(){
     <td style="font-size:12px;color:var(--slate)">${escHtml(r.service||'—')}</td>
     <td style="font-size:12px">${r.begin?fmtDate(r.begin):'—'}</td>
     <td style="font-size:12px">${r.end?fmtDate(r.end):'—'}</td>
-    <td class="mono">${r.annualIncrease?Math.round(r.annualIncrease)+'%':'—'}</td>
     <td><span class="badge ${sc(r.status)}">${escHtml(r.status)}</span></td>
     <td>${editable?`<button class="btn btn-secondary btn-xs" onclick="openRelEntry(${r.id})">Edit</button> <button class="btn btn-ghost btn-xs" style="color:var(--ruby);padding:4px 6px" title="Delete" onclick="deleteRelEntry(${r.id})">${TRASH_SVG}</button>`:'—'}</td>
   </tr>`).join('');
@@ -2474,17 +2425,25 @@ function renderRelationshipTab(){
 function openRelEntry(id){
   const u=USERS.find(x=>x.id===CUR.activeUserId); if(!u)return;
   const rels=ensureRelationships(u);
+  if(!id){
+    const activeRel=rels.find(x=>x.status==='Active');
+    if(activeRel){
+      if(!confirm('An active relationship already exists ("'+(activeRel.title||'Untitled')+'").\n\nAdding a new relationship will terminate the current one.\n\nClick OK to terminate the existing relationship and continue, or Cancel to keep it.')) return;
+      activeRel.status='Terminated'; if(!activeRel.end) activeRel.end=todayISO();
+      renderRelationshipTab();
+    }
+  }
   const r=id?rels.find(x=>x.id===id):null;
   CUR.editRelId=id||null;
   $('rel-title').value=r?.title||''; $('rel-rate').value=r?.rate||''; $('rel-service').value=r?.service||'';
-  $('rel-begin').value=r?.begin||''; $('rel-end').value=r?.end||''; $('rel-increase').value=r?.annualIncrease||''; $('rel-status').value=r?.status||'Offered';
-  $('modal-rel-title').textContent=id?'Edit Relationship Entry':'Add Relationship Entry';
+  $('rel-begin').value=r?.begin||''; $('rel-end').value=r?.end||''; $('rel-status').value=r?.status||'Offered';
+  $('modal-rel-title').textContent=id?'Edit Relationship':'Add Relationship';
   openModal('modal-rel-entry');
 }
 function saveRelEntry(){
   const u=USERS.find(x=>x.id===CUR.activeUserId); if(!u)return;
   const rels=ensureRelationships(u);
-  const d={title:$('rel-title').value.trim(),rate:parseFloat($('rel-rate').value)||0,service:$('rel-service').value.trim(),begin:$('rel-begin').value,end:$('rel-end').value,annualIncrease:parseFloat($('rel-increase').value)||0,status:$('rel-status').value};
+  const d={title:$('rel-title').value.trim(),rate:parseFloat($('rel-rate').value)||0,service:$('rel-service').value.trim(),begin:$('rel-begin').value,end:$('rel-end').value,annualIncrease:0,status:$('rel-status').value};
   if(CUR.editRelId){ const r=rels.find(x=>x.id===CUR.editRelId); if(r)Object.assign(r,d); }
   else { const nid=rels.reduce((m,x)=>Math.max(m,x.id),0)+1; rels.push({id:nid,...d}); }
   const active=[...rels].reverse().find(x=>x.status==='Active')||rels[rels.length-1];
@@ -2789,6 +2748,9 @@ function renderAwardDetail(){
   const av=$('ad-avatar'); av.textContent=initials(u?.name||''); av.style.background=color;
   $('ad-name').textContent=u?.name||'—';
   $('ad-meta').textContent='';
+  $('ad-hero-id').textContent=awardCode(a);
+  $('ad-hero-period').textContent=a.periodLabel||'—';
+  $('ad-hero-date').textContent=a.awardDate?fmtDate(a.awardDate):'—';
   const liveC=(a.lineItems||[]).filter(li=>!li.reversedAt&&li.kind==='contribution');
   const liveP=(a.lineItems||[]).filter(li=>!li.reversedAt&&li.kind==='penalty');
   $('ad-sum-contrib').textContent=(t.contributions<0?'−':'')+fmt$(Math.abs(t.contributions));
@@ -2957,42 +2919,74 @@ const CONTRIB_TYPE_MAP={
   'noncash:relationships':{it:'bonus',label:'Relationships',mult:1,inputLabel:'Value (Fund Leader’s discretion)',hint:'Valued at the Fund Leader’s discretion.'},
   'noncash:other':{it:'bonus',label:'Other Resources',mult:1,inputLabel:'Value (Fund Leader’s discretion)',hint:'Valued at the Fund Leader’s discretion.'}
 };
-function openAddContribution(){
+const CONTRIB_CATS={
+  labor:{title:'Add Labor',types:[['labor','Labor']]},
+  cash:{title:'Add Cash Contribution',types:[['cash:cash','Cash'],['cash:ap','Accounts Payable Paid by Fund Member'],['cash:loan','Unpaid Loan to Company by Fund Member'],['cash:expenses','Unreimbursed Expenses']]},
+  noncash:{title:'Add Non-Cash Contribution',types:[['noncash:guarantee','Personal Guarantee'],['noncash:equip-under','Supplies and Equipment under 1 year'],['noncash:equip-over','Supplies and Equipment over 1 year'],['noncash:facilities','Facilities'],['noncash:ip','Intellectual Property'],['noncash:relationships','Relationships'],['noncash:other','Other Resources']]}
+};
+function openContribFor(cat){
   const a=AWARDS.find(x=>x.id===CUR.activeAwardId); if(!a||isAwardRecorded(a)){toast('Recorded awards cannot be edited','red');return;}
-  $('contrib-type').value='labor'; $('contrib-amount').value=''; $('contrib-desc').value=''; const ev=$('contrib-evidence'); if(ev)ev.value='';
+  CUR.contribCat=cat;
+  const c=CONTRIB_CATS[cat]||CONTRIB_CATS.cash;
+  const tEl=$('contrib-modal-title'); if(tEl)tEl.textContent=c.title;
+  const sel=$('contrib-type'); if(sel)sel.innerHTML=c.types.map(([v,l])=>`<option value="${v}">${l}</option>`).join('');
+  const grp=$('contrib-type-group'); if(grp)grp.style.display=(cat==='labor')?'none':'';
+  $('contrib-amount').value=''; $('contrib-desc').value=''; const ev=$('contrib-evidence'); if(ev)ev.value='';
   contribTypeChange();
   openModal('modal-add-contribution');
 }
+function openAddContribution(){ openContribFor('cash'); }
 function contribTypeChange(){
   const a=AWARDS.find(x=>x.id===CUR.activeAwardId); if(!a)return;
   const u=USERS.find(x=>x.id===a.userId);
-  const m=CONTRIB_TYPE_MAP[$('contrib-type').value]||CONTRIB_TYPE_MAP['cash:cash'];
-  const lbl=$('contrib-amount-label'); if(lbl)lbl.textContent=m.inputLabel||'Amount';
-  const h=$('contrib-hint'); if(h)h.textContent=m.hint||'';
-  if($('contrib-type').value==='labor'){ $('contrib-amount').value=u&&u.rate?u.rate:''; }
+  const cat=CUR.contribCat||'cash';
+  const lbl=$('contrib-amount-label'); const h=$('contrib-hint');
+  if(cat==='labor'){
+    if(lbl)lbl.textContent='Hours';
+    if(h)h.textContent='Recorded value = hours × hourly rate'+(u&&u.rate?' ('+fmt$(u.rate)+'/hr)':'')+'.';
+  } else {
+    const m=CONTRIB_TYPE_MAP[$('contrib-type').value]||CONTRIB_TYPE_MAP['cash:cash'];
+    if(lbl)lbl.textContent=m.inputLabel||'Amount';
+    if(h)h.textContent=m.hint||'';
+  }
   contribValPreview();
 }
 function contribValPreview(){
-  const m=CONTRIB_TYPE_MAP[$('contrib-type').value]||CONTRIB_TYPE_MAP['cash:cash'];
+  const a=AWARDS.find(x=>x.id===CUR.activeAwardId);
+  const u=a?USERS.find(x=>x.id===a.userId):null;
+  const cat=CUR.contribCat||'cash';
   const amt=Math.abs(parseFloat($('contrib-amount').value)||0);
   const pv=$('contrib-valpreview'); if(!pv)return;
-  if(m.mult&&m.mult!==1&&amt){ pv.style.display=''; pv.textContent='Recorded value: '+fmt$(Math.round(amt*m.mult))+'  ('+m.mult+' × '+fmt$(amt)+')'; }
-  else { pv.style.display='none'; }
+  if(cat==='labor'){
+    const rate=u&&u.rate?u.rate:0;
+    if(amt&&rate){ pv.style.display=''; pv.textContent='Recorded value: '+fmt$(Math.round(amt*rate))+'  ('+amt+' hrs × '+fmt$(rate)+')'; }
+    else pv.style.display='none';
+  } else {
+    const m=CONTRIB_TYPE_MAP[$('contrib-type').value]||CONTRIB_TYPE_MAP['cash:cash'];
+    if(m.mult&&m.mult!==1&&amt){ pv.style.display=''; pv.textContent='Recorded value: '+fmt$(Math.round(amt*m.mult))+'  ('+m.mult+' × '+fmt$(amt)+')'; }
+    else pv.style.display='none';
+  }
 }
 function confirmAddContribution(){
   const a=AWARDS.find(x=>x.id===CUR.activeAwardId); if(!a)return;
-  const type=$('contrib-type').value;
+  const u=USERS.find(x=>x.id===a.userId);
+  const cat=CUR.contribCat||'cash';
   const amt=Math.abs(parseFloat($('contrib-amount').value)||0);
   const desc=$('contrib-desc').value.trim();
   const ev=$('contrib-evidence')&&$('contrib-evidence').files&&$('contrib-evidence').files[0];
-  if(!amt){toast('Enter an amount greater than zero','red');return;}
+  if(!amt){toast(cat==='labor'?'Enter hours greater than zero':'Enter an amount greater than zero','red');return;}
   if(!desc){toast('Description is required','red');return;}
   if(!ev){toast('Documentation is required','red');return;}
-  const m=CONTRIB_TYPE_MAP[type]||CONTRIB_TYPE_MAP['cash:cash'];
-  const value=Math.round(amt*(m.mult||1));
+  let value,label,it,quantity,rate;
+  if(cat==='labor'){
+    const hr=u&&u.rate?u.rate:0; value=Math.round(amt*hr); label='Labor'; it='hourly'; quantity=amt; rate=hr;
+  } else {
+    const m=CONTRIB_TYPE_MAP[$('contrib-type').value]||CONTRIB_TYPE_MAP['cash:cash'];
+    value=Math.round(amt*(m.mult||1)); label=m.label; it=m.it; quantity=1; rate=value;
+  }
   a.lineItems=a.lineItems||[];
-  a.lineItems.push({id:uid(),kind:'contribution',inputType:m.it,label:m.label,quantity:1,rate:value,earned:value,baseAmount:amt,notes:desc,reversedAt:null,evidence:{name:ev.name,url:URL.createObjectURL(ev)}});
-  awardAudit(a,'Contribution','—',m.label+' added'); closeModal('modal-add-contribution'); toast('Contribution added','green'); renderAwardDetail();
+  a.lineItems.push({id:uid(),kind:'contribution',inputType:it,label:label,quantity:quantity,rate:rate,earned:value,baseAmount:amt,notes:desc,reversedAt:null,evidence:{name:ev.name,url:URL.createObjectURL(ev)}});
+  awardAudit(a,'Contribution','—',label+' added'); closeModal('modal-add-contribution'); toast('Contribution added','green'); renderAwardDetail();
 }
 function openAddPenalty(){
   const a=AWARDS.find(x=>x.id===CUR.activeAwardId); if(!a||isAwardRecorded(a)){toast('Recorded awards cannot be edited','red');return;}
@@ -3305,6 +3299,7 @@ function switchUpTab(el){
 }
 
 const DOC_TYPES=[['offer','IC Offer Letter'],['ica','IC Agreement'],['cover','NDA Cover Letter'],['nda','NDA']];
+const DOC_SEGMENTS=[['Independent Contractor Agreements',[['offer','IC Offer Letter'],['ica','IC Agreement']]],['Confidentiality Agreements',[['cover','NDA Cover Letter'],['nda','NDA']]]];
 function ensureDocLedgers(u){
   if(!u.docLedgers){
     const base={offer:u.offerDate,ica:u.ndaBegin,cover:u.ndaBegin,nda:u.ndaBegin};
@@ -3317,34 +3312,45 @@ function renderDocsTab(){
   const u=USERS.find(x=>x.id===CUR.activeUserId); if(!u) return;
   const led=ensureDocLedgers(u);
   const editable=(u.id===CUR.user?.id)||CUR.user?.systemRole==='fund_manager';
+  const canDelete=CUR.user?.systemRole==='fund_manager'||MEMBERSHIPS.some(m=>m.userId===CUR.user?.id&&m.fundRole==='fund_secretary');
   const wrap=$('up-doc-ledgers'); if(!wrap)return;
-  wrap.innerHTML=DOC_TYPES.map(([t,label])=>{
+  const renderType=([t,label])=>{
     const versions=led[t]||[];
-    const hasSigned=versions.some(v=>v.source==='signed');
     const rows=versions.map(v=>{
-      const statusBadge=v.current?'<span class="badge badge-green">Current / Enforced</span>':'<span class="badge badge-slate badge-no-dot">Superseded</span>';
+      const statusBadge=v.current?'<span class="badge badge-green">Active</span>':'<span class="badge badge-slate badge-no-dot">Expired</span>';
       const srcBadge=v.source==='signed'?'<span class="badge badge-blue badge-no-dot">Signed copy</span>':'<span class="badge badge-slate badge-no-dot">System</span>';
       const viewBtn=v.source==='signed'
         ? `<button class="btn btn-secondary btn-xs" onclick="viewSignedCopy('${t}',${v.id})">View</button>`
         : `<button class="btn btn-secondary btn-xs" onclick="switchUpTabTo('${t}')">View</button>`;
-      return `<tr style="${v.current?'':'opacity:.6'}">
-        <td class="mono fw-700">${v.id}</td>
-        <td>${escHtml(v.label)}${v.fileName?`<div style="font-size:11px;color:var(--slate)">${escHtml(v.fileName)}</div>`:''}</td>
-        <td style="font-size:12px">${fmtDate(v.date)}</td>
-        <td>${srcBadge}</td>
-        <td>${statusBadge}</td>
-        <td>${viewBtn}</td>
-      </tr>`;
+      const delBtn=canDelete?` <button class="btn btn-ghost btn-xs" style="color:var(--ruby);padding:4px 6px" title="Delete" onclick="deleteDocVersion('${t}',${v.id})">${TRASH_SVG}</button>`:'';
+      return `<tr style="${v.current?'':'opacity:.6'}"><td class="mono fw-700">${v.id}</td><td>${escHtml(v.label)}${v.fileName?`<div style="font-size:11px;color:var(--slate)">${escHtml(v.fileName)}</div>`:''}</td><td style="font-size:12px">${fmtDate(v.date)}</td><td>${srcBadge}</td><td>${statusBadge}</td><td style="white-space:nowrap">${viewBtn}${delBtn}</td></tr>`;
     }).join('');
     return `<div class="card">
-      <div class="card-header"><div class="card-title">${label}</div>${editable?`<button class="btn btn-secondary btn-sm" onclick="uploadSignedCopy('${t}')">Upload Signed Copy</button>`:''}</div>
+      <div class="card-header"><div class="card-title">${label}</div><div style="display:flex;gap:8px">${editable?`<button class="btn btn-secondary btn-sm" onclick="generateDoc('${t}')">Generate</button><button class="btn btn-secondary btn-sm" onclick="uploadSignedCopy('${t}')">Upload Signed Copy</button>`:''}</div></div>
       <div class="card-body" style="padding:0">
-        <table style="width:100%"><thead><tr><th style="width:36px">#</th><th>Version</th><th>Date</th><th>Source</th><th>Status</th><th style="width:90px">Actions</th></tr></thead>
+        <table style="width:100%"><thead><tr><th style="width:36px">#</th><th>Version</th><th>Date</th><th>Source</th><th>Status</th><th style="width:120px">Actions</th></tr></thead>
         <tbody>${rows}</tbody></table>
       </div>
-      ${hasSigned?`<div class="card-body" style="border-top:1px solid var(--border);font-size:11.5px;color:var(--slate)">A signed external copy is on file and is the enforced version referenced for this document.</div>`:''}
     </div>`;
-  }).join('');
+  };
+  wrap.innerHTML=DOC_SEGMENTS.map(([seg,types])=>`<div style="font-size:12px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;color:var(--slate-2);margin:6px 0 2px">${seg}</div>`+types.map(renderType).join('')).join('');
+}
+function generateDoc(type){
+  const u=USERS.find(x=>x.id===CUR.activeUserId); if(!u)return;
+  const led=ensureDocLedgers(u); const arr=led[type];
+  arr.forEach(v=>v.current=false);
+  const nid=arr.reduce((m,v)=>Math.max(m,v.id),0)+1;
+  arr.push({id:nid,label:'System-generated v'+nid,date:todayISO(),source:'system',fileName:'',current:true});
+  toast('New document version generated','green');
+  renderDocsTab();
+}
+function deleteDocVersion(type,vid){
+  const u=USERS.find(x=>x.id===CUR.activeUserId); if(!u)return;
+  if(!confirm('Delete this document version?'))return;
+  const led=ensureDocLedgers(u); let arr=(led[type]||[]).filter(v=>v.id!==vid); led[type]=arr;
+  if(arr.length&&!arr.some(v=>v.current)) arr[arr.length-1].current=true;
+  toast('Document version deleted','');
+  renderDocsTab();
 }
 function uploadSignedCopy(type){
   const inp=$('up-signed-file-input'); if(!inp)return;
@@ -3356,7 +3362,7 @@ function uploadSignedCopy(type){
     arr.forEach(v=>v.current=false);
     const nid=arr.reduce((m,v)=>Math.max(m,v.id),0)+1;
     arr.push({id:nid,label:'Signed copy (uploaded)',date:todayISO(),source:'signed',fileName:f.name,current:true,_url:URL.createObjectURL(f)});
-    toast('Signed copy uploaded — now the enforced version','green');
+    toast('Signed copy uploaded — now the active version','green');
     renderDocsTab();
   };
   inp.click();
@@ -3375,7 +3381,7 @@ function switchUpTabTo(type){
 }
 function renderAgreementDoc(type){
   const u=USERS.find(x=>x.id===CUR.activeUserId); if(!u) return;
-  const fund=FUNDS.find(f=>f.isDefault)||FUNDS[0];
+  const fund=FUNDS.find(f=>f.status==='active')||FUNDS[0];
   const H=(s)=>`<h2 style="font-size:12px;font-weight:700;color:var(--ink);margin:18px 0 6px;text-transform:uppercase;letter-spacing:.04em">${s}</h2>`;
   const H3=(s)=>`<h3 style="font-size:12.5px;font-weight:700;color:var(--ink-3);margin:12px 0 5px">${s}</h3>`;
   const P=(s)=>`<p style="margin-bottom:10px;color:var(--ink-3);font-size:13px">${s}</p>`;
