@@ -3304,7 +3304,7 @@ function ensureDocLedgers(u){
   if(!u.docLedgers){
     const base={offer:u.offerDate,ica:u.ndaBegin,cover:u.ndaBegin,nda:u.ndaBegin};
     u.docLedgers={};
-    DOC_TYPES.forEach(([t])=>{ u.docLedgers[t]=[{id:1,label:'System-generated v1',date:base[t]||u.joinedAt||'',source:'system',fileName:'',current:true}]; });
+    DOC_TYPES.forEach(([t])=>{ u.docLedgers[t]=[{id:1,label:'System-generated',date:base[t]||u.joinedAt||'',source:'system',fileName:'',current:true}]; });
   }
   return u.docLedgers;
 }
