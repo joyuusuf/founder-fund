@@ -329,7 +329,7 @@ select.form-control { appearance: none; background-image: url("data:image/svg+xm
 }
 .hero-stats { display: flex; gap: 28px; margin-left: auto; flex-wrap: wrap; }
 .hero-stat-lbl { font-size: 10px; color: rgba(255,255,255,.45); font-weight: 600; text-transform: uppercase; letter-spacing: .06em; }
-.hero-stat-val { font-size: 20px; font-weight: 700; font-family: var(--mono); margin-top: 3px; letter-spacing: -.5px; }
+.hero-stat-val { font-size: 22px; font-weight: 800; font-family: var(--mono); margin-top: 3px; letter-spacing: -.5px; }
 
 /* ══ FUND CARD (grid view) ═════════════════════════════ */
 .fund-card { background: var(--white); border-radius: var(--r-lg); border: 1px solid var(--border); box-shadow: var(--shadow); cursor: pointer; transition: all .16s; overflow: hidden; }
@@ -1853,7 +1853,7 @@ function renderMyFunds() {
         <div style="font-size:18px;font-weight:800;letter-spacing:-.4px">${escHtml(CUR.user?.name||'')}</div>
       </div>
       <div class="hero-stats">
-        <div><div class="hero-stat-lbl">My Funds</div><div class="hero-stat-val">${myMemberships.length}</div></div>
+        <div style="text-align:center"><div class="hero-stat-lbl">My Funds</div><div class="hero-stat-val">${myMemberships.length}</div></div>
       </div>
     </div>`;
 
