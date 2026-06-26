@@ -36,8 +36,8 @@
   --violet:   #7C3AED;
   --violet-light: #EDE9FE;
 
-  --slate:    #6B7280;
-  --slate-2:  #9CA3AF;
+  --slate:    #4548A8;
+  --slate-2:  #2A5280;
 
   --font: 'Sora', sans-serif;
   --mono: 'JetBrains Mono', monospace;
@@ -239,7 +239,7 @@ select.form-control { appearance: none; background-image: url("data:image/svg+xm
 /* ══ MODAL ═════════════════════════════════════════════ */
 .modal-backdrop { display: none; position: fixed; inset: 0; background: rgba(13,17,23,.55); z-index: 200; align-items: center; justify-content: center; padding: 24px; backdrop-filter: blur(4px); }
 .modal-backdrop.open { display: flex; }
-.modal-box { background: var(--white); border-radius: var(--r-lg); padding: 28px; box-shadow: var(--shadow-lg); max-height: 88vh; overflow-y: auto; position: relative; }
+.modal-box { background: var(--white); border-radius: var(--r-lg); padding: 28px; box-shadow: var(--shadow-lg); max-height: 88vh; overflow-y: auto; position: relative; max-width: 100%; }
 .modal-title { font-size: 16px; font-weight: 700; color: var(--ink); letter-spacing: -.3px; margin-bottom: 4px; }
 .modal-sub { font-size: 12.5px; color: var(--slate); margin-bottom: 22px; line-height: 1.55; }
 .modal-actions { display: flex; gap: 8px; justify-content: flex-end; margin-top: 20px; border-top: 1px solid var(--border); padding-top: 16px; }
@@ -305,16 +305,16 @@ select.form-control { appearance: none; background-image: url("data:image/svg+xm
 /* ══ LOGIN SCREEN ══════════════════════════════════════ */
 #screen-login, #screen-signup {
   background: linear-gradient(135deg, var(--ink) 0%, #112341 100%);
-  align-items: center; justify-content: center; flex-direction: column;
+  align-items: center; justify-content: center; flex-direction: column; padding: 20px;
 }
-.signup-card { background: var(--white); border-radius: 18px; padding: 40px 36px; width: 480px; box-shadow: var(--shadow-lg); max-height: 92vh; overflow-y: auto; }
+.signup-card { background: var(--white); border-radius: 18px; padding: 40px 36px; width: 480px; max-width: 100%; box-shadow: var(--shadow-lg); max-height: 92vh; overflow-y: auto; }
 .role-explain-card { border-radius: 12px; padding: 16px 18px; margin-bottom: 18px; display: flex; align-items: flex-start; gap: 14px; border: 2px solid; }
 .role-explain-icon { font-size: 26px; flex-shrink: 0; margin-top: 2px; }
 .role-explain-title { font-size: 14px; font-weight: 800; color: var(--ink); margin-bottom: 3px; }
 .role-explain-desc { font-size: 12.5px; color: var(--slate); line-height: 1.5; }
 .role-explain-perms { margin-top: 8px; display: flex; flex-wrap: wrap; gap: 5px; }
 .role-perm-tag { font-size: 10.5px; font-weight: 600; padding: 2px 8px; border-radius: 99px; }
-.login-card { background: var(--white); border-radius: 18px; padding: 40px 36px; width: 420px; box-shadow: var(--shadow-lg); }
+.login-card { background: var(--white); border-radius: 18px; padding: 40px 36px; width: 420px; max-width: 100%; box-shadow: var(--shadow-lg); }
 .login-header { text-align: center; margin-bottom: 28px; }
 .login-icon { width: 52px; height: 52px; background: var(--sapphire); border-radius: 14px; display: inline-flex; align-items: center; justify-content: center; font-size: 18px; font-weight: 800; color: #fff; margin-bottom: 12px; letter-spacing: -.5px; }
 .login-title { font-size: 22px; font-weight: 800; color: var(--ink); letter-spacing: -.5px; }
@@ -329,7 +329,7 @@ select.form-control { appearance: none; background-image: url("data:image/svg+xm
 }
 .hero-stats { display: flex; gap: 28px; margin-left: auto; flex-wrap: wrap; }
 .hero-stat-lbl { font-size: 10px; color: rgba(255,255,255,.45); font-weight: 600; text-transform: uppercase; letter-spacing: .06em; }
-.hero-stat-val { font-size: 20px; font-weight: 700; font-family: var(--mono); margin-top: 3px; letter-spacing: -.5px; }
+.hero-stat-val { font-size: 22px; font-weight: 800; font-family: var(--mono); margin-top: 3px; letter-spacing: -.5px; }
 
 /* ══ FUND CARD (grid view) ═════════════════════════════ */
 .fund-card { background: var(--white); border-radius: var(--r-lg); border: 1px solid var(--border); box-shadow: var(--shadow); cursor: pointer; transition: all .16s; overflow: hidden; }
@@ -419,16 +419,35 @@ select.form-control { appearance: none; background-image: url("data:image/svg+xm
 .award-letter .al-sig-role{font-size:11px;color:var(--t2);font-weight:600}
 .award-letter .al-sig-date{font-size:11px;color:var(--t3);margin-top:1px}
 
+.sidebar { transition: transform .25s ease; }
+.menu-toggle { display: none; position: fixed; top: 0; left: 0; width: 52px; height: var(--topbar-h); align-items: center; justify-content: center; background: transparent; border: none; color: var(--ink); cursor: pointer; z-index: 60; }
+.sidebar-backdrop { display: none; position: fixed; inset: 0; background: rgba(13,17,23,.45); z-index: 90; }
 @media (max-width: 960px) {
   .four-col { grid-template-columns: 1fr 1fr; }
   .three-col { grid-template-columns: 1fr 1fr; }
   .two-col { grid-template-columns: 1fr; }
 }
+@media (max-width: 860px) {
+  .sidebar { transform: translateX(-100%); box-shadow: 4px 0 24px rgba(0,0,0,.18); }
+  body.sidebar-open .sidebar { transform: translateX(0); }
+  body.sidebar-open .sidebar-backdrop { display: block; }
+  .main { margin-left: 0; }
+  body.app-active .menu-toggle { display: flex; }
+  .topbar { padding-left: 56px; padding-right: 16px; }
+}
 @media (max-width: 640px) {
   .grid2 { grid-template-columns: 1fr; }
   .grid3 { grid-template-columns: 1fr; }
-  .sidebar { width: 220px; }
-  .main { margin-left: 220px; }
+  .three-col { grid-template-columns: 1fr; }
+  .tb-actions:has(.search-wrap) { width: 100%; }
+  .tb-actions .search-wrap { flex: 1; min-width: 0; }
+  .tb-actions .search-wrap .form-control { width: 100% !important; }
+  .page { padding: 20px 14px; }
+  .topbar { flex-wrap: wrap; height: auto; min-height: var(--topbar-h); padding-top: 8px; padding-bottom: 8px; }
+  .modal-backdrop { padding: 12px; }
+  .modal-box { max-width: 100%; padding: 20px; }
+  .hero-bar { flex-wrap: wrap; }
+  .login-card, .signup-card { padding: 28px 22px; }
 }
 
 /* ══ GOD MODE (admin) ══ */
@@ -447,6 +466,8 @@ select.form-control { appearance: none; background-image: url("data:image/svg+xm
 </style>
 </head>
 <body>
+<button class="menu-toggle" onclick="toggleSidebar()" aria-label="Open menu"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/></svg></button>
+<div class="sidebar-backdrop" onclick="closeSidebar()"></div>
 
 <div class="toast-container" id="toast-container"></div>
 
@@ -705,7 +726,7 @@ select.form-control { appearance: none; background-image: url("data:image/svg+xm
   <div class="page">
     <div id="my-funds-hero"></div>
     <div class="section-label" style="margin:8px 0 14px" id="my-funds-section-label">Your fund memberships</div>
-    <div id="my-funds-grid" class="three-col" style="grid-template-columns:repeat(5,1fr);gap:20px;margin-bottom:28px"></div>
+    <div id="my-funds-grid" class="three-col" style="grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr));gap:18px;margin-bottom:28px"></div>
     <div id="my-funds-graphs"></div>
   </div>
 </div>
@@ -947,11 +968,11 @@ select.form-control { appearance: none; background-image: url("data:image/svg+xm
 
     <div class="grid2" style="align-items:stretch;margin-bottom:20px">
       <div class="card">
-        <div class="card-header" style="min-height:84px"><div><div class="card-title">Total Awards</div><div id="hold-total-header" class="mono" style="font-size:24px;font-weight:800;color:var(--ink);margin-top:4px">—</div></div></div>
+        <div class="card-header" style="min-height:84px"><div class="card-title">Total Awards</div><div id="hold-total-header" class="mono" style="font-size:24px;font-weight:800;color:var(--ink)">—</div></div>
         <div class="card-body"><div id="hold-graph-value"></div></div>
       </div>
       <div class="card">
-        <div class="card-header" style="min-height:84px"><div><div class="card-title">Owner Share</div><div class="card-subtitle">Ownership across funds you participate in</div></div></div>
+        <div class="card-header" style="min-height:84px"><div class="card-title">Owner Share</div><div id="hold-owner-header" class="mono" style="font-size:24px;font-weight:800;color:var(--ink)">—</div></div>
         <div class="card-body"><div id="hold-graph-ownership"></div></div>
       </div>
     </div>
@@ -1153,10 +1174,7 @@ select.form-control { appearance: none; background-image: url("data:image/svg+xm
                   <div class="stat-sub">Contributions − Penalties</div>
                 </div>
               </div>
-              <div style="display:flex;gap:20px;flex-wrap:wrap;font-size:12px;padding-top:12px;border-top:1px solid var(--border)">
-                <div><strong>Award ID:</strong> <span id="ad-info-id">—</span></div>
-                <div><strong>Period:</strong> <span id="ad-info-period">—</span></div>
-                <div><strong>Date:</strong> <span id="ad-info-date">—</span></div>
+              <div id="ad-info-row" style="display:none;gap:20px;flex-wrap:wrap;font-size:12px;padding-top:12px;border-top:1px solid var(--border)">
                 <div id="ad-info-vest-wrap" style="display:none"><strong>Vesting Date:</strong> <span id="ad-info-vest">—</span></div>
               </div>
             </div>
@@ -1205,7 +1223,7 @@ select.form-control { appearance: none; background-image: url("data:image/svg+xm
     <!-- AUDIT LOG TAB -->
     <div class="tab-content" id="ad-tab-audit">
       <div class="card">
-        <div class="card-header"><div class="card-title">Audit Log</div><div class="card-subtitle">Award Status &amp; Vesting Status progression</div></div>
+        <div class="card-header"><div class="card-title">Audit Log</div></div>
         <div id="ad-audit-list"></div>
       </div>
     </div><!-- /ad-tab-audit -->
@@ -1333,7 +1351,7 @@ select.form-control { appearance: none; background-image: url("data:image/svg+xm
 <div id="screen-user-profile" class="screen">
 <div class="main">
   <div class="topbar">
-    <div><div class="tb-title" id="up-title">User Profile</div><div class="tb-bread">Global profile · Shared across all fund memberships</div></div>
+    <div><div class="tb-title" id="up-title">User Profile</div></div>
     <div class="tb-actions">
       <button class="btn btn-secondary" id="up-back-btn" onclick="goBack()">← Back</button>
       <button class="btn btn-primary" onclick="saveUserProfile()">Save Profile</button>
@@ -1355,19 +1373,23 @@ select.form-control { appearance: none; background-image: url("data:image/svg+xm
     <div class="two-col">
       <div>
         <div class="card" style="margin-bottom:16px">
-          <div class="card-header"><div class="card-title">Personal Information</div><span class="badge badge-blue badge-no-dot">Global — applies across all funds</span></div>
+          <div class="card-header"><div class="card-title">Personal Information</div></div>
           <div class="card-body">
             <div class="fg">
               <div class="grid2">
                 <div class="form-group"><label>Full Name <span class="req">*</span></label><input class="form-control" id="up-name" placeholder="Full name"></div>
-                
+                <div class="form-group"><label>Email</label><input class="form-control" id="up-email2" placeholder="personal@email.com"></div>
               </div>
-              <div class="form-group"><label>Street</label><input class="form-control" id="up-street" placeholder="Street address"></div>
+              <div class="form-group"><label>Street Address 1</label><input class="form-control" id="up-street1" placeholder="Street address"></div>
+              <div class="form-group"><label>Street Address 2</label><input class="form-control" id="up-street2" placeholder="Apt, Suite, Unit, etc."></div>
               <div class="grid2">
                 <div class="form-group"><label>City</label><input class="form-control" id="up-city" placeholder="City"></div>
-                <div class="form-group"><label>State</label><input class="form-control" id="up-state" placeholder="State"></div>
+                <div class="form-group"><label>State / Province</label><input class="form-control" id="up-state" placeholder="State / Province"></div>
               </div>
-              <div class="form-group"><label>Email</label><input class="form-control" id="up-email2" placeholder="personal@email.com"></div>
+              <div class="grid2">
+                <div class="form-group"><label>Zip / Postal Code</label><input class="form-control" id="up-zip" placeholder="Zip / Postal code"></div>
+                <div class="form-group"><label>Country</label><input class="form-control" id="up-country" placeholder="Country"></div>
+              </div>
 
               
               
@@ -1399,7 +1421,7 @@ select.form-control { appearance: none; background-image: url("data:image/svg+xm
     <div class="tab-content" id="up-tab-relationship">
       <div class="card">
         <div class="card-header"><div class="card-title">Relationship History</div><button class="btn btn-secondary btn-sm" id="up-rel-add-btn" onclick="openRelEntry()">+ Add Relationship</button></div>
-        <div class="card-body" style="padding:0">
+        <div class="card-body" style="padding:0;overflow-x:auto">
           <table style="width:100%"><thead><tr><th style="width:36px">#</th><th>Title</th><th>Hourly Rate</th><th>Service Description</th><th>Begin</th><th>End</th><th>Status</th><th style="width:120px">Actions</th></tr></thead>
           <tbody id="up-rel-tbody"></tbody></table>
         </div>
@@ -1472,7 +1494,7 @@ select.form-control { appearance: none; background-image: url("data:image/svg+xm
 <div id="screen-admin" class="screen">
 <div class="main">
   <div class="topbar">
-    <div><div class="tb-title">All Funds</div><div class="tb-bread">Administrator console · aggregated across every fund</div></div>
+    <div><div class="tb-title">All Funds</div></div>
     <div class="tb-actions">
       <button class="btn btn-secondary" onclick="renderAdmin()"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px"><polyline points="21 4 21 10 15 10"/><path d="M20 14a8 8 0 11-2.3-6.7L21 10"/></svg> Refresh</button>
     </div>
@@ -1484,11 +1506,10 @@ select.form-control { appearance: none; background-image: url("data:image/svg+xm
         <div class="avatar avatar-lg" style="background:linear-gradient(135deg,#7C3AED,#2563EB)"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M10 20V4M16 20v-6M22 20H2"/></svg></div>
         <div>
           <div class="god-hero-title">All Funds</div>
-          <div class="god-hero-sub" id="god-hero-sub">A consolidated, system-wide view of every fund. All edits happen inside each fund's own view.</div>
         </div>
       </div>
       <div class="card" style="margin-bottom:20px">
-        <div class="card-header"><div class="card-title">Funds</div><div class="card-subtitle">All funds — including those you do not participate in</div></div>
+        <div class="card-header"><div class="card-title">Funds</div></div>
         <div class="tbl-wrap"><table>
           <thead><tr><th>Fund</th><th style="text-align:right">Total Awards</th><th style="text-align:right">Admin Awards</th><th style="text-align:right">Admin Share</th></tr></thead>
           <tbody id="adm-funds-tbody"></tbody>
@@ -1496,12 +1517,24 @@ select.form-control { appearance: none; background-image: url("data:image/svg+xm
       </div>
       <div class="four-col" style="margin-bottom:20px" id="admin-stats"></div>
       <div class="card" style="margin-bottom:20px">
-        <div class="card-header"><div class="card-title">Total Awards by Fund</div><div class="card-subtitle">Aggregated across all funds in the system</div></div>
+        <div class="card-header"><div class="card-title">Total Awards by Fund</div></div>
         <div class="card-body"><div id="admin-bars"></div></div>
       </div>
     </div>
   </div>
 </div>
+</div>
+<div class="modal-backdrop" id="modal-doc-editor">
+  <div class="modal-box" style="width:880px;max-width:95vw;max-height:90vh;display:flex;flex-direction:column">
+    <button class="modal-close" onclick="closeModal('modal-doc-editor')"><svg width="14" height="14" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 5l10 10M15 5L5 15"/></svg></button>
+    <div class="modal-title" id="doc-editor-title">Document</div>
+    <div class="modal-sub" id="doc-editor-sub"></div>
+    <div id="doc-editor-body" contenteditable="true" style="flex:1;overflow:auto;border:1px solid var(--border);border-radius:var(--r);padding:22px 26px;background:#fff;font-size:13px;line-height:1.75;margin:12px 0;text-align:justify"></div>
+    <div class="modal-actions">
+      <button class="btn btn-secondary" onclick="closeModal('modal-doc-editor')">Cancel</button>
+      <button class="btn btn-primary" id="doc-editor-save" onclick="saveDocEditor()">Save &amp; Publish</button>
+    </div>
+  </div>
 </div>
 <script>
 /* ══════════════════════════════════════════════════════════
@@ -1523,7 +1556,7 @@ const FUNDS = [
   { id:'f2', name:"Seed Round Fund", company:'021', isDefault:false, status:'archived', effectiveDate:'2025-07-15', initPeriod:90, otThreshold:40, otCoef:1.25, bonusPct:5, clientServices:'artificial intelligence accounting, strategy, and alignment software and educational products' },
   { id:'f3', name:"Beta Fund", company:'021', isDefault:false, status:'nominated', effectiveDate:'2025-10-01', initPeriod:60, otThreshold:40, otCoef:1.5, bonusPct:8, clientServices:'artificial intelligence accounting, strategy, and alignment software and educational products' },
   { id:'f4', name:"David Fund", company:'021', isDefault:false, status:'active', effectiveDate:'2026-03-01', initPeriod:90, otThreshold:40, otCoef:1.5, bonusPct:10, clientServices:'artificial intelligence accounting, strategy, and alignment software and educational products' },
-  { id:'f5', name:"Rikers Fund", company:'021', isDefault:false, status:'active', effectiveDate:'2026-03-01', initPeriod:90, otThreshold:40, otCoef:1.5, bonusPct:10, clientServices:'artificial intelligence accounting, strategy, and alignment software and educational products' },
+  { id:'f5', name:"Ryker Fund", company:'021', isDefault:false, status:'active', effectiveDate:'2026-03-01', initPeriod:90, otThreshold:40, otCoef:1.5, bonusPct:10, clientServices:'artificial intelligence accounting, strategy, and alignment software and educational products' },
 ];
 
 // MEMBERSHIPS — junction: userId × fundId × fundRole
@@ -1562,7 +1595,7 @@ let AWARDS = [
     { id:'li5', kind:'contribution', inputType:'hourly', label:'Hourly Inputs (×1)', quantity:40, rate:110, earned:4400 },
     { id:'li6', kind:'penalty', inputType:'penalty', label:'Penalty: Poor Time Tracking (minor)', quantity:1, rate:-100, earned:-100, severity:'minor', category:'Poor Time Tracking', notes:'Failed to submit hours within 14-day window.' },
   ]},
-  { id:'aw4', fundId:'f1', userId:'u1', code:'AW-0004', periodLabel:'Jan 2026 — Cash', awardDate:'2026-01-31', status:'drafted', vesting:'unvested', audit:[{ts:'2026-01-31 11:05',actor:'David Boctor',kind:'Contribution',from:'—',to:'Cash added'},{ts:'2026-01-31 11:00',actor:'David Boctor',kind:'Award Status',from:'—',to:'Drafted'}], approvedBy:'u2', lineItems:[
+  { id:'aw4', fundId:'f1', userId:'u1', code:'AW-0004', periodLabel:'Jan 2026', awardDate:'2026-01-31', status:'drafted', vesting:'unvested', audit:[{ts:'2026-01-31 11:05',actor:'David Boctor',kind:'Contribution',from:'—',to:'Cash added'},{ts:'2026-01-31 11:00',actor:'David Boctor',kind:'Award Status',from:'—',to:'Drafted'}], approvedBy:'u2', lineItems:[
     { id:'li7', kind:'contribution', inputType:'cash', label:'Cash Inputs (×1)', quantity:1, rate:10000, earned:10000 },
   ]},
   { id:'aw5', fundId:'f2', userId:'u1', code:'AW-0005', periodLabel:'Q3 2025', awardDate:'2025-09-30', status:'recorded', vesting:'vested', audit:[{ts:'2025-09-30 16:10',actor:'Ryker Rinehart',kind:'Vesting',from:'—',to:'Vesting date set: September 30, 2026'},{ts:'2025-09-30 16:08',actor:'Ryker Rinehart',kind:'Vesting Status',from:'Vesting',to:'Vested'},{ts:'2025-09-30 16:06',actor:'Ryker Rinehart',kind:'Vesting Status',from:'Unvested',to:'Vesting'},{ts:'2025-09-30 16:00',actor:'Ryker Rinehart',kind:'Award Status',from:'Secretary Approval Requested',to:'Recorded'},{ts:'2025-09-29 16:00',actor:'David Boctor',kind:'Award Status',from:'Manager Approved',to:'Secretary Approval Requested'},{ts:'2025-09-29 15:00',actor:'David Boctor',kind:'Award Status',from:'Manager Approval Requested',to:'Manager Approved'},{ts:'2025-09-28 12:00',actor:'David Boctor',kind:'Award Status',from:'Owner Approval Requested',to:'Owner Approved'},{ts:'2025-09-27 10:00',actor:'Ryker Rinehart',kind:'Award Status',from:'Drafted',to:'Owner Approval Requested'},{ts:'2025-09-26 09:00',actor:'Ryker Rinehart',kind:'Award Status',from:'—',to:'Drafted'}], approvedBy:'u2', lineItems:[
@@ -1572,7 +1605,7 @@ let AWARDS = [
 
 /* ══ AWARD STATUS + VESTING WORKFLOW ═════════════════════ */
 const AWARD_FLOW=['drafted','owner_sig_requested','signed_by_owner','manager_sig_requested','signed_by_manager','secretary_sig_requested','recorded'];
-const AWARD_LABEL={drafted:'Drafted',owner_sig_requested:'Owner Approval Requested',signed_by_owner:'Owner Approved',manager_sig_requested:'Manager Approval Requested',signed_by_manager:'Manager Approved',secretary_sig_requested:'Secretary Approval Requested',recorded:'Recorded'};
+const AWARD_LABEL={drafted:'Drafted',owner_sig_requested:'Owner Approval Requested',signed_by_owner:'Owner Approved',manager_sig_requested:'Manager Approval Requested',signed_by_manager:'Secretary Approved',secretary_sig_requested:'Secretary Approval Requested',recorded:'Recorded'};
 const AWARD_NEXT={drafted:'Request Owner Approval',owner_sig_requested:'Approve as Owner',signed_by_owner:'Request Manager Approval',manager_sig_requested:'Approve as Manager',signed_by_manager:'Request Secretary Approval',secretary_sig_requested:'Record (Secretary Approval)'};
 const VESTING_FLOW=['unvested','vesting','vested'];
 const VESTING_LABEL={unvested:'Unvested',vesting:'Vesting',vested:'Vested'};
@@ -1758,6 +1791,8 @@ function fundRolePill(r){
   return `<span class="role-pill ${cls}">${lbl}</span>`;
 }
 
+function toggleSidebar(){ document.body.classList.toggle('sidebar-open'); }
+function closeSidebar(){ document.body.classList.remove('sidebar-open'); }
 function goTo(id) {
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   const t=$( id);
@@ -1773,6 +1808,8 @@ function goTo(id) {
   t.classList.add('active');
   CUR.prev=CUR.screen; CUR.screen=id;
   window.scrollTo(0,0);
+  closeSidebar();
+  document.body.classList.add('app-active');
   applyPermissions();
   // hydrate
   if(id==='screen-my-funds') renderMyFunds();
@@ -1807,6 +1844,7 @@ function handleLogout() {
   CUR.user=null; CUR.screen='screen-login';
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   $('screen-login').classList.add('active');
+  document.body.classList.remove('app-active'); closeSidebar();
   toast('Logged out','');
 }
 
@@ -1820,9 +1858,7 @@ function renderMyFunds() {
   const breadEl=$('my-funds-bread');
   const sectionEl=$('my-funds-section-label');
   if(titleEl) titleEl.textContent=isOp?'My Funds':'My Holdings';
-  if(breadEl)  breadEl.textContent=isOp
-    ?'Operational dashboard · Manage funds, members, and awards'
-    :'Your personal inputs holdings across all funds you participate in';
+  if(breadEl)  breadEl.textContent='';
   if(sectionEl) sectionEl.textContent='Your fund memberships';
 
   const myMemberships=membershipsForUser(CUR.user?.id);
@@ -1841,10 +1877,9 @@ function renderMyFunds() {
       <div class="avatar avatar-lg" style="background:${avatarColor}">${initials(CUR.user?.name||'')}</div>
       <div>
         <div style="font-size:18px;font-weight:800;letter-spacing:-.4px">${escHtml(CUR.user?.name||'')}</div>
-        <div style="font-size:12px;color:rgba(255,255,255,.5);margin-top:3px">${systemRoleLabel(CUR.user?.systemRole)} · ${escHtml(CUR.user?.email||'')}</div>
       </div>
       <div class="hero-stats">
-        <div><div class="hero-stat-lbl">My Funds</div><div class="hero-stat-val">${myMemberships.length}</div></div>
+        <div style="text-align:center"><div class="hero-stat-lbl">My Funds</div><div class="hero-stat-val">${myMemberships.length}</div></div>
       </div>
     </div>`;
 
@@ -1907,8 +1942,7 @@ function renderMyFunds() {
         <div class="fund-stat-cell"><div class="fund-stat-label">My Awards</div><div class="fund-stat-val">${fmt$(inputs.net)}</div></div>
         <div class="fund-stat-cell"><div class="fund-stat-label">Owner Share</div><div class="fund-stat-val" style="color:var(--sapphire)">${equity.toFixed(2)}%</div></div>
       </div>
-      <div class="fund-card-footer">
-        <span style="font-size:11.5px;color:var(--slate)">Joined ${fmtDate(m.joinedAt)}</span>
+      <div class="fund-card-footer" style="justify-content:flex-end">
         <span style="font-size:12px;font-weight:600;color:var(--sapphire)">View Fund →</span>
       </div>
     </div>`;
@@ -2029,7 +2063,6 @@ function renderFundsTable(filter=''){
     return `<tr>
       <td>
         <div class="td-name" style="cursor:pointer;color:var(--sapphire)" onclick="openFundDetails('${f.id}')">${escHtml(f.name)}</div>
-        <div style="font-size:11px;color:var(--slate)">${escHtml(f.company)}</div>
       </td>
       <td class="mono">${memberCount}</td>
       <td class="mono">${f.otThreshold} hrs/wk</td>
@@ -2210,7 +2243,7 @@ function confirmRemoveMember(){
 function renderHoldings(){
   const fund=FUNDS.find(f=>f.id===CUR.activeFundId); if(!fund)return;
   $('hold-title').textContent=fund.name;
-  $('hold-bread').textContent='Fund Details';
+  { const myMem=MEMBERSHIPS.find(m=>m.userId===CUR.user?.id&&m.fundId===fund.id); $('hold-bread').textContent='Fund Details'+(myMem&&myMem.joinedAt?' · Joined '+fmtLongDate(myMem.joinedAt):''); }
   $('hold-fund-name').textContent=fund.name;
   $('hold-breadcrumb').innerHTML=`<a onclick="goTo('screen-my-funds')">My Funds</a><span class="breadcrumb-sep">›</span><span>${escHtml(fund.name)}</span>`;
   const canEdit=isSecretaryOrManager(fund.id);
@@ -2283,6 +2316,7 @@ function renderOwnershipGraph(fund,mems){
   const mine=Math.max(0,Math.min(100,computeEquityPct(meId,fund.id)));
   const rest=Math.max(0,100-mine);
   const meName=USERS.find(u=>u.id===meId)?.name||'You';
+  const ownHdr=$('hold-owner-header'); if(ownHdr)ownHdr.textContent=mine.toFixed(2)+'%';
   el.innerHTML=`
     <div style="display:flex;align-items:center;gap:18px;flex-wrap:wrap">
       ${pieSvg([{value:mine,color:'#2563EB'},{value:rest,color:'#D7DCE6'}],200)}
@@ -2371,11 +2405,38 @@ function newAward(){ CUR.activeAwardId=null; CUR.prev='screen-ledger'; goTo('scr
 function openUserProfile(userId){
   CUR.activeUserId=userId; CUR.prev=CUR.screen; goTo('screen-user-profile');
 }
+function formatAddress(u){
+  if(!u) return '';
+  // Structured fields are the source of truth; fall back to legacy single-string address.
+  const hasStructured = u.street1||u.street2||u.city||u.state||u.zip||u.country;
+  if(!hasStructured) return u.address||'';
+  const line1 = [u.street1, u.street2].filter(Boolean).join(', ');
+  const cityState = [u.city, u.state].filter(Boolean).join(', ');
+  const cityStateZip = [cityState, u.zip].filter(Boolean).join(' ');
+  return [line1, cityStateZip, u.country].filter(Boolean).join(', ');
+}
+function parseLegacyAddress(addr){
+  // Best-effort migration of "Street, City, ST ZIP" into structured parts.
+  const parts=(addr||'').split(',').map(s=>s.trim());
+  const stateZip=(parts[2]||'').trim();
+  const m=stateZip.match(/^(.*?)\s+(\S+)$/);
+  return { street1:parts[0]||'', street2:'', city:parts[1]||'', state:m?m[1]:stateZip, zip:m?m[2]:'', country:'' };
+}
 function renderUserProfileScreen(){
   const u=USERS.find(x=>x.id===CUR.activeUserId); if(!u)return;
   $('up-title').textContent=u.name;
   $('up-name').value=u.name||'';
-  {const _ap=(u.address||'').split(',').map(s=>s.trim());$('up-street').value=_ap[0]||'';$('up-city').value=_ap[1]||'';$('up-state').value=_ap[2]||'';}
+  {
+    let a={street1:u.street1,street2:u.street2,city:u.city,state:u.state,zip:u.zip,country:u.country};
+    const hasStructured=a.street1||a.street2||a.city||a.state||a.zip||a.country;
+    if(!hasStructured && u.address) a=parseLegacyAddress(u.address);
+    $('up-street1').value=a.street1||'';
+    $('up-street2').value=a.street2||'';
+    $('up-city').value=a.city||'';
+    $('up-state').value=a.state||'';
+    $('up-zip').value=a.zip||'';
+    $('up-country').value=a.country||'';
+  }
   $('up-email2').value=u.email2||'';
   $('up-uid').textContent=u.id;
   $('up-sysrole').innerHTML=rolePill(u.systemRole);
@@ -2383,13 +2444,19 @@ function renderUserProfileScreen(){
   const isSelf=u.id===CUR.user?.id;
   const canEditOther=CUR.user?.systemRole==='fund_manager';
   const editable=isSelf||canEditOther;
-  ['up-name','up-street','up-city','up-state','up-email2'].forEach(id=>{ const el=$(id); if(el)el.disabled=!editable; });
+  ['up-name','up-street1','up-street2','up-city','up-state','up-zip','up-country','up-email2'].forEach(id=>{ const el=$(id); if(el)el.disabled=!editable; });
   renderRelationshipTab();
 }
 function saveUserProfile(){
   const u=USERS.find(x=>x.id===CUR.activeUserId); if(!u)return;
   u.name=$('up-name').value.trim()||u.name;
-  u.address=[$('up-street').value.trim(),$('up-city').value.trim(),$('up-state').value.trim()].filter(Boolean).join(', ');
+  u.street1=$('up-street1').value.trim();
+  u.street2=$('up-street2').value.trim();
+  u.city=$('up-city').value.trim();
+  u.state=$('up-state').value.trim();
+  u.zip=$('up-zip').value.trim();
+  u.country=$('up-country').value.trim();
+  u.address=formatAddress(u); // keep derived single-line address in sync for documents & displays
   u.email2=$('up-email2').value.trim();
   if(u.id===CUR.user?.id)CUR.user=u;
   toast('Profile saved','green');
@@ -2758,10 +2825,7 @@ function renderAwardDetail(){
   $('ad-sum-pen').textContent=t.penalties?'−'+fmt$(t.penalties):fmt$(0);
   $('ad-sum-pen-c').textContent=liveP.length+' item'+(liveP.length!==1?'s':'');
   $('ad-sum-net').textContent=(t.net<0?'−':'')+fmt$(Math.abs(t.net));
-  $('ad-info-id').textContent=awardCode(a);
-  $('ad-info-period').textContent=a.periodLabel;
-  $('ad-info-date').textContent=fmtDate(a.awardDate);
-  (function(){const vd=awardVestDate(a);const vw=$('ad-info-vest-wrap');if(vw){if(isAwardRecorded(a)&&vd){vw.style.display='';$('ad-info-vest').textContent=fmtLongDate(vd);}else{vw.style.display='none';}}})();
+  (function(){const vd=awardVestDate(a);const row=$('ad-info-row'),vw=$('ad-info-vest-wrap');if(isAwardRecorded(a)&&vd){if(vw){vw.style.display='';$('ad-info-vest').textContent=fmtLongDate(vd);}if(row)row.style.display='flex';}else{if(vw)vw.style.display='none';if(row)row.style.display='none';}})();
   $('ad-locked-notice').innerHTML = recorded
     ? `<div class="notice notice-info" style="margin-bottom:14px"><span class="notice-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 018 0v3"/></svg></span><span><strong>Recorded &amp; finalized.</strong> This award is locked and cannot be edited. Changes require a reversal from the ledger.</span></div>`
     : '';
@@ -3035,6 +3099,23 @@ function switchAdTabById(tabId){
 }
 
 function reverseAwardFromDetail(awardId){ reverseAward(awardId); if(isReversed(awardId)){ goTo('screen-ledger'); } }
+function letterContribRows(a,u,fund){
+  // Always itemise the standard input categories (labor: hourly/overtime/bonus, plus cash & non-cash),
+  // matching the Summary tab — even when a category is zero, so the letter lists every input type.
+  const items=(a.lineItems||[]).filter(li=>!li.reversedAt&&li.kind==='contribution');
+  const ncTypes=[['hourly','Hourly Inputs'],['overtime','Overtime Inputs'],['bonus','Bonus Inputs']];
+  const used=new Set(); const rows=[];
+  ncTypes.forEach(([type,label])=>{
+    const li=items.find(l=>l.inputType===type);
+    if(li)used.add(li.id);
+    rows.push({label: li?li.label:label, qty: li?(li.quantity||0):0, rate: li?(li.rate||0):nonCashRate(type,u,fund), earned: li?(li.earned||0):0});
+  });
+  const cashLis=items.filter(l=>l.inputType==='cash');
+  if(cashLis.length){ cashLis.forEach(li=>{used.add(li.id); rows.push({label:li.label||'Cash Inputs', qty:li.quantity||1, rate:li.rate||0, earned:li.earned||0});}); }
+  else { rows.push({label:'Cash Inputs', qty:0, rate:0, earned:0}); }
+  items.filter(l=>!used.has(l.id)).forEach(li=>{ rows.push({label:li.label||'Non-Cash Inputs', qty:li.quantity||0, rate:li.rate||0, earned:li.earned||0}); });
+  return rows;
+}
 function renderAwardLetter(a, u){
   const el=document.getElementById('ad-letter-body'); if(!el) return;
   const la=document.getElementById('ad-letter-actions');
@@ -3058,12 +3139,12 @@ function renderAwardLetter(a, u){
   const penaltyQty=liveP.reduce((s,li)=>s+(li.quantity||1),0);
   const createdDate=fmtDate(a.awardDate);
 
-  const contribRows=liveC.map(li=>`
+  const contribRows=letterContribRows(a,u,fund).map(r=>`
     <tr>
-      <td>${escHtml(li.label)}</td>
-      <td>${Math.round(Number(li.quantity||0))}</td>
-      <td>${fmt$(li.rate||0)}</td>
-      <td>${fmt$(li.earned||0)}</td>
+      <td>${escHtml(r.label)}</td>
+      <td>${Math.round(Number(r.qty||0))}</td>
+      <td>${fmt$(r.rate||0)}</td>
+      <td>${fmt$(r.earned||0)}</td>
     </tr>`).join('');
 
   const penRows=liveP.map(li=>`
@@ -3097,7 +3178,7 @@ function renderAwardLetter(a, u){
         </tr>
       </thead>
       <tbody>
-        ${contribRows||'<tr><td colspan="4" style="text-align:center;color:#94a3b8;padding:14px">— no contribution line items —</td></tr>'}
+        ${contribRows||'<tr><td colspan="4" style="text-align:center;color:#4548A8;padding:14px">— no contribution line items —</td></tr>'}
         <tr class="al-total">
           <td>Total Contributions</td>
           <td>${Math.round(contribQty)}</td>
@@ -3197,11 +3278,11 @@ function downloadAwardPdf(){
   const penaltyQty=liveP.reduce((s,li)=>s+(li.quantity||1),0);
   const cell='border:1px solid #000;padding:8px 11px;font-size:13px;';
 
-  const contribRows=liveC.map(li=>`<tr>
-    <td style="${cell}font-weight:600">${escHtml(li.label)}</td>
-    <td style="${cell}text-align:center">${Math.round(Number(li.quantity||0))}</td>
-    <td style="${cell}text-align:center">${fmt$(li.rate||0)}</td>
-    <td style="${cell}text-align:right;font-weight:700">${fmt$(li.earned||0)}</td>
+  const contribRows=letterContribRows(a,u,fund).map(r=>`<tr>
+    <td style="${cell}font-weight:600">${escHtml(r.label)}</td>
+    <td style="${cell}text-align:center">${Math.round(Number(r.qty||0))}</td>
+    <td style="${cell}text-align:center">${fmt$(r.rate||0)}</td>
+    <td style="${cell}text-align:right;font-weight:700">${fmt$(r.earned||0)}</td>
   </tr>`).join('');
 
   const penRows=liveP.map(li=>`<tr>
@@ -3231,7 +3312,7 @@ function downloadAwardPdf(){
         <th style="${cell}background:#fff;text-align:center">Earned</th>
       </tr></thead>
       <tbody>
-        ${contribRows||`<tr><td colspan="4" style="${cell}text-align:center;color:#94a3b8">— no contribution line items —</td></tr>`}
+        ${contribRows||`<tr><td colspan="4" style="${cell}text-align:center;color:#4548A8">— no contribution line items —</td></tr>`}
         <tr style="background:#f8fafc">
           <td style="${cell}font-weight:700">Total Contributions</td>
           <td style="${cell}text-align:center;font-weight:700">${Math.round(contribQty)}</td>
@@ -3258,19 +3339,19 @@ function downloadAwardPdf(){
       <div>
         <div style="border-bottom:1px solid #1e293b;height:38px;font-family:'Caveat','Brush Script MT',cursive;font-size:20px">${escHtml(u?.name||'')}</div>
         <div style="font-size:11px;font-weight:600;margin-top:4px">Co-Founder</div>
-        <div style="font-size:11px;color:#64748b;margin-top:1px">${escHtml(createdDate)}</div>
+        <div style="font-size:11px;color:#4548A8;margin-top:1px">${escHtml(createdDate)}</div>
       </div>
       <div>
         <div style="border-bottom:1px solid #1e293b;height:38px;font-family:'Caveat','Brush Script MT',cursive;font-size:20px">${escHtml(secretary?.name||'')}</div>
         <div style="font-size:11px;font-weight:600;margin-top:4px">Fund Secretary</div>
-        <div style="font-size:11px;color:#64748b;margin-top:1px">${escHtml(createdDate)}</div>
+        <div style="font-size:11px;color:#4548A8;margin-top:1px">${escHtml(createdDate)}</div>
       </div>
     </div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:36px 50px">
       <div>
         <div style="border-bottom:1px solid #1e293b;height:38px;font-family:'Caveat','Brush Script MT',cursive;font-size:20px">${escHtml(manager?.name||'')}</div>
         <div style="font-size:11px;font-weight:600;margin-top:4px">Founder and CEO</div>
-        <div style="font-size:11px;color:#64748b;margin-top:1px">${escHtml(createdDate)}</div>
+        <div style="font-size:11px;color:#4548A8;margin-top:1px">${escHtml(createdDate)}</div>
       </div>
       <div></div>
     </div>
@@ -3314,26 +3395,98 @@ function renderDocsTab(){
   const editable=(u.id===CUR.user?.id)||CUR.user?.systemRole==='fund_manager';
   const canDelete=CUR.user?.systemRole==='fund_manager'||MEMBERSHIPS.some(m=>m.userId===CUR.user?.id&&m.fundRole==='fund_secretary');
   const wrap=$('up-doc-ledgers'); if(!wrap)return;
-  const renderType=([t,label])=>{
+  const sourceLabel=v=>v.source==='signed'?'Uploaded':'System Generated';
+  const renderCard=([t,label])=>{
     const versions=led[t]||[];
-    const rows=versions.map(v=>{
-      const statusBadge=v.current?'<span class="badge badge-green">Active</span>':'<span class="badge badge-slate badge-no-dot">Expired</span>';
-      const srcBadge=v.source==='signed'?'<span class="badge badge-blue badge-no-dot">Signed copy</span>':'<span class="badge badge-slate badge-no-dot">System</span>';
-      const viewBtn=v.source==='signed'
-        ? `<button class="btn btn-secondary btn-xs" onclick="viewSignedCopy('${t}',${v.id})">View</button>`
-        : `<button class="btn btn-secondary btn-xs" onclick="switchUpTabTo('${t}')">View</button>`;
-      const delBtn=canDelete?` <button class="btn btn-ghost btn-xs" style="color:var(--ruby);padding:4px 6px" title="Delete" onclick="deleteDocVersion('${t}',${v.id})">${TRASH_SVG}</button>`:'';
-      return `<tr style="${v.current?'':'opacity:.6'}"><td class="mono fw-700">${v.id}</td><td>${escHtml(v.label)}${v.fileName?`<div style="font-size:11px;color:var(--slate)">${escHtml(v.fileName)}</div>`:''}</td><td style="font-size:12px">${fmtDate(v.date)}</td><td>${srcBadge}</td><td>${statusBadge}</td><td style="white-space:nowrap">${viewBtn}${delBtn}</td></tr>`;
-    }).join('');
-    return `<div class="card">
-      <div class="card-header"><div class="card-title">${label}</div><div style="display:flex;gap:8px">${editable?`<button class="btn btn-secondary btn-sm" onclick="generateDoc('${t}')">Generate</button><button class="btn btn-secondary btn-sm" onclick="uploadSignedCopy('${t}')">Upload Signed Copy</button>`:''}</div></div>
-      <div class="card-body" style="padding:0">
-        <table style="width:100%"><thead><tr><th style="width:36px">#</th><th>Version</th><th>Date</th><th>Source</th><th>Status</th><th style="width:120px">Actions</th></tr></thead>
-        <tbody>${rows}</tbody></table>
+    const cur=versions.find(v=>v.current)||versions[versions.length-1]||null;
+    const multi=versions.length>1;
+    const editBtn=(editable&&cur)?`<button class="btn btn-secondary btn-sm" onclick="openDocEditor('${t}','edit')">Edit</button>`:'';
+    const genBtns=editable?`<button class="btn btn-secondary btn-sm" onclick="openDocEditor('${t}','generate')">Generate New Version</button><button class="btn btn-secondary btn-sm" onclick="uploadSignedCopy('${t}')">Upload Signed Copy</button>`:'';
+    let viewBtn='';
+    if(cur){ viewBtn = cur.source==='signed'
+      ? `<button class="btn btn-secondary btn-sm" onclick="viewSignedCopy('${t}',${cur.id})">View</button>`
+      : `<button class="btn btn-secondary btn-sm" onclick="switchUpTabTo('${t}')">View</button>`; }
+    const delBtn=(canDelete&&cur)?`<button class="btn btn-ghost btn-sm" style="color:var(--ruby)" title="Delete current version" onclick="deleteDocVersion('${t}',${cur.id})">${TRASH_SVG} Delete</button>`:'';
+    const statusBadge=cur
+      ? (cur.source==='signed'?'<span class="badge badge-blue badge-no-dot">Signed</span>':'<span class="badge badge-green">Active</span>')
+      : '<span class="badge badge-slate badge-no-dot">None</span>';
+    const meta = cur ? `
+      <div style="display:grid;grid-template-columns:auto 1fr;gap:7px 18px;font-size:12.5px;align-items:center">
+        <div style="color:var(--slate)">Source</div><div style="font-weight:600">${sourceLabel(cur)}${cur.fileName?` <span style="color:var(--slate);font-weight:400">\u00b7 ${escHtml(cur.fileName)}</span>`:''}</div>
+        <div style="color:var(--slate)">Version</div><div style="font-weight:600">${versions.length}</div>
+        <div style="color:var(--slate)">Last Modified</div><div style="font-weight:600">${fmtDate(cur.date)}</div>
+      </div>`
+      : `<div style="font-size:12.5px;color:var(--slate);padding:4px 0">No document generated yet.</div>`;
+    let history='';
+    if(multi){
+      const rows=versions.map(v=>{
+        const sBadge=v.current?'<span class="badge badge-green">Active</span>':'<span class="badge badge-slate badge-no-dot">Expired</span>';
+        const srcBadge=v.source==='signed'?'<span class="badge badge-blue badge-no-dot">Signed copy</span>':'<span class="badge badge-slate badge-no-dot">System</span>';
+        const vView=v.source==='signed'
+          ? `<button class="btn btn-secondary btn-xs" onclick="viewSignedCopy('${t}',${v.id})">View</button>`
+          : `<button class="btn btn-secondary btn-xs" onclick="switchUpTabTo('${t}')">View</button>`;
+        const vDel=canDelete?` <button class="btn btn-ghost btn-xs" style="color:var(--ruby);padding:4px 6px" title="Delete" onclick="deleteDocVersion('${t}',${v.id})">${TRASH_SVG}</button>`:'';
+        return `<tr style="${v.current?'':'opacity:.6'}"><td class="mono fw-700">${v.id}</td><td>${escHtml(v.label)}${v.fileName?`<div style="font-size:11px;color:var(--slate)">${escHtml(v.fileName)}</div>`:''}</td><td style="font-size:12px">${fmtDate(v.date)}</td><td>${srcBadge}</td><td>${sBadge}</td><td style="white-space:nowrap">${vView}${vDel}</td></tr>`;
+      }).join('');
+      history=`<div style="margin-top:16px">
+        <div style="font-size:12px;font-weight:700;color:var(--slate-2);margin-bottom:6px">Version history</div>
+        <div style="border:1px solid var(--border);border-radius:var(--r);overflow-x:auto">
+          <table style="width:100%"><thead><tr><th style="width:36px">#</th><th>Version</th><th>Date</th><th>Source</th><th>Status</th><th style="width:120px">Actions</th></tr></thead>
+          <tbody>${rows}</tbody></table>
+        </div></div>`;
+    }
+    return `<div class="card" style="display:flex;flex-direction:column">
+      <div class="card-header" style="align-items:center"><div class="card-title">${label}</div>${statusBadge}</div>
+      <div class="card-body">
+        ${meta}
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:16px">${editBtn}${genBtns}${viewBtn}${delBtn}</div>
+        ${history}
       </div>
     </div>`;
   };
-  wrap.innerHTML=DOC_SEGMENTS.map(([seg,types])=>`<div style="font-size:12px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;color:var(--slate-2);margin:6px 0 2px">${seg}</div>`+types.map(renderType).join('')).join('');
+  wrap.innerHTML=DOC_SEGMENTS.map(([seg,types])=>
+    `<div style="font-size:12px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;color:var(--slate-2);margin:14px 0 4px">${seg}</div>`+
+    `<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:16px;margin-bottom:6px">${types.map(renderCard).join('')}</div>`
+  ).join('');
+}
+function getDocHTML(type,u){
+  const cur=((u.docLedgers&&u.docLedgers[type])||[]).find(v=>v.current);
+  if(cur&&cur.content) return cur.content;
+  renderAgreementDoc(type);
+  const id={offer:'up-offer-doc',nda:'up-nda-doc',ica:'up-ica-doc',cover:'up-cover-doc'}[type];
+  const el=document.getElementById(id);
+  return (el&&el.innerHTML)||'<p>(No template content available)</p>';
+}
+function openDocEditor(type,mode){
+  const u=USERS.find(x=>x.id===CUR.activeUserId); if(!u)return;
+  ensureDocLedgers(u);
+  CUR._docEditor={type,mode};
+  const labelMap=Object.fromEntries(DOC_TYPES);
+  $('doc-editor-title').textContent=(mode==='generate'?'Generate New Version \u2014 ':'Edit \u2014 ')+(labelMap[type]||'Document');
+  $('doc-editor-sub').textContent=mode==='generate'
+    ? 'Review and edit the content below. Save & Publish creates a new Active version and marks the previous version Expired.'
+    : 'Edit the current Active version in place. Your changes are saved to this version.';
+  $('doc-editor-body').innerHTML=getDocHTML(type,u);
+  $('doc-editor-save').textContent=mode==='generate'?'Save & Publish':'Save';
+  openModal('modal-doc-editor');
+}
+function saveDocEditor(){
+  const st=CUR._docEditor; if(!st)return;
+  const u=USERS.find(x=>x.id===CUR.activeUserId); if(!u)return;
+  const led=ensureDocLedgers(u); const arr=led[st.type]||(led[st.type]=[]);
+  const html=$('doc-editor-body').innerHTML;
+  if(st.mode==='generate'){
+    arr.forEach(v=>v.current=false);
+    const nid=arr.reduce((m,v)=>Math.max(m,v.id),0)+1;
+    arr.push({id:nid,label:'System-generated v'+nid,date:todayISO(),source:'system',fileName:'',current:true,content:html});
+    toast('New version published \u2014 previous version marked Expired','green');
+  }else{
+    const cur=arr.find(v=>v.current);
+    if(cur){cur.content=html;cur.date=todayISO();}
+    toast('Document updated','green');
+  }
+  closeModal('modal-doc-editor');
+  renderDocsTab();
 }
 function generateDoc(type){
   const u=USERS.find(x=>x.id===CUR.activeUserId); if(!u)return;
@@ -3381,6 +3534,8 @@ function switchUpTabTo(type){
 }
 function renderAgreementDoc(type){
   const u=USERS.find(x=>x.id===CUR.activeUserId); if(!u) return;
+  { const _led=u.docLedgers&&u.docLedgers[type]; const _cur=_led&&_led.find(v=>v.current);
+    if(_cur&&_cur.content){ const _cid={offer:'up-offer-doc',nda:'up-nda-doc',ica:'up-ica-doc',cover:'up-cover-doc'}[type]; const _el=document.getElementById(_cid); if(_el){_el.innerHTML=_cur.content;return;} } }
   const fund=FUNDS.find(f=>f.status==='active')||FUNDS[0];
   const H=(s)=>`<h2 style="font-size:12px;font-weight:700;color:var(--ink);margin:18px 0 6px;text-transform:uppercase;letter-spacing:.04em">${s}</h2>`;
   const H3=(s)=>`<h3 style="font-size:12.5px;font-weight:700;color:var(--ink-3);margin:12px 0 5px">${s}</h3>`;
@@ -3449,7 +3604,7 @@ function renderAgreementDoc(type){
     document.getElementById('up-nda-doc').innerHTML=`
       <h1 style="font-size:16px;text-align:center;margin-bottom:20px;color:var(--ink)">Confidentiality, Non-Disclosure, and Restricted Use Agreement</h1>
       ${P('This Confidentiality, Non-Disclosure, and Restricted Use Agreement ("Agreement") is entered into as of ' + B(fmtDate(u.ndaBegin)||'[NDA Effective Date]') + ' ("Effective Date"), by and between:')}
-      ${P('David Boctor, an individual doing business as 021.CEO ("Providing Party"), located at 3317 Shadybrook Lane, Chico, CA 95928, and ' + B(u.name) + ' ("Receiving Party") located at ' + escHtml(u.address||'[Address]') + '.')}
+      ${P('David Boctor, an individual doing business as 021.CEO ("Providing Party"), located at 3317 Shadybrook Lane, Chico, CA 95928, and ' + B(u.name) + ' ("Receiving Party") located at ' + escHtml(formatAddress(u)||'[Address]') + '.')}
       ${P('The Providing Party and Receiving Party may each be referred to as a "Party" and collectively as the "Parties."')}
       ${H('1. Purpose')}
       ${P('The Receiving Party will receive access to confidential, proprietary, and trade secret information solely for the purpose of performing ' + B(u.service||'[Services]') + ' for 021.CEO in connection with their engagement, including the design, development, analysis, or support of the Providing Party\'s software platform, products, or operations (the "Purpose").')}
@@ -3503,7 +3658,7 @@ function renderAgreementDoc(type){
     document.getElementById('up-ica-doc').innerHTML=`
       <h1 style="font-size:16px;text-align:center;margin-bottom:6px;color:var(--ink)">Independent Contractor Agreement</h1>
       <p style="text-align:center;font-style:italic;color:var(--slate);margin-bottom:20px;font-size:13px">For the Provision of Consulting Services</p>
-      ${P('This INDEPENDENT CONTRACTOR AGREEMENT FOR CONSULTING SERVICES ("Agreement") is made and entered into as of ' + B(fmtDate(u.ndaBegin)||'[Effective Date]') + ', by and between ' + B(u.name) + ' ("Consultant") at ' + escHtml(u.address||'[Address]') + ' and David Boctor D.B.A. 021 ("Client"), located at 3317 Shadybrook Lane, Chico, CA 95928.')}
+      ${P('This INDEPENDENT CONTRACTOR AGREEMENT FOR CONSULTING SERVICES ("Agreement") is made and entered into as of ' + B(fmtDate(u.ndaBegin)||'[Effective Date]') + ', by and between ' + B(u.name) + ' ("Consultant") at ' + escHtml(formatAddress(u)||'[Address]') + ' and David Boctor D.B.A. 021 ("Client"), located at 3317 Shadybrook Lane, Chico, CA 95928.')}
       ${H('Background Information')}
       ${P('WHEREAS, Client is attempting to offer ' + escHtml(fund?.clientServices||'[Client Services Description]') + ' (hereinafter "Services"); and')}
       ${P('WHEREAS, Client has the need from time to time to retain the services of Consultant to research, develop, modify, or protect certain functional components and/or appearance attributes of its Services; and')}
@@ -3627,6 +3782,7 @@ function openSignup(){
 function goToLogin(){
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   $('screen-login').classList.add('active');
+  document.body.classList.remove('app-active'); closeSidebar();
 }
 
 function suLookup(){
@@ -3834,7 +3990,7 @@ function renderAdmin(){
     const adminShare=isMember?computeEquityPct(adminId,f.id):0;
     const sl=(FUND_STATUSES.find(s=>s[0]===f.status)||['',f.status])[1];
     return `<tr style="cursor:pointer" onclick="openFundDetails('${f.id}')">
-      <td><div class="td-name">${escHtml(f.name)}</div><div style="font-size:11px;color:var(--slate)">${escHtml(f.company)} \u00B7 ${sl}</div></td>
+      <td><div class="td-name">${escHtml(f.name)}</div><div style="font-size:11px;color:var(--slate)">${sl}</div></td>
       <td class="mono fw-700" style="text-align:right">${fmt$(total)}</td>
       <td class="mono" style="text-align:right">${fmt$(adminAwards)}</td>
       <td class="mono" style="text-align:right">${Math.round(adminShare)}%</td>
