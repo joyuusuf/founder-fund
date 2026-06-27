@@ -995,8 +995,9 @@ select.form-control { appearance: none; background-image: url("data:image/svg+xm
           <thead>
             <tr>
               <th>Participant</th>
-              <th>Non-Cash Contributions</th>
-              <th>Cash Contributions</th>
+              <th>Labor Inputs</th>
+              <th>Cash Inputs</th>
+              <th>Non-Cash Inputs</th>
               <th>Penalties</th>
               <th>Total Awards</th>
             </tr>
@@ -1695,6 +1696,14 @@ function awardInputBreakdown(award){
   });
   return {labor,cash,nonCash,pen};
 }
+function participantInputBreakdown(userId,fundId){
+  let labor=0,cash=0,nonCash=0,pen=0;
+  awardsForUserInFund(userId,fundId).forEach(a=>{
+    const b=awardInputBreakdown(a);
+    labor+=b.labor; cash+=b.cash; nonCash+=b.nonCash; pen+=b.pen;
+  });
+  return {labor,cash,nonCash,pen,net:labor+cash+nonCash-pen};
+}
 
 function computeUserInputsInFund(userId, fundId) {
   let base=0,ot=0,bonus=0,cash=0,penalty=0;
@@ -1972,7 +1981,7 @@ function renderMyFunds() {
     if(!fund)return'';
     const inputs=computeUserInputsInFund(m.userId,m.fundId);
     const equity=computeEquityPct(m.userId,m.fundId);
-    const roles=`${rolePill('fund_owner')}${m.fundRole==='fund_manager'?rolePill('fund_manager'):''}${m.fundRole==='fund_secretary'?rolePill('fund_secretary'):''}`;
+    const roles=fundRolePill(m.fundRole||'fund_owner');
     return `<tr style="cursor:pointer" onclick="viewFundHoldings('${fund.id}')">
       <td><div class="td-name">${escHtml(fund.name)}</div></td>
       <td>${fundStatusBadge(fund.status)}</td>
@@ -2319,13 +2328,14 @@ function renderHoldings(){
   renderFundValueGraph(fund,mems);
   renderOwnershipGraph(fund,mems);
   // R5: totals row
-  let tCash=0,tNon=0,tPen=0,tNet=0;
-  mems.forEach(m=>{const i=computeUserInputsInFund(m.userId,fund.id);tCash+=i.cash;tNon+=i.base+i.ot+i.bonus;tPen+=i.penalty;tNet+=i.net;});
+  let tLabor=0,tCash=0,tNon=0,tPen=0,tNet=0;
+  mems.forEach(m=>{const b=participantInputBreakdown(m.userId,fund.id);tLabor+=b.labor;tCash+=b.cash;tNon+=b.nonCash;tPen+=b.pen;tNet+=b.net;});
   const tf=$('hold-participants-tfoot');
   if(tf) tf.innerHTML=mems.length?`<tr>
     <td style="font-weight:800;color:var(--ink)">Total</td>
-    <td class="mono fw-700">${tNon?fmt$(tNon):'—'}</td>
+    <td class="mono fw-700">${tLabor?fmt$(tLabor):'—'}</td>
     <td class="mono fw-700" style="color:var(--emerald)">${tCash?fmt$(tCash):'—'}</td>
+    <td class="mono fw-700">${tNon?fmt$(tNon):'—'}</td>
     <td class="mono fw-700" style="color:${tPen?'var(--ruby)':'var(--slate-2)'}">${tPen?'−'+fmt$(tPen):'—'}</td>
     <td class="mono fw-700">${fmt$(tNet)}</td>
   </tr>`:'';
@@ -2333,7 +2343,7 @@ function renderHoldings(){
   const tbody=$('hold-participants-tbody'); if(!tbody)return;
   tbody.innerHTML=mems.map((m,i)=>{
     const u=USERS.find(x=>x.id===m.userId); if(!u)return'';
-    const inp=computeUserInputsInFund(m.userId,fund.id);
+    const b=participantInputBreakdown(m.userId,fund.id);
     const color=COLORS[i%COLORS.length];
     const roleTags=`<span class="role-tag rt-owner">Owner</span>`
       +(m.fundRole==='fund_manager'?`<span class="role-tag rt-manager">Manager</span>`:'')
@@ -2348,10 +2358,11 @@ function renderHoldings(){
           </div>
         </div>
       </td>
-      <td class="mono">${(inp.base+inp.ot+inp.bonus)?fmt$(inp.base+inp.ot+inp.bonus):'—'}</td>
-      <td class="mono" style="color:var(--emerald)">${inp.cash?fmt$(inp.cash):'—'}</td>
-      <td class="mono" style="color:${inp.penalty?'var(--ruby)':'var(--slate-2)'}">${inp.penalty?'−'+fmt$(inp.penalty):'—'}</td>
-      <td class="mono fw-700">${fmt$(inp.net)}</td>
+      <td class="mono">${b.labor?fmt$(b.labor):'—'}</td>
+      <td class="mono" style="color:var(--emerald)">${b.cash?fmt$(b.cash):'—'}</td>
+      <td class="mono">${b.nonCash?fmt$(b.nonCash):'—'}</td>
+      <td class="mono" style="color:${b.pen?'var(--ruby)':'var(--slate-2)'}">${b.pen?'−'+fmt$(b.pen):'—'}</td>
+      <td class="mono fw-700">${fmt$(b.net)}</td>
     </tr>`;
   }).join('');
 }
