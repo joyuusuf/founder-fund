@@ -1677,7 +1677,7 @@ const initials = name => (name||'?').split(' ').map(w=>w[0]).join('').slice(0,2)
 const COLORS = ['#2563EB','#0D9488','#7C3AED','#D97706','#DC2626','#0369A1','#16A34A','#9333EA'];
 /* Blue/green-only palette for chart segments (fund & participant graphs).
    Keeps every graph in the same blue–green family while staying distinguishable. */
-const GRAPH_COLORS = ['#2563EB','#0D9488','#1D4ED8','#16A34A','#3B82F6','#047857','#0EA5E9','#15803D'];
+const GRAPH_COLORS = ['#2563EB','#0D9488'];
 
 function membershipFor(userId, fundId) { return MEMBERSHIPS.find(m=>m.userId===userId && m.fundId===fundId); }
 function membershipsForUser(userId) { return MEMBERSHIPS.filter(m=>m.userId===userId); }
@@ -1968,19 +1968,19 @@ function renderMyFunds() {
     gEl.innerHTML=`<div class="grid2" style="align-items:start;margin-bottom:4px">
       <div class="card"><div class="card-header"><div class="card-title">Cumulative Awards</div><div class="mono" style="font-size:20px;font-weight:800;color:var(--ink)">${fmt$(grand)}</div></div>
         <div class="card-body"><div style="display:flex;align-items:center;gap:18px;flex-wrap:wrap">
-          ${donutSvg([{value:myNet,color:'#2563EB'},{value:othersNet,color:'#16A34A'}], fmt$(grand),'Cumulative',200)}
+          ${donutSvg([{value:myNet,color:'#2563EB'},{value:othersNet,color:'#0D9488'}], fmt$(grand),'Cumulative',200)}
           <div style="flex:1;min-width:170px;display:flex;flex-direction:column;gap:9px;font-size:12.5px">
             <div style="display:flex;align-items:center;gap:8px"><span style="width:11px;height:11px;border-radius:3px;background:#2563EB;flex-shrink:0"></span><span style="flex:1;color:var(--slate)">Your awards</span><span class="mono fw-700" style="min-width:84px;text-align:right">${fmt$(myNet)}</span></div>
-            <div style="display:flex;align-items:center;gap:8px"><span style="width:11px;height:11px;border-radius:3px;background:#16A34A;flex-shrink:0"></span><span style="flex:1;color:var(--slate)">All other participants</span><span class="mono fw-700" style="min-width:84px;text-align:right">${fmt$(othersNet)}</span></div>
+            <div style="display:flex;align-items:center;gap:8px"><span style="width:11px;height:11px;border-radius:3px;background:#0D9488;flex-shrink:0"></span><span style="flex:1;color:var(--slate)">All other participants</span><span class="mono fw-700" style="min-width:84px;text-align:right">${fmt$(othersNet)}</span></div>
           </div>
         </div></div>
       </div>
       <div class="card"><div class="card-header"><div class="card-title">Ownership Share</div><div class="mono" style="font-size:20px;font-weight:800;color:var(--sapphire)">${myShare.toFixed(2)}%</div></div>
         <div class="card-body"><div style="display:flex;align-items:center;gap:18px;flex-wrap:wrap">
-          ${pieSvg([{value:myShare,color:'#2563EB'},{value:Math.max(0,100-myShare),color:'#16A34A'}],200)}
+          ${pieSvg([{value:myShare,color:'#2563EB'},{value:Math.max(0,100-myShare),color:'#0D9488'}],200)}
           <div style="flex:1;min-width:170px;display:flex;flex-direction:column;gap:10px;font-size:12.5px">
             <div style="display:flex;align-items:center;gap:8px"><span style="width:11px;height:11px;border-radius:3px;background:#2563EB;flex-shrink:0"></span><span style="flex:1;font-weight:600">You</span><span class="mono fw-700" style="min-width:84px;text-align:right">${myShare.toFixed(2)}%</span></div>
-            <div style="display:flex;align-items:center;gap:8px"><span style="width:11px;height:11px;border-radius:3px;background:#16A34A;flex-shrink:0"></span><span style="flex:1;font-weight:600">All others</span><span class="mono fw-700" style="min-width:84px;text-align:right">${Math.max(0,100-myShare).toFixed(2)}%</span></div>
+            <div style="display:flex;align-items:center;gap:8px"><span style="width:11px;height:11px;border-radius:3px;background:#0D9488;flex-shrink:0"></span><span style="flex:1;font-weight:600">All others</span><span class="mono fw-700" style="min-width:84px;text-align:right">${Math.max(0,100-myShare).toFixed(2)}%</span></div>
           </div>
         </div></div>
       </div>
@@ -2439,10 +2439,10 @@ function renderOwnershipGraph(fund,mems){
   const ownHdr=$('hold-owner-header'); if(ownHdr)ownHdr.textContent=mine.toFixed(2)+'%';
   el.innerHTML=`
     <div style="display:flex;align-items:center;gap:18px;flex-wrap:wrap">
-      ${pieSvg([{value:mine,color:'#2563EB'},{value:rest,color:'#16A34A'}],200)}
+      ${pieSvg([{value:mine,color:'#2563EB'},{value:rest,color:'#0D9488'}],200)}
       <div style="flex:1;min-width:190px;display:flex;flex-direction:column;gap:12px;font-size:12.5px">
         <div style="display:flex;align-items:center;gap:8px"><span style="width:11px;height:11px;border-radius:3px;background:#2563EB;flex-shrink:0"></span><span style="flex:1;font-weight:600">${escHtml(meName)} (you)</span><span class="mono fw-700" style="min-width:64px;text-align:right">${mine.toFixed(2)}%</span></div>
-        <div style="display:flex;align-items:center;gap:8px"><span style="width:11px;height:11px;border-radius:3px;background:#16A34A;flex-shrink:0"></span><span style="flex:1;font-weight:600">Other participants</span><span class="mono fw-700" style="min-width:64px;text-align:right">${rest.toFixed(2)}%</span></div>
+        <div style="display:flex;align-items:center;gap:8px"><span style="width:11px;height:11px;border-radius:3px;background:#0D9488;flex-shrink:0"></span><span style="flex:1;font-weight:600">Other participants</span><span class="mono fw-700" style="min-width:64px;text-align:right">${rest.toFixed(2)}%</span></div>
       </div>
     </div>`;
 }
