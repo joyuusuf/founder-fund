@@ -186,6 +186,14 @@ body { font-family: var(--font); background: var(--surface); color: var(--ink); 
 .role-manager { background: var(--sapphire-light); color: var(--sapphire); }
 .role-secretary { background: #E0F2FE; color: #0369A1; }
 .role-owner { background: var(--violet-light); color: var(--violet); }
+.role-combo { display: inline-flex; align-items: stretch; border: 1px solid var(--border); border-radius: 6px; overflow: hidden; font-size: 11.5px; font-weight: 600; line-height: 1; }
+.role-combo-seg { display: inline-flex; align-items: center; gap: 5px; padding: 4px 9px; }
+.role-combo-seg + .role-combo-seg { border-left: 1px solid var(--border); }
+.rc-user { background: var(--surface); color: var(--slate-2); }
+.rc-admin { background: var(--white); color: var(--ink); }
+.rc-dot { width: 5px; height: 5px; border-radius: 50%; flex-shrink: 0; }
+.rc-dot-user { background: #94A3B8; }
+.rc-dot-admin { background: var(--sapphire); }
 
 /* ══ TABLES ════════════════════════════════════════════ */
 .tbl-wrap { overflow-x: auto; }
@@ -1827,6 +1835,12 @@ function fundRolePill(r){
   const cls=r==='fund_manager'?'role-manager':r==='fund_secretary'?'role-secretary':'role-owner';
   return `<span class="role-pill ${cls}">${lbl}</span>`;
 }
+function systemRolePill(r){
+  const admin=r==='fund_manager';
+  const userSeg=`<span class="role-combo-seg rc-user"><span class="rc-dot rc-dot-user"></span>User</span>`;
+  const adminSeg=admin?`<span class="role-combo-seg rc-admin"><span class="rc-dot rc-dot-admin"></span>Admin</span>`:'';
+  return `<span class="role-combo">${userSeg}${adminSeg}</span>`;
+}
 
 function toggleSidebar(){ document.body.classList.toggle('sidebar-open'); }
 function closeSidebar(){ document.body.classList.remove('sidebar-open'); }
@@ -1937,7 +1951,7 @@ function renderMyFunds() {
 
   /* ── MY FUNDS ─────────────────────────────────────────── */
   const thead=$('my-funds-thead');
-  if(thead) thead.innerHTML=`<tr><th>Fund Name</th><th>Status</th><th>Role</th><th style="text-align:right">My Awards</th><th style="text-align:right">Ownership Share</th><th style="width:96px;text-align:right">Action</th></tr>`;
+  if(thead) thead.innerHTML=`<tr><th>Fund Name</th><th>Status</th><th style="text-align:center">Role</th><th style="text-align:center">My Awards</th><th style="text-align:center">Ownership Share</th><th style="width:96px;text-align:right">Action</th></tr>`;
 
   // Graphs: you (blue) vs all other participants (green), cumulative + ownership
   (function(){
@@ -1987,13 +2001,14 @@ function renderMyFunds() {
     if(!fund)return'';
     const inputs=computeUserInputsInFund(m.userId,m.fundId);
     const equity=computeEquityPct(m.userId,m.fundId);
-    const roles=fundRolePill(m.fundRole||'fund_owner');
+    const sysRole=(USERS.find(u=>u.id===m.userId)||CUR.user||{}).systemRole;
+    const roles=systemRolePill(sysRole);
     return `<tr style="cursor:pointer" onclick="viewFundHoldings('${fund.id}')">
       <td><div class="td-name">${escHtml(fund.name)}</div></td>
       <td>${fundStatusBadge(fund.status)}</td>
-      <td><div style="display:flex;gap:4px;flex-wrap:wrap">${roles}</div></td>
-      <td class="mono fw-700" style="text-align:right">${fmt$(inputs.net)}</td>
-      <td class="mono fw-700" style="text-align:right;color:var(--sapphire)">${equity.toFixed(2)}%</td>
+      <td><div style="display:flex;gap:4px;flex-wrap:wrap;justify-content:center">${roles}</div></td>
+      <td class="mono fw-700" style="text-align:center">${fmt$(inputs.net)}</td>
+      <td class="mono fw-700" style="text-align:center;color:var(--sapphire)">${equity.toFixed(2)}%</td>
       <td style="text-align:right;white-space:nowrap"><span class="row-view-link">View<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></td>
     </tr>`;
   }).join('');
@@ -2002,7 +2017,7 @@ function renderMyFunds() {
 /* ── ALL FUNDS (operators) — merged into the My Funds toggle ── */
 function renderAllFundsView(){
   const thead=$('my-funds-thead');
-  if(thead) thead.innerHTML=`<tr><th>Fund Name</th><th>Status</th><th style="text-align:right">Members</th><th style="text-align:right">Aggregate Awards</th><th style="width:110px;text-align:right">Action</th></tr>`;
+  if(thead) thead.innerHTML=`<tr><th>Fund Name</th><th>Status</th><th style="text-align:center">Members</th><th style="text-align:center">Aggregate Awards</th><th style="width:110px;text-align:center">Action</th></tr>`;
   // Aggregate Awards by Fund graph (system-wide, multi-fund)
   let aggAwards=0;
   const segs=FUNDS.map((f,i)=>{const v=Math.max(0,fundTotalAwards(f.id));aggAwards+=v;return{label:f.name,value:v,color:GRAPH_COLORS[i%GRAPH_COLORS.length]};});
@@ -2023,9 +2038,9 @@ function renderAllFundsView(){
     return `<tr style="cursor:pointer" onclick="openFundDetails('${f.id}')">
       <td><div class="td-name">${escHtml(f.name)}</div></td>
       <td>${fundStatusBadge(f.status)}</td>
-      <td class="mono" style="text-align:right">${members}</td>
-      <td class="mono fw-700" style="text-align:right">${fmt$(fundTotalAwards(f.id))}</td>
-      <td style="text-align:right;white-space:nowrap"><span class="row-view-link">Manage<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></td>
+      <td class="mono" style="text-align:center">${members}</td>
+      <td class="mono fw-700" style="text-align:center">${fmt$(fundTotalAwards(f.id))}</td>
+      <td style="text-align:center;white-space:nowrap"><span class="row-view-link">Manage<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></td>
     </tr>`;
   }).join('');
 }
