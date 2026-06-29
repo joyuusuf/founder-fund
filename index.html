@@ -1006,11 +1006,11 @@ select.form-control { appearance: none; background-image: url("data:image/svg+xm
           <thead>
             <tr>
               <th>Participant</th>
-              <th>Labor Inputs</th>
-              <th>Cash Inputs</th>
-              <th>Non-Cash Inputs</th>
-              <th>Penalties</th>
-              <th>Total Awards</th>
+              <th style="text-align:center">Labor Inputs</th>
+              <th style="text-align:center">Cash Inputs</th>
+              <th style="text-align:center">Non-Cash Inputs</th>
+              <th style="text-align:center">Penalties</th>
+              <th style="text-align:center">Total Awards</th>
             </tr>
           </thead>
           <tbody id="hold-participants-tbody"></tbody>
@@ -1837,9 +1837,8 @@ function fundRolePill(r){
 }
 function systemRolePill(r){
   const admin=r==='fund_manager';
-  const userSeg=`<span class="role-combo-seg rc-user"><span class="rc-dot rc-dot-user"></span>User</span>`;
-  const adminSeg=admin?`<span class="role-combo-seg rc-admin"><span class="rc-dot rc-dot-admin"></span>Admin</span>`:'';
-  return `<span class="role-combo">${userSeg}${adminSeg}</span>`;
+  if(!admin) return '';
+  return `<span class="role-combo"><span class="role-combo-seg rc-admin"><span class="rc-dot rc-dot-admin"></span>Administrator</span></span>`;
 }
 
 function toggleSidebar(){ document.body.classList.toggle('sidebar-open'); }
@@ -2354,11 +2353,11 @@ function renderHoldings(){
   const tf=$('hold-participants-tfoot');
   if(tf) tf.innerHTML=mems.length?`<tr>
     <td style="font-weight:800;color:var(--ink)">Total</td>
-    <td class="mono fw-700">${tLabor?fmt$(tLabor):'—'}</td>
-    <td class="mono fw-700" style="color:var(--emerald)">${tCash?fmt$(tCash):'—'}</td>
-    <td class="mono fw-700">${tNon?fmt$(tNon):'—'}</td>
-    <td class="mono fw-700" style="color:${tPen?'var(--ruby)':'var(--slate-2)'}">${tPen?'−'+fmt$(tPen):'—'}</td>
-    <td class="mono fw-700">${fmt$(tNet)}</td>
+    <td class="mono fw-700" style="text-align:center">${tLabor?fmt$(tLabor):'—'}</td>
+    <td class="mono fw-700" style="text-align:center;color:var(--emerald)">${tCash?fmt$(tCash):'—'}</td>
+    <td class="mono fw-700" style="text-align:center">${tNon?fmt$(tNon):'—'}</td>
+    <td class="mono fw-700" style="text-align:center;color:${tPen?'var(--ruby)':'var(--slate-2)'}">${tPen?'−'+fmt$(tPen):'—'}</td>
+    <td class="mono fw-700" style="text-align:center">${fmt$(tNet)}</td>
   </tr>`:'';
   // Table
   const tbody=$('hold-participants-tbody'); if(!tbody)return;
@@ -2379,11 +2378,11 @@ function renderHoldings(){
           </div>
         </div>
       </td>
-      <td class="mono">${b.labor?fmt$(b.labor):'—'}</td>
-      <td class="mono" style="color:var(--emerald)">${b.cash?fmt$(b.cash):'—'}</td>
-      <td class="mono">${b.nonCash?fmt$(b.nonCash):'—'}</td>
-      <td class="mono" style="color:${b.pen?'var(--ruby)':'var(--slate-2)'}">${b.pen?'−'+fmt$(b.pen):'—'}</td>
-      <td class="mono fw-700">${fmt$(b.net)}</td>
+      <td class="mono" style="text-align:center">${b.labor?fmt$(b.labor):'—'}</td>
+      <td class="mono" style="text-align:center;color:var(--emerald)">${b.cash?fmt$(b.cash):'—'}</td>
+      <td class="mono" style="text-align:center">${b.nonCash?fmt$(b.nonCash):'—'}</td>
+      <td class="mono" style="text-align:center;color:${b.pen?'var(--ruby)':'var(--slate-2)'}">${b.pen?'−'+fmt$(b.pen):'—'}</td>
+      <td class="mono fw-700" style="text-align:center">${fmt$(b.net)}</td>
     </tr>`;
   }).join('');
 }
