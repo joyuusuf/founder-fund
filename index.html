@@ -197,6 +197,9 @@ tbody tr:hover { background: var(--surface); }
 #ledger-tbody tr:hover { background: var(--sapphire-light); box-shadow: inset 3px 0 0 var(--sapphire); }
 tbody td { padding: 11px 14px; color: var(--ink-3); vertical-align: middle; }
 .td-name { font-weight: 600; color: var(--ink); }
+.row-view-link { display: inline-flex; align-items: center; gap: 5px; font-size: 12px; font-weight: 600; color: var(--sapphire); white-space: nowrap; transition: gap .15s ease; }
+.row-view-link svg { width: 13px; height: 13px; flex-shrink: 0; }
+tr:hover .row-view-link { gap: 8px; }
 tfoot td { padding: 10px 14px; font-weight: 700; color: var(--ink); background: var(--surface); border-top: 2px solid var(--border); }
 
 /* ══ FORMS ═════════════════════════════════════════════ */
@@ -1664,6 +1667,9 @@ const todayISO = () => { const d=new Date(); return `${d.getFullYear()}-${String
 const uid = () => 'id-'+Date.now()+'-'+Math.floor(Math.random()*9999);
 const initials = name => (name||'?').split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase();
 const COLORS = ['#2563EB','#0D9488','#7C3AED','#D97706','#DC2626','#0369A1','#16A34A','#9333EA'];
+/* Blue/green-only palette for chart segments (fund & participant graphs).
+   Keeps every graph in the same blue–green family while staying distinguishable. */
+const GRAPH_COLORS = ['#2563EB','#0D9488','#1D4ED8','#16A34A','#3B82F6','#047857','#0EA5E9','#15803D'];
 
 function membershipFor(userId, fundId) { return MEMBERSHIPS.find(m=>m.userId===userId && m.fundId===fundId); }
 function membershipsForUser(userId) { return MEMBERSHIPS.filter(m=>m.userId===userId); }
@@ -1931,7 +1937,7 @@ function renderMyFunds() {
 
   /* ── MY FUNDS ─────────────────────────────────────────── */
   const thead=$('my-funds-thead');
-  if(thead) thead.innerHTML=`<tr><th>Fund Name</th><th>Status</th><th>Role</th><th style="text-align:right">My Awards</th><th style="text-align:right">Ownership Share</th><th style="width:60px"></th></tr>`;
+  if(thead) thead.innerHTML=`<tr><th>Fund Name</th><th>Status</th><th>Role</th><th style="text-align:right">My Awards</th><th style="text-align:right">Ownership Share</th><th style="width:96px;text-align:right">Action</th></tr>`;
 
   // Graphs: you (blue) vs all other participants (green), cumulative + ownership
   (function(){
@@ -1988,7 +1994,7 @@ function renderMyFunds() {
       <td><div style="display:flex;gap:4px;flex-wrap:wrap">${roles}</div></td>
       <td class="mono fw-700" style="text-align:right">${fmt$(inputs.net)}</td>
       <td class="mono fw-700" style="text-align:right;color:var(--sapphire)">${equity.toFixed(2)}%</td>
-      <td style="text-align:right"><span style="font-size:12px;font-weight:600;color:var(--sapphire)">View →</span></td>
+      <td style="text-align:right;white-space:nowrap"><span class="row-view-link">View<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></td>
     </tr>`;
   }).join('');
 }
@@ -1996,10 +2002,10 @@ function renderMyFunds() {
 /* ── ALL FUNDS (operators) — merged into the My Funds toggle ── */
 function renderAllFundsView(){
   const thead=$('my-funds-thead');
-  if(thead) thead.innerHTML=`<tr><th>Fund Name</th><th>Status</th><th style="text-align:right">Members</th><th style="text-align:right">Aggregate Awards</th><th style="width:60px"></th></tr>`;
+  if(thead) thead.innerHTML=`<tr><th>Fund Name</th><th>Status</th><th style="text-align:right">Members</th><th style="text-align:right">Aggregate Awards</th><th style="width:110px;text-align:right">Action</th></tr>`;
   // Aggregate Awards by Fund graph (system-wide, multi-fund)
   let aggAwards=0;
-  const segs=FUNDS.map((f,i)=>{const v=Math.max(0,fundTotalAwards(f.id));aggAwards+=v;return{label:f.name,value:v,color:COLORS[i%COLORS.length]};});
+  const segs=FUNDS.map((f,i)=>{const v=Math.max(0,fundTotalAwards(f.id));aggAwards+=v;return{label:f.name,value:v,color:GRAPH_COLORS[i%GRAPH_COLORS.length]};});
   const gEl=$('my-funds-graphs');
   if(gEl){
     gEl.innerHTML=FUNDS.length?`<div class="card" style="margin-bottom:4px"><div class="card-header"><div class="card-title">Aggregate Awards by Fund</div></div>
@@ -2019,7 +2025,7 @@ function renderAllFundsView(){
       <td>${fundStatusBadge(f.status)}</td>
       <td class="mono" style="text-align:right">${members}</td>
       <td class="mono fw-700" style="text-align:right">${fmt$(fundTotalAwards(f.id))}</td>
-      <td style="text-align:right"><span style="font-size:12px;font-weight:600;color:var(--sapphire)">Manage →</span></td>
+      <td style="text-align:right;white-space:nowrap"><span class="row-view-link">Manage<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></td>
     </tr>`;
   }).join('');
 }
@@ -2197,7 +2203,7 @@ function renderFundDetails(){
   // Share + voting percentages at the top of the fund details page
   const _mems=membershipsForFund(f.id);
   const _active=_mems.filter(m=>computeEquityPct(m.userId,f.id)>0);
-  const _eqData=_active.map((m,i)=>{const u=USERS.find(x=>x.id===m.userId);return{label:u?.name||'?',value:computeEquityPct(m.userId,f.id),color:COLORS[i%COLORS.length]};});
+  const _eqData=_active.map((m,i)=>{const u=USERS.find(x=>x.id===m.userId);return{label:u?.name||'?',value:computeEquityPct(m.userId,f.id),color:GRAPH_COLORS[i%GRAPH_COLORS.length]};});
   drawPie('fd-pie-equity',_eqData,'fd-legend-equity');
   renderPenaltyTypes(f);
   renderFdMembersTable();
@@ -2367,6 +2373,28 @@ function renderHoldings(){
   }).join('');
 }
 
+/* Normalize an award's reporting period into one consistent date format.
+   Prefers structured periodStart/periodEnd ISO dates; falls back to cleaning
+   any free-form periodLabel so weekly/monthly/quarterly entries read alike. */
+function formatPeriod(a){
+  const MON=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  const parse=iso=>{const m=/^(\d{4})-(\d{2})-(\d{2})$/.exec(String(iso||'').trim());return m?{y:+m[1],mo:+m[2]-1,d:+m[3]}:null;};
+  const s=parse(a&&a.periodStart), e=parse(a&&a.periodEnd);
+  if(s&&e){
+    // A start/end that spans a full calendar month renders as a month label,
+    // not a day range. Weekly ranges, quarters and cross-year spans are unaffected.
+    const lastDay=new Date(e.y,e.mo+1,0).getDate();
+    if(s.y===e.y && s.mo===e.mo && s.d===1 && e.d===lastDay) return `${MON[s.mo]} ${s.y}`;
+    if(s.y===e.y) return `${MON[s.mo]} ${s.d} – ${MON[e.mo]} ${e.d}, ${e.y}`;
+    return `${MON[s.mo]} ${s.d}, ${s.y} – ${MON[e.mo]} ${e.d}, ${e.y}`;
+  }
+  let lbl=String((a&&a.periodLabel)||'').trim();
+  if(!lbl) return '—';
+  if(/^reversal/i.test(lbl)) return lbl;            // leave reversal references intact
+  lbl=lbl.replace(/^week of\s+/i,'');               // drop the verbose "Week of" prefix
+  lbl=lbl.replace(/\s*[–—-]\s*/g,' – ');            // normalize all dashes to a spaced en dash
+  return lbl;
+}
 function legendRow(c,label,val){return `<div style="display:flex;align-items:center;gap:8px"><span style="width:11px;height:11px;border-radius:3px;background:${c};flex-shrink:0"></span><span style="flex:1;color:var(--slate)">${label}</span><span class="mono fw-700">${val}</span></div>`;}
 function renderFundValueGraph(fund,mems){
   let cash=0,nonCash=0,penalty=0;
@@ -2433,7 +2461,7 @@ function renderLedger(){
     const inputCell=(v)=>v?`<span class="mono fw-600" style="color:var(--emerald)">${v<0?'−':''}${fmt$(Math.abs(v))}</span>`:'<span class="mono" style="color:var(--border-2)">—</span>';
     return`<tr style="cursor:pointer${reversedFlag?';opacity:.6':''}" onclick="openAwardDetail('${a.id}')">
       <td class="mono fw-700" style="font-size:12px;white-space:nowrap">${awardCode(a)}${tags}</td>
-      <td style="font-size:12.5px">${escHtml(a.periodLabel)}</td>
+      <td style="font-size:12.5px;white-space:nowrap">${escHtml(formatPeriod(a))}</td>
       <td>
         <div style="display:flex;align-items:center;gap:10px">
           <div class="avatar avatar-sm" style="background:${color}">${initA}</div>
@@ -2927,7 +2955,7 @@ function renderAwardDetail(){
   $('ad-name').textContent=u?.name||'—';
   $('ad-meta').textContent='';
   $('ad-hero-id').textContent=awardCode(a);
-  $('ad-hero-period').textContent=a.periodLabel||'—';
+  $('ad-hero-period').textContent=formatPeriod(a);
   $('ad-hero-date').textContent=a.awardDate?fmtDate(a.awardDate):'—';
   const liveC=(a.lineItems||[]).filter(li=>!li.reversedAt&&li.kind==='contribution');
   const liveP=(a.lineItems||[]).filter(li=>!li.reversedAt&&li.kind==='penalty');
@@ -3296,7 +3324,7 @@ function renderAwardLetter(a, u){
     </div>
     <div class="al-greet">Dear ${escHtml(greetName)},</div>
     <div class="al-body">Your input totals for the current period are as follows. Please review our calculations and be sure you agree.</div>
-    <div class="al-period"><strong>Input Period:</strong> ${escHtml(a.periodLabel)}</div>
+    <div class="al-period"><strong>Input Period:</strong> ${escHtml(formatPeriod(a))}</div>
 
     <table class="al-table">
       <thead>
@@ -3435,7 +3463,7 @@ function downloadAwardPdf(){
     <div style="margin-bottom:22px">${recipientLines.map(l=>`<div>${escHtml(l)}</div>`).join('')}</div>
     <div style="margin-bottom:16px">Dear ${escHtml(greetName)},</div>
     <div style="margin-bottom:16px">Your input totals for the current period are as follows. Please review our calculations and be sure you agree.</div>
-    <div style="margin-bottom:20px"><strong>Input Period:</strong> ${escHtml(a.periodLabel)}</div>
+    <div style="margin-bottom:20px"><strong>Input Period:</strong> ${escHtml(formatPeriod(a))}</div>
     <table style="width:100%;border-collapse:collapse;margin-bottom:44px">
       <thead><tr>
         <th style="${cell}background:#fff;text-align:center">Input Type</th>
@@ -4104,7 +4132,7 @@ function renderAdmin(){
     <div class="stat-card"><div class="stat-label">Aggregate Awards</div><div class="stat-val" style="font-size:19px">${fmt$(aggAwards)}</div><div class="stat-sub">across all funds</div></div>
     <div class="stat-card"><div class="stat-label">Total Contributions</div><div class="stat-val" style="font-size:19px;color:var(--emerald)">${fmt$(aggC)}</div><div class="stat-sub">all funds combined</div></div>
     <div class="stat-card"><div class="stat-label">Total Penalties</div><div class="stat-val" style="font-size:19px;color:var(--ruby)">${fmt$(aggP)}</div><div class="stat-sub">all funds combined</div></div>`;
-  const segs=FUNDS.map((f,i)=>({label:f.name,value:Math.abs(fundTotalAwards(f.id)),raw:fundTotalAwards(f.id),color:COLORS[i%COLORS.length]}));
+  const segs=FUNDS.map((f,i)=>({label:f.name,value:Math.abs(fundTotalAwards(f.id)),raw:fundTotalAwards(f.id),color:GRAPH_COLORS[i%GRAPH_COLORS.length]}));
   $('admin-bars').innerHTML=`<div style="display:flex;align-items:center;gap:22px;flex-wrap:wrap">
     ${donutSvg(segs.map(s=>({value:s.value,color:s.color})), fmt$(aggAwards), 'Aggregate')}
     <div style="flex:1;min-width:220px;display:flex;flex-direction:column;gap:10px">

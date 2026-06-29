@@ -438,9 +438,12 @@ select.form-control { appearance: none; background-image: url("data:image/svg+xm
 @media (max-width: 640px) {
   .grid2 { grid-template-columns: 1fr; }
   .grid3 { grid-template-columns: 1fr; }
+  .three-col { grid-template-columns: 1fr; }
+  .tb-actions:has(.search-wrap) { width: 100%; }
+  .tb-actions .search-wrap { flex: 1; min-width: 0; }
+  .tb-actions .search-wrap .form-control { width: 100% !important; }
   .page { padding: 20px 14px; }
   .topbar { flex-wrap: wrap; height: auto; min-height: var(--topbar-h); padding-top: 8px; padding-bottom: 8px; }
-  .tb-actions { width: 100%; }
   .modal-backdrop { padding: 12px; }
   .modal-box { max-width: 100%; padding: 20px; }
   .hero-bar { flex-wrap: wrap; }
@@ -722,9 +725,17 @@ select.form-control { appearance: none; background-image: url("data:image/svg+xm
   </div>
   <div class="page">
     <div id="my-funds-hero"></div>
-    <div class="section-label" style="margin:8px 0 14px" id="my-funds-section-label">Your fund memberships</div>
-    <div id="my-funds-grid" class="three-col" style="grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr));gap:18px;margin-bottom:28px"></div>
+    <div id="my-funds-toggle" style="display:none;margin:6px 0 18px"></div>
     <div id="my-funds-graphs"></div>
+    <div class="section-label" style="margin:18px 0 14px" id="my-funds-section-label">Your fund memberships</div>
+    <div class="card">
+      <div class="tbl-wrap" style="max-height:460px;overflow:auto">
+        <table>
+          <thead id="my-funds-thead"></thead>
+          <tbody id="my-funds-tbody"></tbody>
+        </table>
+      </div>
+    </div>
   </div>
 </div>
 </div>
@@ -984,8 +995,9 @@ select.form-control { appearance: none; background-image: url("data:image/svg+xm
           <thead>
             <tr>
               <th>Participant</th>
-              <th>Non-Cash Contributions</th>
-              <th>Cash Contributions</th>
+              <th>Labor Inputs</th>
+              <th>Cash Inputs</th>
+              <th>Non-Cash Inputs</th>
               <th>Penalties</th>
               <th>Total Awards</th>
             </tr>
@@ -1019,7 +1031,7 @@ select.form-control { appearance: none; background-image: url("data:image/svg+xm
       <div class="tbl-wrap">
         <table>
           <thead>
-            <tr><th>ID</th><th>Period</th><th>Participant</th><th style="min-width:150px">Status</th><th>Contributions</th><th>Penalties</th><th>Award</th><th>Balance</th><th style="width:80px;text-align:center">Actions</th></tr>
+            <tr><th>ID</th><th>Period</th><th>Participant</th><th style="min-width:150px">Status</th><th style="text-align:right">Labor Inputs</th><th style="text-align:right">Cash Inputs</th><th style="text-align:right">Non-Cash Inputs</th><th style="text-align:right">Penalties</th><th style="text-align:right">Award</th><th style="text-align:right">Balance</th><th style="width:80px;text-align:center">Actions</th></tr>
           </thead>
           <tbody id="ledger-tbody"></tbody>
         </table>
@@ -1279,12 +1291,15 @@ select.form-control { appearance: none; background-image: url("data:image/svg+xm
         <div class="form-group"><label>Title</label><input class="form-control" id="rel-title" placeholder="e.g. Frontend Developer"></div>
         <div class="form-group"><label>Hourly Rate (per HR)</label><input class="form-control" type="number" id="rel-rate" placeholder="0"></div>
       </div>
-      <div class="form-group"><label>Service Description</label><textarea class="form-control" id="rel-service" rows="2" placeholder="Describe the services provided…"></textarea></div>
-      <div class="grid3">
+      <div class="grid2">
+        <div class="form-group"><label>Funded Hours</label><input class="form-control" type="number" id="rel-funded" min="0" placeholder="0" oninput="relRecalcRemaining()"></div>
+        <div class="form-group"><label>Remaining Hours</label><input class="form-control" id="rel-remaining" readonly style="background:var(--surface);color:var(--slate)" value="0"></div>
+      </div>
+      <div class="grid2">
         <div class="form-group"><label>Begin Date</label><input class="form-control" type="date" id="rel-begin"></div>
         <div class="form-group"><label>End Date</label><input class="form-control" type="date" id="rel-end"></div>
       </div>
-      <div class="form-group"><label>Status</label>
+      <div class="form-group" id="rel-status-group"><label>Status</label>
         <select class="form-control" id="rel-status">
           <option value="Offered">Offered</option>
           <option value="Active">Active</option>
@@ -1419,7 +1434,7 @@ select.form-control { appearance: none; background-image: url("data:image/svg+xm
       <div class="card">
         <div class="card-header"><div class="card-title">Relationship History</div><button class="btn btn-secondary btn-sm" id="up-rel-add-btn" onclick="openRelEntry()">+ Add Relationship</button></div>
         <div class="card-body" style="padding:0;overflow-x:auto">
-          <table style="width:100%"><thead><tr><th style="width:36px">#</th><th>Title</th><th>Hourly Rate</th><th>Service Description</th><th>Begin</th><th>End</th><th>Status</th><th style="width:120px">Actions</th></tr></thead>
+          <table style="width:100%"><thead><tr><th style="width:36px">#</th><th>Title</th><th>Hourly Rate</th><th>Funded Hrs</th><th>Used Hrs</th><th>Remaining Hrs</th><th>Begin</th><th>End</th><th>Status</th><th style="width:120px">Actions</th></tr></thead>
           <tbody id="up-rel-tbody"></tbody></table>
         </div>
       </div>
@@ -1514,7 +1529,7 @@ select.form-control { appearance: none; background-image: url("data:image/svg+xm
       </div>
       <div class="four-col" style="margin-bottom:20px" id="admin-stats"></div>
       <div class="card" style="margin-bottom:20px">
-        <div class="card-header"><div class="card-title">Total Awards by Fund</div></div>
+        <div class="card-header"><div class="card-title">Aggregate Awards by Fund</div></div>
         <div class="card-body"><div id="admin-bars"></div></div>
       </div>
     </div>
@@ -1669,6 +1684,26 @@ function awardTotals(award) {
   const p=live.filter(li=>li.kind==='penalty').reduce((s,li)=>s+Math.abs(li.earned||0),0);
   return {contributions:c,penalties:p,net:c-p};
 }
+function awardInputBreakdown(award){
+  let labor=0,cash=0,nonCash=0,pen=0;
+  if(!award || award.status==='reversed') return {labor,cash,nonCash,pen};
+  (award.lineItems||[]).filter(li=>!li.reversedAt).forEach(li=>{
+    if(li.kind==='penalty'){ pen+=Math.abs(li.earned||0); return; }
+    const it=li.inputType;
+    if(it==='hourly'||it==='overtime'||it==='bonus') labor+=li.earned||0;
+    else if(it==='cash') cash+=li.earned||0;
+    else nonCash+=li.earned||0;
+  });
+  return {labor,cash,nonCash,pen};
+}
+function participantInputBreakdown(userId,fundId){
+  let labor=0,cash=0,nonCash=0,pen=0;
+  awardsForUserInFund(userId,fundId).forEach(a=>{
+    const b=awardInputBreakdown(a);
+    labor+=b.labor; cash+=b.cash; nonCash+=b.nonCash; pen+=b.pen;
+  });
+  return {labor,cash,nonCash,pen,net:labor+cash+nonCash-pen};
+}
 
 function computeUserInputsInFund(userId, fundId) {
   let base=0,ot=0,bonus=0,cash=0,penalty=0;
@@ -1744,7 +1779,6 @@ function buildSidebar(activeId) {
     <div class="sb-section">Administration</div>
     ${lnk('screen-users',icons.users,'User Directory',pendingInvites>0?String(pendingInvites):'')}
     <div class="sb-section">Funds</div>
-    ${lnk('screen-admin',icons.shield,'All Funds')}
     ${lnk('screen-funds',icons.funds,'Manage Funds')}`;
   // Owner nav: stripped — just their own holdings + profile
   const ownerNav=`
@@ -1846,105 +1880,150 @@ function handleLogout() {
 }
 
 /* ══ MY FUNDS ════════════════════════════════════════════ */
+function fundStatusBadge(status){
+  return status==='active'?'<span class="badge badge-green">Active</span>'
+    :status==='archived'?'<span class="badge badge-slate">Archived</span>'
+    :status==='terminated'?'<span class="badge badge-red">Terminated</span>'
+    :'<span class="badge badge-amber">Nominated</span>';
+}
+function setFundsView(v){ CUR.fundsView=v; renderMyFunds(); }
 function renderMyFunds() {
   const role=CUR.user?.systemRole||'fund_owner';
   const isOp=role==='fund_manager'||role==='fund_secretary';
+  if(!CUR.fundsView) CUR.fundsView='mine';
+  // Owners only ever see their own holdings; the toggle is an operator affordance.
+  const view=(isOp&&CUR.fundsView==='all')?'all':'mine';
 
-  // Role-aware topbar
+  const myMemberships=membershipsForUser(CUR.user?.id);
+
+  // Topbar labels
   const titleEl=$('my-funds-title');
   const breadEl=$('my-funds-bread');
   const sectionEl=$('my-funds-section-label');
-  if(titleEl) titleEl.textContent=isOp?'My Funds':'My Holdings';
+  if(titleEl) titleEl.textContent=isOp?(view==='all'?'All Funds':'My Funds'):'My Holdings';
   if(breadEl)  breadEl.textContent='';
-  if(sectionEl) sectionEl.textContent='Your fund memberships';
+  if(sectionEl) sectionEl.textContent=view==='all'?'Every fund in the system':'Your fund memberships';
 
-  const myMemberships=membershipsForUser(CUR.user?.id);
-  let totalNet=0, totalContrib=0, totalPenalty=0;
-  myMemberships.forEach(m=>{
-    const i=computeUserInputsInFund(m.userId,m.fundId);
-    totalNet+=i.net; totalContrib+=i.base+i.ot+i.bonus+i.cash; totalPenalty+=i.penalty;
-  });
-
-  // Hero — consistent navy for all roles, same as original
+  // Hero
   const heroBg='linear-gradient(135deg,var(--ink) 0%,#1e4976 100%)';
-  const avatarColor=COLORS[0];
-
   $('my-funds-hero').innerHTML = `
     <div class="hero-bar" style="background:${heroBg}">
-      <div class="avatar avatar-lg" style="background:${avatarColor}">${initials(CUR.user?.name||'')}</div>
+      <div class="avatar avatar-lg" style="background:${COLORS[0]}">${initials(CUR.user?.name||'')}</div>
       <div>
         <div style="font-size:18px;font-weight:800;letter-spacing:-.4px">${escHtml(CUR.user?.name||'')}</div>
       </div>
       <div class="hero-stats">
-        <div style="text-align:center"><div class="hero-stat-lbl">My Funds</div><div class="hero-stat-val">${myMemberships.length}</div></div>
+        <div style="text-align:center"><div class="hero-stat-lbl">${view==='all'?'Total Funds':'My Funds'}</div><div class="hero-stat-val">${view==='all'?FUNDS.length:myMemberships.length}</div></div>
       </div>
     </div>`;
 
-  // two graphs at the top of My Funds
+  // Toggle (operators only): My Funds | All Funds, defaulting to My Funds
+  const tEl=$('my-funds-toggle');
+  if(tEl){
+    if(isOp){
+      tEl.style.display='';
+      const seg=(v,label)=>`<button class="btn ${view===v?'btn-primary':'btn-secondary'} btn-sm" style="min-width:104px" onclick="setFundsView('${v}')">${label}</button>`;
+      tEl.innerHTML=`<div style="display:inline-flex;gap:6px;padding:4px;background:var(--surface-2);border:1px solid var(--border);border-radius:var(--r)">${seg('mine','My Funds')}${seg('all','All Funds')}</div>`;
+    } else { tEl.style.display='none'; tEl.innerHTML=''; }
+  }
+
+  if(view==='all') return renderAllFundsView();
+
+  /* ── MY FUNDS ─────────────────────────────────────────── */
+  const thead=$('my-funds-thead');
+  if(thead) thead.innerHTML=`<tr><th>Fund Name</th><th>Status</th><th>Role</th><th style="text-align:right">My Awards</th><th style="text-align:right">Ownership Share</th><th style="width:60px"></th></tr>`;
+
+  // Graphs: you (blue) vs all other participants (green), cumulative + ownership
   (function(){
     const gEl=$('my-funds-graphs'); if(!gEl)return;
     if(!myMemberships.length){ gEl.innerHTML=''; return; }
-    let gCash=0,gNon=0,gPen=0; const byFund=[];
-    myMemberships.forEach((m,idx)=>{const i=computeUserInputsInFund(m.userId,m.fundId);gCash+=i.cash;gNon+=i.base+i.ot+i.bonus;gPen+=i.penalty;const f=FUNDS.find(x=>x.id===m.fundId);byFund.push({label:f?.name||'Fund',value:Math.max(0,i.net),color:COLORS[idx%COLORS.length]});});
-    const gTotal=gCash+gNon-gPen;
-    const gShareTotal=byFund.reduce((s,r)=>s+r.value,0);
-    gEl.innerHTML=`<div class="grid2" style="align-items:start;margin-bottom:20px">
-      <div class="card"><div class="card-header"><div class="card-title">Cumulative Awards</div></div>
+    let myNet=0, othersNet=0;
+    myMemberships.forEach(m=>{
+      const mine=Math.max(0,computeUserInputsInFund(m.userId,m.fundId).net);
+      const fundTot=Math.max(0,fundTotalAwards(m.fundId));
+      myNet+=mine; othersNet+=Math.max(0,fundTot-mine);
+    });
+    const BLUE='var(--sapphire)', GREEN='var(--emerald)';
+    const grand=myNet+othersNet;
+    const myShare=grand?(myNet/grand*100):0;
+    gEl.innerHTML=`<div class="grid2" style="align-items:start;margin-bottom:4px">
+      <div class="card"><div class="card-header"><div class="card-title">Cumulative Awards</div><div class="mono" style="font-size:20px;font-weight:800;color:var(--ink)">${fmt$(grand)}</div></div>
         <div class="card-body"><div style="display:flex;align-items:center;gap:18px;flex-wrap:wrap">
-          ${donutSvg([{value:Math.max(0,gCash),color:'#0D9488'},{value:Math.max(0,gNon),color:'#2563EB'}], fmt$(gTotal),'Cumulative')}
+          ${donutSvg([{value:myNet,color:'#2563EB'},{value:othersNet,color:'#16A34A'}], fmt$(grand),'Cumulative',200)}
           <div style="flex:1;min-width:170px;display:flex;flex-direction:column;gap:9px;font-size:12.5px">
-            ${legendRow('#0D9488','Cash Inputs',fmt$(gCash))}
-            ${legendRow('#2563EB','Non-Cash Inputs',fmt$(gNon))}
+            <div style="display:flex;align-items:center;gap:8px"><span style="width:11px;height:11px;border-radius:3px;background:#2563EB;flex-shrink:0"></span><span style="flex:1;color:var(--slate)">Your awards</span><span class="mono fw-700" style="min-width:84px;text-align:right">${fmt$(myNet)}</span></div>
+            <div style="display:flex;align-items:center;gap:8px"><span style="width:11px;height:11px;border-radius:3px;background:#16A34A;flex-shrink:0"></span><span style="flex:1;color:var(--slate)">All other participants</span><span class="mono fw-700" style="min-width:84px;text-align:right">${fmt$(othersNet)}</span></div>
           </div>
         </div></div>
       </div>
-      <div class="card"><div class="card-header"><div class="card-title">Owner Share by Fund</div></div>
+      <div class="card"><div class="card-header"><div class="card-title">Ownership Share</div><div class="mono" style="font-size:20px;font-weight:800;color:var(--sapphire)">${myShare.toFixed(2)}%</div></div>
         <div class="card-body"><div style="display:flex;align-items:center;gap:18px;flex-wrap:wrap">
-          ${pieSvg(byFund)}
+          ${pieSvg([{value:myShare,color:'#2563EB'},{value:Math.max(0,100-myShare),color:'#16A34A'}],200)}
           <div style="flex:1;min-width:170px;display:flex;flex-direction:column;gap:10px;font-size:12.5px">
-            ${byFund.map(r=>`<div style="display:flex;align-items:center;gap:8px"><span style="width:11px;height:11px;border-radius:3px;background:${r.color};flex-shrink:0"></span><span style="flex:1;font-weight:600">${escHtml(r.label)}</span><span class="mono fw-700">${gShareTotal?(r.value/gShareTotal*100).toFixed(2):'0.00'}%</span></div>`).join('')}
+            <div style="display:flex;align-items:center;gap:8px"><span style="width:11px;height:11px;border-radius:3px;background:#2563EB;flex-shrink:0"></span><span style="flex:1;font-weight:600">You</span><span class="mono fw-700" style="min-width:84px;text-align:right">${myShare.toFixed(2)}%</span></div>
+            <div style="display:flex;align-items:center;gap:8px"><span style="width:11px;height:11px;border-radius:3px;background:#16A34A;flex-shrink:0"></span><span style="flex:1;font-weight:600">All others</span><span class="mono fw-700" style="min-width:84px;text-align:right">${Math.max(0,100-myShare).toFixed(2)}%</span></div>
           </div>
         </div></div>
       </div>
     </div>`;
   })();
 
+  const tb=$('my-funds-tbody'); if(!tb)return;
   if(myMemberships.length===0){
     const emptyMsg=isOp
       ?'No fund memberships yet. Use <strong>+ New Fund</strong> to create your first fund.'
       :'You haven\'t been added to any funds yet. Contact a Fund Manager to get started.';
-    $('my-funds-grid').innerHTML = `<div class="card" style="grid-column:1/-1"><div class="card-empty"><div class="card-empty-icon">${isOp?'<svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-5 9 5"/><path d="M5 9v10M19 9v10M9 9v10M15 9v10"/><path d="M3 21h18"/></svg>':'<svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7a2 2 0 012-2h4l2 2h8a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>'}</div><div class="card-empty-title">No fund memberships</div><div class="card-empty-desc">${emptyMsg}</div></div></div>`;
+    tb.innerHTML=`<tr><td colspan="6"><div class="card-empty"><div class="card-empty-title">No fund memberships</div><div class="card-empty-desc">${emptyMsg}</div></div></td></tr>`;
     return;
   }
-  $('my-funds-grid').innerHTML = myMemberships.map(m=>{
+  tb.innerHTML=myMemberships.map(m=>{
     const fund=FUNDS.find(f=>f.id===m.fundId);
     if(!fund)return'';
     const inputs=computeUserInputsInFund(m.userId,m.fundId);
     const equity=computeEquityPct(m.userId,m.fundId);
-    const statusBadge=fund.status==='active'?'<span class="badge badge-green">Active</span>':fund.status==='archived'?'<span class="badge badge-slate">Archived</span>':fund.status==='terminated'?'<span class="badge badge-red">Terminated</span>':'<span class="badge badge-amber">Nominated</span>';
-    return `<div class="fund-card" onclick="viewFundHoldings('${fund.id}')">
-      <div class="fund-card-header">
-        <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px">
-          <div>
-            <div class="fund-card-title">${escHtml(fund.name)}</div>
-            <div class="fund-card-meta" style="display:flex;align-items:center;gap:8px"><span style="font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--slate-2)">Status</span>${statusBadge}</div>
-          </div>
-        </div>
-        <div style="margin-top:8px;display:flex;align-items:center;gap:6px;flex-wrap:wrap">
-          <span style="font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--slate-2)">Role</span>
-          ${rolePill('fund_owner')}${m.fundRole==='fund_manager'?rolePill('fund_manager'):''}${m.fundRole==='fund_secretary'?rolePill('fund_secretary'):''}
-        </div>
-      </div>
-      <div class="fund-card-stats">
-        <div class="fund-stat-cell"><div class="fund-stat-label">My Awards</div><div class="fund-stat-val">${fmt$(inputs.net)}</div></div>
-        <div class="fund-stat-cell"><div class="fund-stat-label">Owner Share</div><div class="fund-stat-val" style="color:var(--sapphire)">${equity.toFixed(2)}%</div></div>
-      </div>
-      <div class="fund-card-footer" style="justify-content:flex-end">
-        <span style="font-size:12px;font-weight:600;color:var(--sapphire)">View Fund →</span>
-      </div>
-    </div>`;
+    const roles=fundRolePill(m.fundRole||'fund_owner');
+    return `<tr style="cursor:pointer" onclick="viewFundHoldings('${fund.id}')">
+      <td><div class="td-name">${escHtml(fund.name)}</div></td>
+      <td>${fundStatusBadge(fund.status)}</td>
+      <td><div style="display:flex;gap:4px;flex-wrap:wrap">${roles}</div></td>
+      <td class="mono fw-700" style="text-align:right">${fmt$(inputs.net)}</td>
+      <td class="mono fw-700" style="text-align:right;color:var(--sapphire)">${equity.toFixed(2)}%</td>
+      <td style="text-align:right"><span style="font-size:12px;font-weight:600;color:var(--sapphire)">View →</span></td>
+    </tr>`;
   }).join('');
 }
+
+/* ── ALL FUNDS (operators) — merged into the My Funds toggle ── */
+function renderAllFundsView(){
+  const thead=$('my-funds-thead');
+  if(thead) thead.innerHTML=`<tr><th>Fund Name</th><th>Status</th><th style="text-align:right">Members</th><th style="text-align:right">Aggregate Awards</th><th style="width:60px"></th></tr>`;
+  // Aggregate Awards by Fund graph (system-wide, multi-fund)
+  let aggAwards=0;
+  const segs=FUNDS.map((f,i)=>{const v=Math.max(0,fundTotalAwards(f.id));aggAwards+=v;return{label:f.name,value:v,color:COLORS[i%COLORS.length]};});
+  const gEl=$('my-funds-graphs');
+  if(gEl){
+    gEl.innerHTML=FUNDS.length?`<div class="card" style="margin-bottom:4px"><div class="card-header"><div class="card-title">Aggregate Awards by Fund</div></div>
+      <div class="card-body"><div style="display:flex;align-items:center;gap:22px;flex-wrap:wrap">
+        ${donutSvg(segs.map(s=>({value:s.value,color:s.color})), fmt$(aggAwards), 'Aggregate',200)}
+        <div style="flex:1;min-width:220px;display:flex;flex-direction:column;gap:10px">
+          ${segs.map(s=>`<div style="display:flex;align-items:center;gap:10px;font-size:12.5px"><span style="width:11px;height:11px;border-radius:3px;background:${s.color};flex-shrink:0"></span><span style="flex:1;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${escHtml(s.label)}</span><span class="mono fw-700">${fmt$(s.value)}</span></div>`).join('')}
+        </div>
+      </div></div></div>`:'';
+  }
+  const tb=$('my-funds-tbody'); if(!tb)return;
+  if(!FUNDS.length){ tb.innerHTML=`<tr><td colspan="5"><div class="card-empty"><div class="card-empty-title">No funds yet</div><div class="card-empty-desc">Use <strong>+ New Fund</strong> to create the first fund.</div></div></td></tr>`; return; }
+  tb.innerHTML=FUNDS.map(f=>{
+    const members=membershipsForFund(f.id).length;
+    return `<tr style="cursor:pointer" onclick="openFundDetails('${f.id}')">
+      <td><div class="td-name">${escHtml(f.name)}</div></td>
+      <td>${fundStatusBadge(f.status)}</td>
+      <td class="mono" style="text-align:right">${members}</td>
+      <td class="mono fw-700" style="text-align:right">${fmt$(fundTotalAwards(f.id))}</td>
+      <td style="text-align:right"><span style="font-size:12px;font-weight:600;color:var(--sapphire)">Manage →</span></td>
+    </tr>`;
+  }).join('');
+}
+
 
 function viewFundHoldings(fundId){
   CUR.activeFundId=fundId;
@@ -2249,13 +2328,14 @@ function renderHoldings(){
   renderFundValueGraph(fund,mems);
   renderOwnershipGraph(fund,mems);
   // R5: totals row
-  let tCash=0,tNon=0,tPen=0,tNet=0;
-  mems.forEach(m=>{const i=computeUserInputsInFund(m.userId,fund.id);tCash+=i.cash;tNon+=i.base+i.ot+i.bonus;tPen+=i.penalty;tNet+=i.net;});
+  let tLabor=0,tCash=0,tNon=0,tPen=0,tNet=0;
+  mems.forEach(m=>{const b=participantInputBreakdown(m.userId,fund.id);tLabor+=b.labor;tCash+=b.cash;tNon+=b.nonCash;tPen+=b.pen;tNet+=b.net;});
   const tf=$('hold-participants-tfoot');
   if(tf) tf.innerHTML=mems.length?`<tr>
     <td style="font-weight:800;color:var(--ink)">Total</td>
-    <td class="mono fw-700">${tNon?fmt$(tNon):'—'}</td>
+    <td class="mono fw-700">${tLabor?fmt$(tLabor):'—'}</td>
     <td class="mono fw-700" style="color:var(--emerald)">${tCash?fmt$(tCash):'—'}</td>
+    <td class="mono fw-700">${tNon?fmt$(tNon):'—'}</td>
     <td class="mono fw-700" style="color:${tPen?'var(--ruby)':'var(--slate-2)'}">${tPen?'−'+fmt$(tPen):'—'}</td>
     <td class="mono fw-700">${fmt$(tNet)}</td>
   </tr>`:'';
@@ -2263,7 +2343,7 @@ function renderHoldings(){
   const tbody=$('hold-participants-tbody'); if(!tbody)return;
   tbody.innerHTML=mems.map((m,i)=>{
     const u=USERS.find(x=>x.id===m.userId); if(!u)return'';
-    const inp=computeUserInputsInFund(m.userId,fund.id);
+    const b=participantInputBreakdown(m.userId,fund.id);
     const color=COLORS[i%COLORS.length];
     const roleTags=`<span class="role-tag rt-owner">Owner</span>`
       +(m.fundRole==='fund_manager'?`<span class="role-tag rt-manager">Manager</span>`:'')
@@ -2278,10 +2358,11 @@ function renderHoldings(){
           </div>
         </div>
       </td>
-      <td class="mono">${(inp.base+inp.ot+inp.bonus)?fmt$(inp.base+inp.ot+inp.bonus):'—'}</td>
-      <td class="mono" style="color:var(--emerald)">${inp.cash?fmt$(inp.cash):'—'}</td>
-      <td class="mono" style="color:${inp.penalty?'var(--ruby)':'var(--slate-2)'}">${inp.penalty?'−'+fmt$(inp.penalty):'—'}</td>
-      <td class="mono fw-700">${fmt$(inp.net)}</td>
+      <td class="mono">${b.labor?fmt$(b.labor):'—'}</td>
+      <td class="mono" style="color:var(--emerald)">${b.cash?fmt$(b.cash):'—'}</td>
+      <td class="mono">${b.nonCash?fmt$(b.nonCash):'—'}</td>
+      <td class="mono" style="color:${b.pen?'var(--ruby)':'var(--slate-2)'}">${b.pen?'−'+fmt$(b.pen):'—'}</td>
+      <td class="mono fw-700">${fmt$(b.net)}</td>
     </tr>`;
   }).join('');
 }
@@ -2316,10 +2397,10 @@ function renderOwnershipGraph(fund,mems){
   const ownHdr=$('hold-owner-header'); if(ownHdr)ownHdr.textContent=mine.toFixed(2)+'%';
   el.innerHTML=`
     <div style="display:flex;align-items:center;gap:18px;flex-wrap:wrap">
-      ${pieSvg([{value:mine,color:'#2563EB'},{value:rest,color:'#D7DCE6'}],200)}
+      ${pieSvg([{value:mine,color:'#2563EB'},{value:rest,color:'#16A34A'}],200)}
       <div style="flex:1;min-width:190px;display:flex;flex-direction:column;gap:12px;font-size:12.5px">
         <div style="display:flex;align-items:center;gap:8px"><span style="width:11px;height:11px;border-radius:3px;background:#2563EB;flex-shrink:0"></span><span style="flex:1;font-weight:600">${escHtml(meName)} (you)</span><span class="mono fw-700" style="min-width:64px;text-align:right">${mine.toFixed(2)}%</span></div>
-        <div style="display:flex;align-items:center;gap:8px"><span style="width:11px;height:11px;border-radius:3px;background:#D7DCE6;flex-shrink:0"></span><span style="flex:1;font-weight:600">Other participants</span><span class="mono fw-700" style="min-width:64px;text-align:right">${rest.toFixed(2)}%</span></div>
+        <div style="display:flex;align-items:center;gap:8px"><span style="width:11px;height:11px;border-radius:3px;background:#16A34A;flex-shrink:0"></span><span style="flex:1;font-weight:600">Other participants</span><span class="mono fw-700" style="min-width:64px;text-align:right">${rest.toFixed(2)}%</span></div>
       </div>
     </div>`;
 }
@@ -2333,7 +2414,7 @@ function renderLedger(){
   const list=awardsForFund(CUR.activeFundId).slice().sort((a,b)=>(a.awardDate||'').localeCompare(b.awardDate||'')||(a.code||'').localeCompare(b.code||''));
   const tbody=$('ledger-tbody'); if(!tbody)return;
   if(list.length===0){
-    tbody.innerHTML=`<tr><td colspan="9"><div class="card-empty"><div class="card-empty-icon"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="4" width="12" height="17" rx="2"/><path d="M9 4V3a1 1 0 011-1h4a1 1 0 011 1v1"/><path d="M9 10h6M9 14h6"/></svg></div><div class="card-empty-title">No awards recorded</div><div class="card-empty-desc">Awards bundle contributions and penalties for a participant over a period. Click "+ Add Award" to create one.</div></div></td></tr>`;
+    tbody.innerHTML=`<tr><td colspan="11"><div class="card-empty"><div class="card-empty-icon"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="4" width="12" height="17" rx="2"/><path d="M9 4V3a1 1 0 011-1h4a1 1 0 011 1v1"/><path d="M9 10h6M9 14h6"/></svg></div><div class="card-empty-title">No awards recorded</div><div class="card-empty-desc">Awards bundle contributions and penalties for a participant over a period. Click "+ Add Award" to create one.</div></div></td></tr>`;
     return;
   }
   let balance=0;
@@ -2348,6 +2429,8 @@ function renderLedger(){
     const recorded=isAwardRecorded(a);
     const canReverse=recorded && !isRev && !reversedFlag && isSecretaryOrManager(a.fundId);
     const tags=(isRev?'<span class="badge badge-red badge-no-dot" style="margin-left:6px">Reversal</span>':'')+(reversedFlag?'<span class="badge badge-slate badge-no-dot" style="margin-left:6px">Reversed</span>':'');
+    const b=awardInputBreakdown(a);
+    const inputCell=(v)=>v?`<span class="mono fw-600" style="color:var(--emerald)">${v<0?'−':''}${fmt$(Math.abs(v))}</span>`:'<span class="mono" style="color:var(--border-2)">—</span>';
     return`<tr style="cursor:pointer${reversedFlag?';opacity:.6':''}" onclick="openAwardDetail('${a.id}')">
       <td class="mono fw-700" style="font-size:12px;white-space:nowrap">${awardCode(a)}${tags}</td>
       <td style="font-size:12.5px">${escHtml(a.periodLabel)}</td>
@@ -2358,10 +2441,12 @@ function renderLedger(){
         </div>
       </td>
       <td style="white-space:nowrap;vertical-align:middle">${awardStatusBadge(a.status)}</td>
-      <td class="mono fw-600" style="color:var(--emerald)">${t.contributions?(t.contributions<0?'−':'')+fmt$(Math.abs(t.contributions)):'—'}</td>
-      <td class="mono fw-600" style="color:var(--ruby)">${t.penalties?'−'+fmt$(t.penalties):'—'}</td>
-      <td class="mono fw-700">${t.net<0?'−':''}${fmt$(Math.abs(t.net))}</td>
-      <td class="mono fw-700" style="color:var(--slate)">${balance<0?'−':''}${fmt$(Math.abs(balance))}</td>
+      <td style="text-align:right">${inputCell(b.labor)}</td>
+      <td style="text-align:right">${inputCell(b.cash)}</td>
+      <td style="text-align:right">${inputCell(b.nonCash)}</td>
+      <td class="mono fw-600" style="color:var(--ruby);text-align:right">${t.penalties?'−'+fmt$(t.penalties):'—'}</td>
+      <td class="mono fw-700" style="text-align:right">${t.net<0?'−':''}${fmt$(Math.abs(t.net))}</td>
+      <td class="mono fw-700" style="color:var(--slate);text-align:right">${balance<0?'−':''}${fmt$(Math.abs(balance))}</td>
       <td style="text-align:center" onclick="event.stopPropagation()">
         <div class="dd-wrap">
           <button class="btn btn-ghost btn-sm" style="font-size:18px;letter-spacing:1px;padding:2px 8px" onclick="toggleMenu(this)">⋯</button>
@@ -2461,9 +2546,21 @@ function saveUserProfile(){
 }
 
 /* ══ RELATIONSHIP TAB ════════════════════════════════════ */
+function laborHoursUsed(userId, fundId){
+  let h=0;
+  AWARDS.forEach(a=>{
+    if(a.userId!==userId) return;
+    if(fundId && a.fundId!==fundId) return;
+    if(a.status==='reversed') return;
+    (a.lineItems||[]).filter(li=>!li.reversedAt&&li.kind==='contribution').forEach(li=>{
+      if(li.inputType==='hourly'||li.inputType==='overtime') h+=(li.quantity||0);
+    });
+  });
+  return h;
+}
 function ensureRelationships(u){
   if(!u.relationships){
-    u.relationships=[{id:1,title:u.title||'',rate:u.rate||0,service:u.service||'',begin:u.offerDate||u.joinedAt||'',end:'',annualIncrease:0,status:(u.status==='pending'?'Offered':'Active')}];
+    u.relationships=[{id:1,title:u.title||'',rate:u.rate||0,fundedHours:u.fundedHours||0,service:u.service||'',begin:u.offerDate||u.joinedAt||'',end:'',annualIncrease:0,status:(u.status==='pending'?'Offered':'Active')}];
   }
   return u.relationships;
 }
@@ -2473,18 +2570,25 @@ function renderRelationshipTab(){
   const editable=(u.id===CUR.user?.id)||CUR.user?.systemRole==='fund_manager';
   const addBtn=$('up-rel-add-btn'); if(addBtn)addBtn.style.display=editable?'':'none';
   const tb=$('up-rel-tbody'); if(!tb)return;
-  if(!rels.length){ tb.innerHTML=`<tr><td colspan="9" style="text-align:center;padding:24px;color:var(--slate-2)">No relationship entries yet.</td></tr>`; return; }
+  if(!rels.length){ tb.innerHTML=`<tr><td colspan="10" style="text-align:center;padding:24px;color:var(--slate-2)">No relationship entries yet.</td></tr>`; return; }
   const sc=s=>s==='Active'?'badge-green':s==='Terminated'?'badge-red':'badge-amber';
-  tb.innerHTML=rels.map(r=>`<tr>
+  const usedTotal=laborHoursUsed(u.id);
+  tb.innerHTML=rels.map(r=>{
+    const funded=Number(r.fundedHours||0);
+    const used=r.status==='Active'?usedTotal:0;
+    const remaining=Math.max(0,funded-used);
+    return `<tr>
     <td class="mono fw-700">${r.id}</td>
     <td>${escHtml(r.title||'—')}</td>
     <td class="mono">${r.rate?fmt$(r.rate)+' per HR':'—'}</td>
-    <td style="font-size:12px;color:var(--slate)">${escHtml(r.service||'—')}</td>
+    <td class="mono">${funded?funded.toFixed(2):'—'}</td>
+    <td class="mono" style="color:var(--slate)">${used?used.toFixed(2):'—'}</td>
+    <td class="mono fw-600" style="color:var(--sapphire)">${funded?remaining.toFixed(2):'—'}</td>
     <td style="font-size:12px">${r.begin?fmtDate(r.begin):'—'}</td>
     <td style="font-size:12px">${r.end?fmtDate(r.end):'—'}</td>
     <td><span class="badge ${sc(r.status)}">${escHtml(r.status)}</span></td>
     <td>${editable?`<button class="btn btn-secondary btn-xs" onclick="openRelEntry(${r.id})">Edit</button> <button class="btn btn-ghost btn-xs" style="color:var(--ruby);padding:4px 6px" title="Delete" onclick="deleteRelEntry(${r.id})">${TRASH_SVG}</button>`:'—'}</td>
-  </tr>`).join('');
+  </tr>`;}).join('');
 }
 function openRelEntry(id){
   const u=USERS.find(x=>x.id===CUR.activeUserId); if(!u)return;
@@ -2499,19 +2603,29 @@ function openRelEntry(id){
   }
   const r=id?rels.find(x=>x.id===id):null;
   CUR.editRelId=id||null;
-  $('rel-title').value=r?.title||''; $('rel-rate').value=r?.rate||''; $('rel-service').value=r?.service||'';
+  $('rel-title').value=r?.title||''; $('rel-rate').value=r?.rate||'';
+  $('rel-funded').value=r?.fundedHours||'';
   $('rel-begin').value=r?.begin||''; $('rel-end').value=r?.end||''; $('rel-status').value=r?.status||'Offered';
+  // Status only applies when editing an existing relationship; new entries start as Offered.
+  const statusGroup=$('rel-status-group'); if(statusGroup) statusGroup.style.display=id?'':'none';
+  CUR.relUsedHours=laborHoursUsed(u.id);
+  relRecalcRemaining();
   $('modal-rel-title').textContent=id?'Edit Relationship':'Add Relationship';
   openModal('modal-rel-entry');
+}
+function relRecalcRemaining(){
+  const funded=parseFloat($('rel-funded')?.value)||0;
+  const used=CUR.relUsedHours||0;
+  const rem=$('rel-remaining'); if(rem) rem.value=Math.max(0,funded-used).toFixed(2);
 }
 function saveRelEntry(){
   const u=USERS.find(x=>x.id===CUR.activeUserId); if(!u)return;
   const rels=ensureRelationships(u);
-  const d={title:$('rel-title').value.trim(),rate:parseFloat($('rel-rate').value)||0,service:$('rel-service').value.trim(),begin:$('rel-begin').value,end:$('rel-end').value,annualIncrease:0,status:$('rel-status').value};
+  const d={title:$('rel-title').value.trim(),rate:parseFloat($('rel-rate').value)||0,fundedHours:parseFloat($('rel-funded').value)||0,begin:$('rel-begin').value,end:$('rel-end').value,annualIncrease:0,status:(CUR.editRelId?$('rel-status').value:'Offered')};
   if(CUR.editRelId){ const r=rels.find(x=>x.id===CUR.editRelId); if(r)Object.assign(r,d); }
   else { const nid=rels.reduce((m,x)=>Math.max(m,x.id),0)+1; rels.push({id:nid,...d}); }
   const active=[...rels].reverse().find(x=>x.status==='Active')||rels[rels.length-1];
-  if(active){ u.title=active.title; u.rate=active.rate; u.service=active.service; }
+  if(active){ u.title=active.title; u.rate=active.rate; u.fundedHours=active.fundedHours; }
   closeModal('modal-rel-entry'); toast('Relationship entry saved','green'); renderRelationshipTab();
 }
 function deleteRelEntry(id){
@@ -3136,6 +3250,25 @@ function renderAwardLetter(a, u){
   const penaltyQty=liveP.reduce((s,li)=>s+(li.quantity||1),0);
   const createdDate=fmtDate(a.awardDate);
 
+  // Funded labor hours summary (commitment vs usage) for transparent reporting
+  const _rels=(u&&u.relationships)?u.relationships:[];
+  const _activeRel=_rels.find(r=>r.status==='Active')||_rels[_rels.length-1]||null;
+  const fundedHrs=Number(_activeRel?.fundedHours||u?.fundedHours||0);
+  const usedHrs=laborHoursUsed(a.userId, a.fundId);
+  const remainingHrs=Math.max(0, fundedHrs-usedHrs);
+  const hoursSummary=`
+    <table class="al-table" style="margin-top:14px">
+      <thead><tr><th>Labor Hours</th><th>Funded</th><th>Used</th><th>Remaining</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>Hours commitment</td>
+          <td>${fundedHrs.toFixed(2)}</td>
+          <td>${usedHrs.toFixed(2)}</td>
+          <td>${fundedHrs?remainingHrs.toFixed(2):'—'}</td>
+        </tr>
+      </tbody>
+    </table>`;
+
   const contribRows=letterContribRows(a,u,fund).map(r=>`
     <tr>
       <td>${escHtml(r.label)}</td>
@@ -3192,6 +3325,8 @@ function renderAwardLetter(a, u){
         </tr>
       </tbody>
     </table>
+
+    ${hoursSummary}
 
     <div class="al-signed-label">Signed by:</div>
     <div class="al-sig-grid">
@@ -3990,7 +4125,7 @@ function renderAdmin(){
       <td><div class="td-name">${escHtml(f.name)}</div><div style="font-size:11px;color:var(--slate)">${sl}</div></td>
       <td class="mono fw-700" style="text-align:right">${fmt$(total)}</td>
       <td class="mono" style="text-align:right">${fmt$(adminAwards)}</td>
-      <td class="mono" style="text-align:right">${Math.round(adminShare)}%</td>
+      <td class="mono" style="text-align:right">${adminShare.toFixed(2)}%</td>
     </tr>`;
   }).join('');
 }
