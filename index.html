@@ -736,7 +736,6 @@ select.form-control { appearance: none; background-image: url("data:image/svg+xm
   </div>
   <div class="page">
     <div id="my-funds-hero"></div>
-    <div id="my-funds-toggle" style="display:none;margin:6px 0 18px"></div>
     <div id="my-funds-graphs"></div>
     <div class="section-label" style="margin:18px 0 14px" id="my-funds-section-label">Your fund memberships</div>
     <div class="card">
@@ -1905,13 +1904,9 @@ function fundStatusBadge(status){
     :status==='terminated'?'<span class="badge badge-red">Terminated</span>'
     :'<span class="badge badge-amber">Nominated</span>';
 }
-function setFundsView(v){ CUR.fundsView=v; renderMyFunds(); }
 function renderMyFunds() {
   const role=CUR.user?.systemRole||'fund_owner';
   const isOp=role==='fund_manager'||role==='fund_secretary';
-  if(!CUR.fundsView) CUR.fundsView='mine';
-  // Owners only ever see their own holdings; the toggle is an operator affordance.
-  const view=(isOp&&CUR.fundsView==='all')?'all':'mine';
 
   const myMemberships=membershipsForUser(CUR.user?.id);
 
@@ -1919,9 +1914,9 @@ function renderMyFunds() {
   const titleEl=$('my-funds-title');
   const breadEl=$('my-funds-bread');
   const sectionEl=$('my-funds-section-label');
-  if(titleEl) titleEl.textContent=isOp?(view==='all'?'All Funds':'My Funds'):'My Holdings';
+  if(titleEl) titleEl.textContent=isOp?'My Funds':'My Holdings';
   if(breadEl)  breadEl.textContent='';
-  if(sectionEl) sectionEl.textContent=view==='all'?'Every fund in the system':'Your fund memberships';
+  if(sectionEl) sectionEl.textContent='Your fund memberships';
 
   // Hero
   const heroBg='linear-gradient(135deg,var(--ink) 0%,#1e4976 100%)';
@@ -1932,25 +1927,13 @@ function renderMyFunds() {
         <div style="font-size:18px;font-weight:800;letter-spacing:-.4px">${escHtml(CUR.user?.name||'')}</div>
       </div>
       <div class="hero-stats">
-        <div style="text-align:center"><div class="hero-stat-lbl">${view==='all'?'Total Funds':'My Funds'}</div><div class="hero-stat-val">${view==='all'?FUNDS.length:myMemberships.length}</div></div>
+        <div style="text-align:center"><div class="hero-stat-lbl">My Funds</div><div class="hero-stat-val">${myMemberships.length}</div></div>
       </div>
     </div>`;
 
-  // Toggle (operators only): My Funds | All Funds, defaulting to My Funds
-  const tEl=$('my-funds-toggle');
-  if(tEl){
-    if(isOp){
-      tEl.style.display='';
-      const seg=(v,label)=>`<button class="btn ${view===v?'btn-primary':'btn-secondary'} btn-sm" style="min-width:104px" onclick="setFundsView('${v}')">${label}</button>`;
-      tEl.innerHTML=`<div style="display:inline-flex;gap:6px;padding:4px;background:var(--surface-2);border:1px solid var(--border);border-radius:var(--r)">${seg('mine','My Funds')}${seg('all','All Funds')}</div>`;
-    } else { tEl.style.display='none'; tEl.innerHTML=''; }
-  }
-
-  if(view==='all') return renderAllFundsView();
-
   /* ── MY FUNDS ─────────────────────────────────────────── */
   const thead=$('my-funds-thead');
-  if(thead) thead.innerHTML=`<tr><th>Fund Name</th><th>Status</th><th style="text-align:center">Role</th><th style="text-align:center">My Awards</th><th style="text-align:center">Ownership Share</th><th style="width:96px;text-align:right">Action</th></tr>`;
+  if(thead) thead.innerHTML=`<tr><th>Fund Name</th><th>Owner Status</th><th style="text-align:center">Owner Role</th><th style="text-align:center">My Awards</th><th style="text-align:center">Ownership Share</th><th style="width:96px;text-align:right">Action</th></tr>`;
 
   // Graphs: you (blue) vs all other participants (green), cumulative + ownership
   (function(){
@@ -2001,7 +1984,7 @@ function renderMyFunds() {
     const inputs=computeUserInputsInFund(m.userId,m.fundId);
     const equity=computeEquityPct(m.userId,m.fundId);
     const sysRole=(USERS.find(u=>u.id===m.userId)||CUR.user||{}).systemRole;
-    const roles=systemRolePill(sysRole);
+    const roles=fundRolePill(sysRole);
     return `<tr style="cursor:pointer" onclick="viewFundHoldings('${fund.id}')">
       <td><div class="td-name">${escHtml(fund.name)}</div></td>
       <td>${fundStatusBadge(fund.status)}</td>
@@ -2012,38 +1995,6 @@ function renderMyFunds() {
     </tr>`;
   }).join('');
 }
-
-/* ── ALL FUNDS (operators) — merged into the My Funds toggle ── */
-function renderAllFundsView(){
-  const thead=$('my-funds-thead');
-  if(thead) thead.innerHTML=`<tr><th>Fund Name</th><th>Status</th><th style="text-align:center">Members</th><th style="text-align:center">Aggregate Awards</th><th style="width:110px;text-align:center">Action</th></tr>`;
-  // Aggregate Awards by Fund graph (system-wide, multi-fund)
-  let aggAwards=0;
-  const segs=FUNDS.map((f,i)=>{const v=Math.max(0,fundTotalAwards(f.id));aggAwards+=v;return{label:f.name,value:v,color:GRAPH_COLORS[i%GRAPH_COLORS.length]};});
-  const gEl=$('my-funds-graphs');
-  if(gEl){
-    gEl.innerHTML=FUNDS.length?`<div class="card" style="margin-bottom:4px"><div class="card-header"><div class="card-title">Aggregate Awards by Fund</div></div>
-      <div class="card-body"><div style="display:flex;align-items:center;gap:22px;flex-wrap:wrap">
-        ${donutSvg(segs.map(s=>({value:s.value,color:s.color})), fmt$(aggAwards), 'Aggregate',200)}
-        <div style="flex:1;min-width:220px;display:flex;flex-direction:column;gap:10px">
-          ${segs.map(s=>`<div style="display:flex;align-items:center;gap:10px;font-size:12.5px"><span style="width:11px;height:11px;border-radius:3px;background:${s.color};flex-shrink:0"></span><span style="flex:1;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${escHtml(s.label)}</span><span class="mono fw-700">${fmt$(s.value)}</span></div>`).join('')}
-        </div>
-      </div></div></div>`:'';
-  }
-  const tb=$('my-funds-tbody'); if(!tb)return;
-  if(!FUNDS.length){ tb.innerHTML=`<tr><td colspan="5"><div class="card-empty"><div class="card-empty-title">No funds yet</div><div class="card-empty-desc">Use <strong>+ New Fund</strong> to create the first fund.</div></div></td></tr>`; return; }
-  tb.innerHTML=FUNDS.map(f=>{
-    const members=membershipsForFund(f.id).length;
-    return `<tr style="cursor:pointer" onclick="openFundDetails('${f.id}')">
-      <td><div class="td-name">${escHtml(f.name)}</div></td>
-      <td>${fundStatusBadge(f.status)}</td>
-      <td class="mono" style="text-align:center">${members}</td>
-      <td class="mono fw-700" style="text-align:center">${fmt$(fundTotalAwards(f.id))}</td>
-      <td style="text-align:center;white-space:nowrap"><span class="row-view-link">Manage<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></td>
-    </tr>`;
-  }).join('');
-}
-
 
 function viewFundHoldings(fundId){
   CUR.activeFundId=fundId;
